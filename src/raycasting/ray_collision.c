@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 03:29:13 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 03:41:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ static t_coord	_r_ray_collision(t_type type, t_coord P, float angle_ray,
 				return (last_v);
 			last = last_h;
 		}
-		while (last.y < data->y_max - 1)
+		while (last.y <= data->y_max - 1)
 		{
 			// to_vector_print(last);
 			if (data->map[(int)last.x][(int)last.y] == type)
@@ -305,7 +305,7 @@ static t_coord	_r_ray_collision(t_type type, t_coord P, float angle_ray,
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
 		}
-		return (last);
+		return ((t_coord){-1, -1});
 	}
 	return ((t_coord){-1, -1});
 }
@@ -344,7 +344,7 @@ int	main(int ac, char **av)
 		printf("\nangle %.0f: ", angle_ray);
 	// printf("toto\n");
 		to_vector_print(_r_ray_collision(WALL, co_p, angle_ray * M_PI / 180, &data));
-		++angle_ray;
+		angle_ray += 10;
 	}
 
 	while (--i >= 0)
