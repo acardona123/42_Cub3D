@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:04:34 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 15:20:09 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 17:01:27 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	_r_ray_collision_vertical_sub(float *sign_offset_y,
 }
 
 static t_coord	_r_ray_collision_vertical(t_bloc_type type, t_coord P,
-	float angle_ray, t_data_map *data)
+	float angle_ray, t_map *data)
 {
 	float	x;
 	float	y;
@@ -108,7 +108,7 @@ static void	_r_ray_collision_horizontal_sub(float *sign_offset_x,
 }
 
 static t_coord	_r_ray_collision_horizontal(t_bloc_type type, t_coord P,
-	float angle_ray, t_data_map *data)
+	float angle_ray, t_map *data)
 {
 	float	x;
 	float	y;
@@ -172,7 +172,7 @@ int	main(int ac, char **av)
 	char	*x9 = "1111111111";
 	char	*map_[10] = {x0, x1, x2, x3, x4, x5, x6, x7, x8, x9};
 
-	t_data_map	data = {10, 10, map_};
+	t_map	data = {10, 10, map_};
 	t_coord	co_p = {5, 5};
 	float	angle_ray =  atof(av[1]) * M_PI / 180;//M_PI;//;
 	printf("angle: %f (%f)\n", atof(av[1]), angle_ray);
