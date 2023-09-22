@@ -6,14 +6,14 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/21 17:13:44 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:47:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAYCASTING_H
 # define RAYCASTING_H
 
-#include "tools.h"
+#include "shared.h"
 
 typedef int v2si	__attribute__ ((vector_size (8)));
 
