@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 14:45:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:55:28 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <stdio.h>
 
 # include "../mlx/mlx.h"
+# include "../libft/libft.h"
 
 # define FLOAT_EPSILON 0.000001
 
@@ -35,8 +36,11 @@ typedef struct s_coord
 
 typedef t_coord	t_vector;
 
-
+//tools_vectors
 void	to_vector_print(t_vector v);
 double	to_vector_norm(t_vector v0, t_vector v1);
+
+//tools_error
+void	to_error_msg(char *msg);
 
 #endif
