@@ -6,14 +6,14 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 17:24:55 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/19 14:13:27 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:13:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "shared.h"
+# include "tools.h"
 # include "raycasting.h"
 
 #endif

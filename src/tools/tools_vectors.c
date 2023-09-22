@@ -1,51 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shared.h                                           :+:      :+:    :+:   */
+/*   tools_vectors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/20 02:13:09 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/21 17:09:01 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/21 20:17:53 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHARED_H
-# define SHARED_H
+#include "../../includes/tools.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <math.h>
-
-
-#include <stdio.h>/////////////////////////
-
-
-
-# include "../mlx/mlx.h"
-
-# define FLOAT_EPSILON 0.000001
-
-typedef enum e_type
+void	to_vector_print(t_vector v)
 {
-	NOTHING = '0',
-	WALL,
-	DOOR
-}	t_type;
+	printf("vector(%f, %f)\n", v.x, v.y);
+}
 
-typedef struct s_data_tmp
+double	to_vector_norm(t_vector v0, t_vector v1)
 {
-	float	x_max;
-	float	y_max;
-	char	**map;
-}	t_data_tmp;
-
-
-
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-}	t_coord;
-
-#endif
+	return (sqrt(pow(v1.x - v0.x, 2) + pow(v1.y - v0.y, 2)));
+}
