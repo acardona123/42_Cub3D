@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 15:20:09 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 17:01:27 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	_r_ray_init_v(t_coord *P, float angle_ray, t_coord *last_v,
 	}
 }
 
-static bool	_r_point_inside_map_borders(t_data_map *data, t_coord *P)
+static bool	_r_point_inside_map_borders(t_map *data, t_coord *P)
 {
 	if (P->x < 1 || P->y < 1 || P->x > data->x_max - 1 || P->y > data->y_max)
 		return (false);
@@ -64,7 +64,7 @@ static bool	_r_point_inside_map_borders(t_data_map *data, t_coord *P)
 }
 
 static t_coord	_r_ray_collision(t_bloc_type type, t_coord P, float angle_ray,
-	t_data_map *data)
+	t_map *data)
 {
 	t_coord		last_h;
 	t_coord		last_v;
@@ -335,7 +335,7 @@ int	main(int ac, char **av)
 		}
 	}
 
-	t_data_map	data = {10, 10, (char **)map_transposee};
+	t_map	data = {10, 10, (char **)map_transposee};
 	t_coord	co_p = {atof(av[1]), atof(av[2])};
 	
 	float	angle_ray = 0;
