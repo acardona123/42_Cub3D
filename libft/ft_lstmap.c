@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:54:46 by acardona          #+#    #+#             */
-/*   Updated: 2022/11/10 18:22:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:43:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void (*del)(void *))
 	t_list	*scr_elem;
 	t_list	*dest_elem;
 
-	if (!lst || !f)
+	if (!lst || !f || !del)
 		return (NULL);
 	dest_init = ft_lstnew((*f)(lst->content));
 	if (!dest_init)

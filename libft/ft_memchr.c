@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:05:51 by acardona          #+#    #+#             */
-/*   Updated: 2022/11/15 12:37:22 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:35:02 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	unsigned char	*us;
 	unsigned char	uc;
 
+	if (!s)
+		return (NULL);
 	us = (unsigned char *) s;
 	uc = (unsigned char) c;
 	i = 0;

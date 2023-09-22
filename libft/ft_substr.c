@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:13:17 by acardona          #+#    #+#             */
-/*   Updated: 2022/11/07 12:13:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:49:15 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ size_t len)
 	size_t	lens;
 	char	*sub;
 
+	if (!s)
+		return (write(2, "Error:\nft_substr with NULL pointer\n", 35), NULL);
 	lens = ft_strlen(s);
 	if (start >= lens)
 	{
@@ -28,10 +30,7 @@ size_t len)
 		*sub = 0;
 		return (sub);
 	}
-	if (lens - start < len)
-		sub = malloc((lens - start + 1));
-	else
-		sub = malloc(len + 1);
+	sub = malloc(len - start * (lens - start < len) + 1);
 	if (!sub)
 		return (NULL);
 	i = -1;

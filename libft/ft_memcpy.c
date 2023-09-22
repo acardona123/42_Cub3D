@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:06:23 by acardona          #+#    #+#             */
-/*   Updated: 2022/11/15 12:22:16 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:38:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t		i;
 
+	if (!dest || !src)
+	{
+		write(2, "Error:\nft_memcpy with NULL pointer\n", 35);
+		return (NULL);
+	}
 	i = 0;
 	while (i < n)
 	{

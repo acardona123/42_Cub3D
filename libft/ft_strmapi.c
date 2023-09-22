@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:11:33 by acardona          #+#    #+#             */
-/*   Updated: 2022/11/07 12:11:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:46:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int, char))
 	size_t	i;
 	size_t	len;
 
+	if (!s || !f)
+	{
+		write(2, "Error:\nft_strmapi with NULL pointer\n", 35);
+		return (NULL);
+	}
 	len = ft_strlen(s);
 	str = malloc((len + 1) * sizeof(char));
 	if (!str)

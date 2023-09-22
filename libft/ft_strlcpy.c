@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:11:11 by acardona          #+#    #+#             */
-/*   Updated: 2022/11/08 11:53:30 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:42:33 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 
+	if (!dst || !src)
+	{
+		write(2, "Error:\nft_strlcat with NULL pointer\n", 35);
+		return (0);
+	}
 	if (size == 0)
 		return (ft_strlen(src));
 	i = 0;

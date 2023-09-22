@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:10:29 by acardona          #+#    #+#             */
-/*   Updated: 2022/11/11 16:58:03 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:41:01 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	unsigned int	i;
 
-	if (s)
+	if (s && f)
 	{
 		i = 0;
 		while (s[i])
