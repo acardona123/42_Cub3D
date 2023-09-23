@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 16:03:39 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:21:45 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	_r_ray_init_v(t_coord_f *P, float angle_ray, t_coord_f *last_v,
 	}
 }
 
-static bool	_r_point_inside_map_borders(t_data_map *data, t_coord_f *P)
+static bool	_r_point_inside_map_borders(t_map *data, t_coord_f *P)
 {
 	if (P->x < 1 || P->y < 1 || P->x > data->x_max - 1 || P->y > data->y_max)
 		return (false);
@@ -64,7 +64,7 @@ static bool	_r_point_inside_map_borders(t_data_map *data, t_coord_f *P)
 }
 
 static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
-	float angle_ray, t_data_map *data)
+	float angle_ray, t_map *data)
 {
 	t_coord_f		last_h;
 	t_coord_f		last_v;
@@ -326,8 +326,9 @@ int	main(int ac, char **av)
 			map_transposee[i][j] = map[j][i];
 		}
 	}
-	t_data_map	data = {10, 10, (char **)map_transposee};
-	t_coord_f	co_p = {atof(av[1]), atof(av[2])};
+
+	t_map	data = {10, 10, (char **)map_transposee};
+	t_coord	co_p = {atof(av[1]), atof(av[2])};
 	
 	float		angle_ray = 0;
 	t_hitpoint	hitpoint;

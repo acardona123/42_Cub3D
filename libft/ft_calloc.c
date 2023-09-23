@@ -1,19 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2022/11/07 12:03:26 by acardona          #+#    #+#             */
+/*   Updated: 2022/11/16 13:27:39 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "libft.h"
 
-#include "shared.h"
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ptr;
+	size_t	i;
+	size_t	tot;
 
-
-#endif
+	ptr = NULL;
+	if (size != 0 && nmemb > ULLONG_MAX / size)
+		return (NULL);
+	tot = nmemb * size;
+	ptr = malloc(tot);
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (i < tot)
+	{
+		((char *)ptr)[i] = 0;
+		i++;
+	}
+	return (ptr);
+}

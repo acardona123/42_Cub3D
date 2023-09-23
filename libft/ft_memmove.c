@@ -1,19 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2022/11/07 12:06:53 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/22 18:39:15 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "libft.h"
 
-#include "shared.h"
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	unsigned char	*usrc;
+	unsigned char	*udest;
 
-
-#endif
+	if (!dest || !src)
+	{
+		write(2, "Error:\nft_memmove with NULL pointer\n", 35);
+		return (NULL);
+	}
+	usrc = (unsigned char *) src;
+	udest = (unsigned char *) dest;
+	if (usrc < udest)
+		while (n--)
+			udest[n] = usrc[n];
+	else
+		while (n--)
+			*udest++ = *usrc++;
+	return (dest);
+}

@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2022/11/07 12:06:23 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/22 18:38:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "libft.h"
 
-#include "shared.h"
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t		i;
 
-
-#endif
+	if (!dest || !src)
+	{
+		write(2, "Error:\nft_memcpy with NULL pointer\n", 35);
+		return (NULL);
+	}
+	i = 0;
+	while (i < n)
+	{
+		((char *)dest)[i] = ((char *)src)[i];
+		i++;
+	}
+	return ((void *) dest);
+}

@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ft_strlst_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/03/21 23:36:03 by alexcardona       #+#    #+#             */
+/*   Updated: 2023/04/13 01:32:25 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "libft.h"
 
-#include "shared.h"
+char	**ft_strlst_free(char **lst)
+{
+	int	i;
 
-
-#endif
+	if (!lst)
+		return (NULL);
+	i = -1;
+	while (lst[++i] != NULL)
+		free(lst[i]);
+	free(lst);
+	return (NULL);
+}

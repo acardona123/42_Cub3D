@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   init_0_mapformat_main.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/23 02:37:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "../../../includes/init.h"
 
-#include "shared.h"
-
-
-#endif
+/**
+ * @brief checks if the map format is correct according to the subject do not do
+ *			anythig with the readen data
+ * TODO: function to code
+ * @param ac 
+ * @param av 
+ * @param gen 
+ * @return EXIT if faillure
+ */
+void	in_0_map_format_check(int ac, char **av, t_general *gen)
+{
+}

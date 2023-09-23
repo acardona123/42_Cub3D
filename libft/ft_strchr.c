@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2022/11/07 12:09:50 by acardona          #+#    #+#             */
+/*   Updated: 2022/11/11 16:01:06 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "libft.h"
 
-#include "shared.h"
+char	*ft_strchr(const char *s, int c)
+{
+	int		i;
+	char	cc;
 
-
-#endif
+	if (!s)
+		return (NULL);
+	cc = (char) c;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == cc)
+			return ((char *)s + i);
+		i++;
+	}
+	if (cc == '\0')
+		return ((char *)s + i);
+	return (NULL);
+}

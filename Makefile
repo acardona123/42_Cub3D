@@ -4,7 +4,11 @@ CC				=	cc
 CFLAGS			=	-Werror -Wall -Wextra
 DEPSFLAG		=	-MMD
 
-INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lmlx -lXext -lX11 -lm
+MLX_DIR			=	mlx
+MLX				=	$(MLX_DIR)/libmlx.a
+LIBFT_DIR		=	libft
+LIBFT			=	$(LIBFT_DIR)/libft.a
+INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -lft
 
 
 FILES_PARSING	=	$(addprefix parsing/, \
@@ -26,11 +30,10 @@ OBJ_DIR			=	obj
 OBJ				=	$(addprefix $(OBJ_DIR)/, $(FILES_NAMES:=.o))
 DEPS			=	$(addprefix $(OBJ_DIR)/, $(FILES_NAMES:=.d))
 
-MLX_DIR			=	mlx
 
-all : MLX $(NAME)
+all : $(MLX) $(LIBFT) $(NAME)
 
-MLX :
+$(MLX) :
 	@echo "\e[32m==== MLX CLONING AND COMPIATION ====\e[0m"
 	@if [ ! -d "$(MLX_DIR)" ]; then \
         echo "Cloning the mlx..."; \
@@ -43,17 +46,21 @@ MLX :
 	@make --no-print-directory -C $(MLX_DIR) >/dev/null 2>/dev/null
 	@echo "\e[32m---- End: mlx cloning and compilation ----\e[0m\n"
 
+$(LIBFT) :
+	@echo "\e[32m==== LIBFT COMPIATION ====\e[36m"
+	@make -C $(LIBFT_DIR)
+	@echo "\e[32m---- End: libft compilation ----\e[0m\n"
+
 clean :
 	@echo "\e[31mRemoving object files\e[0m"
 	@rm -rf $(OBJ_DIR)
-
+	@make clean --no-print-directory -C $(LIBFT_DIR)
 	@make clean --no-print-directory -C $(MLX_DIR) >/dev/null 2>&1
 
 fclean : clean
-	@echo "\e[31mRemoving mlx library and \e[0m"
-	@if [ -d "$(MLX_DIR)" ]; then \
-		rm -rf $(NAME) $(MLX_DIR);\
-	fi
+	@echo "\e[31mRemoving Libft library and executable\e[0m"
+	@rm -rf $(NAME)
+	@make fclean --no-print-directory -C $(LIBFT_DIR)
 
 re : fclean all
 

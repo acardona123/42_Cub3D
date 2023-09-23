@@ -1,19 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2022/11/07 12:11:33 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/22 18:46:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "libft.h"
 
-#include "shared.h"
+char	*ft_strmapi(char const *s, char (*f)(unsigned
+int, char))
+{
+	char	*str;
+	size_t	i;
+	size_t	len;
 
-
-#endif
+	if (!s || !f)
+	{
+		write(2, "Error:\nft_strmapi with NULL pointer\n", 35);
+		return (NULL);
+	}
+	len = ft_strlen(s);
+	str = malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	str[len] = 0;
+	i = 0;
+	while (i < len)
+	{
+		str[i] = f(i, s[i]);
+		i++;
+	}
+	return (str);
+}

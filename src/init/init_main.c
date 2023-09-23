@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   init_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/23 02:38:01 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "../../includes/init.h"
 
-#include "shared.h"
-
-
-#endif
+bool	init_main(int ac, char **av, t_general	*gen)
+{
+	*gen = (t_general){0};
+	in_0_map_format_check(ac, av, gen);
+	in_1_init_display(gen);
+	in_2_init_texture_pack(ac, av, gen);
+	in_3_map_content_init(ac, av, gen);
+	return (true);
+}

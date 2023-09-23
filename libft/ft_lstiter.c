@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2022/11/07 13:54:26 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/22 18:43:28 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "libft.h"
 
-#include "shared.h"
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	t_list	*pelem;
 
-
-#endif
+	if (!lst || !f)
+		return ;
+	pelem = lst;
+	while (pelem)
+	{
+		(*f)(pelem->content);
+		pelem = pelem->next;
+	}
+}
