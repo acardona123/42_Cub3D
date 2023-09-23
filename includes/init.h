@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 02:36:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:51:15 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "shared.h"
 
-/* ===============0_ mapformat/ =============== */
+/* =============== 0_mapformat/ =============== */
 // init_0_mapformat_main.c
 void	in_0_map_format_check(int ac, char **av, t_general *gen);
 

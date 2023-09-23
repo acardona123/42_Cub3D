@@ -11,16 +11,44 @@ LIBFT			=	$(LIBFT_DIR)/libft.a
 INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -lft
 
 
-FILES_PARSING	=	$(addprefix parsing/, \
-					)
+FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
+							general \
+							display \
+							exit \
+							map \
+							texture_pack \
+						)
 
-FILES_TOOLS		=	$(addprefix tools/, \
-					 \
-					)
+FILES_INIT			=	$(addprefix init/, \
+							init_main \
+							$(addprefix 0_mapformat/init_0_mapformat_, \
+								main \
+							) \
+							$(addprefix 1_user_interface/init_1_user_interface_, \
+								main \
+								hooks \
+							) \
+							$(addprefix 2_texturepack/init_2_texturepack_, \
+								main \
+							) \
+							$(addprefix 3_mapcontent/init_3_mapcontent_, \
+								main \
+							) \
+						)
 
-FILES_NAMES		=	main \
-					$(FILES_PARSING) \
-					$(FILES_TOOLS)
+FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
+							\
+						)
+
+FILES_TOOLS			=	$(addprefix tools/tools_, \
+							error \
+							vectors \
+						)
+
+FILES_NAMES			=	main \
+						$(FILES_INIT) \
+						$(FILES_END_DESTROY) \
+						$(FILES_TOOLS)
 
 
 SRC_DIR			=	src

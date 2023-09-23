@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_detroy_texture_pack.c                          :+:      :+:    :+:   */
+/*   end_destroy_texture_pack.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 01:42:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 18:20:16 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
 static void	_end_textures_destroy_one_animated_texture(void *mlx,
 	t_animated_texture *target)
 {
-	int	i;
+	unsigned int	i;
 
-	if (!target->frame_table)
+	if (!target->frame_array)
 		return ;
 	i = 0;
-	while (i < target->frame_number && target->frame_table[i].path)
+	while (i < target->frame_number && target->frame_array[i].path)
 	{
-		_end_textures_destroy_one_static_texture(&target->frame_table[i], mlx);
+		_end_textures_destroy_one_static_texture(&target->frame_array[i], mlx);
 		++i;
 	}
-	free(target->frame_table);
+	free(target->frame_array);
 }
 
 /**

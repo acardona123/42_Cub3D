@@ -40,6 +40,8 @@ void	in_1_hooks_init(t_general *gen)
  */
 static int	_in_1_hooks_init_keys(int key, t_general *gen)
 {
+	(void)key;
+	(void)gen;
 	return (0);
 }
 

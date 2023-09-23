@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shared.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 16:17:55 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/09/23 16:37:12 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,7 @@
 # define KEY_LOOK_LEFT XK_Left
 # define KEY_LOOK_RIGHT XK_Right
 
-typedef enum e_chunk_type
-{
-	FLOOR = '0',
-	DOOR = '2',
-	WALL = '1',
-	NOTHING = ' ',
-}	t_chunk_type;
-
-typedef enum e_chunk_face
-{
-	FACE_N ,
-	FACE_E ,
-	FACE_S ,
-	FACE_O ,
-}	t_chunk_face;
-
-typedef struct s_hitpoint
-{
-	t_coord_f			impactpoint_coord;
-	t_coord_i			chunk_coord;
-	t_chunk_face		face;
-}	t_hitpoint;
-
-
-typedef struct s_data_map
-{
-	float	x_max;
-	float	y_max;
-	char	**map;
-}	t_data_map;
-
-// ---- End: Map data ----
+/*
 
 
 ==== Textures ==== */
@@ -89,7 +58,7 @@ typedef struct s_animated_texture
 	unsigned int		frame_pause_ms;
 	unsigned int		frame_cycle_short;//time to display all frames without pause
 	unsigned int		frame_cycle_long;//time of the complete cycle including pause
-	t_static_texture	*frame_table;
+	t_static_texture	*frame_array;
 }	t_animated_texture;
 
 # define NUMBER_OF_TEXTURES 7
@@ -119,6 +88,14 @@ typedef enum e_chunk_type
 	NOTHING = ' ',
 }	t_chunk_type;
 
+typedef enum e_chunk_face
+{
+	FACE_N ,
+	FACE_E ,
+	FACE_S ,
+	FACE_O ,
+}	t_chunk_face;
+
 typedef enum e_door_status
 {
 	DOOR_OPEN,
@@ -144,6 +121,13 @@ typedef struct s_map
 	t_chunk	**map;
 }	t_map;
 
+typedef struct s_hitpoint
+{
+	t_coord_f			hit_point_coord;
+	t_coord_i			hit_chunk_coord;
+	t_chunk_face		hit_face;
+}	t_hitpoint;
+
 /* ---- End: Map data ----
 
 
@@ -152,7 +136,7 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	t_coord		p_co;
+	t_coord_f	p_co;
 	float		p_angle;
 	float		p_speed;
 }	t_player;
@@ -178,10 +162,10 @@ typedef struct s_display
 
 typedef struct s_general
 {
-	t_display	disp;
-	t_player			player;
+	t_display			disp;
 	t_texture_pack		textures;
 	t_map				map;
+	t_player			player;
 	float				fov;
 }	t_general;
 

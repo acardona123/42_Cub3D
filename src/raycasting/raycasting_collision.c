@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_collision.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 16:21:45 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/09/23 17:26:53 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.y != last_h.y)
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last_v, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
 				
 			last = last_h;
 		}
 		while (last.y <= data->y_max - 1)
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && floor(last.x) != last_v.x)
@@ -108,7 +108,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_v.x > data->x_max - 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_v.y += delta_v.y;
-				if (data->map[(int)last_v.x][(int)last_v.y] == type)
+				if (data->map[(int)last_v.x][(int)last_v.y].type == type)
 					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x, (int)last_v.y}, FACE_O});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
@@ -119,13 +119,13 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.x != last_v.x)
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
 			last = last_v;
 		}
 		while (last.x <= data->x_max - 1)
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && floor(last.y) != last_h.y)
@@ -134,7 +134,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_h.y > data->y_max - 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_h.x += delta_h.x;
-				if (data->map[(int)last_h.x][(int)last_h.y] == type)
+				if (data->map[(int)last_h.x][(int)last_h.y].type == type)
 					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y}, FACE_S});
 			}
 			last.x += delta_v.x;//optimisable en ++last.y
@@ -145,13 +145,13 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.x != last_v.x)
 		{
-			if (data->map[(int)last.x][(int)last.y - 1] == type)
+			if (data->map[(int)last.x][(int)last.y - 1].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
 			last = last_v;
 		}
 		while (last.x <= data->x_max - 1) // <=> < stricte
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && ceil(last.y) != last_h.y)
@@ -160,7 +160,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_h.y < 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_h.x += delta_h.x;
-				if (data->map[(int)last_h.x][(int)last_h.y - 1] == type)
+				if (data->map[(int)last_h.x][(int)last_h.y - 1].type == type)
 					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y - 1}, FACE_N});
 			}
 			last.x += delta_v.x;//optimisable en ++last.y
@@ -171,14 +171,14 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.y != last_h.y)
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
 				
 			last = last_h;
 		}
 		while (last.y >= 1.)
 		{
-			if (data->map[(int)last.x][(int)last.y - 1] == type)
+			if (data->map[(int)last.x][(int)last.y - 1].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && floor(last.x) != last_v.x)
@@ -187,7 +187,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_v.x > data->x_max - 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_v.y += delta_v.y;
-				if (data->map[(int)last_v.x][(int)last_v.y] == type)
+				if (data->map[(int)last_v.x][(int)last_v.y].type == type)
 					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x, (int)last_v.y}, FACE_O});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
@@ -198,13 +198,13 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.y != last_h.y)
 		{
-			if (data->map[(int)last.x - 1][(int)last.y] == type)
+			if (data->map[(int)last.x - 1][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
 			last = last_h;
 		}
 		while (last.y >= 1.)
 		{
-			if (data->map[(int)last.x][(int)last.y - 1] == type)
+			if (data->map[(int)last.x][(int)last.y - 1].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && ceil(last.x) != last_v.x)
@@ -213,7 +213,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_v.x < 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_v.y += delta_v.y;
-				if (data->map[(int)last_v.x - 1][(int)last_v.y] == type)
+				if (data->map[(int)last_v.x - 1][(int)last_v.y].type == type)
 					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x - 1, (int)last_v.y}, FACE_E});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
@@ -224,13 +224,13 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.x != last_v.x)
 		{
-			if (data->map[(int)last.x][(int)last.y - 1] == type)
+			if (data->map[(int)last.x][(int)last.y - 1].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
 			last = last_v;
 		}
 		while (last.x >= 1.)
 		{
-			if (data->map[(int)last.x - 1][(int)last.y] == type)
+			if (data->map[(int)last.x - 1][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && ceil(last.y) != last_h.y)
@@ -239,7 +239,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_h.y < 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_h.x += delta_h.x;
-				if (data->map[(int)last_h.x][(int)last_h.y - 1] == type)
+				if (data->map[(int)last_h.x][(int)last_h.y - 1].type == type)
 					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y - 1}, FACE_N});
 			}
 			last.x += delta_v.x;//optimisable en --last.x
@@ -250,13 +250,13 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.x != last_v.x)
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
 			last = last_v;
 		}
 		while (last.x >= 1.)
 		{
-			if (data->map[(int)last.x - 1][(int)last.y] == type)
+			if (data->map[(int)last.x - 1][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && floor(last.y) != last_h.y)
@@ -265,7 +265,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_h.y > data->y_max - 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_h.x += delta_h.x;
-				if (data->map[(int)last_h.x][(int)last_h.y] == type)
+				if (data->map[(int)last_h.x][(int)last_h.y].type == type)
 					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y}, FACE_S});
 			}
 			last.x += delta_v.x;//optimisable en --last.x
@@ -276,14 +276,14 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	{
 		if (last.y != last_h.y)
 		{
-			if (data->map[(int)last.x - 1][(int)last.y] == type)
+			if (data->map[(int)last.x - 1][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
 				
 			last = last_h;
 		}
 		while (last.y <= data->y_max - 1)
 		{
-			if (data->map[(int)last.x][(int)last.y] == type)
+			if (data->map[(int)last.x][(int)last.y].type == type)
 				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && ceil(last.x) != last_v.x)
@@ -292,7 +292,7 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 				if (last_v.x < 1)
 					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 				last_v.y += delta_v.y;
-				if (data->map[(int)last_v.x - 1][(int)last_v.y] == type)
+				if (data->map[(int)last_v.x - 1][(int)last_v.y].type == type)
 					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x - 1, (int)last_v.y}, FACE_E});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
@@ -302,44 +302,44 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
 }
 
+/*
 int	main(int ac, char **av)
 {
-	char	*y9 = "1111111111";
-	char	*y8 = "1000000001";
-	char	*y7 = "1000000001";
-	char	*y6 = "1001000101";
-	char	*y5 = "1000000001";
-	char	*y4 = "1000000001";
-	char	*y3 = "1000000001";
-	char	*y2 = "1001000101";
-	char	*y1 = "1000000001";
-	char	*y0 = "1111111111";
-	char	*map[10] = {y0, y1, y2, y3, y4, y5, y6, y7, y8, y9};
+	t_chunk	*y9 = "1111111111";
+	t_chunk	*y8 = "1000000001";
+	t_chunk	*y7 = "1000000001";
+	t_chunk	*y6 = "1001000101";
+	t_chunk	*y5 = "1000000001";
+	t_chunk	*y4 = "1000000001";
+	t_chunk	*y3 = "1000000001";
+	t_chunk	*y2 = "1001000101";
+	t_chunk	*y1 = "1000000001";
+	t_chunk	*y0 = "1111111111";
+	t_chunk	*map[10] = {y0, y1, y2, y3, y4, y5, y6, y7, y8, y9};
 
-	char *map_transposee[10];
+	t_chunk *map_transposee[10];
 	int	i = -1;
 	while ( ++i < 10)
 	{
-		map_transposee[i] = malloc(10 * sizeof(char));
+		map_transposee[i] = malloc(10 * sizeof(t_chunk));
 		for(int j = 0; j < 10; j++)
 		{
-			map_transposee[i][j] = map[j][i];
+			map_transposee[i][j].type = map[j][i].type;
 		}
 	}
 
-	t_map	data = {10, 10, (char **)map_transposee};
-	t_coord	co_p = {atof(av[1]), atof(av[2])};
+	t_map	data = {10, 10, 10, 10, (t_chunk **)map_transposee};
+	t_coord_f	co_p = {atof(av[1]), atof(av[2])};
 	
 	float		angle_ray = 0;
 	t_hitpoint	hitpoint;
 	while(angle_ray < 360)
 	{
 		printf("\nangle %.0f: ", angle_ray);
-	// printf("toto\n");
 		hitpoint = _r_ray_collision(WALL, co_p, angle_ray * M_PI / 180, &data);
 		printf("point d'impact ");
-		to_vector_print(hitpoint.impactpoint_coord);
-		printf("chunck coordonne [%d][%d] face %d\n", hitpoint.chunk_coord.x, hitpoint.chunk_coord.y, hitpoint.face);
+		to_vector_print(hitpoint.hit_point_coord);
+		printf("chunck coordonne [%d][%d] hit_face %d\n", hitpoint.hit_chunk_coord.x, hitpoint.hit_chunk_coord.y, hitpoint.hit_face);
 		angle_ray += 10;
 	}
 
@@ -348,3 +348,4 @@ int	main(int ac, char **av)
 	
 	return (0);
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 02:38:21 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 18:15:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,3 @@ static bool	_in_1_display_elements_init(t_display *disp)
 	return (true);
 }
 
-static void	in_1_keybinds(t_display *disp)
-{
-}

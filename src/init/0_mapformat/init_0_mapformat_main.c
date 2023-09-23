@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 02:37:54 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 18:14:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,9 @@
  */
 void	in_0_map_format_check(int ac, char **av, t_general *gen)
 {
+	(void) ac;
+	(void) av;
+	(void) gen;
 }
+
+

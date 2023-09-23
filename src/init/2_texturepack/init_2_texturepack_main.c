@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 02:37:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 18:17:04 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,7 @@
  */
 void	in_2_init_texture_pack(int ac, char **av, t_general *gen)
 {
+	(void)ac;
+	(void)av;
+	(void)gen;
 }

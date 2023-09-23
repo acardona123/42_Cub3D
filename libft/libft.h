@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:23:38 by marvin            #+#    #+#             */
-/*   Updated: 2023/06/23 00:34:27 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 17:18:56 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <unistd.h>
+
+# include "get_next_line.h"
 
 typedef struct s_list
 {

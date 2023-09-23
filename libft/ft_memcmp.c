@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:06:03 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 18:44:19 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 17:21:29 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	ft_memcmp(const char *s1, const char *s2, size_t n)
 	if (!s1 && !s2)
 		return (0);
 	if (!s1)
-		return (-*us2);
+		return (*s2);
 	if (!s2)
-		return (*us1);
+		return (*s1);
 	us1 = (unsigned char *) s1;
 	us2 = (unsigned char *) s2;
 	i = 0;
