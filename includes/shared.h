@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 17:16:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 02:05:22 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,28 @@
 
 # include "tools.h"
 
+# define WIN_HIGHT 720
+# define WIN_WIDTH 1280
+# define WIN_NAME "Cub3D"
 
-// ==== Textures ====
+# define KEY_FORWARD XK_w
+# define KEY_BACK XK_s
+# define KEY_LEFT XK_a
+# define KEY_RIGHT XK_d
+# define KEY_ACT XK_space
+# define KEY_LOOK_LEFT XK_Left
+# define KEY_LOOK_RIGHT XK_Right
+
+/*
+
+
+==== Textures ==== */
 
 typedef struct s_data
 {
 	void	*img;
 	char	*addr;
-	int		bpp;
+	int		opp;
 	int		line_length;
 	int		pix_width;
 	int		pix_height;
@@ -37,7 +51,7 @@ typedef struct s_static_texture
 	t_data	data;
 }	t_static_texture;
 
-typedef struct s_animated_textures
+typedef struct s_animated_texture
 {
 	unsigned int		frame_number;
 	unsigned int		frame_ms;//time between 2 consecutive frames without pause
@@ -45,12 +59,26 @@ typedef struct s_animated_textures
 	unsigned int		frame_cycle_short;//time to display all frames without pause
 	unsigned int		frame_cycle_long;//time of the complete cycle including pause
 	t_static_texture	*frame_table;
-}	t_animated_textures;
+}	t_animated_texture;
 
-// ---- End: Textures ----
+# define NUMBER_OF_TEXTURES 7
+
+typedef struct s_texture_pack
+{
+	t_animated_texture	*wall_n;
+	t_animated_texture	*wall_s;
+	t_animated_texture	*wall_e;
+	t_animated_texture	*wall_w;
+	t_animated_texture	*door_front;
+	t_animated_texture	*door_side_l;
+	t_animated_texture	*door_side_r;
+}	t_texture_pack;
+
+/* ---- End: Textures ----
 
 
-// ==== Map datas ====
+
+==== Map datas ==== */
 
 typedef enum e_chunk_type
 {
@@ -73,44 +101,76 @@ typedef struct s_chunk
 	t_chunk_type		type;
 	char				status;
 	unsigned int		t0;//ref time for the animations
-	t_animated_textures	*textures;
+	t_animated_texture	*textures;
 }	t_chunk;
 
 typedef struct s_map
 {
-	float	x_max;
-	float	y_max;
+	double	x_max;
+	double	y_max;
+	int		widht;
+	int		height;
 	t_chunk	**map;
 }	t_map;
 
-// ---- End: Map data ----
+/* ---- End: Map data ----
 
 
 
-// ==== Player ====
+==== Player ==== */
 
-typedef	struct s_player
+typedef struct s_player
 {
 	t_coord		p_co;
 	float		p_angle;
 	float		p_speed;
 }	t_player;
 
-// ---- End: Player ----
+/* ---- End: Player ----
+
+
+
+==== Display ==== */
 
 typedef struct s_display
 {
-	void	*mlx;
-	void	*win;
-	t_data	*buff;
+	void			*mlx;
+	t_data			*buff;
+	void			*win;
 }	t_display;
+
+/* ---- End: Display ----
+
+
+
+==== General ==== */
 
 typedef struct s_general
 {
-	t_map		map;
-	t_player	player;
 	t_display	disp;
-	float		fov;
+	t_player			player;
+	t_texture_pack		textures;
+	t_map				map;
+	float				fov;
 }	t_general;
+
+/* ---- End: General ----
+
+
+==== end_destroy ==== */
+//end_destroy_display_close.c
+void	end_destroy_display(t_display *disp);
+
+// end_destroy_map.c
+void	end_destroy_map(t_map *map);
+
+//end_detroy_texture_pack.c
+void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
+
+//end_destroy_general.c
+void	end_destroy_general(t_general *gen);
+
+//end_destroy_exit.c
+void	end_destroy_exit(t_general *gen, t_exit_values n);
 
 #endif

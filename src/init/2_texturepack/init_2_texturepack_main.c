@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   init_2_texturepack_main.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/23 02:37:58 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "../../../includes/init.h"
 
-#include "shared.h"
-
-
-#endif
+/**
+ * @brief initializes the texturepack structure by reading the input file,
+ *			extracting the textures paths and generating the textures images
+ *			structured as requiered.
+ * TODO:	function to be done
+ * @param ac 
+ * @param av 
+ * @param gen 
+ * @return EXIT if faillure
+ */
+void	in_2_init_texture_pack(int ac, char **av, t_general *gen)
+{
+}

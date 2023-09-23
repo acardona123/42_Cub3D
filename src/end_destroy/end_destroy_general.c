@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   end_destroy_general.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 23:10:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/23 00:25:18 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/23 01:42:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "../../includes/shared.h"
 
-#include "shared.h"
-
-
-#endif
+void	end_destroy_general(t_general *gen)
+{
+	end_destroy_map(&gen->map);
+	end_destroy_texture_pack(gen->disp.mlx, &gen->textures);
+	end_destroy_display(&gen->disp);
+}

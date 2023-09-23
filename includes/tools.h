@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 18:55:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/23 02:00:53 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <math.h>
 # include <stdbool.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 
 #include <stdio.h>
@@ -25,6 +27,15 @@
 # include "../libft/libft.h"
 
 # define FLOAT_EPSILON 0.000001
+
+typedef enum e_exit_values
+{
+	EXIT_NORMAL,
+	EXIT_INIT_0,
+	EXIT_INIT_1,
+	EXIT_INIT_2,
+	EXIT_INIT_3
+}	t_exit_values;
 
 
 
