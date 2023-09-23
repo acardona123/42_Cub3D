@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shared.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/22 15:12:42 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:20:23 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,29 @@
 
 // ==== Map datas ====
 
-typedef enum e_bloc_type
+typedef enum e_chunk_type
 {
 	FLOOR = '0',
 	DOOR = '2',
 	WALL = '1',
 	NOTHING = ' ',
-}	t_bloc_type;
+}	t_chunk_type;
+
+typedef enum e_chunk_face
+{
+	FACE_N ,
+	FACE_E ,
+	FACE_S ,
+	FACE_O ,
+}	t_chunk_face;
+
+typedef struct s_hitpoint
+{
+	t_coord_f			impactpoint_coord;
+	t_coord_i			chunk_coord;
+	t_chunk_face		face;
+}	t_hitpoint;
+
 
 typedef struct s_data_map
 {

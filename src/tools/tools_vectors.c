@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tools_vectors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:09:01 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/21 20:17:53 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:34:12 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/tools.h"
 
-void	to_vector_print(t_vector v)
+void	to_vector_print(t_vector_f v)
 {
 	printf("vector(%f, %f)\n", v.x, v.y);
 }
 
-double	to_vector_norm(t_vector v0, t_vector v1)
+double	to_vector_norm(t_vector_f v0, t_vector_f v1)
 {
 	return (sqrt(pow(v1.x - v0.x, 2) + pow(v1.y - v0.y, 2)));
 }
