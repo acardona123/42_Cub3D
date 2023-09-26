@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_3_mapcontent_main.c                           :+:      :+:    :+:   */
+/*   ft_lstnewaddback.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 17:55:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/26 14:47:02 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/26 14:50:15 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/init.h"
+#include "libft.h"
 
-/**
- * @brief initializes the map structure by reading the input file,
- *			extracting linking it to the previousli generated textures
- * TODO:	function to be done
- * 
- * @param ac 
- * @param av 
- * @param gen 
- * @return EXIT if faillure
- */
-void	in_3_map_content_init(int ac, char **av, t_general *gen,
-			t_lists lst_map)
+int	ft_lstnewaddback(t_list **lst, char *content)
 {
-	(void)ac;
-	(void)av;
-	(void)gen;
-	(void)lst_map;
+	t_list	*elem;
+
+	if (!lst || !content)
+		return (1);
+	elem = ft_lstnew(content);
+	if (!elem)
+		return (1);
+	ft_lstadd_back(lst, elem);
+	return (0);
 }

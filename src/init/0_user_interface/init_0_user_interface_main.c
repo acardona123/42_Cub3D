@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_1_user_interface_main.c                       :+:      :+:    :+:   */
+/*   init_0_user_interface_main.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 18:15:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:19:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
 
-static bool	_in_1_display_elements_init(t_display *disp);
+static bool	_in_0_display_elements_init(t_display *disp);
 
 /**
  * @brief initialize the t_display structure that corresponds to the ui
@@ -21,11 +21,11 @@ static bool	_in_1_display_elements_init(t_display *disp);
  * @param gen 
  * @return EXIT on errors 
  */
-void	in_1_init_display(t_general *gen)
+void	in_0_init_display(t_general *gen)
 {
-	if (_in_1_display_elements_init(&gen->disp))
+	if (_in_0_display_elements_init(&gen->disp))
 		end_destroy_exit(gen, EXIT_INIT_1);
-	in_1_hooks_init(gen);
+	in_0_hooks_init(gen);
 }
 
 /**
@@ -35,7 +35,7 @@ void	in_1_init_display(t_general *gen)
  * @return true if the initialisation was successfull
  * @return false if init error: nothing allocated/freed and error msg displayed
  */
-static bool	_in_1_display_elements_init(t_display *disp)
+static bool	_in_0_display_elements_init(t_display *disp)
 {
 	disp->mlx = mlx_init();
 	if (!disp->mlx)

@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_3_mapcontent_main.c                           :+:      :+:    :+:   */
+/*   tools_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 17:55:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/26 16:07:37 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/26 16:11:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/init.h"
+#include "../../includes/tools.h"
 
-/**
- * @brief initializes the map structure by reading the input file,
- *			extracting linking it to the previousli generated textures
- * TODO:	function to be done
- * 
- * @param ac 
- * @param av 
- * @param gen 
- * @return EXIT if faillure
- */
-void	in_3_map_content_init(int ac, char **av, t_general *gen,
-			t_lists lst_map)
+void	to_lstfree(t_list **lst)
 {
-	(void)ac;
-	(void)av;
-	(void)gen;
-	(void)lst_map;
+	t_list	*elem;
+	t_list	*tmp;
+
+	if (!lst)
+		return ;
+	elem = *lst;
+	while (elem)
+	{
+		if (elem->content)
+			free(elem->content);
+		tmp = elem;
+		elem = elem->next;
+		free(tmp);
+	}
 }

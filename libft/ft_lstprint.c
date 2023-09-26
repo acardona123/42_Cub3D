@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_0_mapformat_main.c                            :+:      :+:    :+:   */
+/*   ft_lstprint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 18:14:20 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/26 15:15:59 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/26 15:25:39 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/init.h"
+#include "libft.h"
 
-/**
- * @brief checks if the map format is correct according to the subject do not do
- *			anythig with the readen data
- * TODO: function to code
- * @param ac 
- * @param av 
- * @param gen 
- * @return EXIT if faillure
- */
-void	in_0_map_format_check(int ac, char **av, t_general *gen)
+void	ft_lstprint(t_list *lst)
 {
-	(void) ac;
-	(void) av;
-	(void) gen;
+	t_list	*elem;
+
+	elem = lst;
+	while (elem)
+	{
+		ft_putstr_fd(elem->content, STDOUT_FILENO);
+		write(STDOUT_FILENO, "\n", 1);
+		elem = elem->next;
+	}
 }
-
-

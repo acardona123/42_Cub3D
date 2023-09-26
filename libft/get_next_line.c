@@ -6,11 +6,12 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:46:46 by acardona          #+#    #+#             */
-/*   Updated: 2023/01/12 18:47:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:57:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 
 char	*get_next_line(int fd)
 {
@@ -23,8 +24,7 @@ char	*get_next_line(int fd)
 	while (rtn && b.e > 0 && ft_indexn(b.buf + b.s, b.e - b.s) == b.e - b.s)
 	{
 		tmp = ft_join(rtn, b.buf, b.s, b.e - b.s);
-		free(rtn);
-		rtn = tmp;
+		(free(rtn), rtn = tmp);
 		b.e = read(fd, b.buf, BUFFER_SIZE);
 		if (b.e == -1 || !rtn)
 			return (0);
@@ -36,6 +36,8 @@ char	*get_next_line(int fd)
 		free(rtn);
 		rtn = tmp;
 		b.s += ft_indexn(b.buf + b.s, b.e - b.s) + 1;
+		rtn[ft_strlen(rtn) - (ft_strlen(rtn) > 0
+				&& rtn[ft_strlen(rtn) - 1] == '\n')] = '\0';
 	}
 	return (rtn);
 }

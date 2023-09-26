@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_3_mapcontent_main.c                           :+:      :+:    :+:   */
+/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 17:55:06 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/26 14:32:15 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/26 14:32:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/init.h"
+#include "libft.h"
 
-/**
- * @brief initializes the map structure by reading the input file,
- *			extracting linking it to the previousli generated textures
- * TODO:	function to be done
- * 
- * @param ac 
- * @param av 
- * @param gen 
- * @return EXIT if faillure
- */
-void	in_3_map_content_init(int ac, char **av, t_general *gen,
-			t_lists lst_map)
+int	ft_iswhitespace(char c)
 {
-	(void)ac;
-	(void)av;
-	(void)gen;
-	(void)lst_map;
+	int	i;
+
+	i = 0;
+	while (" \f\n\r\t\v"[i])
+		if (c == " \f\n\r\t\v"[i++])
+			return (1);
+	return (0);
 }

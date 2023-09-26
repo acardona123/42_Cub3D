@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:35:01 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 17:27:21 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:20:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ int main(int ac, char **av)
 	(void) ac;
 	(void) av;
 	gen = (t_general){0};
+	init_main(ac, av, &gen);
 }

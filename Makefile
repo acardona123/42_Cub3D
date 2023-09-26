@@ -1,7 +1,7 @@
 NAME			=	cub3D
 
 CC				=	cc
-CFLAGS			=	-Werror -Wall -Wextra
+CFLAGS			=	-Werror -Wall -Wextra -g
 DEPSFLAG		=	-MMD
 
 MLX_DIR			=	mlx
@@ -21,12 +21,13 @@ FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
 
 FILES_INIT			=	$(addprefix init/, \
 							init_main \
-							$(addprefix 0_mapformat/init_0_mapformat_, \
-								main \
-							) \
-							$(addprefix 1_user_interface/init_1_user_interface_, \
+							$(addprefix 0_user_interface/init_0_user_interface_, \
 								main \
 								hooks \
+							) \
+							$(addprefix 1_mapformat/init_1_mapformat_, \
+								main \
+								utils \
 							) \
 							$(addprefix 2_texturepack/init_2_texturepack_, \
 								main \
@@ -43,6 +44,7 @@ FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 FILES_TOOLS			=	$(addprefix tools/tools_, \
 							error \
 							vectors \
+							lst \
 						)
 
 FILES_NAMES			=	main \
@@ -76,7 +78,7 @@ $(MLX) :
 
 $(LIBFT) :
 	@echo "\e[32m==== LIBFT COMPIATION ====\e[36m"
-	@make -C $(LIBFT_DIR)
+	@make bonus -C $(LIBFT_DIR)
 	@echo "\e[32m---- End: libft compilation ----\e[0m\n"
 
 clean :
