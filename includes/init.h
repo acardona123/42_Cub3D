@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 17:55:31 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:03:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ void	in_0_hooks_init(t_general *gen);
 =============== 2_texturepack/ =============== */
 // init_2_texturepack_main.c
 void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
-			t_list *lst_params);
+			t_lists *lst_init);
 
 /*
 
 =============== 3_mapcontent/ =============== */
 // init_3_mapcontent.c
 void	in_3_map_content_init(int ac, char **av, t_general *gen,
-			t_lists lst_map);
+			t_lists *lst_init);
 
 
 #endif
