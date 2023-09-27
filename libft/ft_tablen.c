@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_lst.c                                        :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/26 16:07:37 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 18:11:37 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/26 19:30:35 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/26 19:32:39 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/tools.h"
+#include "libft.h"
 
-void	to_lstfree(t_list **lst)
+ssize_t	ft_tablen(char **tab)
 {
-	t_list	*elem;
-	t_list	*tmp;
+	ssize_t	len;
 
-	if (!lst)
-		return ;
-	elem = *lst;
-	while (elem)
-	{
-		if (elem->content)
-			free(elem->content);
-		tmp = elem;
-		elem = elem->next;
-		free(tmp);
-	}
-	*lst = NULL;
+	if (!tab)
+		return (0);
+	len = 0;
+	while (tab[len])
+		++len;
+	return (len);
 }

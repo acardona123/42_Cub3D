@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:23:38 by marvin            #+#    #+#             */
-/*   Updated: 2023/09/26 15:17:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/26 21:37:21 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
+int		ft_strcmp(char *s1, char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const char *s1, const char *s2, size_t n);
@@ -60,6 +61,8 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	**ft_split(char const *s, char c);
+void	ft_tabfree(char **tab);
+ssize_t	ft_tablen(char **tab);
 /*Bonus :*/
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *newelem);

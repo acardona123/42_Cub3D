@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_lst.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/26 16:07:37 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 18:11:37 by acardona         ###   ########.fr       */
+/*   Created: 2023/09/26 21:30:20 by acardona          #+#    #+#             */
+/*   Updated: 2023/09/26 21:35:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/tools.h"
+#include "libft.h"
 
-void	to_lstfree(t_list **lst)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_list	*elem;
-	t_list	*tmp;
+	ssize_t	len1;
+	ssize_t	len2;
 
-	if (!lst)
-		return ;
-	elem = *lst;
-	while (elem)
-	{
-		if (elem->content)
-			free(elem->content);
-		tmp = elem;
-		elem = elem->next;
-		free(tmp);
-	}
-	*lst = NULL;
+	if (!s1 && !s2)
+		return (0);
+	if (!s1)
+		return (-*s2);
+	if (!s2)
+		return (*s1);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (len1 < len2)
+		return (ft_strncmp(s1, s2, len1 + 1));
+	return (ft_strncmp(s1, s2, len2));
 }

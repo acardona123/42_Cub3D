@@ -6,11 +6,16 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 18:05:50 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 03:31:39 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
+
+static bool	_in_2_init_animated_texture(void *mlx,
+				t_texture_pack *text_pack, char **line_arg, bool *already_done);
+static bool	_in_2_one_animated_door(t_animated_texture **texture,
+				char **line_arg);
 
 /**
  * @brief initializes the texturepack structure by reading the input file,
@@ -22,12 +27,77 @@
  * @param av 
  * @param gen 
  * @return EXIT if faillure
+ *			on success lst_init->lst_param is freed and set to NULL
  */
 void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
 	t_lists *lst_init)
 {
-	(void)ac;
+	(void)ac;//retirer ac et av des params ? y not
 	(void)av;
-	(void)gen;
-	(void)lst_init;
+	
+	t_list				*elem;
+	t_animated_texture	**tex;
+	char 				**line_arg;
+	bool				*already_done;
+
+	already_done = (bool[2]){false, false};
+	elem = lst_init->lst_param;
+	while (elem)
+	{
+		line_arg = ft_split(elem->content, ' ');
+		if (!line_arg)
+			to_error_msg("Allocation faillure while initializing the textures");
+		if (!line_arg || _in_2_init_one_animated_texture(gen->disp.mlx,
+				&gen->textures, line_arg, already_done))
+		{
+			ft_tabfree(line_arg);
+			to_lstfree(&lst_init->lst_param);
+			to_lstfree(&lst_init->lst_map);
+			end_destroy_exit(gen, EXIT_INIT_2);
+		}
+		ft_tabfree(line_arg);
+		elem = elem->next;
+	}
+	to_lstfree(&lst_init->lst_param);
 }
+
+static bool	_in_2_init_animated_texture(void *mlx,
+	t_texture_pack *text_pack, char **line_arg, bool *already_done)
+{
+	if (!ft_strcmp(*line_arg, "NO"))
+		return (in_2_anim_texture_init(mlx, &text_pack->wall_n, line_arg));
+	else if (!ft_strcmp(*line_arg, "SO"))
+		return (in_2_anim_texture_init(mlx, &text_pack->wall_s, line_arg));
+	else if (!ft_strcmp(*line_arg, "WE"))
+		return (in_2_anim_texture_init(mlx, &text_pack->wall_w, line_arg));
+	else if (!ft_strcmp(*line_arg, "EA"))
+		return (in_2_anim_texture_init(mlx, &text_pack->wall_e, line_arg));
+	else if (!ft_strcmp(*line_arg, "DF"))
+		return (in_2_anim_texture_init(mlx, &text_pack->door_front, line_arg));
+	else if (!ft_strcmp(*line_arg, "DL"))
+		return (in_2_anim_texture_init(mlx, &text_pack->door_side_l, line_arg));
+	else if (!ft_strcmp(*line_arg, "DR"))
+		return (in_2_anim_texture_init(mlx, &text_pack->door_side_r, line_arg));
+	else if (!ft_strcmp(*line_arg, "F"))
+		return (in_2_set_color(&text_pack->color_f, line_arg,
+				&already_done[IDX_FLOOR]));
+	else if (!ft_strcmp(*line_arg, "C"))
+		return (in_2_set_color(&text_pack->color_c, line_arg,
+				&already_done[IDX_CEIL]));
+	return (false);
+}
+
+/**
+ * @brief 
+ * TODO: to do
+ * @param texture 
+ * @param line_arg 
+ * @return true 
+ * @return false 
+ */
+static bool	_in_2_one_animated_door(t_animated_texture **texture,
+	char **line_arg)
+{
+	return (true);
+}
+

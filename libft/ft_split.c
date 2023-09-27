@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:09:05 by acardona          #+#    #+#             */
-/*   Updated: 2023/05/13 18:09:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:29:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	_ft_count_word(char const *str, char c);
 static char	*_str_cpylim(char const *str, int n, char c);
-static char	**_ft_split_free(char **liste, int i_tab);
 static char	**_ft_subsplit(char **liste, char const *s, char c);
+static char	**_ft_split_free(char **liste, int i_tab);
 
 char	**ft_split(char const *s, char c)
 {
