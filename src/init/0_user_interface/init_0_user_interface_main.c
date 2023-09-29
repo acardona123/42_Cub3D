@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 16:19:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/28 12:59:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	_in_0_display_elements_init(t_display *disp);
  */
 void	in_0_init_display(t_general *gen)
 {
-	if (_in_0_display_elements_init(&gen->disp))
+	if (_in_0_display_elements_init(&gen->disp) == false)
 		end_destroy_exit(gen, EXIT_INIT_1);
 	in_0_hooks_init(gen);
 }
@@ -43,7 +43,7 @@ static bool	_in_0_display_elements_init(t_display *disp)
 		to_error_msg("mlx_init faillure");
 		return (false);
 	}
-	disp->win = mlx_new_window(disp->win, 0, 0, WIN_NAME);
+	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HIGHT, WIN_NAME);
 	if (!disp->win)
 	{
 		to_error_msg("mlx_new_window faillure");
@@ -61,3 +61,17 @@ static bool	_in_0_display_elements_init(t_display *disp)
 	return (true);
 }
 
+/*
+int main(void)
+{
+	t_static_texture	texture;
+	t_general			gen;
+
+	texture = (t_static_texture){0};
+	gen = (t_general){0};
+	in_0_init_display(&gen);
+	printf("Disp init\n");
+	mlx_loop(gen.disp.mlx);
+	return 0;
+}
+*/

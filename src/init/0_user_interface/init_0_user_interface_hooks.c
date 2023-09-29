@@ -25,8 +25,9 @@ static int	_in_0_hooks_destroy(void *gen);
  */
 void	in_0_hooks_init(t_general *gen)
 {
-	mlx_hook(gen->disp.mlx, 2, 1L, _in_0_hooks_keys, gen);
-	mlx_hook(gen->disp.mlx, 17, 0, _in_0_hooks_destroy, gen);
+	if (1)
+		mlx_hook(gen->disp.win, 2, 1L, _in_0_hooks_keys, gen);
+	mlx_hook(gen->disp.win, 33, 0L, _in_0_hooks_destroy, gen);
 	//mouse_hook
 }
 
@@ -42,6 +43,8 @@ static int	_in_0_hooks_keys(int key, t_general *gen)
 {
 	(void)key;
 	(void)gen;
+	if (key == XK_Escape)
+		mlx_loop_end(gen->disp.win);
 	return (0);
 }
 
@@ -53,8 +56,7 @@ static int	_in_0_hooks_keys(int key, t_general *gen)
  */
 static int	_in_0_hooks_destroy(void *gen)
 {
-	end_destroy_general((t_general *)gen);
-	exit (0); //verifier
+	end_destroy_exit(gen, 0);
 	return (0);
 }
 

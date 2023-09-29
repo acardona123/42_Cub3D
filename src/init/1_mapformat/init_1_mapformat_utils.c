@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:14:57 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 17:16:13 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 02:50:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	in_1_file_opening(char *file_name)
 	return (fd_input);
 }
 
+#ifndef BONUS
+
 /**
  * @brief checks if a line is describing a prameter of the map (or is empty)
  * 
@@ -52,6 +54,31 @@ bool	in_1_line_is_parameter(char *line)
 		return (true);
 	return (false);
 }
+
+#endif
+#ifdef BONUS
+
+/**
+ * @brief checks if a line is describing a prameter of the map (or is empty)
+ * 
+ * @param line 
+ * @return true param line
+ * @return false 
+ */
+bool	in_1_line_is_parameter(char *line)
+{
+	while (ft_iswhitespace(*line))
+		++line;
+	if (!*line || !ft_strncmp("SO ", line, 3) || !ft_strncmp("NO ", line, 3)
+		|| !ft_strncmp("WE ", line, 3) || !ft_strncmp("EA ", line, 3)
+		|| !ft_strncmp("F ", line, 2) || !ft_strncmp("C ", line, 2)
+		|| !ft_strncmp("DF ", line, 3) || !ft_strncmp("DL ", line, 3)
+		|| !ft_strncmp("DR ", line, 3))
+		return (true);
+	return (false);
+}
+
+#endif
 
 /**
  * @brief checks if a line is empty (only whitespaces)

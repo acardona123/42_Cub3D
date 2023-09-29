@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 17:52:15 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 02:47:18 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 	_in_1_map_params_check(gen, &lists, fd_input, &line);
 	if (!line)
 	{
-		to_error_msg("Incorrect map content");
+		to_error_msg("Incorrect map content0");
 		to_lstfree(&lists.lst_param);
 		close(fd_input);
 		end_destroy_exit(gen, EXIT_INIT_1);
@@ -97,7 +97,7 @@ static void	_in_1_map_mapcontent_check(t_general *gen, t_lists *lists,
 		if (in_1_line_is_empty(*line))
 		{
 			free(*line);
-			to_error_msg("Incorrect map content");
+			to_error_msg("Incorrect map content1");
 			to_lstfree(&lists->lst_param);
 			to_lstfree(&lists->lst_map);
 			close(fd_input);
