@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 00:58:04 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 19:03:37 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static void	_end_textures_destroy_one_animated_texture(void *mlx,
 	if (!target || !target->frame_array)
 		return ;
 	i = 0;
-	while (i < target->frame_number && target->frame_array[i].path)
+	while (target->frame_array && i < target->frame_number
+		&& target->frame_array[i].path)
 	{
 		_end_textures_destroy_one_static_texture(mlx, &target->frame_array[i]);
 		++i;

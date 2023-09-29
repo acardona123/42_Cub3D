@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 03:14:07 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 19:42:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,10 @@ static t_bool	_in_2_anim_textu_init_file(void *mlx,
 					t_animated_texture *texture, char **line_arg);
 static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 					t_animated_texture *texture, char **line_arg);
-static t_bool	_in_2_anim_count_files_in_folder(char *dir_name,
-					unsigned int *cpt);
 
 t_bool	in_2_init_animated_texture(void *mlx, t_texture_pack *text_pack,
 	char **line_arg, bool *already_done)
 {
-	printf("%s\n", *line_arg);//
 	if (!ft_strcmp(*line_arg, "NO"))
 		return (_in_2_anim_textu_init(mlx, &text_pack->wall_n, line_arg));
 	else if (!ft_strcmp(*line_arg, "SO"))
@@ -74,8 +71,6 @@ static t_bool	_in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
 		|| (ft_tablen(line_arg) == 4 \
 		&& _in_2_anim_textu_init_folder(mlx, *texture, line_arg) == SUCCESS))
 		return (SUCCESS);
-	free(*texture);
-	*texture = NULL;
 	return (FAIL);
 }
 
@@ -131,14 +126,17 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 	DIR				*dir;
 	struct dirent	*elem;
 	unsigned int	i;
+	char			*path;
 
 	if (ft_atoui_protected(line_arg[2], &tex->frame_ms)
 		|| ft_atoui_protected(line_arg[3], &tex->frame_pause_ms))
 		return (to_error_msg("Wrong time argument"), FAIL);
-	if (_in_2_anim_count_files_in_folder(line_arg[1], &tex->frame_number) == FAIL)
+	if (in_2_tools_count_xpm_files_in_folder(line_arg[1], &tex->frame_number) == FAIL)
 		return (FAIL);
 	tex->frame_array = ft_calloc(tex->frame_number,
 			sizeof(t_static_texture));
+	if (!tex->frame_array)
+		return (to_error_msg("Mem alloc faillure in texture init"), FAIL);
 	dir = opendir(line_arg[1]);
 	if (!dir)
 		return (to_error_msg("Wrong texture directory"), FAIL);
@@ -146,53 +144,24 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 	elem = readdir(dir);
 	while (elem && i < tex->frame_number)
 	{
-		if (elem->d_type == DT_REG)
+		if (elem->d_type == DT_REG && ft_strlen(elem->d_name) >= 4
+			&& !ft_strcmp(elem->d_name + ft_strlen(elem->d_name) - 4, ".xpm"))
 		{
-			tex->frame_array[i].path = ft_strjoin3(line_arg[1], "/" ,elem->d_name);
-			if (!tex->frame_array[i].path)
+			path = ft_strjoin3(line_arg[1], "/", elem->d_name);
+			if (!path)
 				return (closedir(dir),
 					to_error_msg("Mem alloc faillure in texture init"), FAIL);
 			if (in_2_static_texture_init_one (mlx, &tex->frame_array[i],
-					tex->frame_array[i].path) == FAIL)
-				return (closedir(dir), FAIL);
-			i++;
+					path) == FAIL)
+				return (closedir(dir), free(path), FAIL);
+			++i;
 		}
 		elem = readdir(dir);
 	}
 	tex->frame_cycle_short = tex->frame_number * tex->frame_ms;
 	tex->frame_cycle_long = tex->frame_cycle_short + tex->frame_pause_ms;
+	in_2_tools_sort_anim_text_table(tex->frame_array, tex->frame_number);
 	return (closedir(dir), SUCCESS);
-}
-
-/**
- * @brief counts the number of regular files in a repertory
- * 
- * @param dir_name 
- * @param cpt 
- * @return true SUCCESS, updates cpt
- * @return FAIL FAILURE if can't open the directory
- */
-static t_bool	_in_2_anim_count_files_in_folder(char *dir_name,
-	unsigned int *cpt)
-{
-	DIR				*dir;
-	struct dirent	*elem;
-
-	*cpt = 0;
-	dir = opendir(dir_name);
-	if (!dir)
-		return (to_error_msg("Wrong texture directory"), FAIL);
-	elem = readdir(dir);
-	while (elem)
-	{
-		if (elem->d_type == DT_REG)
-			++*cpt;
-		elem = readdir(dir);
-	}
-	closedir(dir);
-	if (!*cpt)
-		return (to_error_msg("No normal file in the texture folder"), FAIL);
-	return (SUCCESS);
 }
 #endif
 

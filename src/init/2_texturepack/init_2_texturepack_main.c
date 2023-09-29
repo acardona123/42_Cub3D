@@ -6,14 +6,11 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 03:35:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 18:54:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
-
-// static t_bool	_in_2_one_animated_door(t_animated_texture **texture,
-// 				char **line_arg);
 
 /**
  * @brief initializes the texturepack structure by reading the input file,
@@ -26,15 +23,11 @@
  * @return EXIT if faillure
  *			on success lst_init->lst_param is freed and set to NULL
  */
-void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
-	t_lists *lst_init)
+void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init)
 {
-	(void)ac;//retirer ac et av des params ? y not
-	(void)av;
-
-	t_list				*elem;
-	char 				**line_arg;
-	bool				*already_done;
+	t_list	*elem;
+	char	**line_arg;
+	bool	*already_done;
 
 	already_done = (bool[2]){false, false};
 	elem = lst_init->lst_param;
@@ -57,55 +50,40 @@ void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
 	to_lstfree(&lst_init->lst_param);
 }
 
-
-/**
- * @brief 
- * TODO: to do
- * @param texture 
- * @param line_arg 
- * @return true 
- * @return false 
- */
- /*
-static t_bool	_in_2_one_animated_door(t_animated_texture **texture,
-	char **line_arg)
-{
-	(void)texture;
-	(void)line_arg;
-	return (true);
-}
-*/
-
-/*
+// /*
 int	main(int ac, char **av)
 {
-	t_general		gen = {0};
-	t_lists			init_lists;
+	t_general	gen = {0};
+	t_lists		init_lists;
 
 	in_0_init_display(&gen);
 	init_lists = in_1_map_format_check(ac, av, &gen);
 	printf("Debut du parsing des textures :\n");
-	in_2_init_texture_pack(ac, av, &gen, &init_lists);
 	to_lstfree(&init_lists.lst_map);
-	
-	t_animated_texture *table[7] = {gen.textures.wall_n, gen.textures.wall_s, gen.textures.wall_e, gen.textures.wall_w, gen.textures.door_front, gen.textures.door_side_l, gen.textures.door_side_r};
-	
-	printf("floor color : %x\nceil color: %x\n", gen.textures.color_f, gen.textures.color_c);
+	in_2_init_texture_pack(&gen, &init_lists);
+
+	//affichage des textures generees:
+	t_animated_texture *table[7] = {gen.textures.wall_n, gen.textures.wall_s,
+		gen.textures.wall_e, gen.textures.wall_w, gen.textures.door_front,
+		gen.textures.door_side_l, gen.textures.door_side_r};
+	printf("floor color : %x\nceil color: %x\n", gen.textures.color_f,
+		gen.textures.color_c);
 	int	i = 0;
-	while(i < 7)
+	while (i < 7)
 	{
 		if (!table[i])
 		{
 			printf("Erreur texture %d non init\n", i);
-			break;
+			break ;
 		}
 		printf("\e[102mType %d\e[0m\n", i);
 		unsigned int j = 0;
 		while (j < table[i]->frame_number)
 		{
-			
-			printf("\e[35m -texture %d\e[0m\n", j);
-			mlx_put_image_to_window(gen.disp.mlx, gen.disp.win, table[i]->frame_array[j].data.img, 0, 0);
+			printf("\e[35m -texture %d (%s)\e[0m\n", j,
+				table[i]->frame_array[j].path);
+			mlx_put_image_to_window(gen.disp.mlx, gen.disp.win,
+				table[i]->frame_array[j].data.img, 0, 0);
 			// sleep (1);
 			j++;
 		}
@@ -114,4 +92,4 @@ int	main(int ac, char **av)
 	end_destroy_general(&gen);
 	return (0);
 }
-*/
+// */

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/28 21:56:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 18:41:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ void	in_0_hooks_init(t_general *gen);
 
 =============== 2_texturepack/ =============== */
 // init_2_texturepack_main.c
-void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
-			t_lists *lst_init);
+void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init);
 //init_2_texturepack_set_color.c
 t_bool	in_2_set_color(int *dest_color, char **line_arg,
 			bool *already_done);
@@ -70,6 +69,11 @@ t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 //init_2_texturepack_animated_texture.c
 t_bool	in_2_init_animated_texture(void *mlx, t_texture_pack *text_pack,
 			char **line_arg, bool *already_done);
+//init_2_texturepack_tools.c
+t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
+			unsigned int *cpt);
+void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
+			unsigned int frame_number);
 /*
 
 =============== 3_mapcontent/ =============== */

@@ -34,6 +34,7 @@ FILES_INIT			=	$(addprefix init/, \
 								animated_texture \
 								set_color \
 								static_texture \
+								tools \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
