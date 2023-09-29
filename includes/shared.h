@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/27 03:11:15 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:00:38 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define KEY_ACT XK_space
 # define KEY_LOOK_LEFT XK_Left
 # define KEY_LOOK_RIGHT XK_Right
+
+
+#      define BONUS//
 
 /*
 

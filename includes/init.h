@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/27 02:55:08 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/28 21:56:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 
 # include <sys/stat.h>
 # include <fcntl.h>
+
+# ifdef BONUS
+#  include <sys/types.h>
+#  include <dirent.h>
+# endif
 
 typedef struct s_init_lists
 {
@@ -57,14 +62,14 @@ void	in_0_hooks_init(t_general *gen);
 void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
 			t_lists *lst_init);
 //init_2_texturepack_set_color.c
-bool	in_2_set_color(int *dest_color, char **line_arg,
+t_bool	in_2_set_color(int *dest_color, char **line_arg,
 			bool *already_done);
 //init_2_texturepack_static_texture.c
-bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
+t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 			char *path);
-	
-bool	in_2_anim_texture_init(void *mlx, t_animated_texture **texture,
-			char **line_arg);
+//init_2_texturepack_animated_texture.c
+t_bool	in_2_init_animated_texture(void *mlx, t_texture_pack *text_pack,
+			char **line_arg, bool *already_done);
 /*
 
 =============== 3_mapcontent/ =============== */
