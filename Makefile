@@ -81,7 +81,7 @@ $(MLX) :
 
 $(LIBFT) :
 	@echo "\e[32m==== LIBFT COMPIATION ====\e[36m"
-	@make bonus -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 	@echo "\e[32m---- End: libft compilation ----\e[0m\n"
 
 clean :
