@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 00:39:36 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/27 01:37:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/28 21:57:17 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static int	_in_2_set_color_get_end_component(char *str, int *dst);
  * @param line_arg splitted line to check
  * @param already_done indicates if this elem of the texturepack has already
  *		been treated in a previous line
- * @return true if color succesfully set (already_done updated)
- * @return false if the line have a wrong format or redefine a variable
+ * @return SUCCESS if color succesfully set (already_done updated)
+ * @return FAIL if the line have a wrong format or redefine a variable
  *			(err msg displayed but no argument freed)
  */
-bool	in_2_set_color(int *dest_color, char **line_arg,
+t_bool	in_2_set_color(int *dest_color, char **line_arg,
 	bool *already_done)
 {
 	int	start_idx;
@@ -33,24 +33,24 @@ bool	in_2_set_color(int *dest_color, char **line_arg,
 
 	if (*already_done)
 		return (to_error_msg("Double definition of ceilling/floor color"),
-			false);
+			FAIL);
 	if (ft_tablen(line_arg) != 2)
-		return (to_error_msg("Wrong color format"), false);
+		return (to_error_msg("Wrong color format"), FAIL);
 	*already_done = true;
 	start_idx = _in_2_set_color_get_end_component(line_arg[1], dest_color);
 	if (start_idx == -1 || line_arg[1][start_idx] != ',')
-		return (to_error_msg("Wrong color format"), false);
+		return (to_error_msg("Wrong color format"), FAIL);
 	line_arg[1][start_idx] = 0;
 	start_idx = _in_2_set_color_get_end_component(line_arg[1], &subcolor);
 	if (start_idx == -1 || line_arg[1][start_idx] != ',')
-		return (to_error_msg("Wrong color format"), false);
+		return (to_error_msg("Wrong color format"), FAIL);
 	*dest_color = *dest_color + (subcolor << 8);
 	line_arg[1][start_idx] = 0;
 	start_idx = _in_2_set_color_get_end_component(line_arg[1], &subcolor);
 	if (start_idx != 0)
-		return (to_error_msg("Wrong color format"), false);
+		return (to_error_msg("Wrong color format"), FAIL);
 	*dest_color = *dest_color + (subcolor << 16);
-	return (true);
+	return (SUCCESS);
 }
 
 /**
@@ -128,7 +128,7 @@ int	main( void)
 	int		nb;
 	bool	done;
 
-	done = false;
+	done = FAIL;
 	tabstr[0] = ft_strdup("F");
 	tabstr[1] = ft_strdup("255,1655,1");
 	tabstr[2] = NULL;
