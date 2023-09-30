@@ -8,7 +8,7 @@ MLX_DIR			=	mlx
 MLX				=	$(MLX_DIR)/libmlx.a
 LIBFT_DIR		=	libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
-INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -lft
+INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -lft
 
 
 FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
@@ -31,6 +31,10 @@ FILES_INIT			=	$(addprefix init/, \
 							) \
 							$(addprefix 2_texturepack/init_2_texturepack_, \
 								main \
+								animated_texture \
+								set_color \
+								static_texture \
+								tools \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
@@ -80,7 +84,7 @@ $(MLX) :
 
 $(LIBFT) :
 	@echo "\e[32m==== LIBFT COMPIATION ====\e[36m"
-	@make bonus -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 	@echo "\e[32m---- End: libft compilation ----\e[0m\n"
 
 clean :

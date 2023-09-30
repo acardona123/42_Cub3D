@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/30 19:31:55 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:51:55 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define KEY_ACT XK_space
 # define KEY_LOOK_LEFT XK_Left
 # define KEY_LOOK_RIGHT XK_Right
+
+
+#      define BONUS//
 
 /*
 
@@ -72,6 +75,8 @@ typedef struct s_texture_pack
 	t_animated_texture	*door_front;
 	t_animated_texture	*door_side_l;
 	t_animated_texture	*door_side_r;
+	int					color_f;
+	int					color_c;
 }	t_texture_pack;
 
 /* ---- End: Textures ----

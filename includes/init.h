@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/30 20:38:44 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:49:41 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+# ifdef BONUS
+#  include <sys/types.h>
+#  include <dirent.h>
+# endif
+
 typedef struct s_init_lists
 {
 	t_list			*lst_param;
@@ -25,6 +30,12 @@ typedef struct s_init_lists
 	unsigned int	map_max_y;
 	unsigned int	map_max_x;
 }	t_lists;
+
+typedef enum e_texture_int_index
+{
+	IDX_FLOOR,
+	IDX_CEIL
+}	t_texture_int_index;
 
 bool	init_main(int ac, char **av, t_general	*gen);
 
@@ -48,9 +59,21 @@ void	in_0_hooks_init(t_general *gen);
 
 =============== 2_texturepack/ =============== */
 // init_2_texturepack_main.c
-void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
-			t_lists *lst_init);
-
+void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init);
+//init_2_texturepack_set_color.c
+t_bool	in_2_set_color(int *dest_color, char **line_arg,
+			bool *already_done);
+//init_2_texturepack_static_texture.c
+t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
+			char *path);
+//init_2_texturepack_animated_texture.c
+t_bool	in_2_init_animated_texture(void *mlx, t_texture_pack *text_pack,
+			char **line_arg, bool *already_done);
+//init_2_texturepack_tools.c
+t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
+			unsigned int *cpt);
+void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
+			unsigned int frame_number);
 /*
 
 =============== 3_mapcontent/ =============== */

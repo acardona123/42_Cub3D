@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/27 15:53:12 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:52:07 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # include "../libft/libft.h"
 
 # define FLOAT_EPSILON 0.000001
+
+typedef enum e_bool
+{
+	SUCCESS,
+	FAIL
+}	t_bool;
 
 typedef enum e_exit_values
 {
