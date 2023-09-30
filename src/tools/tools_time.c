@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_time.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:28:24 by alexandm          #+#    #+#             */
-/*   Updated: 2023/09/27 15:46:22 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/01 00:16:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #ifdef BONUS
 
-unsigned int	to_getime(void)
+size_t	to_getime(void)
 {
 	struct timeval	time;
 
@@ -24,7 +24,7 @@ unsigned int	to_getime(void)
 #endif
 
 #ifndef BONUS
-unsigned int	to_getime(void)
+size_t	to_getime(void)
 {
 	return (0);
 }
