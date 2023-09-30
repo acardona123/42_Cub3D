@@ -34,6 +34,7 @@ FILES_INIT			=	$(addprefix init/, \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
+								utils \
 							) \
 						)
 
@@ -45,6 +46,7 @@ FILES_TOOLS			=	$(addprefix tools/tools_, \
 							error \
 							vectors \
 							lst \
+							time \
 						)
 
 FILES_NAMES			=	main \

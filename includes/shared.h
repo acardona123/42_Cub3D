@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shared.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 16:37:12 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/30 19:31:55 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ typedef enum e_chunk_type
 	DOOR = '2',
 	WALL = '1',
 	NOTHING = ' ',
+	PLAYER_N = 'N',
+	PLAYER_S = 'S',
+	PLAYER_E = 'E',
+	PLAYER_W = 'W',
 }	t_chunk_type;
 
 typedef enum e_chunk_face
@@ -109,14 +113,14 @@ typedef struct s_chunk
 	t_chunk_type		type;
 	char				status;
 	unsigned int		t0;//ref time for the animations
-	t_animated_texture	*textures;
+	t_animated_texture	*textures[4];
 }	t_chunk;
 
 typedef struct s_map
 {
 	double	x_max;
 	double	y_max;
-	int		widht;
+	int		width;
 	int		height;
 	t_chunk	**map;
 }	t_map;

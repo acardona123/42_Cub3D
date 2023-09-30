@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 16:12:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:53:12 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
-
-#include <stdio.h>
+# include <stdio.h>
 
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
@@ -50,13 +49,16 @@ typedef struct s_coord_i
 	int	y;
 }	t_coord_i;
 
-void	to_vector_print(t_vector_f v);
-double	to_vector_norm(t_vector_f v0, t_vector_f v1);
+void			to_vector_print(t_vector_f v);
+double			to_vector_norm(t_vector_f v0, t_vector_f v1);
 
 //tools_error
-void	to_error_msg(char *msg);
+void			to_error_msg(char *msg);
 
 //tools_lst.c
-void	to_lstfree(t_list **lst);
+void			to_lstfree(t_list **lst);
+
+//tools_time.c
+unsigned int	to_getime(void);
 
 #endif

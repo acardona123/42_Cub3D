@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/26 18:03:52 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:38:44 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	in_2_init_texture_pack(int ac, char **av, t_general *gen,
 
 =============== 3_mapcontent/ =============== */
 // init_3_mapcontent.c
-void	in_3_map_content_init(int ac, char **av, t_general *gen,
-			t_lists *lst_init);
-
+void	in_3_map_content_init(t_general *gen, t_lists *lst_init);
+//init_3_mapcontent_utils.c
+// void	in_3_map_allocate_textures(t_general *gen, char c, int x, int y);
+void	in_3_map_allocate_textures(t_texture_pack *texturepack, t_animated_texture **tex, char c);
+void	in_3_map_init_destroy(t_general *gen, t_lists *lst_init, char *err_msg);
 
 #endif
