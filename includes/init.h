@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 18:41:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:04:56 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum e_texture_int_index
 	IDX_CEIL
 }	t_texture_int_index;
 
-bool	init_main(int ac, char **av, t_general	*gen);
+void	init_main(int ac, char **av, t_general	*gen);
 
 /* =============== 0_mapformat/ =============== */
 // init_0_mapformat_main.c
@@ -80,6 +80,5 @@ void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
 // init_3_mapcontent.c
 void	in_3_map_content_init(int ac, char **av, t_general *gen,
 			t_lists *lst_init);
-
 
 #endif

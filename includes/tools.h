@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/28 21:50:27 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:03:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@
 # include <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-
-
-#include <stdio.h>
+# include <stdio.h>
 
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
-# define FLOAT_EPSILON 0.000001
+# include "settings.h"
 
 typedef enum e_bool
 {
@@ -65,4 +63,7 @@ void	to_error_msg(char *msg);
 //tools_lst.c
 void	to_lstfree(t_list **lst);
 
+//tools_anglesset.c
+void	to_angle_set_init(float *old_fov, float new_fov,
+			float *angles_set);
 #endif

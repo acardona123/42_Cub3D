@@ -6,29 +6,15 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/27 15:00:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/30 22:38:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHARED_H
 # define SHARED_H
 
+# include "settings.h"
 # include "tools.h"
-
-# define WIN_HIGHT 720
-# define WIN_WIDTH 1280
-# define WIN_NAME "Cub3D"
-
-# define KEY_FORWARD XK_w
-# define KEY_BACK XK_s
-# define KEY_LEFT XK_a
-# define KEY_RIGHT XK_d
-# define KEY_ACT XK_space
-# define KEY_LOOK_LEFT XK_Left
-# define KEY_LOOK_RIGHT XK_Right
-
-
-#      define BONUS//
 
 /*
 
@@ -51,6 +37,7 @@ typedef struct s_static_texture
 	char	*path;
 	int		img_width;
 	int		img_height;
+	float	h_ratio;
 	t_data	data;
 }	t_static_texture;
 
@@ -98,7 +85,7 @@ typedef enum e_chunk_face
 	FACE_N ,
 	FACE_E ,
 	FACE_S ,
-	FACE_O ,
+	FACE_W ,
 }	t_chunk_face;
 
 typedef enum e_door_status
@@ -113,7 +100,7 @@ typedef struct s_chunk
 {
 	t_chunk_type		type;
 	char				status;
-	unsigned int		t0;//ref time for the animations
+	size_t				t0;//ref time for the animations
 	t_animated_texture	*textures;
 }	t_chunk;
 
@@ -172,6 +159,7 @@ typedef struct s_general
 	t_map				map;
 	t_player			player;
 	float				fov;
+	float				angles_set[WIN_WIDTH];
 }	t_general;
 
 /* ---- End: General ----

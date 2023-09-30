@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 19:42:40 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/30 22:40:12 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ static t_bool	_in_2_anim_textu_init_file(void *mlx,
 	if (!texture->frame_array)
 		return (to_error_msg("Mem alloc fail while textures init"), FAIL);
 	texture->frame_number = 1;
-	texture->frame_ms = INT_MAX / 2;
+	texture->frame_ms = 0;
 	texture->frame_pause_ms = 0;
-	texture->frame_cycle_short = INT_MAX / 2;
+	texture->frame_cycle_short = 0;
 	texture->frame_cycle_long = INT_MAX / 2;
-	texture->frame_array[0] = (t_static_texture){line_arg[1], 0, 0,
+	texture->frame_array[0] = (t_static_texture){line_arg[1], 0, 0, .0,
 		(t_data){0}};
 	if (in_2_static_texture_init_one(mlx, &texture->frame_array[0],
 			line_arg[1]) == FAIL)

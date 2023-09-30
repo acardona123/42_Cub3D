@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 18:54:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:01:28 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init)
 	to_lstfree(&lst_init->lst_param);
 }
 
-// /*
+/*
 int	main(int ac, char **av)
 {
 	t_general	gen = {0};
@@ -92,4 +92,4 @@ int	main(int ac, char **av)
 	end_destroy_general(&gen);
 	return (0);
 }
-// */
+*/
