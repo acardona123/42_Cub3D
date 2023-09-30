@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_destroy_map.c                                  :+:      :+:    :+:   */
+/*   tools_time.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 22:51:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/30 20:03:05 by alexandm         ###   ########.fr       */
+/*   Created: 2023/09/27 15:28:24 by alexandm          #+#    #+#             */
+/*   Updated: 2023/09/27 15:46:22 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shared.h"
+#include "../../includes/tools.h"
 
-void	end_destroy_map(t_map *map)
+#ifdef BONUS
+
+unsigned int	to_getime(void)
 {
-	int	x;
+	struct timeval	time;
 
-	if (!map || !map->map)
-		return ;
-	x = 0;
-	while (x < map->width + 1)
-	{
-		if (map->map[x])
-			free(map->map[x]);
-		else
-			break ;
-		x++;
-	}
-	free(map->map);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
+#endif
+
+#ifndef BONUS
+unsigned int	to_getime(void)
+{
+	return (0);
+}
+
+#endif

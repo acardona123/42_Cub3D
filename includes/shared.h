@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/30 22:38:42 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/01 00:11:17 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ typedef enum e_chunk_type
 	DOOR = '2',
 	WALL = '1',
 	NOTHING = ' ',
+	PLAYER_N = 'N',
+	PLAYER_S = 'S',
+	PLAYER_E = 'E',
+	PLAYER_W = 'W',
 }	t_chunk_type;
 
 typedef enum e_chunk_face
@@ -108,7 +112,7 @@ typedef struct s_map
 {
 	double	x_max;
 	double	y_max;
-	int		widht;
+	int		width;
 	int		height;
 	t_chunk	**map;
 }	t_map;
