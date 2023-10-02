@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/01 00:23:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:33:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "settings.h"
 # include "tools.h"
+
 
 /*
 
@@ -26,7 +27,7 @@ typedef struct s_data
 	void	*img;
 	char	*addr;
 	int		opp;
-	int		line_length;
+	int		line_len;
 	int		pix_width;
 	int		pix_height;
 	int		endian;
@@ -119,9 +120,11 @@ typedef struct s_map
 
 typedef struct s_hitpoint
 {
-	t_coord_f			hit_point_coord;
-	t_coord_i			hit_chunk_coord;
+	t_coord_f			point_co;
+	t_coord_i			chunk_co;
+	// double				hit_dec; for future opti ?
 	t_chunk_face		hit_face;
+	float				height_corrector;
 }	t_hitpoint;
 
 /* ---- End: Map data ----
@@ -146,8 +149,8 @@ typedef struct s_player
 typedef struct s_display
 {
 	void			*mlx;
-	t_data			*buff;
 	void			*win;
+	t_data			*buff;
 }	t_display;
 
 /* ---- End: Display ----
@@ -163,7 +166,7 @@ typedef struct s_general
 	t_map				map;
 	t_player			player;
 	float				fov;
-	float				angles_set[WIN_WIDTH];
+	double				angles_set[WIN_WIDTH];
 }	t_general;
 
 /* ---- End: General ----

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 02:20:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/28 23:33:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:21:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 		texture->path = path;
 	texture->data.img = mlx_xpm_file_to_image(mlx, path, &texture->img_width,
 			&texture->img_height);
+	// printf("{%s} (%p): width  %d, height : %d\n", texture->path, texture,	texture->img_width, texture->img_height);
 	if (!texture->data.img)
 	{
 		to_error_msg("mlx .xpm conversion fail");
@@ -39,7 +40,7 @@ t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 		return (FAIL);
 	}
 	texture->data.addr = mlx_get_data_addr(texture->data.img,
-			&texture->data.opp, &texture->data.line_length,
+			&texture->data.opp, &texture->data.line_len,
 			&texture->data.endian);
 	texture->data.opp /= 8;
 	texture->data.pix_height = texture->img_height;
@@ -76,12 +77,13 @@ int main(void)
 
 	gen = (t_general){0};
 	in_0_init_display(&gen);
+	texture = (t_static_texture){0};
 	printf("init texture:\n");
 	in_2_static_texture_init_one(gen.disp.mlx, &texture, path);
 	printf("img:%p\n", texture.data.img);
 	printf("addr:%p\n", texture.data.addr);
 	printf("opp: %d\n", texture.data.opp);
-	printf("line_len: %d\n", texture.data.line_length);
+	printf("line_len: %d\n", texture.data.line_len);
 	printf("pix_w: %d\n", texture.data.pix_width);
 	printf("pix_h: %d\n", texture.data.pix_height);
 	printf("img_w: %d\n", texture.img_width);

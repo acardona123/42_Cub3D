@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 19:03:37 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/01 22:58:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int main(void)
 	printf("img:%p\n", texture.data.img);
 	printf("addr:%p\n", texture.data.addr);
 	printf("opp: %d\n", texture.data.opp);
-	printf("line_len: %d\n", texture.data.line_length);
+	printf("line_len: %d\n", texture.data.line_len);
 	printf("pix_w: %d\n", texture.data.pix_width);
 	printf("pix_h: %d\n", texture.data.pix_height);
 	printf("img_w: %d\n", texture.img_width);

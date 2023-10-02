@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/01 01:36:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:21:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,28 @@ void	in_3_map_content_init(t_general *gen, t_lists *lst_init)
 		--y;
 		tmp = tmp->next;
 	}
+
 	// if (!_in_3_check_door(gen))
 	// 	end_destroy_exit(gen, EXIT_INIT_3);
+	to_lstfree(&lst_init->lst_map);
+	printf("\e[101m32 12: %p\e[0m\n", gen->map.map[32][12].textures[3]);
+	// exit (3);
+	sleep(1);
+	// int x1;
+	// int y1;
+	// y1 = -1;
+	// while(++y1 <= gen->map.height)
+	// {
+	// 	printf("\n\e[101mY = %d:\e[0m\n", y1);
+	// 	x1 = -1;
+	// 	while (++x1 <= gen->map.width)
+	// 	{
+	// 		if (gen->map.map[x1][y1].type == WALL && (!gen->map.map[x1][y1].textures[0] || !gen->map.map[x1][y1].textures[1] || !gen->map.map[x1][y1].textures[2] || !gen->map.map[x1][y1].textures[3]))
+	// 			printf(" \e[33mError: (x, y) = (%d, %d) => textures = {%p, %p, %p, %p}\n", x1, y1, gen->map.map[x1][y1].textures[0], gen->map.map[x1][y1].textures[1], gen->map.map[x1][y1].textures[2], gen->map.map[x1][y1].textures[3]);
+	// 	}
+	// 	printf(" others ok\n");
+	// }
+	// printf("Textures : %p, %p, %p,%p\n", gen->textures.wall_w, gen->textures.wall_e, gen->textures.wall_s, gen->textures.wall_n);
 }
 
 /**
@@ -139,12 +159,14 @@ static void	_in_3_alloc_tabmap(t_general *gen, t_lists *lst_init)
 	x = 0;
 	gen->map.map = ft_calloc(gen->map.width + 1, sizeof(t_chunk *));
 	if (!gen->map.map)
-		in_3_map_init_destroy_exit(gen, lst_init, "Map memory allocation error");
+		in_3_map_init_destroy_exit(gen, lst_init,
+			"Map memory allocation error");
 	while (x <= gen->map.width)
 	{
 		gen->map.map[x] = ft_calloc(gen->map.height + 1, sizeof(t_chunk));
 		if (!gen->map.map[x])
-			in_3_map_init_destroy_exit(gen, lst_init, "Map memory allocation error");
+			in_3_map_init_destroy_exit(gen, lst_init,
+				"Map memory allocation error");
 		++x;
 	}
 }
@@ -179,7 +201,7 @@ static void	_in_3_alloc_tabmap(t_general *gen, t_lists *lst_init)
 // 	return (true);
 // }
 
-// /*
+/*
 int	main(int ac, char **av)
 {
 	t_lists	init_lists;

@@ -1,7 +1,7 @@
 NAME			=	cub3D
 
 CC				=	cc
-CFLAGS			=	-Werror -Wall -Wextra -g
+CFLAGS			=	-Werror -Wall -Wextra -g 
 DEPSFLAG		=	-MMD
 
 MLX_DIR			=	mlx
@@ -38,12 +38,14 @@ FILES_INIT			=	$(addprefix init/, \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
+								locate_texture \
 								utils \
 							) \
 						)
 
 FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
-							\
+							collision \
+							frame_build \
 						)
 
 FILES_TOOLS			=	$(addprefix tools/tools_, \
@@ -51,12 +53,14 @@ FILES_TOOLS			=	$(addprefix tools/tools_, \
 							vectors \
 							lst \
 							time \
+							angles_set \
 						)
 
 FILES_NAMES			=	main \
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
-						$(FILES_TOOLS)
+						$(FILES_TOOLS) \
+						$(FILES_RAYCASTING)
 
 
 SRC_DIR			=	src

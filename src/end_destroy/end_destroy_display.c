@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:33:19 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/28 12:56:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 04:56:07 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	end_destroy_display(t_display *disp)
 	if (disp->win)
 		mlx_destroy_window(disp->mlx, disp->win);
 	if (disp->buff)
-		mlx_destroy_image(disp->mlx, disp->buff);
+	{
+		if (disp->buff->img)
+			mlx_destroy_image(disp->mlx, disp->buff->img);
+		free(disp->buff);
+	}
 	if (disp->mlx)
 	{
 		mlx_destroy_display(disp->mlx);

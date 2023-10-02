@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/28 12:59:42 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 04:45:16 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ void	in_0_init_display(t_general *gen)
 	in_0_hooks_init(gen);
 }
 
+// static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+// 	char	*dst;
+
+// 	dst = data->addr + (y * data->line_len + x * (data->opp));
+// 	*(unsigned int*)dst = color;
+// }
+
 /**
  * @brief initializes the t_display struct (mlx, window and empty buffer image)
  * 
@@ -39,25 +47,21 @@ static bool	_in_0_display_elements_init(t_display *disp)
 {
 	disp->mlx = mlx_init();
 	if (!disp->mlx)
-	{
-		to_error_msg("mlx_init faillure");
-		return (false);
-	}
-	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HIGHT, WIN_NAME);
+		return (to_error_msg("mlx_init faillure"), false);
+	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
 	if (!disp->win)
-	{
-		to_error_msg("mlx_new_window faillure");
-		mlx_destroy_display(disp->mlx);
-		return (false);
-	}
-	disp->buff = mlx_new_image(disp->mlx, WIN_WIDTH, WIN_HIGHT);
+		return (to_error_msg("mlx_new_window faillure"), false);
+	disp->buff = calloc(1, sizeof(t_data));
 	if (!disp->buff)
-	{
-		to_error_msg("mlx_new_image faillure");
-		mlx_destroy_window(disp->mlx, disp->win);
-		mlx_destroy_display(disp->mlx);
-		return (false);
-	}
+		return (to_error_msg("Mem allocation error in display init"), false);
+	disp->buff->img = mlx_new_image(disp->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!disp->buff->img)
+		return (to_error_msg("mlx_new_image faillure"), false);
+	disp->buff->addr = mlx_get_data_addr(disp->buff->img, &disp->buff->opp,
+			&disp->buff->line_len, &disp->buff->endian);
+	disp->buff->opp /= 8;
+	disp->buff->pix_height = WIN_HEIGHT;
+	disp->buff->pix_width = WIN_WIDTH;
 	return (true);
 }
 

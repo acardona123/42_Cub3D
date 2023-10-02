@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/01 01:31:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 14:57:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
 =============== 3_mapcontent/ =============== */
 // init_3_mapcontent.c
 void	in_3_map_content_init(t_general *gen, t_lists *lst_init);
-//init_3_mapcontent_utils.c
-// void	in_3_map_locate_textures(t_general *gen, char c, int x, int y);
+// init_3_mapcontent_locate_texture.c
 void	in_3_map_locate_textures(t_texture_pack *texturepack,
 			t_animated_texture **tex, char c);
+//init_3_mapcontent_utils.c
 void	in_3_map_init_destroy_exit(t_general *gen, t_lists *lst_init,
 			char *err_msg);
 
