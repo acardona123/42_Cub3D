@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_collision.c                                    :+:      :+:    :+:   */
+/*   raycasting_collision.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/23 17:26:53 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:36:47 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ static void	_r_ray_init_h(t_coord_f *P, float angle_ray, t_coord_f *last_h,
 static void	_r_ray_init_v(t_coord_f *P, float angle_ray, t_coord_f *last_v,
 	t_vector_f *delta_v)
 {
+	register float	ratio_tan;
+	register float	round_x;
+
 	if ((angle_ray >= - FLOAT_EPSILON && angle_ray <= FLOAT_EPSILON)
 			|| (angle_ray >= M_PI - FLOAT_EPSILON && angle_ray <= M_PI + FLOAT_EPSILON)) // (angle_ray == 0 || angle_ray == M_PI)
 	{
@@ -44,15 +47,19 @@ static void	_r_ray_init_v(t_coord_f *P, float angle_ray, t_coord_f *last_v,
 		*delta_v = (t_vector_f){0, 0};
 		return ;
 	}
+	ratio_tan = 1 / tan(angle_ray);
 	if (angle_ray >= 0 && angle_ray < M_PI) // cadran droit
 	{
-		*last_v = (t_coord_f){ceil(P->x), P->y + (ceil(P->x) - P->x) / tan(angle_ray)};
-		*delta_v = (t_vector_f){1, 1 / tan(angle_ray)};
+		round_x = ceil(P->x);
+		*last_v = (t_coord_f){round_x, P->y + (round_x - P->x) * ratio_tan};
+		*delta_v = (t_vector_f){1, ratio_tan};
 	}
 	else // gauche
 	{
-		*last_v = (t_coord_f){floor(P->x), P->y - (P->x - floor(P->x)) / tan(angle_ray)};
-		*delta_v = (t_vector_f){-1, -1 / tan(angle_ray)};
+		round_x = floor(P->x);
+		*last_v = (t_coord_f){floor(P->x),
+			P->y - (P->x - floor(P->x)) * ratio_tan};
+		*delta_v = (t_vector_f){-1, -ratio_tan};
 	}
 }
 
@@ -63,8 +70,8 @@ static bool	_r_point_inside_map_borders(t_map *data, t_coord_f *P)
 	return (true);
 }
 
-static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
-	float angle_ray, t_map *data)
+t_hitpoint	r_ray_collision(t_chunk_type type, t_coord_f P, float angle_ray,
+	t_map *data)
 {
 	t_coord_f		last_h;
 	t_coord_f		last_v;
@@ -72,9 +79,13 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 	t_vector_f		delta_v;
 	t_coord_f		last;
 
+	if (angle_ray < 0)
+		angle_ray += 2 * M_PI;
+	if (angle_ray > 2 * M_PI)
+		angle_ray -= 2 * M_PI;
 	_r_ray_init_h(&P, angle_ray, &last_h, &delta_h);
 	_r_ray_init_v(&P, angle_ray, &last_v, &delta_v);
-	if (to_vector_norm(P, last_v) > to_vector_norm(P, last_h))
+	if (to_vector_norm_sqrt(P, last_v) > to_vector_norm_sqrt(P, last_h))
 	{
 		last = last_h;
 		last_v.x -= delta_v.x;
@@ -87,224 +98,224 @@ static t_hitpoint	_r_ray_collision(t_chunk_type type, t_coord_f P,
 		last_h.y -= delta_h.y;
 	}
 	if (!_r_point_inside_map_borders(data, &last))//ne peut pas arriver si le player est entre les murs de la map
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	if (angle_ray < M_PI / 4) //N_NE
 	{
 		if (last.y != last_h.y)
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last_v, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
-				
+				return ((t_hitpoint){last_v, (t_coord_i){(int)last.x, (int)last.y}, FACE_W, 0});
 			last = last_h;
 		}
 		while (last.y <= data->y_max - 1)
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S, 0});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && floor(last.x) != last_v.x)
 			{
 				last_v.x += delta_v.x;// <=> ++last_v.x
 				if (last_v.x > data->x_max - 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_v.y += delta_v.y;
 				if (data->map[(int)last_v.x][(int)last_v.y].type == type)
-					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x, (int)last_v.y}, FACE_O});
+					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x, (int)last_v.y}, FACE_W, 0});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	if (angle_ray < M_PI / 2) // NE_E
 	{
 		if (last.x != last_v.x)
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S, 0});
 			last = last_v;
 		}
 		while (last.x <= data->x_max - 1)
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_W, 0});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && floor(last.y) != last_h.y)
 			{
 				last_h.y += delta_h.y;// <=> ++last_h.y
 				if (last_h.y > data->y_max - 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_h.x += delta_h.x;
 				if (data->map[(int)last_h.x][(int)last_h.y].type == type)
-					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y}, FACE_S});
+					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y}, FACE_S, 0});
 			}
 			last.x += delta_v.x;//optimisable en ++last.y
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	if (angle_ray < M_PI * 0.75) // SE_E
 	{
 		if (last.x != last_v.x)
 		{
 			if (data->map[(int)last.x][(int)last.y - 1].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N, 0});
 			last = last_v;
 		}
 		while (last.x <= data->x_max - 1) // <=> < stricte
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_W, 0});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && ceil(last.y) != last_h.y)
 			{
 				last_h.y += delta_h.y;// <=> ++last_h.y
 				if (last_h.y < 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_h.x += delta_h.x;
 				if (data->map[(int)last_h.x][(int)last_h.y - 1].type == type)
-					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y - 1}, FACE_N});
+					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y - 1}, FACE_N, 0});
 			}
 			last.x += delta_v.x;//optimisable en ++last.y
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	if (angle_ray < M_PI) // S_SE
 	{
 		if (last.y != last_h.y)
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_O});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_W, 0});
 				
 			last = last_h;
 		}
 		while (last.y >= 1.)
 		{
 			if (data->map[(int)last.x][(int)last.y - 1].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N, 0});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && floor(last.x) != last_v.x)
 			{
 				last_v.x += delta_v.x;// <=> ++last_v.x
 				if (last_v.x > data->x_max - 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_v.y += delta_v.y;
 				if (data->map[(int)last_v.x][(int)last_v.y].type == type)
-					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x, (int)last_v.y}, FACE_O});
+					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x, (int)last_v.y}, FACE_W, 0});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	if (angle_ray < M_PI * 1.25) // S_SO
 	{
 		if (last.y != last_h.y)
 		{
 			if (data->map[(int)last.x - 1][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E, 0});
 			last = last_h;
 		}
 		while (last.y >= 1.)
 		{
 			if (data->map[(int)last.x][(int)last.y - 1].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N, 0});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && ceil(last.x) != last_v.x)
 			{
 				last_v.x += delta_v.x;// <=> --last_v.x
 				if (last_v.x < 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_v.y += delta_v.y;
 				if (data->map[(int)last_v.x - 1][(int)last_v.y].type == type)
-					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x - 1, (int)last_v.y}, FACE_E});
+					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x - 1, (int)last_v.y}, FACE_E, 0});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	if (angle_ray < M_PI * 1.5) // O_SO
 	{
 		if (last.x != last_v.x)
 		{
 			if (data->map[(int)last.x][(int)last.y - 1].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y - 1}, FACE_N, 0});
 			last = last_v;
 		}
 		while (last.x >= 1.)
 		{
 			if (data->map[(int)last.x - 1][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E, 0});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && ceil(last.y) != last_h.y)
 			{
 				last_h.y += delta_h.y;// <=> --last_h.y
 				if (last_h.y < 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_h.x += delta_h.x;
 				if (data->map[(int)last_h.x][(int)last_h.y - 1].type == type)
-					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y - 1}, FACE_N});
+					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y - 1}, FACE_N, 0});
 			}
 			last.x += delta_v.x;//optimisable en --last.x
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	if (angle_ray < M_PI * 1.75) // O_NO
 	{
 		if (last.x != last_v.x)
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S, 0});
 			last = last_v;
 		}
 		while (last.x >= 1.)
 		{
 			if (data->map[(int)last.x - 1][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E, 0});
 			last.y += delta_v.y;
 			if (last_h.y != -1 && floor(last.y) != last_h.y)
 			{
 				last_h.y += delta_h.y;// <=> ++last_h.y
 				if (last_h.y > data->y_max - 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_h.x += delta_h.x;
 				if (data->map[(int)last_h.x][(int)last_h.y].type == type)
-					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y}, FACE_S});
+					return ((t_hitpoint){last_h, (t_coord_i){(int)last_h.x, (int)last_h.y}, FACE_S, 0});
 			}
 			last.x += delta_v.x;//optimisable en --last.x
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	else // N_NO
 	{
 		if (last.y != last_h.y)
 		{
 			if (data->map[(int)last.x - 1][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x - 1, (int)last.y}, FACE_E, 0});
 				
 			last = last_h;
 		}
 		while (last.y <= data->y_max - 1)
 		{
 			if (data->map[(int)last.x][(int)last.y].type == type)
-				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S});
+				return ((t_hitpoint){last, (t_coord_i){(int)last.x, (int)last.y}, FACE_S, 0});
 			last.x += delta_h.x;
 			if (last_v.x != -1 && ceil(last.x) != last_v.x)
 			{
 				last_v.x += delta_v.x;// <=> ++last_v.x
 				if (last_v.x < 1)
-					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+					return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 				last_v.y += delta_v.y;
 				if (data->map[(int)last_v.x - 1][(int)last_v.y].type == type)
-					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x - 1, (int)last_v.y}, FACE_E});
+					return ((t_hitpoint){last_v, (t_coord_i){(int)last_v.x - 1, (int)last_v.y}, FACE_E, 0});
 			}
 			last.y += delta_h.y;//optimisable en ++last.y
 		}
-		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
-	return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0});
+	return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 }
 
 /*
 int	main(int ac, char **av)
 {
+	
 	t_chunk	*y9 = "1111111111";
 	t_chunk	*y8 = "1000000001";
 	t_chunk	*y7 = "1000000001";
@@ -336,10 +347,10 @@ int	main(int ac, char **av)
 	while(angle_ray < 360)
 	{
 		printf("\nangle %.0f: ", angle_ray);
-		hitpoint = _r_ray_collision(WALL, co_p, angle_ray * M_PI / 180, &data);
+		hitpoint = r_ray_collision(WALL, co_p, angle_ray * M_PI / 180, &data);
 		printf("point d'impact ");
-		to_vector_print(hitpoint.hit_point_coord);
-		printf("chunck coordonne [%d][%d] hit_face %d\n", hitpoint.hit_chunk_coord.x, hitpoint.hit_chunk_coord.y, hitpoint.hit_face);
+		to_vector_print(hitpoint.point_co);
+		printf("chunck coordonne [%d][%d] hit_face %d\n", hitpoint.chunk_co.x, hitpoint.chunk_co.y, hitpoint.hit_face);
 		angle_ray += 10;
 	}
 

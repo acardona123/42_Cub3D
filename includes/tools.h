@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/01 00:17:19 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:01:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ typedef struct s_coord_i
 }	t_coord_i;
 
 void	to_vector_print(t_vector_f v);
-double	to_vector_norm(t_vector_f v0, t_vector_f v1);
+double	to_vector_norm_abs(t_vector_f v0, t_vector_f v1);
+double	to_vector_norm_sqrt(t_vector_f v0, t_vector_f v1);
 
 //tools_error
 void	to_error_msg(char *msg);
@@ -69,5 +70,5 @@ size_t	to_getime(void);
 
 //tools_anglesset.c
 void	to_angle_set_init(float *old_fov, float new_fov,
-			float *angles_set);
+			double *angles_set);
 #endif
