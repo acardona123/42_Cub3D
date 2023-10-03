@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/30 22:40:12 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:27:25 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ static t_bool	_in_2_anim_textu_init_file(void *mlx,
 			line_arg[1]) == FAIL)
 	{
 		free(texture->frame_array);
+		texture->frame_array = NULL;
 		return (FAIL);
 	}
 	line_arg[1] = line_arg[ft_tablen(line_arg) - 1];
@@ -175,10 +176,10 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
  * @return FAIL ALWAYS
  */
 static t_bool	_in_2_anim_textu_init_folder(void *mlx,
-	t_animated_texture **texture, char **line_arg)
+	t_animated_texture *tex, char **line_arg)
 {
 	(void)mlx;
-	(void)texture;
+	(void)tex;
 	(void)line_arg;
 	return (to_error_msg("Cannot open folder in the mandatry part"), FAIL);
 }

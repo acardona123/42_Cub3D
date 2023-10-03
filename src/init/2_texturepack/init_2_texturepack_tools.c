@@ -6,11 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:34:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 18:42:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:19:49 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
+
+#ifdef BONUS
 
 /**
  * @brief counts the number of .xpm files in a repertory
@@ -43,6 +45,8 @@ t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
 		return (to_error_msg("No .xpm file in the texture folder"), FAIL);
 	return (SUCCESS);
 }
+
+#endif
 
 /**
  * @brief sorts the frames table of the animated texture by ascii order

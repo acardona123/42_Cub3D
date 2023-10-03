@@ -6,14 +6,15 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:19:27 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 20:01:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 18:37:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/tools.h"
 
-static void	_tools_angle_calc_const_step(float fov, double *angles_set);
-static void	_tools_angle_calc_cos_step(float fov, double *angles_set);
+// static void	_tools_angle_calc_const_step(float fov, double *angles_set);
+static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
+				double *angle_correc);
 
 /**
  * @brief calculates the angle_offset to add to the player angle to obtain each
@@ -23,13 +24,10 @@ static void	_tools_angle_calc_cos_step(float fov, double *angles_set);
  * @param new_fov new fov used to calculate the angleset
  * @param angle_set pointer to gen->angles_set
  */
-void	to_angle_set_init(float *old_fov, float new_fov, double *angles_set)
+void	to_angle_set_init(float *old_fov, float new_fov, double *angles_set, double *angle_correc)
 {
 	*old_fov = new_fov;
-	if (1)//const_step
-		_tools_angle_calc_const_step(new_fov, angles_set);
-	else
-		_tools_angle_calc_cos_step(new_fov, angles_set);
+	_tools_angle_calc_adapted_step(new_fov, angles_set, angle_correc);
 }
 
 /**
@@ -38,6 +36,7 @@ void	to_angle_set_init(float *old_fov, float new_fov, double *angles_set)
  * @param fov 
  * @param table_dest 
  */
+/*
 static void	_tools_angle_calc_const_step(float fov, double *angles_set)
 {
 	int		idx;
@@ -46,18 +45,20 @@ static void	_tools_angle_calc_const_step(float fov, double *angles_set)
 	while (++idx < WIN_WIDTH)
 		angles_set[idx] = fov * idx / WIN_WIDTH - 0.5 * fov;
 }
+*/
 
-static void	_tools_angle_calc_cos_step(float fov, double *angles_set)
+static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
+	double *angle_correc)
 {
 	int		idx;
-	float amplitude = 0.1;
+	double	focal;
 
-	angles_set[0] = -fov / 2;
-	idx = 0;
+	focal = WIN_WIDTH / (2 * tan(fov / 2));
+	idx = -1;
 	while (++idx < WIN_WIDTH)
 	{
-		angles_set[idx] = angles_set[idx - 1] + fov * (1 - amplitude * cos(2 * M_PI * idx / (WIN_WIDTH - 1))) / WIN_WIDTH;
-		printf("idx: %d => angle = %f\n", idx, angles_set[idx]);
+		angles_set[idx] = atan(((double)(idx - (double)WIN_WIDTH / 2)) / focal);
+		angle_correc[idx] = cos(angles_set[idx]);
 	}
 }
 

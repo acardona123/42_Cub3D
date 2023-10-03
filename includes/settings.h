@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 17:34:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 18:26:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 # define SETTINGS_H
 
 //window parameters
-# define WIN_HEIGHT 720
-# define WIN_WIDTH 1280
+# define WIN_HEIGHT 1280
+# define WIN_WIDTH 2000
 # define WIN_NAME "Cub3D"
 
 //game parameters
 # define DEFAULT_FOV 1.
 # define DIST_WALL_MIN 0.125
-# define DIST_REF 10
 
 //controls :
 # define KEY_FORWARD XK_w

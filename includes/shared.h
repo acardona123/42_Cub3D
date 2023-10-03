@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 20:33:51 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 18:37:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct s_hitpoint
 	t_coord_i			chunk_co;
 	// double				hit_dec; for future opti ?
 	t_chunk_face		hit_face;
-	float				height_corrector;
+	double				dist;
 }	t_hitpoint;
 
 /* ---- End: Map data ----
@@ -167,6 +167,7 @@ typedef struct s_general
 	t_player			player;
 	float				fov;
 	double				angles_set[WIN_WIDTH];
+	double				angle_correc[WIN_WIDTH];
 }	t_general;
 
 /* ---- End: General ----

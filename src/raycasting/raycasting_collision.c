@@ -6,69 +6,18 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 20:36:47 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 18:29:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/raycasting.h"
 
-static void	_r_ray_init_h(t_coord_f *P, float angle_ray, t_coord_f *last_h,
-	t_vector_f *delta_h)
-{
-	if ((angle_ray >= M_PI / 2 - FLOAT_EPSILON && angle_ray <= M_PI / 2 + FLOAT_EPSILON)
-			|| (angle_ray >= M_PI * 1.5 - FLOAT_EPSILON && angle_ray <= M_PI * 1.5 + FLOAT_EPSILON)) // (angle_ray == M_PI / 2 || angle_ray == M_PI * 1.5)
-	{
-		*last_h = (t_coord_f){-1, -1};
-		*delta_h = (t_vector_f){0, 0};
-		return ;
-	}
-	if (angle_ray >= 1.5 * M_PI || angle_ray < M_PI * 0.5) // cadran sup
-	{
-		*last_h = (t_coord_f){P->x + tan(angle_ray) * (ceil(P->y) - P->y), ceil(P->y)};
-		*delta_h = (t_vector_f){tan(angle_ray), 1};
-	}
-	else
-	{
-		*last_h = (t_coord_f){P->x - tan(angle_ray) * (P->y - floor(P->y)), floor(P->y)};
-		*delta_h = (t_vector_f){-tan(angle_ray), -1};
-	}
-}
-
-static void	_r_ray_init_v(t_coord_f *P, float angle_ray, t_coord_f *last_v,
-	t_vector_f *delta_v)
-{
-	register float	ratio_tan;
-	register float	round_x;
-
-	if ((angle_ray >= - FLOAT_EPSILON && angle_ray <= FLOAT_EPSILON)
-			|| (angle_ray >= M_PI - FLOAT_EPSILON && angle_ray <= M_PI + FLOAT_EPSILON)) // (angle_ray == 0 || angle_ray == M_PI)
-	{
-		*last_v = (t_coord_f){-1, -1};
-		*delta_v = (t_vector_f){0, 0};
-		return ;
-	}
-	ratio_tan = 1 / tan(angle_ray);
-	if (angle_ray >= 0 && angle_ray < M_PI) // cadran droit
-	{
-		round_x = ceil(P->x);
-		*last_v = (t_coord_f){round_x, P->y + (round_x - P->x) * ratio_tan};
-		*delta_v = (t_vector_f){1, ratio_tan};
-	}
-	else // gauche
-	{
-		round_x = floor(P->x);
-		*last_v = (t_coord_f){floor(P->x),
-			P->y - (P->x - floor(P->x)) * ratio_tan};
-		*delta_v = (t_vector_f){-1, -ratio_tan};
-	}
-}
-
-static bool	_r_point_inside_map_borders(t_map *data, t_coord_f *P)
-{
-	if (P->x < 1 || P->y < 1 || P->x > data->x_max - 1 || P->y > data->y_max)
-		return (false);
-	return (true);
-}
+static void	_r_ray_init_h(t_coord_f *P, float angle_ray,
+				t_coord_f *last_h, t_vector_f *delta_h);
+static void	_r_ray_init_v(t_coord_f *P, float angle_ray,
+				t_coord_f *last_v, t_vector_f *delta_v);
+static bool	_r_point_inside_map_borders(t_map *data, t_coord_f *P);
+static bool	_r_point_inside_map_borders(t_map *data, t_coord_f *P);
 
 t_hitpoint	r_ray_collision(t_chunk_type type, t_coord_f P, float angle_ray,
 	t_map *data)
@@ -85,7 +34,7 @@ t_hitpoint	r_ray_collision(t_chunk_type type, t_coord_f P, float angle_ray,
 		angle_ray -= 2 * M_PI;
 	_r_ray_init_h(&P, angle_ray, &last_h, &delta_h);
 	_r_ray_init_v(&P, angle_ray, &last_v, &delta_v);
-	if (to_vector_norm_sqrt(P, last_v) > to_vector_norm_sqrt(P, last_h))
+	if (to_vector_norm(P, last_v) > to_vector_norm(P, last_h))
 	{
 		last = last_h;
 		last_v.x -= delta_v.x;
@@ -310,6 +259,63 @@ t_hitpoint	r_ray_collision(t_chunk_type type, t_coord_f P, float angle_ray,
 		return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
 	}
 	return ((t_hitpoint){(t_coord_f){-1, -1}, (t_coord_i){-1, -1}, 0, 0});
+}
+
+static void	_r_ray_init_h(t_coord_f *P, float angle_ray, t_coord_f *last_h,
+	t_vector_f *delta_h)
+{
+	if ((angle_ray >= M_PI / 2 - FLOAT_EPSILON && angle_ray <= M_PI / 2 + FLOAT_EPSILON)
+			|| (angle_ray >= M_PI * 1.5 - FLOAT_EPSILON && angle_ray <= M_PI * 1.5 + FLOAT_EPSILON)) // (angle_ray == M_PI / 2 || angle_ray == M_PI * 1.5)
+	{
+		*last_h = (t_coord_f){-1, -1};
+		*delta_h = (t_vector_f){0, 0};
+		return ;
+	}
+	if (angle_ray >= 1.5 * M_PI || angle_ray < M_PI * 0.5) // cadran sup
+	{
+		*last_h = (t_coord_f){P->x + tan(angle_ray) * (ceil(P->y) - P->y), ceil(P->y)};
+		*delta_h = (t_vector_f){tan(angle_ray), 1};
+	}
+	else
+	{
+		*last_h = (t_coord_f){P->x - tan(angle_ray) * (P->y - floor(P->y)), floor(P->y)};
+		*delta_h = (t_vector_f){-tan(angle_ray), -1};
+	}
+}
+
+static void	_r_ray_init_v(t_coord_f *P, float angle_ray, t_coord_f *last_v,
+	t_vector_f *delta_v)
+{
+	register float	ratio_tan;
+	register float	round_x;
+
+	if ((angle_ray >= - FLOAT_EPSILON && angle_ray <= FLOAT_EPSILON)
+			|| (angle_ray >= M_PI - FLOAT_EPSILON && angle_ray <= M_PI + FLOAT_EPSILON)) // (angle_ray == 0 || angle_ray == M_PI)
+	{
+		*last_v = (t_coord_f){-1, -1};
+		*delta_v = (t_vector_f){0, 0};
+		return ;
+	}
+	ratio_tan = 1 / tan(angle_ray);
+	if (angle_ray >= 0 && angle_ray < M_PI) // cadran droit
+	{
+		round_x = ceil(P->x);
+		*last_v = (t_coord_f){round_x, P->y + (round_x - P->x) * ratio_tan};
+		*delta_v = (t_vector_f){1, ratio_tan};
+	}
+	else // gauche
+	{
+		round_x = floor(P->x);
+		*last_v = (t_coord_f){floor(P->x),
+			P->y - (P->x - floor(P->x)) * ratio_tan};
+		*delta_v = (t_vector_f){-1, -ratio_tan};
+	}
+}
+
+static bool	_r_point_inside_map_borders(t_map *data, t_coord_f *P)
+{
+	return (!(P->x < 1 || P->y < 1 || P->x > data->x_max - 1
+			|| P->y > data->y_max));
 }
 
 /*

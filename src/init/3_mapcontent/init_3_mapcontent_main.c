@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 16:21:14 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:09:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ void	in_3_map_content_init(t_general *gen, t_lists *lst_init)
 		--y;
 		tmp = tmp->next;
 	}
+	if (_in_3_check_characters(NOTHING, gen, gen->map.width, 0) == FAIL)
+		in_3_map_init_destroy_exit(gen, lst_init, NULL);
 
 	// if (!_in_3_check_door(gen))
 	// 	end_destroy_exit(gen, EXIT_INIT_3);
 	to_lstfree(&lst_init->lst_map);
-	printf("\e[101m32 12: %p\e[0m\n", gen->map.map[32][12].textures[3]);
+	// printf("\e[101m32 12: %p\e[0m\n", gen->map.map[32][12].textures[3]);
 	// exit (3);
 	sleep(1);
 	// int x1;
