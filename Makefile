@@ -48,6 +48,10 @@ FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 							frame_build \
 						)
 
+FILES_GAMEPLAY			=	$(addprefix gameplay/gameplay_, \
+							main \
+						)
+
 FILES_TOOLS			=	$(addprefix tools/tools_, \
 							error \
 							vectors \
@@ -60,7 +64,8 @@ FILES_NAMES			=	main \
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
 						$(FILES_TOOLS) \
-						$(FILES_RAYCASTING)
+						$(FILES_RAYCASTING) \
+						$(FILES_GAMEPLAY)
 
 
 SRC_DIR			=	src

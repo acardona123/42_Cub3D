@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/03 18:37:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 23:04:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,20 @@ typedef struct s_player
 	float		p_speed;
 }	t_player;
 
+typedef enum e_head_rotate
+{
+	TURN_R = 1,
+	TURN_L = -1
+}	t_head_rotate;
+
+typedef enum e_player_move
+{
+	GO_FORWARD,
+	GO_RIGHT,
+	GO_BACK,
+	GO_LEFT
+}	t_player_move;
+
 /* ---- End: Player ----
 
 
@@ -168,6 +182,7 @@ typedef struct s_general
 	float				fov;
 	double				angles_set[WIN_WIDTH];
 	double				angle_correc[WIN_WIDTH];
+	unsigned int		delta_t;
 }	t_general;
 
 /* ---- End: General ----

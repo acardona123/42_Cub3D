@@ -25,8 +25,7 @@ static int	_in_0_hooks_destroy(void *gen);
  */
 void	in_0_hooks_init(t_general *gen)
 {
-	if (1)
-		mlx_hook(gen->disp.win, 2, 1L, _in_0_hooks_keys, gen);
+	mlx_hook(gen->disp.win, 2, 1L, _in_0_hooks_keys, gen);
 	mlx_hook(gen->disp.win, 33, 0L, _in_0_hooks_destroy, gen);
 	//mouse_hook
 }
