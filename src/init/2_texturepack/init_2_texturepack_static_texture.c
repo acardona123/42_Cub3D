@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 02:20:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 16:21:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 21:54:03 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_bool	_in_2_static_texture_init_one_check_path(char *path)
 handle .xpm images as textures, sorry"), FAIL);
 	fd_tmp = open(path, O_RDWR);
 	if (fd_tmp == -1)
-		return (to_error_msg("Texture file not reachable/readable"), FAIL);
+		return (printf("%s\n", path), to_error_msg("Texture file not reachable/readable"), FAIL);
 	close(fd_tmp);
 	return (SUCCESS);
 }
