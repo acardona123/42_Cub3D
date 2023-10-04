@@ -40,8 +40,11 @@ void	in_0_hooks_init(t_general *gen)
  */
 static int	_in_0_hooks_keys(int key, t_general *gen)
 {
-	(void)key;
-	(void)gen;
+	// static int	key_tab[NUMBER_KEY] = {KEY_FORWARD, KEY_BACK, KEY_LEFT,
+	// 	KEY_RIGHT, KEY_LOOK_LEFT, KEY_LOOK_RIGHT, KEY_ACT, KEY_WALK_SPEED_UP,
+	// 	KEY_WALK_SPEED_DOWN, KEY_ROT_SPEED_UP, KEY_ROT_SPEED_DOWN, KEY_ESCAPE};
+	
+
 	if (key == XK_Escape)
 		mlx_loop_end(gen->disp.win);
 	return (0);

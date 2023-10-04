@@ -19,6 +19,7 @@ static t_static_texture	*_r_get_column_texture(
 static int				_r_get_pixel_color(
 							double height, t_static_texture *texture,
 							double ratio_col);
+static void				r_frame_empty_column(t_data *buff, int idx_ray);
 
 /**
  * @brief draws the buffer image using raycasting
@@ -41,23 +42,39 @@ void	r_frame_construction(t_general *gen, size_t time)
 	{
 		hitpoint = r_ray_collision(WALL, p_co,
 				p_angle + gen->angles_set[idx_ray], &gen->map);
-		hitpoint.dist = to_vector_norm(hitpoint.point_co, gen->player.p_co);
-		if (hitpoint.dist < DIST_WALL_MIN)
-			hitpoint.dist = DIST_WALL_MIN;
-		_r_frame_build_column(gen, idx_ray, hitpoint, time);
+		if (hitpoint.point_co.x < 0)
+			r_frame_empty_column(gen->disp.buff,idx_ray);
+		else
+		{
+			hitpoint.dist = to_vector_norm(hitpoint.point_co, gen->player.p_co);
+			if (hitpoint.dist < DIST_WALL_MIN)
+				hitpoint.dist = DIST_WALL_MIN;
+			_r_frame_build_column(gen, idx_ray, hitpoint, time);
+		}
 	}
 }
 
-// static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
+/**
+ * @brief draw a 
+ * 
+ * @param buff 
+ * @param idx_ray 
+ * @param color_f 
+ * @param color_c 
+ */
+static void	r_frame_empty_column(t_data *buff, int idx_ray)
+{
+	int				y;
+	register char	*addr_x;
 
-// 	dst = data->addr + (y * data->line_len + x * (data->opp));
-// 	*(unsigned int*)dst = color;
-// }
+	addr_x = buff->addr + idx_ray * buff->opp;
+	y = -1;
+	while (++y < WIN_HEIGHT)
+		*(int *)(addr_x + y * buff->line_len) = 0xa0a0a0;
+}
 
 /**
- * @brief draw a column of pixel in the buffer image
+ * @brief draw a column of pixel form a texture into the buffer image
  * 
  * @param gen 
  * @param idx_ray index of the column to draw (between 0 and WINDOW_WIDTH)
@@ -70,7 +87,7 @@ static void	_r_frame_build_column(t_general *gen, int idx_ray,
 	register long int	y;
 	register long int	tmp_y;
 	register long int	h_theoric;
-	char				*addr_x;
+	register char		*addr_x;
 	t_static_texture	*texture;
 
 	texture = _r_get_column_texture(gen->map.map[hitpoint.chunk_co.x]
