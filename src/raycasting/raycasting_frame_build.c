@@ -28,10 +28,10 @@ static void				r_frame_empty_column(t_data *buff, int idx_ray);
  * @param gen 
  * @param time used for getting the right animation
  */
-void	r_frame_construction(t_general *gen, size_t time)
+void	r_frame_construction(t_general *gen)
 {
 	register int		idx_ray;
-	register t_hitpoint	hitpoint;
+	register t_hitpoint	hit_pt;
 	register t_coord_f	p_co;
 	register float		p_angle;
 
@@ -40,16 +40,16 @@ void	r_frame_construction(t_general *gen, size_t time)
 	idx_ray = -1;
 	while (++idx_ray < WIN_WIDTH)
 	{
-		hitpoint = r_ray_collision(WALL, p_co,
+		hit_pt = r_ray_collision(WALL, p_co,
 				p_angle + gen->angles_set[idx_ray], &gen->map);
-		if (hitpoint.point_co.x < 0)
-			r_frame_empty_column(gen->disp.buff,idx_ray);
+		if (hit_pt.point_co.x < 0)
+			r_frame_empty_column(gen->disp.buff, idx_ray);
 		else
 		{
-			hitpoint.dist = to_vector_norm(hitpoint.point_co, gen->player.p_co);
-			if (hitpoint.dist < DIST_WALL_MIN)
-				hitpoint.dist = DIST_WALL_MIN;
-			_r_frame_build_column(gen, idx_ray, hitpoint, time);
+			hit_pt.dist = to_vector_norm(hit_pt.point_co, gen->player.p_co);
+			if (hit_pt.dist < DIST_WALL_MIN)
+				hit_pt.dist = DIST_WALL_MIN;
+			_r_frame_build_column(gen, idx_ray, hit_pt, gen->delays.last_time);
 		}
 	}
 }

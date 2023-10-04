@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_3_mapcontent_main.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/03 22:25:23 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/05 01:17:31 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static t_bool	_in_3_check_characters(char letter, t_general *gen, int x,
 	int y)
 {
 	static int	player = false;
+	int			i;
 
 	if (!ft_isinset(letter, "012 WSEN"))
 		return (to_error_msg("Map contains an invalid character"), FAIL);
@@ -90,6 +91,9 @@ static t_bool	_in_3_check_characters(char letter, t_general *gen, int x,
 	{
 		if (player == true)
 			return (to_error_msg("Map multiple player's position"), FAIL);
+		i = -1;
+		while (letter != "NESW"[++i])
+			gen->player.p_angle += M_PI / 2;
 		gen->player.p_co.x = x + 0.5;
 		gen->player.p_co.y = y + 0.5;
 		player = true;

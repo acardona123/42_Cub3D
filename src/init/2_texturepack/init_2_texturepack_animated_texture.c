@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_2_texturepack_animated_texture.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/03 19:27:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/04 19:49:19 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 	(void)mlx;
 	(void)tex;
 	(void)line_arg;
-	return (to_error_msg("Cannot open folder in the mandatry part"), FAIL);
+	return (to_error_msg("Cannot open folder in the mandatory part"), FAIL);
 }
 
 #endif

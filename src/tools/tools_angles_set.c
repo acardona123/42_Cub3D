@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_angles_set.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:19:27 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/03 18:37:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/05 01:13:12 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
  * @brief calculates the angle_offset to add to the player angle to obtain each
  *	ray's angle to point toward each pixel column of the screen.
  * 
- * @param old_fov point to gen->fov
+ * @param old_fov point to gen->settings->fov
  * @param new_fov new fov used to calculate the angleset
  * @param angle_set pointer to gen->angles_set
  */
@@ -57,7 +57,7 @@ static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
 	idx = -1;
 	while (++idx < WIN_WIDTH)
 	{
-		angles_set[idx] = atan(((double)(idx - (double)WIN_WIDTH / 2)) / focal);
+		angles_set[idx] = -atan(((double)(idx - (double)WIN_WIDTH / 2)) / focal);
 		angle_correc[idx] = cos(angles_set[idx]);
 	}
 }
@@ -69,7 +69,7 @@ int main()
 	int 		i;
 	t_general	gen = {0};
 
-	to_angle_set_init(&gen.fov, DEFAULT_FOV, gen.angles_set);
+	to_angle_set_init(&gen.settings.fov, DEFAULT_FOV, gen.angles_set);
 	i = -1;
 	while (++i < WIN_WIDTH)
 		printf("%d: %f (%f deg) : %f (%f deg) \n", i, DEFAULT_FOV,

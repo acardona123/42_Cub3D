@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shared.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/03 23:04:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/05 01:34:17 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "settings.h"
 # include "tools.h"
-
 
 /*
 
@@ -137,13 +136,12 @@ typedef struct s_player
 {
 	t_coord_f	p_co;
 	float		p_angle;
-	float		p_speed;
 }	t_player;
 
 typedef enum e_head_rotate
 {
-	TURN_R = 1,
-	TURN_L = -1
+	TURN_SIGN_R = 1,
+	TURN_SIGN_L = -1
 }	t_head_rotate;
 
 typedef enum e_player_move
@@ -151,10 +149,26 @@ typedef enum e_player_move
 	GO_FORWARD,
 	GO_RIGHT,
 	GO_BACK,
-	GO_LEFT
+	GO_LEFT,
+	TURN_R,
+	TURN_L
 }	t_player_move;
 
 /* ---- End: Player ----
+
+
+
+==== Settings ==== */
+
+typedef struct s_settings
+{
+	float		walk_speed;
+	float		key_turn_speed;
+	float		mouse_turn_speed;
+	float		fov;
+}	t_settings;
+
+/* ---- End: Settings ----
 
 
 
@@ -171,6 +185,22 @@ typedef struct s_display
 
 
 
+
+==== delay ==== */
+
+typedef struct s_delay
+{
+	unsigned int	idx;
+	float			delay_average;
+	unsigned int	delay_array[DELAY_AVERAGE_AMPITUDE];
+	size_t			last_time;
+}	t_delay;
+
+/* ---- End: delay ----
+
+
+
+
 ==== General ==== */
 
 typedef struct s_general
@@ -179,10 +209,10 @@ typedef struct s_general
 	t_texture_pack		textures;
 	t_map				map;
 	t_player			player;
-	float				fov;
+	t_settings			settings;
+	t_delay				delays;
 	double				angles_set[WIN_WIDTH];
 	double				angle_correc[WIN_WIDTH];
-	unsigned int		delta_t;
 }	t_general;
 
 /* ---- End: General ----
