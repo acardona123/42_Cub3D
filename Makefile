@@ -1,7 +1,7 @@
 NAME			=	cub3D
 
 CC				=	cc
-CFLAGS			=	-Werror -Wall -Wextra -g 
+CFLAGS			=	-Werror -Wall -Wextra -g
 DEPSFLAG		=	-MMD
 
 MLX_DIR			=	mlx
@@ -9,7 +9,6 @@ MLX				=	$(MLX_DIR)/libmlx.a
 LIBFT_DIR		=	libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -lft
-
 
 FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
 							general \
@@ -76,7 +75,34 @@ OBJ				=	$(addprefix $(OBJ_DIR)/, $(FILES_NAMES:=.o))
 DEPS			=	$(addprefix $(OBJ_DIR)/, $(FILES_NAMES:=.d))
 
 
-all : $(MLX) $(LIBFT) $(NAME)
+STATE_FILE = $(OBJ_DIR)/.state
+
+all : all_state $(MLX) $(LIBFT) $(NAME)
+	@echo "all" > $(STATE_FILE)
+	@echo Done
+
+bonus : bonus_state $(MLX) $(LIBFT) $(NAME)
+	@echo "bonus" > $(STATE_FILE)
+	@echo done
+
+all_state :
+	@mkdir -p $(OBJ_DIR)
+	@if [ ! -f $(STATE_FILE) ]; then \
+		echo all > $(STATE_FILE); \
+	fi
+	@if [ "$$(cat $(STATE_FILE))" != "all" ]; then \
+		rm -rf $(OBJ_DIR) $(NAME); mkdir $(OBJ_DIR); echo "all" > $(STATE_FILE); \
+	fi
+
+
+bonus_state :
+	@mkdir -p $(OBJ_DIR)
+	@if [ ! -f $(STATE_FILE) ]; then \
+		echo bonus > $(STATE_FILE); \
+	fi
+	@if [ "$$(cat $(STATE_FILE))" != "bonus" ]; then \
+		rm -rf $(OBJ_DIR) $(NAME); mkdir $(OBJ_DIR); echo "bonus" > $(STATE_FILE); \
+	fi
 
 $(MLX) :
 	@echo "\e[32m==== MLX CLONING AND COMPIATION ====\e[0m"
@@ -114,9 +140,14 @@ re : fclean all
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(DEPSFLAG) $(OBJ) $(INCLUDE_LIB) -o $(NAME)
 
+ifeq ($(MAKECMDGOALS),bonus)
+CFLAGS += -D BONUS
+endif
+
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c Makefile
 	@mkdir -p $(OBJ_DIR)
 	@if [ ! -d "$(dir $@)" ]; then mkdir $(dir $@); fi
 	$(CC) $(CFLAGS) $(DEPSFLAG) -c $< -o $@
 
-.PHONY : all clean fclean re
+
+.PHONY : all clean fclean re bonus
