@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 00:47:00 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/05 01:39:45 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include "../libft/libft.h"
 
 # include "settings.h"
-
-#define BONUS
 
 typedef enum e_bool
 {

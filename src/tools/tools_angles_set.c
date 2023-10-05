@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:19:27 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 01:13:12 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/05 02:24:08 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
 	idx = -1;
 	while (++idx < WIN_WIDTH)
 	{
-		angles_set[idx] = -atan(((double)(idx - (double)WIN_WIDTH / 2)) / focal);
+		angles_set[idx] = atan(((double)(idx - (double)WIN_WIDTH / 2)) / focal);
 		angle_correc[idx] = cos(angles_set[idx]);
 	}
 }

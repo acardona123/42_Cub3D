@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 01:34:17 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/05 01:43:02 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ typedef struct s_general
 	t_delay				delays;
 	double				angles_set[WIN_WIDTH];
 	double				angle_correc[WIN_WIDTH];
+	bool				next_moove[6];
 }	t_general;
 
 /* ---- End: General ----
