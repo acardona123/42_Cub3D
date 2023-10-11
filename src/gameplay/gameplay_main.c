@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 02:35:33 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:25:47 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ static void	_game_action_player(t_general *gen)
 		(float)gen->next_moove[GO_RIGHT] - (float)gen->next_moove[GO_LEFT],
 		(float)gen->next_moove[GO_FORWARD] - (float)gen->next_moove[GO_BACK]});
 	game_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L]);
-	gen->next_moove[0] = false;
-	gen->next_moove[1] = false;
-	gen->next_moove[2] = false;
-	gen->next_moove[3] = false;
-	gen->next_moove[4] = false;
-	gen->next_moove[5] = false;
 }
 
 #ifdef BONUS

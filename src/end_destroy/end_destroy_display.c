@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   end_destroy_display.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:33:19 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 04:56:07 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/05 20:25:00 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shared.h"
 
 /**
- * @brief distroys display elements (mlx, winndow and buffer image).
+ * @brief distroys display elements (mlx, window and buffer image).
  *! /!\ BEFORE DESTROYING DISPLAY: ALL THE IMAGES, INCLUDING THE ONES IN THE
  *! TEXTURE PACK, MUST HAVE BEEN DESTROYED USING END_DESTROY_TEXTURE_PACK
  * 

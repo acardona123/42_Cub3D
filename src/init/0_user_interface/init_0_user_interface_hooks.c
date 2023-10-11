@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:27:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 02:44:33 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/11 20:12:17 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int		_in_0_hooks_keys_press(int key, t_general *gen);
 static t_bool	_in_0_hooks_keys_move_press(t_general *gen, int key);
-static int		_in_0_hooks_keys_move_release(t_general *gen, int key);
+static int		_in_0_hooks_keys_move_release(int key, t_general *gen);
 static t_bool	_in_0_hooks_keys_settings(t_general *gen, int key);
 static int		_in_0_hooks_destroy(void *gen);
 // static int	_in_0_ihooks_init_mouse(... , t_general *gen)
@@ -34,9 +34,22 @@ void	in_0_hooks_init(t_general *gen)
 	mlx_hook(gen->disp.win, 33, 0L, _in_0_hooks_destroy, gen);
 }
 
+// /**
+//  * @brief initializes all hooks associated to keybord keys release
+//  * TODO: function to be done 
+//  *
+//  * @param key 
+//  * @param gen 
+//  * @return int 
+//  */
+// stati
+// static int	_in_0_hooks_keys_release(int key, t_general *gen)
+// {
+	
+// }
 
 /**
- * @brief initializes all hooks associated to keybord keys
+ * @brief initializes all hooks associated to keybord keys press
  * TODO: function to be done 
  *
  * @param key 
@@ -47,6 +60,8 @@ static int	_in_0_hooks_keys_press(int key, t_general *gen)
 {
 	if (_in_0_hooks_keys_move_press(gen, key) == SUCCESS)
 		return (0);
+	// if (_in_0_hooks_keys_move_release(gen, key) == SUCCESS)
+	// 	return (0);
 	// if (key == KEY_ACT)
 	// 	return (, 0);//wsa
 	if (_in_0_hooks_keys_settings(gen, key) == SUCCESS)
@@ -87,7 +102,7 @@ static t_bool	_in_0_hooks_keys_move_press(t_general *gen, int key)
  * @param key 
  * @return t_bool 
  */
-static int	_in_0_hooks_keys_move_release(t_general *gen, int key)
+static int	_in_0_hooks_keys_move_release(int key ,t_general *gen)
 {
 	if (key == KEY_RIGHT)
 		return (gen->next_moove[GO_RIGHT] = false, SUCCESS);
@@ -100,7 +115,7 @@ static int	_in_0_hooks_keys_move_release(t_general *gen, int key)
 	if (key == KEY_LOOK_LEFT)
 		return (gen->next_moove[TURN_L] = false, SUCCESS);
 	if (key == KEY_LOOK_RIGHT)
-		return (gen->next_moove[TURN_L] = false, SUCCESS);
+		return (gen->next_moove[TURN_R] = false, SUCCESS);
 	return (FAIL);
 }
 

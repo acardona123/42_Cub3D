@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 02:38:50 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/11 20:04:20 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <X11/keysym.h>
 
 //window parameters
-# define WIN_HEIGHT 720
-# define WIN_WIDTH 1080
+# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1920
 # define WIN_NAME "Cub3D"
 
 //game default parameters

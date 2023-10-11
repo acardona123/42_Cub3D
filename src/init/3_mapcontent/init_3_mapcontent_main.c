@@ -6,7 +6,7 @@
 /*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 01:17:31 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:50:01 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_bool	_in_3_check_characters(char c, t_general *gen, int x, int y);
 static t_bool	_int_3_check_around(char c, t_general *gen, int x, int y);
-// static t_bool	_in_3_check_door(t_general *gen);
+static t_bool	_in_3_check_door(t_general *gen);
 static void		_in_3_alloc_tabmap(t_general *gen, t_lists *lst_init);
 
 /**
@@ -66,7 +66,6 @@ void	in_3_map_content_init(t_general *gen, t_lists *lst_init)
 	}
 	if (_in_3_check_characters(NOTHING, gen, gen->map.width, 0) == FAIL)
 		in_3_map_init_destroy_exit(gen, lst_init, NULL);
-
 	to_lstfree(&lst_init->lst_map);
 }
 
@@ -101,6 +100,7 @@ static t_bool	_in_3_check_characters(char letter, t_general *gen, int x,
 	else if (x == gen->map.width && y == 0 && player == false)
 		return (to_error_msg("Map does not contain a player position"), FAIL);
 	return (_int_3_check_around(letter, gen, x, y));
+	_in_3_check_door(gen);
 }
 
 /**
@@ -162,35 +162,35 @@ static void	_in_3_alloc_tabmap(t_general *gen, t_lists *lst_init)
 	}
 }
 
-// /**
-//  * @brief check if doors have a correct placement and change textures for
-//  * 			walls next to them
-//  * @param gen 
-//  * @return true 
-//  * @return false 
-//  */
-// static t_bool	_in_3_check_door(t_general *gen)
-// {
-// 	int	x;
-// 	int	y;
+/**
+ * @brief check if doors have a correct placement and change textures for
+ * 			walls next to them
+ * @param gen 
+ * @return true 
+ * @return false 
+ */
+static t_bool	_in_3_check_door(t_general *gen)
+{
+	int	x;
+	int	y;
 
-// 	x = 0;
-// 	while (x < gen->map.width + 1)
-// 	{
-// 		y = 0;
-// 		while (y < gen->map.height + 1)
-// 		{
-// 			if (gen->map.map[x][y].type == DOOR)
-// 			{
-// 				// fonction a faire pour check les murs autour de la door et si
-// 				// valide attribuer les bonnes textures aux murs
-// 			}
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// 	return (true);
-// }
+	x = 0;
+	while (x < gen->map.width + 1)
+	{
+		y = 0;
+		while (y < gen->map.height + 1)
+		{
+			if (gen->map.map[x][y].type == DOOR)
+			{
+				// fonction a faire pour check les murs autour de la door et si
+				// valide attribuer les bonnes textures aux murs
+			}
+			y++;
+		}
+		x++;
+	}
+	return (true);
+}
 
 /*
 int	main(int ac, char **av)
