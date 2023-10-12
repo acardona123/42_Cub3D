@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shared.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 01:43:02 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:50:34 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,21 +186,6 @@ typedef struct s_display
 
 
 
-==== delay ==== */
-
-typedef struct s_delay
-{
-	unsigned int	idx;
-	float			delay_average;
-	unsigned int	delay_array[DELAY_AVERAGE_AMPITUDE];
-	size_t			last_time;
-}	t_delay;
-
-/* ---- End: delay ----
-
-
-
-
 ==== General ==== */
 
 typedef struct s_general
@@ -210,7 +195,6 @@ typedef struct s_general
 	t_map				map;
 	t_player			player;
 	t_settings			settings;
-	t_delay				delays;
 	double				angles_set[WIN_WIDTH];
 	double				angle_correc[WIN_WIDTH];
 	bool				next_moove[6];

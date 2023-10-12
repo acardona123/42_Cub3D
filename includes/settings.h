@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/11 20:04:20 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:01:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
+//force bonus mode:
+# ifndef BONUS
+#  define BONUS
+# endif
+
 //window parameters
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
@@ -23,23 +28,26 @@
 
 //game default parameters
 # define DEFAULT_FOV 1.
-# define DEFAULT_ROTATE_SPEED_KEY 0.4
+# define DEFAULT_ROTATE_SPEED_KEY 0.0006
 # define DEFAULT_ROTATE_SPEED_MOUSE 0.1
-# define DEFAULT_WALK_SPEED 0.6
+# define DEFAULT_WALK_SPEED 0.0016
 # define DEFAULT_DELAY 1
 
 //game settings
-# define DELAY_AVERAGE_AMPITUDE 6 
 # define DIST_WALL_MIN 0.125
 # define ROTATE_SPEED_KEY_INCREMENT 0.001
 # define ROTATE_SPEED_MOUSE_INCREMENT 0.001
 # define WALK_SPEED_INCREMENT 0.05
 # define FOV_INCREMENT 0.125
-# define FOV_MIN 0
-# define FOV_MAX M_PI * 0.99
+# define FOV_MIN 0.0125
+# define FOV_MAX 3.14
+# ifndef BONUS
+#  define FIXED_DELAY 10
+# endif
 
 //controls :
 # define NUMBER_KEY 12
+
 typedef enum e_commands
 {
 	KEY_FORWARD			= XK_w,
@@ -59,7 +67,6 @@ typedef enum e_commands
 	KEY_FOV_DOWN		= XK_KP_Subtract,
 	KEY_ESCAPE			= XK_Escape
 }	t_command;
-
 
 //float_precision
 # define FLOAT_EPSILON 0.000001

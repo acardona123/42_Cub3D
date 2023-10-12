@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/04 23:52:27 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:51:04 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/init.h"
 
-static void	_init_settings_delays_angleset(t_general *gen);
+static void	_init_settings_angleset(t_general *gen);
 
 void	init_main(int ac, char **av, t_general	*gen)
 {
@@ -31,22 +31,14 @@ void	init_main(int ac, char **av, t_general	*gen)
 	init_lists = in_1_map_format_check(ac, av, gen);
 	in_2_init_texture_pack(gen, &init_lists);
 	in_3_map_content_init(gen, &init_lists);
-	_init_settings_delays_angleset(gen);
+	_init_settings_angleset(gen);
 	printf("Initialisation done.\n");
 }
 
-static void	_init_settings_delays_angleset(t_general *gen)
+static void	_init_settings_angleset(t_general *gen)
 {
-	int	i;
-
 	gen->settings = (t_settings){DEFAULT_WALK_SPEED, DEFAULT_ROTATE_SPEED_KEY,
 		DEFAULT_ROTATE_SPEED_MOUSE, DEFAULT_FOV};
 	to_angle_set_init(&gen->settings.fov, DEFAULT_FOV, gen->angles_set,
 		gen->angle_correc);
-	gen->delays.idx = 0;
-	gen->delays.delay_average = DEFAULT_DELAY;
-	i = -1;
-	while (++i < DELAY_AVERAGE_AMPITUDE)
-		gen->delays.delay_array[i] = DEFAULT_DELAY;
-	gen->delays.last_time = 0;
 }

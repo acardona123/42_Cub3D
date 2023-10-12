@@ -28,7 +28,7 @@ static void				r_frame_empty_column(t_data *buff, int idx_ray);
  * @param gen 
  * @param time used for getting the right animation
  */
-void	r_frame_construction(t_general *gen)
+void	r_frame_construction(t_general *gen, size_t last_time)
 {
 	register int		idx_ray;
 	register t_hitpoint	hit_pt;
@@ -49,7 +49,7 @@ void	r_frame_construction(t_general *gen)
 			hit_pt.dist = to_vector_norm(hit_pt.point_co, gen->player.p_co);
 			if (hit_pt.dist < DIST_WALL_MIN)
 				hit_pt.dist = DIST_WALL_MIN;
-			_r_frame_build_column(gen, idx_ray, hit_pt, gen->delays.last_time);
+			_r_frame_build_column(gen, idx_ray, hit_pt, last_time);
 		}
 	}
 }
