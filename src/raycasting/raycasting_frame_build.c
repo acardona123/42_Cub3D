@@ -28,34 +28,37 @@ static void				r_frame_empty_column(t_data *buff, int idx_ray);
  * @param gen 
  * @param time used for getting the right animation
  */
-void	r_frame_construction(t_general *gen, size_t last_time)
+void	*r_frame_construction(t_general *gen, size_t last_time)
 {
 	register int		idx_ray;
 	register t_hitpoint	hit_pt;
-	register t_coord_f	p_co;
 	register float		p_angle;
+	t_coord_f			p_co;
 
 	p_co = gen->player.p_co;
 	p_angle = gen->player.p_angle;
 	idx_ray = -1;
 	while (++idx_ray < WIN_WIDTH)
 	{
-		hit_pt = r_ray_collision(WALL, p_co,
+		hit_pt = r_ray_hit(&p_co,
 				p_angle + gen->angles_set[idx_ray], &gen->map);
-		if (hit_pt.point_co.x < 0)
+		if (hit_pt.pt_co.x <= 0.)
 			r_frame_empty_column(gen->disp.buff, idx_ray);
 		else
 		{
-			hit_pt.dist = to_vector_norm(hit_pt.point_co, gen->player.p_co);
+			hit_pt.dist = to_vector_norm(hit_pt.pt_co, gen->player.p_co);
 			if (hit_pt.dist < DIST_WALL_MIN)
 				hit_pt.dist = DIST_WALL_MIN;
 			_r_frame_build_column(gen, idx_ray, hit_pt, last_time);
 		}
 	}
+	return (gen->disp.buff->img);
 }
 
 /**
- * @brief draw a 
+ * @brief draw a gray column if no ostacle is found. This shouldn't happen
+ *	(can only happend if outside the map boundaries, but in this case a black
+ *	screen is displayed so r_frame_construction isn't called)
  * 
  * @param buff 
  * @param idx_ray 
@@ -104,31 +107,12 @@ static void	_r_frame_build_column(t_general *gen, int idx_ray,
 	_r_get_pixel_color(0, NULL, 0);
 	while (++y < tmp_y && y < WIN_HEIGHT)
 		*(int *)(addr_x + y * gen->disp.buff->line_len) = _r_get_pixel_color(\
-			h_theoric, texture, hitpoint.point_co.x - floor(hitpoint.point_co.x)
-				+ hitpoint.point_co.y - floor(hitpoint.point_co.y));
+			h_theoric, texture, hitpoint.pt_co.x - floor(hitpoint.pt_co.x)
+				+ hitpoint.pt_co.y - floor(hitpoint.pt_co.y));
 	--y;
 	while (++y < WIN_HEIGHT)
 		*(int *)(addr_x + y * gen->disp.buff->line_len) = gen->textures.color_f;
 }
-
-/*
-static void	_r_frame_build_column(t_general *gen, int idx_ray,
-	register t_hitpoint hitpoint, size_t time)
-{
-	t_static_texture		*texture;
-	double					h_theoric;
-
-	texture = _r_get_column_texture(gen->map.map[hitpoint.chunk_co.x]
-	[hitpoint.chunk_co.y].textures[hitpoint.hit_face], time, gen->map.map
-	[hitpoint.chunk_co.x][hitpoint.chunk_co.y].t0);
-	h_theoric = 1. / (hitpoint.height_corrector
-	* to_vector_norm(hitpoint.point_co, gen->player.p_co) + DIST_REF)
-	* WIN_HEIGHT;
-	
-
-
-}
-*/
 
 /**
  * @brief given a certain animated texture, a reference time t0 and a current

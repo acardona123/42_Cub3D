@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_0_user_interface_hooks.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:27:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/11 20:12:17 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:26:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,6 @@ void	in_0_hooks_init(t_general *gen)
 	mlx_key_hook(gen->disp.win, _in_0_hooks_keys_move_release, gen);
 	mlx_hook(gen->disp.win, 33, 0L, _in_0_hooks_destroy, gen);
 }
-
-// /**
-//  * @brief initializes all hooks associated to keybord keys release
-//  * TODO: function to be done 
-//  *
-//  * @param key 
-//  * @param gen 
-//  * @return int 
-//  */
-// stati
-// static int	_in_0_hooks_keys_release(int key, t_general *gen)
-// {
-	
-// }
 
 /**
  * @brief initializes all hooks associated to keybord keys press
@@ -102,7 +88,7 @@ static t_bool	_in_0_hooks_keys_move_press(t_general *gen, int key)
  * @param key 
  * @return t_bool 
  */
-static int	_in_0_hooks_keys_move_release(int key ,t_general *gen)
+static int	_in_0_hooks_keys_move_release(int key, t_general *gen)
 {
 	if (key == KEY_RIGHT)
 		return (gen->next_moove[GO_RIGHT] = false, SUCCESS);

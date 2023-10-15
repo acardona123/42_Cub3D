@@ -43,8 +43,14 @@ FILES_INIT			=	$(addprefix init/, \
 						)
 
 FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
-							collision \
+							collision_main \
+							collision_init \
+							collision_segments_east \
+							collision_segments_west \
+							collision_hit_check \
+							collision_hit_check_door \
 							frame_build \
+							tools \
 						)
 
 FILES_GAMEPLAY			=	$(addprefix gameplay/gameplay_, \

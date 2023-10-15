@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/12 17:50:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:00:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,8 @@ typedef struct s_map
 
 typedef struct s_hitpoint
 {
-	t_coord_f			point_co;
+	t_coord_f			pt_co;
 	t_coord_i			chunk_co;
-	// double				hit_dec; for future opti ?
 	t_chunk_face		hit_face;
 	double				dist;
 }	t_hitpoint;
@@ -179,6 +178,7 @@ typedef struct s_display
 	void			*mlx;
 	void			*win;
 	t_data			*buff;
+	t_data			*img_out_map;
 }	t_display;
 
 /* ---- End: Display ----

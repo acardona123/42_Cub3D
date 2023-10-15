@@ -6,63 +6,72 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 04:45:16 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:28:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
 
-static bool	_in_0_display_elements_init(t_display *disp);
+static t_bool	_in_0_display_elements_init(t_display *disp);
+static t_bool	_in_0_display_empty_img_init(void *mlx, t_data **img_dst);
 
 /**
- * @brief initialize the t_display structure that corresponds to the ui
- *			(window + hooks)
+ * @brief initializes the t_display structure that corresponds to the ui
+ *			(window + hooks + images + hooks)
  * 
  * @param gen 
  * @return EXIT on errors 
  */
 void	in_0_init_display(t_general *gen)
 {
-	if (_in_0_display_elements_init(&gen->disp) == false)
+	if (_in_0_display_elements_init(&gen->disp) == FAIL)
 		end_destroy_exit(gen, EXIT_INIT_1);
 	in_0_hooks_init(gen);
 }
-
-// static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = data->addr + (y * data->line_len + x * (data->opp));
-// 	*(unsigned int*)dst = color;
-// }
 
 /**
  * @brief initializes the t_display struct (mlx, window and empty buffer image)
  * 
  * @param disp genereal structure to init
- * @return true if the initialisation was successfull
- * @return false if init error: nothing allocated/freed and error msg displayed
+ * @return SUCCESS if the initialisation was successfull
+ * @return FAIL if init error: nothing allocated/freed and error msg displayed
  */
-static bool	_in_0_display_elements_init(t_display *disp)
+static t_bool	_in_0_display_elements_init(t_display *disp)
 {
 	disp->mlx = mlx_init();
 	if (!disp->mlx)
-		return (to_error_msg("mlx_init faillure"), false);
+		return (to_error_msg("mlx_init faillure"), FAIL);
 	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
 	if (!disp->win)
-		return (to_error_msg("mlx_new_window faillure"), false);
-	disp->buff = calloc(1, sizeof(t_data));
-	if (!disp->buff)
-		return (to_error_msg("Mem allocation error in display init"), false);
-	disp->buff->img = mlx_new_image(disp->mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!disp->buff->img)
-		return (to_error_msg("mlx_new_image faillure"), false);
-	disp->buff->addr = mlx_get_data_addr(disp->buff->img, &disp->buff->opp,
-			&disp->buff->line_len, &disp->buff->endian);
-	disp->buff->opp /= 8;
-	disp->buff->pix_height = WIN_HEIGHT;
-	disp->buff->pix_width = WIN_WIDTH;
-	return (true);
+		return (to_error_msg("mlx_new_window faillure"), FAIL);
+	if (_in_0_display_empty_img_init(disp->mlx, &disp->buff) == FAIL)
+		return (FAIL);
+	if (_in_0_display_empty_img_init(disp->mlx, &disp->img_out_map) == FAIL)
+		return (FAIL);
+	return (SUCCESS);
+}
+
+/**
+ * @brief used to initialise an empty image of the size of the window
+ * 
+ * @param mlx 
+ * @return SUCCESS if success 
+ * @return FAIL if faillure (err msg displayed)
+ */
+static t_bool	_in_0_display_empty_img_init(void *mlx, t_data **img_dst)
+{
+	*img_dst = calloc(1, sizeof(t_data));
+	if (!*img_dst)
+		return (to_error_msg("Mem allocation error in display init"), FAIL);
+	(*img_dst)->img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!(*img_dst)->img)
+		return (to_error_msg("mlx_new_image faillure"), FAIL);
+	(*img_dst)->addr = mlx_get_data_addr((*img_dst)->img, &(*img_dst)->opp,
+			&(*img_dst)->line_len, &(*img_dst)->endian);
+	(*img_dst)->opp /= 8;
+	(*img_dst)->pix_height = WIN_HEIGHT;
+	(*img_dst)->pix_width = WIN_WIDTH;
+	return (SUCCESS);
 }
 
 /*

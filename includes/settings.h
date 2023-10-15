@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/12 18:01:14 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:32:11 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WIN_NAME "Cub3D"
 
 //game default parameters
-# define DEFAULT_FOV 1.
+# define DEFAULT_FOV 1.4
 # define DEFAULT_ROTATE_SPEED_KEY 0.0006
 # define DEFAULT_ROTATE_SPEED_MOUSE 0.1
 # define DEFAULT_WALK_SPEED 0.0016
@@ -69,6 +69,6 @@ typedef enum e_commands
 }	t_command;
 
 //float_precision
-# define FLOAT_EPSILON 0.000001
+# define EPSILON 0.000001
 
 #endif

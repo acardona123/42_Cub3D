@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_destroy_display.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:33:19 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/05 20:25:00 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:01:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void	end_destroy_display(t_display *disp)
 		if (disp->buff->img)
 			mlx_destroy_image(disp->mlx, disp->buff->img);
 		free(disp->buff);
+	}
+	if (disp->img_out_map)
+	{
+		if (disp->img_out_map->img)
+			mlx_destroy_image(disp->mlx, disp->img_out_map->img);
+		free(disp->img_out_map);
 	}
 	if (disp->mlx)
 	{

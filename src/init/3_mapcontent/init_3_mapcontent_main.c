@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_3_mapcontent_main.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/10 19:50:01 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:13:35 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	in_3_map_content_init(t_general *gen, t_lists *lst_init)
 				in_3_map_init_destroy_exit(gen, lst_init, NULL);
 			++x;
 		}
+		while (x < gen->map.width)
+			gen->map.map[x++][y].type = NOTHING;
 		--y;
 		tmp = tmp->next;
 	}

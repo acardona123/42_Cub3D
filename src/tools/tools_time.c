@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:28:24 by alexandm          #+#    #+#             */
-/*   Updated: 2023/10/01 00:16:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:55:04 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ size_t	to_getime(void)
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
-#endif
+#else
 
-#ifndef BONUS
 size_t	to_getime(void)
 {
 	return (0);

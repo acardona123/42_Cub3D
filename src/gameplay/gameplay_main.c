@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/12 18:11:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:25:36 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @brief function that loop to generate the frames according to the inputs
  * 
  * @param elem void * pointer to the t_general structure
- * @return int 0 anyway
+ * @return int 0 anyway, necessary for the mlx
  */
 int	game_looping(void *elem)
 {
@@ -27,6 +27,7 @@ int	game_looping(void *elem)
 	size_t					delay;
 	static size_t			last_time = 0;
 	register size_t			tmp_time;
+	void					*img;
 
 	gen = elem;
 	tmp_time = to_getime();
@@ -38,14 +39,16 @@ int	game_looping(void *elem)
 		delay);
 	game_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		delay);
-	r_frame_construction(gen, tmp_time);
-	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win, gen->disp.buff->img,
-		0, 0);
+	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
+			[(int)gen->player.p_co.y].type, "1 "))
+		img = gen->disp.img_out_map->img;
+	else
+		img = r_frame_construction(gen, tmp_time);
+	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win, img, 0, 0);
 	return (0);
 }
 
-#endif
-#ifndef BONUS
+#else
 
 int	game_looping(void *elem)
 {
@@ -99,8 +102,8 @@ void	game_move_player(t_general *gen, t_vector_f direction, size_t delay)
 		return ;
 	if (direction.x && direction.y)
 	{
-		direction.x = SQRT2INV;
-		direction.y = SQRT2INV;
+		direction.x *= SQRT2INV;
+		direction.y *= SQRT2INV;
 	}
 	gen->player.p_co.x += gen->settings.walk_speed * delay
 		* (direction.x * cos(gen->player.p_angle)

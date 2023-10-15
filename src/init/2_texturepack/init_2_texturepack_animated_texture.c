@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_2_texturepack_animated_texture.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/04 19:49:19 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:39:34 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,8 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 	in_2_tools_sort_anim_text_table(tex->frame_array, tex->frame_number);
 	return (closedir(dir), SUCCESS);
 }
-#endif
+#else
 
-#ifndef BONUS
 /**
  * @brief can't open a folder in the mandatory part
  * 
@@ -190,8 +189,8 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 static void	_in_2_show_static_text(t_static_texture *tex)
 {
 	if (tex)
-		printf("- {%s} :\n  width = %d\n  height: %d\n  data.img = %p\n", tex->path,
-		tex->img_width, tex->img_height, tex->data.img);
+		printf("- {%s} :\n  width = %d\n  height: %d\n  data.img = %p\n",
+		tex->path, tex->img_width, tex->img_height, tex->data.img);
 	else
 	 printf("- (nill)\n");
 }
@@ -199,7 +198,9 @@ static void	_in_2_show_static_text(t_static_texture *tex)
 static void	_in_2_show_animated_text(t_animated_texture *tex)
 {
 	unsigned int	i;
-	printf("Texture: frame_number: %u\n frame_ms: %u\n frame_cycle_short: %u\n frame_cycle_long: %u\n frame_array:\n", tex->frame_number, tex->frame_ms, tex->frame_cycle_short, tex->frame_cycle_long);
+	printf("Texture: frame_number: %u\n frame_ms: %u\n frame_cycle_short: %u\n\
+ frame_cycle_long: %u\n frame_array:\n", tex->frame_number, tex->frame_ms,
+ 	tex->frame_cycle_short, tex->frame_cycle_long);
 	if (tex->frame_array)
 	{
 		i = 0;
@@ -228,19 +229,22 @@ or {./a.out SO text_repo_containing_img frame_ms frame_pause_ms}\n"), 0);
 	printf("init ok\n\n");
 	
 	arg = av + 1;
-	if (_in_2_anim_textu_init(gen.disp.mlx, &gen.textures.wall_e, arg) == SUCCESS)
+	if (_in_2_anim_textu_init(gen.disp.mlx, &gen.textures.wall_e, arg)
+		== SUCCESS)
 	{
 		printf("Texture ok:\n");
 		_in_2_show_animated_text(gen.textures.wall_e);
 		i = 0;
 		while (i < gen.textures.wall_e->frame_number)
 		{
-			mlx_put_image_to_window(gen.disp.mlx, gen.disp.win, gen.textures.wall_e->frame_array[i].data.img, 0, 0);
+			mlx_put_image_to_window(gen.disp.mlx, gen.disp.win,
+				gen.textures.wall_e->frame_array[i].data.img, 0, 0);
 			sleep(2);
 			++i;
 		}
 		printf("No more texture\n");
-		mlx_put_image_to_window(gen.disp.mlx, gen.disp.win, gen.textures.wall_e->frame_array[1].data.img, 0, 0);
+		mlx_put_image_to_window(gen.disp.mlx, gen.disp.win,
+			gen.textures.wall_e->frame_array[1].data.img, 0, 0);
 		mlx_loop(gen.disp.mlx);
 	}
 	else
@@ -249,4 +253,3 @@ or {./a.out SO text_repo_containing_img frame_ms frame_pause_ms}\n"), 0);
 	return (0);
 }
 */
-

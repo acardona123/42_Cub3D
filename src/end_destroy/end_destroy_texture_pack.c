@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/01 22:58:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:25:05 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ static void	_end_textures_destroy_one_static_texture(void *mlx,
 	free(target->path);
 	if (target->data.img)
 		mlx_destroy_image(mlx, target->data.img);
-	// if (target->data.addr)
-	// 	free(target->data.addr);
 }
 
 /*

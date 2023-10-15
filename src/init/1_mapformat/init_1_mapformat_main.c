@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/29 03:33:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:35:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	_in_1_map_mapcontent_check(t_general *gen, t_lists *lists,
 /**
  * @brief checks if the map format is correct according to the subject do not do
  *			anythig with the readen data
- * TODO: function to code
+ * TODO: function to complete with doors controle
  * @param ac 
  * @param av 
  * @param gen 
@@ -51,12 +51,16 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 }
 
 /**
- * @brief store parameters in the linked list lst->param 
+ * @brief stores parameters (string describing textures and ceil/floor color)
+ *		in the linked list lst->param 
  * 
- * @param gen 
- * @param lists 
- * @param fd_input 
- * @param line 
+ * @param gen general structure to fill
+ * @param lists to linked list constaining string : one for the texture's
+ *		parameters lines in the map file, the other for the lines corresonding
+ *		to the map_content elements -> will be updatedd to add a line
+ * @param fd_input input map containing the parameters and the map
+ * @param line pointer where the readed line will be stored (the last line will
+ *		be used in the mapcontent_check later)
  * @return EXIT if error
  */
 static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
@@ -83,7 +87,7 @@ static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
  * @brief store the map in the linked list lst->map and check if there is
  *		empty_line in the map  
  * 
- * @param gen 
+ * @param gen idem _in_1_map_params_check
  * @param lists 
  * @param fd_input 
  * @param line 
