@@ -1,0 +1,16 @@
+NO ./textures/random_tests/wall_n/walln1.xpm
+SO ./textures/random_tests/wall_s/walls.xpm
+WE ./textures/random_tests/wall_w/wallw.xpm
+EA ./textures/random_tests/wall_e/wall_e1.xpm
+F 100,60,60
+C 60,160,255
+
+
+
+1111111111111111111
+1000000000000000001
+1000000000000010001
+10001N0000000000001
+1000000000000010001
+1000000001000000001
+1111111111111111111
