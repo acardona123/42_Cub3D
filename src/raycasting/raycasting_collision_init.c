@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:42:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/16 00:40:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 	_r_ray_init_h(p_co, rdata, angle_ray);
 	_r_ray_init_v(p_co, rdata, angle_ray);
 	rdata->first = r_ray_init_hitpoint(p_co, rdata, &hitpoint);
+	if (hitpoint.pt_co.x >= 0. && r_point_outside_map(map, hitpoint.pt_co))//ne peut pas arriver si le player est entre les murs de la map
 		hitpoint.pt_co.x = -1;
 	return (hitpoint);
 }
