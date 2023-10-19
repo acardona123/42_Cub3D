@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:25:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:19:58 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	game_looping(void *elem)
 		delay);
 	game_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		delay);
+	printf("player_co: (%.3f, %.3f)\n", gen->player.p_co.x, gen->player.p_co.y);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
 			[(int)gen->player.p_co.y].type, "1 "))
 		img = gen->disp.img_out_map->img;

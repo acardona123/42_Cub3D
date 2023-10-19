@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:00:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/17 23:23:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,21 @@ typedef struct s_texture_pack
 typedef enum e_chunk_type
 {
 	FLOOR = '0',
-	DOOR = '2',
 	WALL = '1',
+	DOOR = 'd',
 	NOTHING = ' ',
 	PLAYER_N = 'N',
-	PLAYER_S = 'S',
 	PLAYER_E = 'E',
-	PLAYER_W = 'W',
+	PLAYER_S = 'S',
+	PLAYER_W = 'W'
 }	t_chunk_type;
 
 typedef enum e_chunk_face
 {
-	FACE_N ,
-	FACE_E ,
-	FACE_S ,
-	FACE_W ,
+	FACE_N,
+	FACE_E,
+	FACE_S,
+	FACE_W
 }	t_chunk_face;
 
 typedef enum e_door_status

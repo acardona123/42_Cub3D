@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:11:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/13 22:33:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:41:35 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  */
 bool	r_point_outside_map(t_map *map, t_coord_f P)
 {
-	return (P.x < 1 || P.y < 1 || P.x > map->x_max - 1 || P.y > map->y_max);
+	return (P.x < 1. || P.y < 1. || P.x > map->x_max - 1. || P.y > map->y_max);
 }
 
 /**

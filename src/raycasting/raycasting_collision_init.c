@@ -6,16 +6,18 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/16 00:40:08 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:10:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/raycasting.h"
 
-static void	_r_ray_init_h(t_coord_f *P, t_ray_data *rdata, float angle_ray);
-static void	_r_ray_init_v(t_coord_f *P, t_ray_data *rdata, float angle_ray);
-t_1st_type	r_ray_init_hitpoint(t_coord_f *p_co, t_ray_data *rdata,
-				t_hitpoint *hitpt);
+static void			_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata,
+						float angle_ray);
+static void			_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata,
+						float angle_ray);
+static t_1st_type	_r_ray_init_get_first_type(t_coord_f *pco,
+						t_ray_data *rdata);
 
 /**
  * @brief calculates the parameters used too check the ray intersection with the
@@ -40,6 +42,7 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 	_r_ray_init_h(p_co, rdata, angle_ray);
 	_r_ray_init_v(p_co, rdata, angle_ray);
 	rdata->first = r_ray_init_hitpoint(p_co, rdata, &hitpoint);
+	// (void)map;
 	if (hitpoint.pt_co.x >= 0. && r_point_outside_map(map, hitpoint.pt_co))//ne peut pas arriver si le player est entre les murs de la map
 		hitpoint.pt_co.x = -1;
 	return (hitpoint);
@@ -72,12 +75,12 @@ static void	_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 	if (angle_ray > 1.5 * M_PI || angle_ray < M_PI * 0.5) // cadran sup
 	{
 		rdata->delta_x = tan_a;
-		round_y = ceil(p_co->y);
+		round_y = ceil(p_co->y) + (p_co->y == ceil(p_co->y));
 	}
 	else
 	{
 		rdata->delta_x = -tan_a;
-		round_y = floor(p_co->y);
+		round_y = floor(p_co->y) - (p_co->y == floor(p_co->y));
 	}
 	rdata->last_h.x = p_co->x + tan_a * (round_y - p_co->y);
 	rdata->last_h.y = round_y;
@@ -92,7 +95,7 @@ static void	_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
  * @param rdata structure that will be partially completed
  * @param angle_ray angle of the ray in rad
  */
-static void	_r_ray_init_v(t_coord_f *P, t_ray_data *rdata, float angle_ray)
+static void	_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 {
 	register float	ratio_tan_a;
 	register float	round_x;
@@ -110,15 +113,15 @@ static void	_r_ray_init_v(t_coord_f *P, t_ray_data *rdata, float angle_ray)
 	if (angle_ray < M_PI) // cadran droit
 	{
 		rdata->delta_y = ratio_tan_a;
-		round_x = ceil(P->x);
+		round_x = ceil(p_co->x) + (p_co->x == ceil(p_co->x));
 	}
 	else // gauche
 	{
 		rdata->delta_y = -ratio_tan_a;
-		round_x = floor(P->x);
+		round_x = floor(p_co->x) - (p_co->x == floor(p_co->x));
 	}
 	rdata->last_v.x = round_x;
-	rdata->last_v.y = P->y + (round_x - P->x) * ratio_tan_a;
+	rdata->last_v.y = p_co->y + (round_x - p_co->x) * ratio_tan_a;
 }
 
 /**
@@ -133,10 +136,11 @@ static void	_r_ray_init_v(t_coord_f *P, t_ray_data *rdata, float angle_ray)
 t_1st_type	r_ray_init_hitpoint(t_coord_f *pco, t_ray_data *rdata,
 	t_hitpoint *hitpt)
 {
+	t_1st_type	first_type;
+
 	*hitpt = (t_hitpoint){0};
-	if (!rdata->check_v || (rdata->last_v.x != rdata->last_h.x \
-	&& pow(pco->x - rdata->last_v.x, 2.) + pow(pco->y - rdata->last_v.y, 2.) \
-	> pow(pco->x - rdata->last_h.x, 2.) + pow(pco->y - rdata->last_h.y, 2.)))//hits an horizontal first
+	first_type = _r_ray_init_get_first_type(pco, rdata);
+	if (first_type == FIRST_IS_H)//hits an horizontal first
 	{
 		hitpt->pt_co = rdata->last_h;
 		hitpt->chunk_co.x = (int)hitpt->pt_co.x;
@@ -152,10 +156,124 @@ t_1st_type	r_ray_init_hitpoint(t_coord_f *pco, t_ray_data *rdata,
 		hitpt->hit_face = FACE_E;
 	else
 		hitpt->hit_face = FACE_W;
-	if (rdata->last_v.x < rdata->last_h.x + EPSILON
-		&& rdata->last_v.x > rdata->last_h.x - EPSILON)
-		return (rdata->last_h.x = rdata->last_v.x,
-			rdata->last_v.y = rdata->last_h.y, hitpt->chunk_co.y
-			+= (rdata->dial == NE_E || rdata->dial == W_NW), FIRST_IS_ANY);
-	return (FIRST_IS_V);
+	if (first_type == FIRST_IS_V)
+		return (FIRST_IS_V);
+	return (FIRST_IS_ANY);
 }
+
+static t_1st_type	_r_ray_init_get_first_type(t_coord_f *pco,
+	t_ray_data *rdata)
+{
+	if (!rdata->check_h)
+		return (FIRST_IS_V);
+	if (!rdata->check_v)
+		return (FIRST_IS_H);
+	if (rdata->last_h.x > rdata->last_v.x - EPSILON
+		&& rdata->last_h.x < rdata->last_v.x + EPSILON)
+	{
+		rdata->last_h.x = rdata->last_v.x;
+		rdata->last_v.y = rdata->last_h.y;
+		return (FIRST_IS_ANY);
+	}
+	if (pow(pco->x - rdata->last_v.x, 2.) + pow(pco->y - rdata->last_v.y, 2.)
+		< pow(pco->x - rdata->last_h.x, 2.) + pow(pco->y - rdata->last_h.y, 2.))
+		return (FIRST_IS_V);
+	return (FIRST_IS_H);
+}
+
+/*
+//==== tests _r_ray_init_h and _r_ray_init_v only ====
+// https://www.geogebra.org/m/zw7kz29a
+
+#include "../../includes/cub3d.h"
+
+static void			_test_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata,
+						float angle_ray);
+static void			_test_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata,
+						float angle_ray);
+static void			_test_r_ray_init_rdata_hitpoint(t_coord_f *p_co,
+						float angle_ray, t_map *map, t_ray_data *rdata);
+
+int	main(int ac, char **av)
+{
+	t_general	gen;
+	t_ray_data	rdata;
+	float		angle_deg;
+
+	gen = (t_general){0};
+
+	init_main(ac, av, &gen);
+	gen.player.p_co.x  = floor(gen.player.p_co.x);
+	gen.player.p_co.y = floor(gen.player.p_co.y);
+	gen.player.p_angle = 1 * M_PI / 2;
+	printf("new player data:\n co: (%f, %f)\nangle: %f (%f deg)\n\n",
+		gen.player.p_co.x, gen.player.p_co.y, gen.player.p_angle,
+		gen.player.p_angle * 180 / M_PI);
+
+	// gen.player.p_co.x = 18.;//to change for different tests
+	// gen.player.p_co.y = 9.5;
+
+	// printf("player co: (%.4f, %.4f)\n", gen.player.p_co.x, gen.player.p_co.y);
+
+	angle_deg = 0.;
+	while (angle_deg < 360.)
+	{
+		printf("\n-----------------------\nangle: %.2f (%.4f)\n\n", angle_deg,
+			angle_deg * M_PI / 180.);
+
+		printf("first h and first v detection :");
+		_test_r_ray_init_h(&gen.player.p_co, &rdata, angle_deg * M_PI / 180.);
+		_test_r_ray_init_v(&gen.player.p_co, &rdata, angle_deg * M_PI / 180.);
+
+		printf("\nAfter selection:\n");
+		_test_r_ray_init_rdata_hitpoint(&gen.player.p_co,
+			angle_deg * M_PI / 180, &gen.map, &rdata);
+		angle_deg += 5.;
+	}
+	return (0);
+}
+
+static void	_test_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata,
+				float angle_ray)
+{
+	_r_ray_init_h(p_co, rdata, angle_ray);
+	printf("H:\n check_H: %d\n first_h: (%.4f, %.4f) -> delta_h - player :\
+ (%.4f, %.4f)\n delta_x: %.4f\n", rdata->check_h, rdata->last_h.x,
+		rdata->last_h.y, rdata->last_h.x - floor(p_co->x),
+		rdata->last_h.y - floor(p_co->y), rdata->delta_x);
+}
+
+static void	_test_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata,
+				float angle_ray)
+{
+	_r_ray_init_v(p_co, rdata, angle_ray);
+	printf("V:\n check_v: %d\n first_v: (%.4f, %.4f) -> delta_v - player :\
+ (%.4f, %.4f)\n delta_y: %.4f\n", rdata->check_v, rdata->last_v.x,
+		rdata->last_v.y, rdata->last_v.x - floor(p_co->x),
+		rdata->last_v.y - floor(p_co->y), rdata->delta_y);
+}
+
+static void	_test_r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
+	t_map *map, t_ray_data *rdata)
+{
+	t_hitpoint	first;
+
+	first = r_ray_init_rdata_hitpoint(p_co, angle_ray, map, rdata);
+	printf("H:\n check_H: %d\n first_h: (%.4f, %.4f) -> delta_h - player :\
+ (%.4f, %.4f)\n delta_x: %.4f\n", rdata->check_h, rdata->last_h.x,
+		rdata->last_h.y, rdata->last_h.x - floor(p_co->x),
+		rdata->last_h.y - floor(p_co->y), rdata->delta_x);
+	printf("V:\n check_v: %d\n first_v: (%.4f, %.4f) -> delta_v - player :\
+ (%.4f, %.4f)\n delta_y: %.4f\n", rdata->check_v, rdata->last_v.x,
+		rdata->last_v.y, rdata->last_v.x - floor(p_co->x),
+		rdata->last_v.y - floor(p_co->y), rdata->delta_y);
+	printf("\nFirst hitpoint:\n prio: %c\n pt_co : (%.4f, %.4f) -> pt_co - \
+player_co : (%.3f, %.3f)\n chunk_co: (%d, %d) -> cunk_co - player_co :\
+ (%d, %d)\n face: %c\n",
+		"HVA"[rdata->first], first.pt_co.x, first.pt_co.y,
+		first.pt_co.x - floor(p_co->x), first.pt_co.y - floor(p_co->y),
+		first.chunk_co.x, first.chunk_co.y, first.chunk_co.x - (int)p_co->x,
+		first.chunk_co.y - (int)p_co->y, "NESW"[first.hit_face]);
+}
+
+*/
