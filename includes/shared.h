@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/17 23:23:30 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:44:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_animated_texture
 	t_static_texture	*frame_array;
 }	t_animated_texture;
 
-# define NUMBER_OF_TEXTURES 7
+# define NUMBER_OF_TEXTURES 6
 
 typedef struct s_texture_pack
 {
@@ -60,8 +60,7 @@ typedef struct s_texture_pack
 	t_animated_texture	*wall_e;
 	t_animated_texture	*wall_w;
 	t_animated_texture	*door_front;
-	t_animated_texture	*door_side_l;
-	t_animated_texture	*door_side_r;
+	t_animated_texture	*door_side;
 	int					color_f;
 	int					color_c;
 }	t_texture_pack;
@@ -99,6 +98,12 @@ typedef enum e_door_status
 	DOOR_CLOSING,
 	DOOR_CLOSED
 }	t_door_status;
+
+typedef enum e_other_status
+{
+	INACTIVE,
+	ACTIVE
+}	t_other_status;
 
 typedef struct s_chunk
 {

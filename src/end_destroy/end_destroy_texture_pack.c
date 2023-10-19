@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:25:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:13:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
 		return ;
 	textures = (t_animated_texture **[NUMBER_OF_TEXTURES]){&pack->wall_n,
 		&pack->wall_s, &pack->wall_e, &pack->wall_w, &pack->door_front,
-		&pack->door_side_r, &pack->door_side_l};
+		&pack->door_side};
 	i = -1;
 	while (++i < NUMBER_OF_TEXTURES)
 	{

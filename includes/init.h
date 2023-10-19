@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/02 14:57:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 00:56:16 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@
 #  include <sys/types.h>
 #  include <dirent.h>
 # endif
+
+# define MSG_BAD_ALLOC "Map: memory allocation error during "
+
+//map parameters error messages
+# define MSG_TEXTURE_MISSING_DOOR_F "Map: missing texture for the doors' front"
+# define MSG_TEXTURE_MISSING_DOOR_S "Map: missing texture for the doors' sides"
+
+//map content error messages
+# define MSG_MAP_NOT_CLOSED "Map: not surrounded by walls"
+# define MSG_INVALID_CHAR "Map: contains an invalid character"
+# define MSG_MULTIPLE_PLAYER "Map: multiple player's position"
+# define MSG_NO_PLAYER "Map: does not contain a player position"
+# define MSG_DOOR_ISOLATED "Map: door not surrounded by at least two opposit\
+ walls"
 
 typedef struct s_init_lists
 {
@@ -79,9 +93,14 @@ void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
 =============== 3_mapcontent/ =============== */
 // init_3_mapcontent.c
 void	in_3_map_content_init(t_general *gen, t_lists *lst_init);
+// init_3_mapcontent_fill_chunk.c
+bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x,
+			int y);
 // init_3_mapcontent_locate_texture.c
-void	in_3_map_locate_textures(t_texture_pack *texturepack,
+t_bool	in_3_map_locate_textures(t_texture_pack *texturepack,
 			t_animated_texture **tex, char c);
+void	in_3_map_add_door_sides_textures(t_chunk **map,
+			t_texture_pack *textures, int door_x, int door_y);
 //init_3_mapcontent_utils.c
 void	in_3_map_init_destroy_exit(t_general *gen, t_lists *lst_init,
 			char *err_msg);

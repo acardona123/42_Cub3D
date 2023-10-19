@@ -37,6 +37,7 @@ FILES_INIT			=	$(addprefix init/, \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
+								fill_chunk \
 								locate_texture \
 								utils \
 							) \

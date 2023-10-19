@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:39:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:15:43 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ t_bool	in_2_init_animated_texture(void *mlx, t_texture_pack *text_pack,
 		return (_in_2_anim_textu_init(mlx, &text_pack->wall_e, line_arg));
 	else if (!ft_strcmp(*line_arg, "DF"))
 		return (_in_2_anim_textu_init(mlx, &text_pack->door_front, line_arg));
-	else if (!ft_strcmp(*line_arg, "DL"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->door_side_l, line_arg));
-	else if (!ft_strcmp(*line_arg, "DR"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->door_side_r, line_arg));
+	else if (!ft_strcmp(*line_arg, "DS"))
+		return (_in_2_anim_textu_init(mlx, &text_pack->door_side, line_arg));
 	else if (!ft_strcmp(*line_arg, "F"))
 		return (in_2_set_color(&text_pack->color_f, line_arg,
 				&already_done[IDX_FLOOR]));
@@ -186,6 +184,9 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 #endif
 
 /*
+
+//tests
+
 static void	_in_2_show_static_text(t_static_texture *tex)
 {
 	if (tex)
