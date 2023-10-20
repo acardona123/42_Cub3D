@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/17 17:19:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 02:08:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	game_looping(void *elem)
 		delay);
 	game_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		delay);
-	printf("player_co: (%.3f, %.3f)\n", gen->player.p_co.x, gen->player.p_co.y);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
 			[(int)gen->player.p_co.y].type, "1 "))
 		img = gen->disp.img_out_map->img;
@@ -54,6 +53,7 @@ int	game_looping(void *elem)
 int	game_looping(void *elem)
 {
 	static t_general		*gen;
+	void					*img;
 
 	gen = elem;
 	game_move_player(gen, (t_vector_f){
@@ -62,8 +62,12 @@ int	game_looping(void *elem)
 		FIXED_DELAY);
 	game_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		FIXED_DELAY);
-	r_frame_construction(gen);
-	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win, gen->disp.buff->img,
+	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
+			[(int)gen->player.p_co.y].type, "1 "))
+		img = gen->disp.img_out_map->img;
+	else
+		img = r_frame_construction(gen, 0);
+	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win, img,
 		0, 0);
 	return (0);
 }

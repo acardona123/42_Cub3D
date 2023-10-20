@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 22:03:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 02:26:07 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ bool	r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
 	(void)hitpoint;
 	(void)rdata;
 	(void)real_hitpoint_co;
-	(void)g_collision_function;
 	return (false);
 }
 
