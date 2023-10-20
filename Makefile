@@ -20,6 +20,7 @@ FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
 
 FILES_INIT			=	$(addprefix init/, \
 							init_main \
+							init_utils \
 							$(addprefix 0_user_interface/init_0_user_interface_, \
 								main \
 								hooks \
@@ -33,13 +34,12 @@ FILES_INIT			=	$(addprefix init/, \
 								animated_texture \
 								set_color \
 								static_texture \
-								tools \
+								utils \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
 								fill_chunk \
 								locate_texture \
-								utils \
 							) \
 						)
 
@@ -51,7 +51,7 @@ FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 							collision_hit_check \
 							collision_hit_check_door \
 							frame_build \
-							tools \
+							utils \
 						)
 
 FILES_GAMEPLAY			=	$(addprefix gameplay/gameplay_, \
