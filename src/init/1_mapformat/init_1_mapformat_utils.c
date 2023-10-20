@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:14:57 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/19 17:20:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:22:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * 
  * @param file_name 
  * @return int 	error: -1 (err msg displayed)
- *				success:fd of the open file
+ *				success: fd of the open file
  */
 int	in_1_file_opening(char *file_name)
 {
@@ -26,12 +26,12 @@ int	in_1_file_opening(char *file_name)
 	if (ft_strlen(file_name) < 4
 		|| ft_strncmp(".cub", file_name + ft_strlen(file_name) - 4, 4))
 	{
-		to_error_msg("Map format incorrect, requieres a .cub file");
+		to_error_msg(MSG_MAP_FILE_FORMAT);
 		return (-1);
 	}
 	fd_input = open(file_name, O_RDWR);
 	if (fd_input == -1)
-		to_error_msg("Cannot open the given map file");
+		to_error_msg(MSG_MAP_OPEN_FAIL);
 	return (fd_input);
 }
 
@@ -63,7 +63,7 @@ bool	in_1_line_is_parameter(char *line)
  * 
  * @param line 
  * @return true param line
- * @return false 
+ * @return false (nothing displayed)
  */
 bool	in_1_line_is_parameter(char *line)
 {
@@ -83,7 +83,7 @@ bool	in_1_line_is_parameter(char *line)
  * 
  * @param line 
  * @return true is empty
- * @return false 
+ * @return false (nothing dislayed)
  */
 bool	in_1_line_is_empty(char *line)
 {

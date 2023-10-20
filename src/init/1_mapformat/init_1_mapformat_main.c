@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:35:40 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:33:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	_in_1_map_mapcontent_check(t_general *gen, t_lists *lists,
 /**
  * @brief checks if the map format is correct according to the subject do not do
  *			anythig with the readen data
- * TODO: function to complete with doors controle
  * @param ac 
  * @param av 
  * @param gen 
@@ -31,6 +30,7 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 	t_lists	lists;
 	char	*line;
 	int		fd_input;
+	int		i;
 
 	(void) ac;
 	fd_input = in_1_file_opening(av[1]);
@@ -41,11 +41,15 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 	_in_1_map_params_check(gen, &lists, fd_input, &line);
 	if (!line)
 	{
-		to_error_msg("Incorrect map content");
-		to_lstfree(&lists.lst_param);
 		close(fd_input);
-		end_destroy_exit(gen, EXIT_INIT_1);
+		in_init_destroy_lists_exit(gen, &lists, MSG_NO_MAP_CONTENT,
+			EXIT_INIT_1);
 	}
+	i = -1;
+	while (line[++i])
+		if (!ft_isinset(line[i], CHARS_ALLOWED))
+			(close(fd_input), in_init_destroy_lists_exit(gen, &lists,
+					MSG_WRONG_ACRONYME, EXIT_INIT_1));
 	_in_1_map_mapcontent_check(gen, &lists, fd_input, &line);
 	return (lists);
 }
@@ -74,10 +78,8 @@ static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
 		else if (ft_lstnewaddback(&lists->lst_param, *line))
 		{
 			free(*line);
-			to_error_msg("Allocation error");
 			close(fd_input);
-			to_lstfree(&lists->lst_param);
-			end_destroy_exit(gen, EXIT_INIT_1);
+			in_init_destroy_lists_exit(gen, lists, MSG_BAD_ALLOC, EXIT_INIT_1);
 		}
 		*line = get_next_line(fd_input);
 	}
@@ -101,20 +103,14 @@ static void	_in_1_map_mapcontent_check(t_general *gen, t_lists *lists,
 		if (in_1_line_is_empty(*line))
 		{
 			free(*line);
-			to_error_msg("Incorrect map content");
-			to_lstfree(&lists->lst_param);
-			to_lstfree(&lists->lst_map);
 			close(fd_input);
-			end_destroy_exit(gen, EXIT_INIT_1);
+			in_init_destroy_lists_exit(gen, lists, MSG_EMPTY_LINE, EXIT_INIT_1);
 		}
 		if (ft_lstnewaddback(&lists->lst_map, *line))
 		{
 			free(*line);
-			to_error_msg("Allocation error");
-			to_lstfree(&lists->lst_map);
-			to_lstfree(&lists->lst_param);
 			close(fd_input);
-			end_destroy_exit(gen, EXIT_INIT_1);
+			in_init_destroy_lists_exit(gen, lists, MSG_BAD_ALLOC, EXIT_INIT_1);
 		}
 		lists->map_max_y++;
 		if (ft_strlen(*line) > lists->map_max_x)

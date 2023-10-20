@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:34:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/03 19:19:49 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:17:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
 	*cpt = 0;
 	dir = opendir(dir_name);
 	if (!dir)
-		return (to_error_msg("Wrong texture directory"), FAIL);
+		return (to_error_msg(MSG_OPENDIR_FAIL), FAIL);
 	elem = readdir(dir);
 	while (elem)
 	{
@@ -42,7 +42,7 @@ t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
 	}
 	closedir(dir);
 	if (!*cpt)
-		return (to_error_msg("No .xpm file in the texture folder"), FAIL);
+		return (to_error_msg(MSG_NO_XPM_IN_FOLDER), FAIL);
 	return (SUCCESS);
 }
 

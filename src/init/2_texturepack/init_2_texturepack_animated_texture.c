@@ -6,42 +6,16 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 01:15:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:19:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
 
-static t_bool	_in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
-					char **line_arg);
-static t_bool	_in_2_anim_textu_init_file(void *mlx,
+static t_bool	in_2_anim_textu_init_file(void *mlx,
 					t_animated_texture *texture, char **line_arg);
-static t_bool	_in_2_anim_textu_init_folder(void *mlx,
+static t_bool	in_2_anim_textu_init_folder(void *mlx,
 					t_animated_texture *texture, char **line_arg);
-
-t_bool	in_2_init_animated_texture(void *mlx, t_texture_pack *text_pack,
-	char **line_arg, bool *already_done)
-{
-	if (!ft_strcmp(*line_arg, "NO"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->wall_n, line_arg));
-	else if (!ft_strcmp(*line_arg, "SO"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->wall_s, line_arg));
-	else if (!ft_strcmp(*line_arg, "WE"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->wall_w, line_arg));
-	else if (!ft_strcmp(*line_arg, "EA"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->wall_e, line_arg));
-	else if (!ft_strcmp(*line_arg, "DF"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->door_front, line_arg));
-	else if (!ft_strcmp(*line_arg, "DS"))
-		return (_in_2_anim_textu_init(mlx, &text_pack->door_side, line_arg));
-	else if (!ft_strcmp(*line_arg, "F"))
-		return (in_2_set_color(&text_pack->color_f, line_arg,
-				&already_done[IDX_FLOOR]));
-	else if (!ft_strcmp(*line_arg, "C"))
-		return (in_2_set_color(&text_pack->color_c, line_arg,
-				&already_done[IDX_CEIL]));
-	return (FAIL);
-}
 
 /**
  * @brief initializes the t_animated_texture structure of a texture based on a
@@ -56,20 +30,19 @@ t_bool	in_2_init_animated_texture(void *mlx, t_texture_pack *text_pack,
  * @return SUCCESS (textures successfully loaded)
  * @return FAIL (err msg displayed. no argument freed)
  */
-static t_bool	_in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
+t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
 	char **line_arg)
 {
 	if (*texture)
-		return (to_error_msg("Multiple definition of texture"), FAIL);
+		return (to_error_msg(MSG_TEXTURE_MULTIPLE_DEF), FAIL);
 	*texture = ft_calloc(1, sizeof(t_animated_texture));
 	if (!texture)
-		return (to_error_msg("Mem alloc fail while textures init"), FAIL);
-	if ((ft_tablen(line_arg) == 2
-			&& _in_2_anim_textu_init_file(mlx, *texture, line_arg) == SUCCESS)
-		|| (ft_tablen(line_arg) == 4 \
-		&& _in_2_anim_textu_init_folder(mlx, *texture, line_arg) == SUCCESS))
-		return (SUCCESS);
-	return (FAIL);
+		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
+	if (ft_tablen(line_arg) == 2)
+		return (in_2_anim_textu_init_file(mlx, *texture, line_arg));
+	else if (ft_tablen(line_arg) == 4)
+		return (in_2_anim_textu_init_folder(mlx, *texture, line_arg));
+	return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
 }
 
 /**
@@ -83,12 +56,12 @@ static t_bool	_in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
  * @return SUCCESS: texture successfully imported, no arg freed
  * @return FAIL: err msg displayed, no arg freed
  */
-static t_bool	_in_2_anim_textu_init_file(void *mlx,
+static t_bool	in_2_anim_textu_init_file(void *mlx,
 	t_animated_texture *texture, char **line_arg)
 {
 	texture->frame_array = ft_calloc (1, sizeof(t_static_texture));
 	if (!texture->frame_array)
-		return (to_error_msg("Mem alloc fail while textures init"), FAIL);
+		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
 	texture->frame_number = 1;
 	texture->frame_ms = 0;
 	texture->frame_pause_ms = 0;
@@ -110,58 +83,88 @@ static t_bool	_in_2_anim_textu_init_file(void *mlx,
 
 #ifdef BONUS
 
+static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
+					char *dir_name, t_animated_texture *tex);
+
 /**
  * @brief fills t_animated_texture structure based on the line_arg elements:
  *	elem_acronym text_repo_containing_img frame_ms frame_pause_ms
  * @param mlx 
  * @param texture 
  * @param line_arg 
- * @return true SUCCESS: textures successfully imported, no arg freed
+ * @return SUCCESS: textures successfully imported, no arg freed
  * @return FAIL : err msg displayed, no arg freed
  */
-static t_bool	_in_2_anim_textu_init_folder(void *mlx,
+static t_bool	in_2_anim_textu_init_folder(void *mlx,
 	t_animated_texture *tex, char **line_arg)
 {
 	DIR				*dir;
-	struct dirent	*elem;
-	unsigned int	i;
-	char			*path;
 
 	if (ft_atoui_protected(line_arg[2], &tex->frame_ms)
 		|| ft_atoui_protected(line_arg[3], &tex->frame_pause_ms))
-		return (to_error_msg("Wrong time argument"), FAIL);
-	if (in_2_tools_count_xpm_files_in_folder(line_arg[1], &tex->frame_number) == FAIL)
+		return (to_error_msg(MSG_WRONG_TIME), FAIL);
+	if (in_2_tools_count_xpm_files_in_folder(line_arg[1], &tex->frame_number)
+		== FAIL)
 		return (FAIL);
 	tex->frame_array = ft_calloc(tex->frame_number,
 			sizeof(t_static_texture));
 	if (!tex->frame_array)
-		return (to_error_msg("Mem alloc faillure in texture init"), FAIL);
+		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
 	dir = opendir(line_arg[1]);
 	if (!dir)
-		return (to_error_msg("Wrong texture directory"), FAIL);
+		return (to_error_msg(MSG_OPENDIR_FAIL), FAIL);
+	if (_in_2_get_textures_from_directory(mlx, dir, line_arg[1], tex) == FAIL)
+		return (closedir(dir), FAIL);
+	closedir(dir);
+	tex->frame_cycle_short = tex->frame_number * tex->frame_ms;
+	tex->frame_cycle_long = tex->frame_cycle_short + tex->frame_pause_ms;
+	in_2_tools_sort_anim_text_table(tex->frame_array, tex->frame_number);
+	return (SUCCESS);
+}
+
+/**
+ * @brief initializes all the static textures of an animated texture based on
+ *		the .xpm files contained in the given folder
+ * 
+ * @param mlx 
+ * @param dir 
+ * @param dir_name 
+ * @param tex 
+ * @return t_bool	SUCCESS if all the .xpm have been loaded successfully as
+ *						static textures
+ *					FAIL in case of allocation faillure or texture
+ *						initialisation error
+ *						-> error msg displayed, arguments untouched
+ */
+static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
+	char *dir_name, t_animated_texture *tex)
+{
+	struct dirent	*elem;
+	unsigned int	i;
+	char			*path;
+
 	i = 0;
+	if (ft_strlen(dir_name) > 1 && dir_name[ft_strlen(dir_name) - 1] == '/')
+		dir_name[ft_strlen(dir_name) - 1] = 0;
 	elem = readdir(dir);
 	while (elem && i < tex->frame_number)
 	{
 		if (elem->d_type == DT_REG && ft_strlen(elem->d_name) >= 4
 			&& !ft_strcmp(elem->d_name + ft_strlen(elem->d_name) - 4, ".xpm"))
 		{
-			path = ft_strjoin3(line_arg[1], "/", elem->d_name);
+			path = ft_strjoin3(dir_name, "/", elem->d_name);
 			if (!path)
-				return (closedir(dir),
-					to_error_msg("Mem alloc faillure in texture init"), FAIL);
+				return (to_error_msg(MSG_BAD_ALLOC), FAIL);
 			if (in_2_static_texture_init_one (mlx, &tex->frame_array[i],
 					path) == FAIL)
-				return (closedir(dir), free(path), FAIL);
+				return (free(path), FAIL);
 			++i;
 		}
 		elem = readdir(dir);
 	}
-	tex->frame_cycle_short = tex->frame_number * tex->frame_ms;
-	tex->frame_cycle_long = tex->frame_cycle_short + tex->frame_pause_ms;
-	in_2_tools_sort_anim_text_table(tex->frame_array, tex->frame_number);
-	return (closedir(dir), SUCCESS);
+	return (SUCCESS);
 }
+
 #else
 
 /**
@@ -172,13 +175,13 @@ static t_bool	_in_2_anim_textu_init_folder(void *mlx,
  * @param line_arg ignored
  * @return FAIL ALWAYS
  */
-static t_bool	_in_2_anim_textu_init_folder(void *mlx,
+static t_bool	in_2_anim_textu_init_folder(void *mlx,
 	t_animated_texture *tex, char **line_arg)
 {
 	(void)mlx;
 	(void)tex;
 	(void)line_arg;
-	return (to_error_msg("Cannot open folder in the mandatory part"), FAIL);
+	return (to_error_msg(MSG_OPENDIR_FORBIDDEN), FAIL);
 }
 
 #endif
@@ -214,7 +217,7 @@ static void	_in_2_show_animated_text(t_animated_texture *tex)
 */
 
 /*
-//tests d'une unique texture animee (_in_2_anim_textu_init)
+//tests d'une unique texture animee (in_2_anim_textu_init)
 int	main(int ac, char **av)
 {
 	char			**arg;
@@ -230,7 +233,7 @@ or {./a.out SO text_repo_containing_img frame_ms frame_pause_ms}\n"), 0);
 	printf("init ok\n\n");
 	
 	arg = av + 1;
-	if (_in_2_anim_textu_init(gen.disp.mlx, &gen.textures.wall_e, arg)
+	if (in_2_anim_textu_init(gen.disp.mlx, &gen.textures.wall_e, arg)
 		== SUCCESS)
 	{
 		printf("Texture ok:\n");

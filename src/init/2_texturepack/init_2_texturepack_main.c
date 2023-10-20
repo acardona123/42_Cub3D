@@ -6,11 +6,17 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/19 17:27:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:35:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
+
+static t_bool	_in_2_init_texture_or_color(void *mlx,
+					t_texture_pack *text_pack, char **line_arg,
+					bool *already_done);
+static bool		_in_2_are_all_mandatory_textures_init(
+					t_texture_pack *texturepack, bool *colors_defined);
 
 /**
  * @brief initializes the texturepack structure by reading the input file,
@@ -27,28 +33,78 @@ void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init)
 {
 	t_list	*elem;
 	char	**line_arg;
-	bool	*already_done;
+	bool	*colors_defined;
 
-	already_done = (bool[2]){false, false};
+	colors_defined = (bool[2]){false, false};
 	elem = lst_init->lst_param;
 	while (elem)
 	{
 		line_arg = ft_split(elem->content, ' ');
 		if (!line_arg)
-			to_error_msg("Mem alloc faillure while initializing the textures");
-		if (!line_arg || in_2_init_animated_texture(gen->disp.mlx,
-				&gen->textures, line_arg, already_done) == FAIL)
+			to_error_msg(MSG_BAD_ALLOC);
+		if (!line_arg || _in_2_init_texture_or_color(gen->disp.mlx,
+				&gen->textures, line_arg, colors_defined) == FAIL)
 		{
 			ft_tabfree(line_arg);
-			to_lstfree(&lst_init->lst_param);
-			to_lstfree(&lst_init->lst_map);
-			end_destroy_exit(gen, EXIT_INIT_2);
+			in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_2);
 		}
 		ft_tabfree(line_arg);
 		elem = elem->next;
 	}
 	to_lstfree(&lst_init->lst_param);
-	//verifier que toutes les textures qui devaient etre setup l'ont ete
+	if (!_in_2_are_all_mandatory_textures_init(&gen->textures, colors_defined))
+		in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_2);
+}
+
+static t_bool	_in_2_init_texture_or_color(void *mlx,
+	t_texture_pack *text_pack, char **line_arg, bool *already_done)
+{
+	if (!ft_strcmp(*line_arg, "NO"))
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_n, line_arg));
+	else if (!ft_strcmp(*line_arg, "SO"))
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_s, line_arg));
+	else if (!ft_strcmp(*line_arg, "WE"))
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_w, line_arg));
+	else if (!ft_strcmp(*line_arg, "EA"))
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_e, line_arg));
+	else if (!ft_strcmp(*line_arg, "DF"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_front, line_arg));
+	else if (!ft_strcmp(*line_arg, "DS"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_side, line_arg));
+	else if (!ft_strcmp(*line_arg, "F"))
+		return (in_2_set_color(&text_pack->color_f, line_arg,
+				&already_done[IDX_FLOOR]));
+	else if (!ft_strcmp(*line_arg, "C"))
+		return (in_2_set_color(&text_pack->color_c, line_arg,
+				&already_done[IDX_CEIL]));
+	return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
+}
+
+/**
+ * @brief checks if all the wall's faces textures and the floor and ceilling
+ *		colors have been set
+ * 
+ * @param texturepack 
+ * @param colors_defined 
+ * @return true successfully set
+ * @return false missing texture
+ */
+static bool	_in_2_are_all_mandatory_textures_init(t_texture_pack *texturepack,
+	bool *colors_defined)
+{
+	if (!texturepack->wall_n)
+		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_N), false);
+	if (!texturepack->wall_e)
+		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_E), false);
+	if (!texturepack->wall_s)
+		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_S), false);
+	if (!texturepack->wall_w)
+		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_W), false);
+	if (!colors_defined[IDX_FLOOR])
+		return (to_error_msg(MSG_COLOR_MISSING_FLOOR), false);
+	if (!colors_defined[IDX_CEIL])
+		return (to_error_msg(MSG_COLOR_MISSING_CEIL), false);
+	return (true);
 }
 
 /*

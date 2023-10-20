@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 02:20:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:40:16 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:59:19 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 			&texture->img_height);
 	if (!texture->data.img)
 	{
-		to_error_msg("mlx .xpm conversion fail");
+		to_error_msg(MSG_BAD_XPM_TO_IMG);
 		texture->path = NULL;
 		return (FAIL);
 	}
@@ -59,12 +59,10 @@ static t_bool	_in_2_static_texture_init_one_check_path(char *path)
 	int	fd_tmp;
 
 	if (ft_strlen(path) < 4 || ft_strcmp(path + ft_strlen(path) - 4, ".xpm"))
-		return (to_error_msg("To avoid mlx leaks this program can only \
-handle .xpm images as textures, sorry"), FAIL);
+		return (to_error_msg(MSG_ACCEPT_ONLY_XPM), FAIL);
 	fd_tmp = open(path, O_RDWR);
 	if (fd_tmp == -1)
-		return (printf("%s\n", path),
-			to_error_msg("Texture file not reachable/readable"), FAIL);
+		return (to_error_msg(MSG_ERR_OPEN_TEXTURE), FAIL);
 	close(fd_tmp);
 	return (SUCCESS);
 }
