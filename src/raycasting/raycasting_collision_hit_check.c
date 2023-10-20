@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:42:08 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 02:25:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	r_ray_hit_check_basic(t_map *map, t_hitpoint *hit_pt,
 	if (hit_pt->pt_co.x <= -EPSILON)
 		return (true);
 	if (ft_isinset(map->map[hit_pt->chunk_co.x][hit_pt->chunk_co.y].type,
-		" 0NSEW"))
+		CHARS_TRANSPARENT))
 		return (false);
 	if (map->map[hit_pt->chunk_co.x][hit_pt->chunk_co.y].type == WALL)
 		return (true);
@@ -56,7 +56,7 @@ bool	r_ray_hit_check_extra_co(t_map *map, t_hitpoint *hit_pt,
 	if (real_hitpt_co.x <= -EPSILON)
 		return (hit_pt->pt_co.x = -1., true);
 	if (ft_isinset(map->map[hit_pt->chunk_co.x][hit_pt->chunk_co.y].type,
-		" 0NSEW"))
+		CHARS_TRANSPARENT))
 		return (false);
 	if (map->map[hit_pt->chunk_co.x][hit_pt->chunk_co.y].type == WALL)
 		return (hit_pt->pt_co = real_hitpt_co, true);

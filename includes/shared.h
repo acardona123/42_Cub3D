@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 01:44:54 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:53:37 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ typedef struct s_texture_pack
 
 
 ==== Map datas ==== */
+
+# ifdef BONUS
+#  define CHARS_ALLOWED "01d NESW"
+# else
+#  define CHARS_ALLOWED "01 NESW"
+# endif
+# define CHARS_PLAYER "NESW"
+# define CHARS_MAP_BORDER "1 "
+# define CHARS_TRANSPARENT " 0NSEW"
 
 typedef enum e_chunk_type
 {

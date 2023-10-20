@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 02:08:30 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 02:11:38 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	game_looping(void *elem)
 	game_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		delay);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
-			[(int)gen->player.p_co.y].type, "1 "))
+			[(int)gen->player.p_co.y].type, CHARS_MAP_BORDER))
 		img = gen->disp.img_out_map->img;
 	else
 		img = r_frame_construction(gen, tmp_time);
@@ -63,7 +63,7 @@ int	game_looping(void *elem)
 	game_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		FIXED_DELAY);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
-			[(int)gen->player.p_co.y].type, "1 "))
+			[(int)gen->player.p_co.y].type, CHARS_MAP_BORDER))
 		img = gen->disp.img_out_map->img;
 	else
 		img = r_frame_construction(gen, 0);
