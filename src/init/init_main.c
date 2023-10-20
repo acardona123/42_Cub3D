@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/12 17:51:04 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:01:23 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init_main(int ac, char **av, t_general	*gen)
 {
 	t_lists	init_lists;
 
-	printf("Initialisation start.\n");
 	*gen = (t_general){0};
 	if (WIN_HEIGHT <= 0 || WIN_WIDTH <= 0 || DEFAULT_FOV <= 0
 		|| DIST_WALL_MIN <= 0)
@@ -32,7 +31,6 @@ void	init_main(int ac, char **av, t_general	*gen)
 	in_2_init_texture_pack(gen, &init_lists);
 	in_3_map_content_init(gen, &init_lists);
 	_init_settings_angleset(gen);
-	printf("Initialisation done.\n");
 }
 
 static void	_init_settings_angleset(t_general *gen)

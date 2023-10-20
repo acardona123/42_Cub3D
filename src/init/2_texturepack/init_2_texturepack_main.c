@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/09/30 21:01:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:27:01 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init)
 		elem = elem->next;
 	}
 	to_lstfree(&lst_init->lst_param);
+	//verifier que toutes les textures qui devaient etre setup l'ont ete
 }
 
 /*

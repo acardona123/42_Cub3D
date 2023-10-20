@@ -21,7 +21,6 @@ static const t_collision_function	g_collision_function[8]
 bool	r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
 	t_ray_data *rdata, t_coord_f real_hitpoint_co)
 {
-	//todo
 	(void)map;
 	(void)hitpoint;
 	(void)rdata;

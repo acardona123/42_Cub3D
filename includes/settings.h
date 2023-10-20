@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 18:32:11 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/20 01:07:01 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <X11/keysym.h>
 
 //force bonus mode:
-# ifndef BONUS
-#  define BONUS
-# endif
+// # ifndef BONUS
+// #  define BONUS
+// # endif
 
 //window parameters
 # define WIN_HEIGHT 1080
@@ -41,8 +41,9 @@
 # define FOV_INCREMENT 0.125
 # define FOV_MIN 0.0125
 # define FOV_MAX 3.14
+
 # ifndef BONUS
-#  define FIXED_DELAY 10
+#  define FIXED_DELAY 20
 # endif
 
 //controls :
