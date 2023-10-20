@@ -1,6 +1,6 @@
 NO ./textures/random_tests/wall_n/walln.xpm
-SO ./textures/random_tests/wall_s/walls.xpm
-WE ./UNKNOWN.xpm
+SO ./textures/random_tests/wall_s/walls.xpm 1
+WE ./textures/random_tests/wall_w/wallw.xpm
 EA ./textures/random_tests/wall_e/wall_e1.xpm
 F 100,60,60
 C 60,160,255
