@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting_collision_segments_west.c               :+:      :+:    :+:   */
+/*   ray_collision_segments_west.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:51:14 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:27:53 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raycasting.h"
+#include "../../includes/ray_collision.h"
 
 /**
  * @brief ray projection for angles between M_PI and 5 * M_PI / 4

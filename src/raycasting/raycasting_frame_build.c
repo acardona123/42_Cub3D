@@ -28,7 +28,7 @@ static void				r_frame_empty_column(t_data *buff, int idx_ray);
  * @param gen 
  * @param time used for getting the right animation
  */
-void	*r_frame_construction(t_general *gen, size_t last_time)
+void	*rc_raycasting_frame_build(t_general *gen, size_t last_time)
 {
 	register int		idx_ray;
 	register t_hitpoint	hit_pt;
@@ -58,7 +58,7 @@ void	*r_frame_construction(t_general *gen, size_t last_time)
 /**
  * @brief draw a gray column if no ostacle is found. This shouldn't happen
  *	(can only happend if outside the map boundaries, but in this case a black
- *	screen is displayed so r_frame_construction isn't called)
+ *	screen is displayed so rc_raycasting_frame_build isn't called)
  * 
  * @param buff 
  * @param idx_ray 

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/13 16:16:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:18:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_coord_i
 	int	y;
 }	t_coord_i;
 
+
+//tools_tvectors
 void	to_vector_print(t_vector_f v);
 double	to_vector_norm(t_coord_f P0, t_coord_f P1);
 double	to_vector_normsqr(t_coord_f P0, t_coord_f P1);

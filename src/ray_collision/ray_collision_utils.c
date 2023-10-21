@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting_tools.c                                 :+:      :+:    :+:   */
+/*   ray_colllision_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:11:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/16 14:41:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:27:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raycasting.h"
+#include "../../includes/ray_collision.h"
 
 /**
  * @brief checks if a point (x, y) is outside the map (ie insides the exterior

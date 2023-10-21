@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 01:53:37 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:25:31 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,20 +217,29 @@ typedef struct s_general
 /* ---- End: General ----
 
 
-==== end_destroy ==== */
-//end_destroy_display_close.c
+==== Public functions prototypes ==== */
+
+// end_destroy
 void	end_destroy_display(t_display *disp);
-
-// end_destroy_map.c
 void	end_destroy_map(t_map *map);
-
-//end_detroy_texture_pack.c
 void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
-
-//end_destroy_general.c
 void	end_destroy_general(t_general *gen);
-
-//end_destroy_exit.c
 void	end_destroy_exit(t_general *gen, t_exit_values n);
+
+// init
+void	init_main(int ac, char **av, t_general	*gen);
+
+// ray_collision
+t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map);
+
+// raycasting
+void	*rc_raycasting_frame_build(t_general *gen, size_t last_time);
+
+// gameplay
+int	game_looping(void *void_gen);
+
+// tools
+//all the tools header is usefull and therefore has been included
+
 
 #endif

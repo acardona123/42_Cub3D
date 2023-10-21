@@ -43,33 +43,39 @@ FILES_INIT			=	$(addprefix init/, \
 							) \
 						)
 
-FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
-							collision_main \
-							collision_init \
-							collision_segments_east \
-							collision_segments_west \
-							collision_hit_check \
-							collision_hit_check_door \
-							frame_build \
+FILES_RAY_COLLISION	=	$(addprefix ray_collision/ray_collision_, \
+							main \
+							init \
+							segments_east \
+							segments_west \
+							hit_check \
+							hit_check_door \
 							utils \
 						)
 
-FILES_GAMEPLAY			=	$(addprefix gameplay/gameplay_, \
-							main \
+FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
+							frame_build \
 						)
 
-FILES_TOOLS			=	$(addprefix tools/tools_, \
-							error \
-							vectors \
-							lst \
-							time \
-							angles_set \
+
+FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
+							main \
+							movements \
 						)
+
+FILES_TOOLS		=	$(addprefix tools/tools_, \
+						error \
+						vectors \
+						lst \
+						time \
+						angles_set \
+					)
 
 FILES_NAMES			=	main \
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
 						$(FILES_TOOLS) \
+						$(FILES_RAY_COLLISION) \
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY)
 
