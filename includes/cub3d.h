@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 17:24:55 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/21 21:03:12 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:29:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,5 @@
 # define CUB3D_H
 
 # include "shared.h"
-
-
 
 #endif

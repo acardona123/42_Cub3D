@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/21 19:32:40 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:30:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,5 @@ bool		r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
 bool		r_point_outside_map(t_map *map, t_coord_f p_co);
 bool		r_is_obstacle_f(t_map *map, float x, float y);
 bool		r_is_obstacle_i(t_map *map, int x, int y);
-
 
 #endif

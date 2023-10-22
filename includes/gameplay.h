@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:00:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/12 17:42:26 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:32:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "shared.h"
 
-void	game_turn_head(t_general *gen, t_head_rotate direction, size_t delay);
-void	game_move_player(t_general *gen, t_vector_f direction, size_t delay);
-int		game_looping(void *elem);
+void	gp_turn_head(t_general *gen, t_head_rotate direction, size_t delay);
+void	gp_move_player(t_general *gen, float dir_x, float dir_y, size_t delay);
+int		gp_looping(void *elem);
+
 #endif
