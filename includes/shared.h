@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/21 20:25:31 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:31:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ typedef struct s_static_texture
 typedef struct s_animated_texture
 {
 	unsigned int		frame_number;
-	unsigned int		frame_ms;//time between 2 consecutive frames without pause
+	unsigned int		frame_ms;
 	unsigned int		frame_pause_ms;
-	unsigned int		frame_cycle_short;//time to display all frames without pause
-	unsigned int		frame_cycle_long;//time of the complete cycle including pause
+	unsigned int		frame_cycle_short;
+	unsigned int		frame_cycle_long;
 	t_static_texture	*frame_array;
 }	t_animated_texture;
 
@@ -118,7 +118,7 @@ typedef struct s_chunk
 {
 	t_chunk_type		type;
 	char				status;
-	size_t				t0;//ref time for the animations
+	size_t				t0;
 	t_animated_texture	*textures[4];
 }	t_chunk;
 
@@ -220,26 +220,25 @@ typedef struct s_general
 ==== Public functions prototypes ==== */
 
 // end_destroy
-void	end_destroy_display(t_display *disp);
-void	end_destroy_map(t_map *map);
-void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
-void	end_destroy_general(t_general *gen);
-void	end_destroy_exit(t_general *gen, t_exit_values n);
+void		end_destroy_display(t_display *disp);
+void		end_destroy_map(t_map *map);
+void		end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
+void		end_destroy_general(t_general *gen);
+void		end_destroy_exit(t_general *gen, t_exit_values n);
 
 // init
-void	init_main(int ac, char **av, t_general	*gen);
+void		init_main(int ac, char **av, t_general	*gen);
 
 // ray_collision
 t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map);
 
 // raycasting
-void	*rc_raycasting_frame_build(t_general *gen, size_t last_time);
+void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);
 
 // gameplay
-int	game_looping(void *void_gen);
+int			gp_looping(void *void_gen);
 
 // tools
 //all the tools header is usefull and therefore has been included
-
 
 #endif

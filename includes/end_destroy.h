@@ -6,14 +6,14 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 20:20:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/21 20:23:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:30:05 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef END_DESTROY_H
 # define END_DESTROY_H
 
-#include "shared.h"
+# include "shared.h"
 
 // end_destroy_display.c
 void	end_destroy_display(t_display *disp);
