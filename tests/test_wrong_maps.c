@@ -6,14 +6,18 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:43:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 00:37:00 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:08:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//cc test_wrong_maps.c -o test_wrong_maps.exe
+/*
+cc test_wrong_maps.c -o test_wrong_maps.exe
+*/
 
 #include "../includes/shared.h"
 #include <sys/types.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <string.h>
 #include <sys/types.h>
@@ -24,10 +28,13 @@ static int		_child_exec_cub(char *exec_path, char *maps_dir,
 					char *map_name, char **env);
 static size_t	_ft_strlen(const char *str);
 static char		*_ft_strjoin3(const char *s1, const char *s2, const char *s3);
+static void		_test_maps_file_without_rights(char *exec_path, char **env);
+static void		_test_repo_without_rights(char *exec_path, char **env);
 
 int	main(int ac, char **av, char **env)
 {
 	DIR				*dir;
+	int				fd_no_access_file;
 
 	if (ac != 3 || !strstr(av[1], "cub3D")
 		|| strlen(strstr(av[1], "cub3D")) != strlen("cub3D"))
@@ -37,6 +44,8 @@ int	main(int ac, char **av, char **env)
 	if (strlen(av[2]) > 1 && av[2][strlen(av[2]) - 1] == '/')
 		av[2][strlen(av[2]) - 1] = 0;
 	read_map_dir(av[1], av[2], env);
+	_test_maps_file_without_rights(av[1], env);
+	_test_repo_without_rights(av[1], env);
 	return (0);
 }
 
@@ -84,7 +93,7 @@ path\n"), true);
 			if (pid == -1)
 			{
 				fprintf(stderr, "Tester error: fork error\n");
-				rtn = true;
+				rtn = false;
 				break ;
 			}
 			if (!pid)
@@ -95,7 +104,7 @@ path\n"), true);
 				{
 					fprintf(stderr, "Tester error: Memory allocation \
 faillure\n");
-					return (true);
+					return (false);
 				}
 				return (_child_exec_cub(exec_path, maps_dir, elem_name, env));
 			}
@@ -130,8 +139,98 @@ static int	_child_exec_cub(char *exec_path, char *maps_dir,
 	printf("\e[103m%s :\e[0m\n\e[37m", av[1]);
 	execve(exec_path, av, env);
 	free(av[1]);
-	return (fprintf(stderr, "Tester error:\nexecve faillure\n"), 1);
+	fprintf(stderr, "Tester error:\nexecve faillure\n");
+	exit (0);
 }
+
+static void	_test_maps_file_without_rights(char *exec_path, char **env)
+{
+	int		fd_unaccessible_file;
+	char	*av[3];
+	int		child_pid;
+	int		child_rtn;
+
+	printf("\e[103mfile_without_read_rights:\e[0m\n");
+	av[0] = exec_path;
+	av[1] = "no_rights.cub";
+	av[2] = NULL;
+	fd_unaccessible_file = open(av[1], O_CREAT | O_WRONLY, 0);
+	close(fd_unaccessible_file);
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		fprintf(stderr, "Tester error:\n fork faillure\n");
+		remove(av[1]);
+	}
+	else if (!child_pid)
+	{
+		execve(exec_path, av, env);
+		perror("execve");
+		remove(av[1]);
+		fprintf(stderr, "Tester error:\n execve faillure\n");
+		exit(0);
+	}
+	else
+	{
+		waitpid(child_pid, &child_rtn, 0);
+		if (WIFEXITED(child_rtn) && !WEXITSTATUS(child_rtn))
+			printf("%s: \e[31mERROR NOT DETECTED\e[0m\n", av[1]);
+		else
+			printf("\e[30;1m==>%s: \e[33mok\e[0m\n", av[1]);
+		remove(av[1]);
+	}
+}
+
+static void	_test_repo_without_rights(char *exec_path, char **env)
+{
+	DIR		*unaccessible_dir;
+	char	*av[3];
+	int		child_pid;
+	int		child_rtn;
+	int		fd_map_unreachable_texture;
+
+	printf("\e[103mtexture_repo_without_read_rights:\e[0m\n");
+	av[0] = exec_path;
+	av[1] = "unreachable_text_repo.cub";
+	av[2] = NULL;
+	mkdir("no_rights_dir", 0);
+	fd_map_unreachable_texture = open(av[1], O_CREAT | O_RDWR, 0766);
+	if (fd_map_unreachable_texture == -1)
+	{
+		printf("\e[31mTester: open fail\e[0m\n");
+		perror(NULL);
+		return ;
+	}
+	write(fd_map_unreachable_texture, "NO no_rights_dir 500 0\nSO ./textures/\
+random_tests/wall_s 500 0\nWE ./textures/random_tests/wall_w 500 0\nEA \
+./textures/random_tests/wall_e 500 0\nF 100,60,60\n\
+C 60,160,255\n111\n1N1\n111", 179);
+	close(fd_map_unreachable_texture);
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		fprintf(stderr, "Tester error:\n fork faillure\n");
+		remove("no_rights_dir");
+		remove(av[1]);
+	}
+	else if (!child_pid)
+	{
+		execve(exec_path, av, env);
+		fprintf(stderr, "Tester error:\n execve faillure\n");
+		exit(0);
+	}
+	else
+	{
+		waitpid(child_pid, &child_rtn, 0);
+		if (WIFEXITED(child_rtn) && !WEXITSTATUS(child_rtn))
+			printf("%s: \e[31mERROR NOT DETECTED\e[0m\n", "no_rights_dir");
+		else
+			printf("\e[30;1m==>%s: \e[33mok\e[0m\n", "no_rights_dir");
+		remove(av[1]);
+		remove("no_rights_dir");
+	}
+}
+
 
 static size_t	_ft_strlen(const char *str)
 {
