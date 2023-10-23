@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/21 22:29:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/23 04:10:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static const t_collision_function	g_collision_function[8]
  * @return t_hitpoint structure contining the datas oh the first bloc hitten and
  *		the imact point.
  */
-t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map)
+t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
+	bool obstacles_shift)
 {
 	t_hitpoint	last_hit;
 	t_ray_data	rdata;
@@ -38,6 +39,8 @@ t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map)
 	while (angle_ray > 2 * M_PI)
 		angle_ray -= 2 * M_PI;
 	rdata = (t_ray_data){0};
+	rdata.dial = (int)(angle_ray * 4 / M_PI);
+	rdata.shift = obstacles_shift * DIST_WALL_MIN;
 	last_hit = r_ray_init_rdata_hitpoint(p_co, angle_ray, map, &rdata);
 	return (g_collision_function[rdata.dial](map, last_hit, rdata));
 }
@@ -63,12 +66,12 @@ int	main(int ac, char **av)
 	{
 		printf("\e[103mangle: %f (%f)\e[0m\n", angle_deg, angle_deg * M_PI / 180);
 		hitpoint = r_ray_hit(&gen.player.p_co, angle_deg * M_PI / 180,
-				&gen.map);
+				&gen.map, false);
 		printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
-		if (hitpoint.chunk_co.x >= 0.)
-			printf(" chunk: (%d, %d) -> \'%c\'\n\n", hitpoint.chunk_co.x,
-				hitpoint.chunk_co.y,
-				gen.map.map[hitpoint.chunk_co.x][hitpoint.chunk_co.y].type);
+		if (hitpoint.chunk_co_x >= 0.)
+			printf(" chunk: (%d, %d) -> \'%c\'\n\n", hitpoint.chunk_co_x,
+				hitpoint.chunk_co_y,
+				gen.map.map[hitpoint.chunk_co_x][hitpoint.chunk_co_y].type);
 		else
 			printf("\e[33m chunk: no\e[0m\n");
 		angle_deg += 5.;

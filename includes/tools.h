@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/22 01:37:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/23 04:18:16 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include "../libft/libft.h"
 
 # include "settings.h"
-
-# define SQRT2INV 0.7071
 
 typedef enum e_bool
 {

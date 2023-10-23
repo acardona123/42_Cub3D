@@ -6,11 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:17:08 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/22 02:56:54 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/23 04:39:27 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/gameplay.h"
+
+static const float	g_sqrt_inv = 0.7071;
 
 /**
  * @brief turns the player head in the given direction. the angle increment is
@@ -35,9 +37,6 @@ void	gp_turn_head(t_general *gen, t_head_rotate direction, size_t delay)
 
 #ifdef BONUS
 
-static void		_gp_move_player_avoid_wall(t_map *map, t_coord_f *target_pt);
-inline static bool	_gp_is_obstacle(t_map *map, int x, int y);
-
 /**
  * @brief mooves the player in the direction dir. It tries to do a step of
  *		delay * walk_speed (to keep a constant velocity independant of the fps).
@@ -59,69 +58,21 @@ void	gp_move_player(t_general *gen, float dir_x, float dir_y, size_t delay)
 	if (!dir_x && !dir_y)
 		return ;
 	hitpoint = r_ray_hit(&gen->player.p_co, gen->player.p_angle + M_PI
-			* ((dir_y == -1.) + 0.5 * dir_x), &gen->map);
+			* ((dir_y == -1.) + 0.5 * dir_x), &gen->map, true);
 	target_dest.x = gen->player.p_co.x + gen->settings.walk_speed * delay
-		* ((dir_x && dir_y) * SQRT2INV + (!dir_x || !dir_y))
+		* ((dir_x && dir_y) * g_sqrt_inv + (!dir_x || !dir_y))
 		* (dir_x * cos(gen->player.p_angle) + dir_y * sin(gen->player.p_angle));
 	target_dest.y = gen->player.p_co.y + gen->settings.walk_speed * delay
-		* ((dir_x && dir_y) * SQRT2INV + (!dir_x || !dir_y))
+		* ((dir_x && dir_y) * g_sqrt_inv + (!dir_x || !dir_y))
 		* (dir_y * cos(gen->player.p_angle) - dir_x * sin(gen->player.p_angle));
+	printf("\nplayer_co: (%f, %f)\n", gen->player.p_co.x, gen->player.p_co.y);//
+	printf("hitpoint_wall_dist: (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);//
+	printf("target_dest: (%f, %f)\n", target_dest.x, target_dest.y);//
 	if (to_vector_norm_sqr(gen->player.p_co, hitpoint.pt_co)
 		< to_vector_norm_sqr(gen->player.p_co, target_dest))//optimisable en norme absolue: |gen->player.p_co.x - hitpoint.pt_co.x| < |gen->player.p_co.x - target_dest.pt_co.x| || |gen->player.p_co.y - hitpoint.pt_co.y| < |gen->player.p_co.y - target_dest.pt_co.y|
-	{
-		gen->player.p_co.x = hitpoint.pt_co.x + DIST_WALL_MIN
-			* ((hitpoint.hit_face == FACE_E) - (hitpoint.hit_face == FACE_W));
-		gen->player.p_co.y = hitpoint.pt_co.y + DIST_WALL_MIN
-			* ((hitpoint.hit_face == FACE_N) - (hitpoint.hit_face == FACE_S));
-	}
+		gen->player.p_co = hitpoint.pt_co;
 	else
 		gen->player.p_co = target_dest;
-	_gp_move_player_avoid_wall(&gen->map, &gen->player.p_co);
-}
-
-/**
- * @brief updates the player position so that it is not too close to an obstacle
- *		(wall or door not open)
- * 
- * @param map pointer to the map structure
- * @param p_co pointer to the player position 
- */
-static void	_gp_move_player_avoid_wall(t_map *map, t_coord_f *p_co)
-{
-	t_coord_i	p_int;
-	t_coord_f	p_dec;
-
-	p_int.x = (int)p_co->x;
-	p_int.y = (int)p_co->y;
-	p_dec.x = p_co->x - floor(p_co->x);
-	p_dec.y = p_co->y - floor(p_co->y);
-	if (p_dec.y < DIST_WALL_MIN && (!p_int.y
-			|| _gp_is_obstacle(map, p_int.x, p_int.y - 1)))
-		p_co->y = floor(p_co->y) + DIST_WALL_MIN;
-	else if (1 - p_dec.y < DIST_WALL_MIN && (p_int.y == map->height - 1
-			|| _gp_is_obstacle(map, p_int.x, p_int.y + 1)))
-		p_co->y = ceil(p_co->y) - DIST_WALL_MIN;
-	if (p_dec.x < DIST_WALL_MIN && (!p_int.x
-			|| _gp_is_obstacle(map, p_int.x - 1, p_int.y)))
-		p_co->x = floor(p_co->x) + DIST_WALL_MIN;
-	else if (1 - p_dec.x < DIST_WALL_MIN && (p_int.x == map->width - 1
-			|| _gp_is_obstacle(map, p_int.x + 1, p_int.y)))
-		p_co->x = ceil(p_co->x) - DIST_WALL_MIN;
-}
-
-/**
- * @brief checks if the chunk is an obstacle (wall or door not opened)
- * 
- * @param map 
- * @param x 
- * @param y 
- * @return true 
- * @return false 
- */
-inline static bool	_gp_is_obstacle(t_map *map, int x, int y)
-{
-	return (map->map[x][y].type == WALL || (map->map[x][y].type == DOOR
-		&& map->map[x][y].status != DOOR_OPEN));
 }
 
 #else
@@ -140,8 +91,8 @@ void	gp_move_player(t_general *gen, float dir_x, float dir_y, size_t delay)
 		return ;
 	if (dir_x && dir_y)
 	{
-		dir_x *= SQRT2INV;
-		dir_y *= SQRT2INV;
+		dir_x *= g_sqrt_inv;
+		dir_y *= g_sqrt_inv;
 	}
 	gen->player.p_co.x += gen->settings.walk_speed * delay
 		* (dir_x * cos(gen->player.p_angle)

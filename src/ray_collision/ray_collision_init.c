@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/21 20:27:50 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/23 04:08:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,9 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 {
 	t_hitpoint	hitpoint;
 
-	*rdata = (t_ray_data){0};
-	rdata->dial = (int)(angle_ray * 4 / M_PI);
 	_r_ray_init_h(p_co, rdata, angle_ray);
 	_r_ray_init_v(p_co, rdata, angle_ray);
 	rdata->first = r_ray_init_hitpoint(p_co, rdata, &hitpoint);
-	// (void)map;
 	if (hitpoint.pt_co.x >= 0. && r_point_outside_map(map, hitpoint.pt_co))//ne peut pas arriver si le player est entre les murs de la map
 		hitpoint.pt_co.x = -1;
 	return (hitpoint);
@@ -65,8 +62,6 @@ static void	_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 	if ((angle_ray > M_PI / 2 - EPSILON && angle_ray < M_PI / 2 + EPSILON) || \
 		(angle_ray > M_PI * 1.5 - EPSILON && angle_ray < M_PI * 1.5 + EPSILON))
 	{
-		rdata->last_h.x = -1.;
-		rdata->last_h.y = -1.;
 		rdata->check_h = false;
 		return ;
 	}
@@ -75,12 +70,14 @@ static void	_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 	if (angle_ray > 1.5 * M_PI || angle_ray < M_PI * 0.5) // cadran sup
 	{
 		rdata->delta_x = tan_a;
-		round_y = ceil(p_co->y) + (p_co->y == ceil(p_co->y));
+		round_y = ceil(p_co->y) - rdata->shift
+			+ (p_co->y == ceil(p_co->y) - rdata->shift);
 	}
 	else
 	{
 		rdata->delta_x = -tan_a;
-		round_y = floor(p_co->y) - (p_co->y == floor(p_co->y));
+		round_y = floor(p_co->y) + rdata->shift
+			- (p_co->y == floor(p_co->y) + rdata->shift);
 	}
 	rdata->last_h.x = p_co->x + tan_a * (round_y - p_co->y);
 	rdata->last_h.y = round_y;
@@ -103,8 +100,6 @@ static void	_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 	if (angle_ray > 2 * M_PI - EPSILON || angle_ray < EPSILON
 		|| (angle_ray > M_PI - EPSILON && angle_ray < M_PI + EPSILON))
 	{
-		rdata->last_v.x = -1.;
-		rdata->last_v.y = -1.;
 		rdata->check_v = false;
 		return ;
 	}
@@ -113,12 +108,14 @@ static void	_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 	if (angle_ray < M_PI) // cadran droit
 	{
 		rdata->delta_y = ratio_tan_a;
-		round_x = ceil(p_co->x) + (p_co->x == ceil(p_co->x));
+		round_x = ceil(p_co->x) - rdata->shift
+			+ (p_co->x == ceil(p_co->x) - rdata->shift);
 	}
 	else // gauche
 	{
 		rdata->delta_y = -ratio_tan_a;
-		round_x = floor(p_co->x) - (p_co->x == floor(p_co->x));
+		round_x = floor(p_co->x) + rdata->shift
+			- (p_co->x == floor(p_co->x) + rdata->shift);
 	}
 	rdata->last_v.x = round_x;
 	rdata->last_v.y = p_co->y + (round_x - p_co->x) * ratio_tan_a;
@@ -140,24 +137,26 @@ t_1st_type	r_ray_init_hitpoint(t_coord_f *pco, t_ray_data *rdata,
 
 	*hitpt = (t_hitpoint){0};
 	first_type = _r_ray_init_get_first_type(pco, rdata);
-	if (first_type == FIRST_IS_H)//hits an horizontal first
+	if (first_type == FIRST_H)//hits an horizontal first
 	{
 		hitpt->pt_co = rdata->last_h;
-		hitpt->chunk_co.x = (int)hitpt->pt_co.x;
-		hitpt->chunk_co.y = (int)hitpt->pt_co.y;
+		hitpt->chunk_co_x = (int)(hitpt->pt_co.x);
 		if (rdata->dial >= E_SE && rdata->dial <= SW_W)
-			return (hitpt->hit_face = FACE_N, --hitpt->chunk_co.y, FIRST_IS_H);
-		return (hitpt->hit_face = FACE_S, FIRST_IS_H);
+			return (hitpt->chunk_co_y = (int)(hitpt->pt_co.y) - 1,
+			hitpt->hit_face = FACE_N, FIRST_H);
+		return (hitpt->chunk_co_y = (int)(hitpt->pt_co.y + rdata->shift),
+			hitpt->hit_face = FACE_S, FIRST_H);
 	}
 	hitpt->pt_co = rdata->last_v;
-	hitpt->chunk_co.x = (int)hitpt->pt_co.x - (rdata->dial >= S_SW);
-	hitpt->chunk_co.y = (int)hitpt->pt_co.y;
+	hitpt->chunk_co_x = (int)(hitpt->pt_co.x + rdata->shift
+			* (rdata->dial < S_SW)) - (rdata->dial >= S_SW);
+	hitpt->chunk_co_y = (int)hitpt->pt_co.y;
 	if (rdata->dial >= S_SW)
 		hitpt->hit_face = FACE_E;
 	else
 		hitpt->hit_face = FACE_W;
-	if (first_type == FIRST_IS_V)
-		return (FIRST_IS_V);
+	if (first_type == FIRST_V)
+		return (FIRST_V);
 	return (FIRST_IS_ANY);
 }
 
@@ -165,9 +164,9 @@ static t_1st_type	_r_ray_init_get_first_type(t_coord_f *pco,
 	t_ray_data *rdata)
 {
 	if (!rdata->check_h)
-		return (FIRST_IS_V);
+		return (FIRST_V);
 	if (!rdata->check_v)
-		return (FIRST_IS_H);
+		return (FIRST_H);
 	if (rdata->last_h.x > rdata->last_v.x - EPSILON
 		&& rdata->last_h.x < rdata->last_v.x + EPSILON)
 	{
@@ -177,8 +176,8 @@ static t_1st_type	_r_ray_init_get_first_type(t_coord_f *pco,
 	}
 	if (pow(pco->x - rdata->last_v.x, 2.) + pow(pco->y - rdata->last_v.y, 2.)
 		< pow(pco->x - rdata->last_h.x, 2.) + pow(pco->y - rdata->last_h.y, 2.))
-		return (FIRST_IS_V);
-	return (FIRST_IS_H);
+		return (FIRST_V);
+	return (FIRST_H);
 }
 
 /*
@@ -272,8 +271,8 @@ player_co : (%.3f, %.3f)\n chunk_co: (%d, %d) -> cunk_co - player_co :\
  (%d, %d)\n face: %c\n",
 		"HVA"[rdata->first], first.pt_co.x, first.pt_co.y,
 		first.pt_co.x - floor(p_co->x), first.pt_co.y - floor(p_co->y),
-		first.chunk_co.x, first.chunk_co.y, first.chunk_co.x - (int)p_co->x,
-		first.chunk_co.y - (int)p_co->y, "NESW"[first.hit_face]);
+		first.chunk_co_x, first.chunk_co_y, first.chunk_co_x - (int)p_co->x,
+		first.chunk_co_y - (int)p_co->y, "NESW"[first.hit_face]);
 }
 
 */

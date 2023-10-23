@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/22 01:31:52 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/23 04:10:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,8 @@ typedef struct s_map
 typedef struct s_hitpoint
 {
 	t_coord_f			pt_co;
-	t_coord_i			chunk_co;
+	int					chunk_co_x;
+	int					chunk_co_y;
 	t_chunk_face		hit_face;
 	double				dist;
 }	t_hitpoint;
@@ -230,7 +231,8 @@ void		end_destroy_exit(t_general *gen, t_exit_values n);
 void		init_main(int ac, char **av, t_general	*gen);
 
 // ray_collision
-t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map);
+t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
+				bool obstacles_shift);
 
 // raycasting
 void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);
