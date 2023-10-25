@@ -7,7 +7,6 @@ DEPSFLAG		=	-MMD
 MLX_DIR			=	mlx
 MLX				=	$(MLX_DIR)/libmlx.a
 LIBFT_DIR		=	libft
-LIBFT			=	$(LIBFT_DIR)/libft.a
 INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -lft
 
 FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
@@ -71,13 +70,14 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 						angles_set \
 					)
 
-FILES_NAMES			=	main \
+FILES_NAMES			=	\
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
 						$(FILES_TOOLS) \
 						$(FILES_RAY_COLLISION) \
 						$(FILES_RAYCASTING) \
-						$(FILES_GAMEPLAY)
+						$(FILES_GAMEPLAY) \
+						main 
 
 
 SRC_DIR			=	src
@@ -90,11 +90,11 @@ DEPS			=	$(addprefix $(OBJ_DIR)/, $(FILES_NAMES:=.d))
 
 STATE_FILE = $(OBJ_DIR)/.state
 
-all : all_state $(MLX) $(LIBFT) $(NAME)
+all : all_state lib_mlx lib_libft name_start $(NAME) name_end
 	@echo "all" > $(STATE_FILE)
 	@echo Done
 
-bonus : bonus_state $(MLX) $(LIBFT) $(NAME)
+bonus : bonus_state lib_mlx lib_libft name_start $(NAME) name_end
 	@echo "bonus" > $(STATE_FILE)
 	@echo done
 
@@ -107,7 +107,6 @@ all_state :
 		rm -rf $(OBJ_DIR) $(NAME); mkdir $(OBJ_DIR); echo "all" > $(STATE_FILE); \
 	fi
 
-
 bonus_state :
 	@mkdir -p $(OBJ_DIR)
 	@if [ ! -f $(STATE_FILE) ]; then \
@@ -117,8 +116,8 @@ bonus_state :
 		rm -rf $(OBJ_DIR) $(NAME); mkdir $(OBJ_DIR); echo "bonus" > $(STATE_FILE); \
 	fi
 
-$(MLX) :
-	@echo "\e[32m==== MLX CLONING AND COMPIATION ====\e[0m"
+lib_mlx :
+	@echo "\e[32m==== MLX CLONING AND COMPILATION ====\e[0m"
 	@if [ ! -d "$(MLX_DIR)" ]; then \
         echo "Cloning the mlx..."; \
         git clone -q https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
@@ -130,9 +129,9 @@ $(MLX) :
 	@make --no-print-directory -C $(MLX_DIR) >/dev/null 2>/dev/null
 	@echo "\e[32m---- End: mlx cloning and compilation ----\e[0m\n"
 
-$(LIBFT) :
-	@echo "\e[32m==== LIBFT COMPIATION ====\e[36m"
-	@make -C $(LIBFT_DIR)
+lib_libft :
+	@echo "\e[32m==== LIBFT COMPILATION ====\e[36m"
+	@make --no-print-directory -C $(LIBFT_DIR)
 	@echo "\e[32m---- End: libft compilation ----\e[0m\n"
 
 clean :
@@ -142,8 +141,9 @@ clean :
 	@make clean --no-print-directory -C $(MLX_DIR) >/dev/null 2>&1
 
 fclean : clean
-	@echo "\e[31mRemoving Libft library and executable\e[0m"
+	@echo "\e[31mRemoving Libft library, mlx directory and executable\e[0m"
 	@rm -rf $(NAME)
+	@rm -rf $(MLX_DIR)
 	@make fclean --no-print-directory -C $(LIBFT_DIR)
 
 re : fclean all
@@ -152,6 +152,13 @@ re : fclean all
 
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(DEPSFLAG) $(OBJ) $(INCLUDE_LIB) -o $(NAME)
+
+
+name_start :
+	@echo "\e[32m==== SOURCES COMPILATION ====\e[0m"
+
+name_end :
+	@echo "\e[32m---- End: sources compilation ----\e[0m\n"
 
 ifeq ($(MAKECMDGOALS),bonus)
 CFLAGS += -D BONUS
