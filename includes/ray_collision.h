@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/23 04:10:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/24 23:34:03 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ typedef struct s_ray_data
 	float			shift;
 }	t_ray_data;
 
+typedef struct s_init_chunks
+{
+	int	init0_vx;
+	int	init0_vy;
+	int	init0_hx;
+	int	init0_hy;
+}	t_init_chunks;
+
 typedef t_hitpoint	(*t_collision_function)(t_map*, t_hitpoint, t_ray_data);
 
 //raycasting_collision.c
@@ -63,8 +71,6 @@ t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
 //raycasting_collision_init.c
 t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 				t_map *map, t_ray_data *rdata);
-t_1st_type	r_ray_init_hitpoint(t_coord_f *p_co, t_ray_data *rdata,
-				t_hitpoint *hitpoint);
 
 //raycasting_collision_segment_right.c
 t_hitpoint	r_ray_hit_n_ne(t_map *map, t_hitpoint last,

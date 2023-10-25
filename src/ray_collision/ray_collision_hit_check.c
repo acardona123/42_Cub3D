@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/23 04:53:03 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/24 20:04:31 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ bool	r_ray_hit_primary(t_map *map, t_hitpoint *hit_pt, t_ray_data *rdata)
 		return (true);
 	else if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
 	{
-		if (rdata->shift)
-			return (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].status
-				!= DOOR_OPEN);
+		if (rdata->shift && map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y]
+			.status != DOOR_OPEN)
+			return (true);
+		else if (rdata->shift)
+			return (false);
 		return (r_ray_hit_check_doors(map, hit_pt, rdata, hit_pt->pt_co));
 	}
 	if (!rdata->shift)
@@ -78,9 +80,11 @@ bool	r_ray_hit_sec(t_map *map, t_hitpoint *hit_pt,
 		return (hit_pt->pt_co = real_hitpt_co, true);
 	else if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
 	{
-		if (rdata->shift)
-			return (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].status
-				!= DOOR_OPEN);
+		if (rdata->shift && map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y]
+			.status != DOOR_OPEN)
+			return (hit_pt->pt_co = real_hitpt_co, true);
+		else if (rdata->shift)
+			return (false);
 		return (r_ray_hit_check_doors(map, hit_pt, rdata, real_hitpt_co));
 	}
 	if (!rdata->shift)
@@ -148,44 +152,35 @@ static bool	r_ray_check_basic_shift_diagonal_neighbors(t_map *map,
  */
 bool	r_ray_hit_primary(t_map *map, t_hitpoint *hit_pt, t_ray_data *rdata)
 {
+	(void)rdata;
 	if (hit_pt->pt_co.x <= -EPSILON)
 		return (true);
-	if (ft_isinset(map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type,
-		CHARS_TRANSPARENT))
-		return (false);
 	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL)
 		return (true);
-	else if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
-		return (r_ray_hit_check_doors(map, hit_pt, rdata, hit_pt->pt_co));
-	return (true);
+	return (false);
 }
 
 /**
- * @brief same as r_ray_hit_primary but the hitpoint coordinates that
- *		are taken into account are not stored in hit_pt but in real_hitpt_co.
- *		Used to check the obstacles on the secondary axis
+ * @brief checks if real_hitpt_co touchs an obstacle (calculous base on
+ *		hitpoint->chunk_co), if so hit_pt->pt_co is set to real_hitpt_co
  *
  * @param map 
  * @param hit_pt hitpoint detected that need to be checked
  * @param rdata 
  * @param real_hitpt_co
  * @return true if the ray hit an obstacle, hit_pt updated (coord becomes
- *	real_hitpt_co) and are modified if hit a door
+ *	real_hitpt_co)
  * @return false if no obstacle, hit_pt unchanged
  */
 bool	r_ray_hit_sec(t_map *map, t_hitpoint *hit_pt,
 	t_ray_data *rdata, t_vector_f real_hitpt_co)
 {
+	(void)rdata;
 	if (real_hitpt_co.x <= -EPSILON)
 		return (hit_pt->pt_co.x = -1., true);
-	if (ft_isinset(map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type,
-		CHARS_TRANSPARENT))
-		return (false);
 	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL)
 		return (hit_pt->pt_co = real_hitpt_co, true);
-	else if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
-		return (r_ray_hit_check_doors(map, hit_pt, rdata, real_hitpt_co));
-	return (true);
+	return (false);
 }
 
 #endif
