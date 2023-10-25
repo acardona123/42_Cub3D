@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:17:08 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/23 04:39:27 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:29:15 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	gp_move_player(t_general *gen, float dir_x, float dir_y, size_t delay)
 
 	if (!dir_x && !dir_y)
 		return ;
-	hitpoint = r_ray_hit(&gen->player.p_co, gen->player.p_angle + M_PI
+	hitpoint = r_ray_hit_view(&gen->player.p_co, gen->player.p_angle + M_PI
 			* ((dir_y == -1.) + 0.5 * dir_x), &gen->map, true);
 	target_dest.x = gen->player.p_co.x + gen->settings.walk_speed * delay
 		* ((dir_x && dir_y) * g_sqrt_inv + (!dir_x || !dir_y))

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/22 13:11:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:58:06 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,24 @@
 
 //game default parameters
 # define DEFAULT_FOV 1.4
-# define DEFAULT_ROTATE_SPEED_KEY 0.0006
-# define DEFAULT_ROTATE_SPEED_MOUSE 0.1
-# define DEFAULT_WALK_SPEED 0.0016
 # define DEFAULT_DELAY 1
+# define DEFAULT_WALK_SPEED 0.0016
+# define DEFAULT_ROTATE_SPEED_KEY 0.0006
+# ifdef BONUS
+#  define DEFAULT_ROTATE_SPEED_MOUSE 0.1
+# endif
 
 //game settings
-# define DIST_WALL_MIN 0.015625
-# define ROTATE_SPEED_KEY_INCREMENT 0.001
-# define ROTATE_SPEED_MOUSE_INCREMENT 0.001
-# define WALK_SPEED_INCREMENT 0.05
 # define FOV_INCREMENT 0.125
 # define FOV_MIN 0.0125
 # define FOV_MAX 3.14
-
-# ifndef BONUS
+# define WALK_SPEED_INCREMENT 0.05
+# define ROTATE_SPEED_KEY_INCREMENT 0.001
+# define DIST_WALL_MIN 0.015625
+# ifdef BONUS
+#  define ROTATE_SPEED_MOUSE_INCREMENT 0.001
+#  define DOOR_ACTION_TIME 1000
+# else
 #  define FIXED_DELAY 20
 # endif
 

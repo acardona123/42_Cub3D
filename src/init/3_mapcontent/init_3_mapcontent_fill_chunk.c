@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/24 19:19:15 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:43:43 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 		return (false);
 	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].t0 = to_getime() - rand() % 1000;
+	gen->map.map[x][y].tlast_action = 0;
 	if (in_3_map_locate_textures(&gen->textures, gen->map.map[x][y].textures,
 		c_type) == FAIL)
 		return (false);
@@ -47,6 +48,7 @@ bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].status = INACTIVE;
 	gen->map.map[x][y].t0 = 0;
+	gen->map.map[x][y].tlast_action = 0;
 	in_3_map_locate_textures(&gen->textures, gen->map.map[x][y].textures,
 		c_type);
 	return (true);

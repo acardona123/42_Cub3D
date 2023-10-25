@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/24 23:34:03 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:34:12 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef enum e_primary_axis
 
 typedef struct s_ray_data
 {
+	size_t			time_now;
 	t_dial			dial;
 	t_primary_axis	prim;
 	t_1st_type		first;
@@ -65,8 +66,10 @@ typedef struct s_init_chunks
 typedef t_hitpoint	(*t_collision_function)(t_map*, t_hitpoint, t_ray_data);
 
 //raycasting_collision.c
-t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
-				bool obstacles_shift);
+t_hitpoint	r_ray_hit_view(t_coord_f *p_co, float angle_ray, t_map *map,
+				size_t time_now);
+t_hitpoint	r_ray_hit_move(t_coord_f *p_co, float angle_ray, t_map *map,
+				size_t time_now);
 
 //raycasting_collision_init.c
 t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
@@ -99,7 +102,9 @@ bool		r_ray_hit_sec(t_map *map, t_hitpoint *hit_pt,
 				t_ray_data *rdata, t_vector_f real_hitpt_co);
 
 //raycasting_collision_hit_check_door.c
-bool		r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
+bool		r_ray_hit_check_doors_prim(t_map *map, t_hitpoint *hitpoint,
+				t_ray_data *rdata, t_coord_f real_hitpoint_co);
+bool		r_ray_hit_check_doors_sec(t_map *map, t_hitpoint *hitpoint,
 				t_ray_data *rdata, t_coord_f real_hitpoint_co);
 
 //raycasting_tools.c

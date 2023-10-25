@@ -6,13 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/24 20:04:31 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:01:03 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ray_collision.h"
 
-#ifdef BONUS
+#ifndef BONUS
 
 static const float	g_max_dec_to_wall = 1. - DIST_WALL_MIN;
 
@@ -20,7 +20,8 @@ static bool	r_ray_check_basic_shift_diagonal_neighbors(t_map *map,
 				t_hitpoint *hit_pt, float dec, bool touch_horiz);
 
 /**
- * @brief if rdata.shift == 0.
+ * @brief Used to check the obstacles on the primary axis
+ *		if rdata.shift == 0.
  *			->then checks if the hitpoint of the ray touchs an obstacle (not
  *			floor or nothing), if so returns true and update the hitpoint if
  *			needed (ie if it hit a door)
@@ -47,7 +48,7 @@ bool	r_ray_hit_primary(t_map *map, t_hitpoint *hit_pt, t_ray_data *rdata)
 			return (true);
 		else if (rdata->shift)
 			return (false);
-		return (r_ray_hit_check_doors(map, hit_pt, rdata, hit_pt->pt_co));
+		return (r_ray_hit_check_doors_prim(map, hit_pt, rdata, hit_pt->pt_co));
 	}
 	if (!rdata->shift)
 		return (false);
@@ -80,12 +81,12 @@ bool	r_ray_hit_sec(t_map *map, t_hitpoint *hit_pt,
 		return (hit_pt->pt_co = real_hitpt_co, true);
 	else if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
 	{
-		if (rdata->shift && map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y]
-			.status != DOOR_OPEN)
-			return (hit_pt->pt_co = real_hitpt_co, true);
-		else if (rdata->shift)
+		if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].status
+			== DOOR_OPEN)
 			return (false);
-		return (r_ray_hit_check_doors(map, hit_pt, rdata, real_hitpt_co));
+		else if (rdata->shift)
+			return (hit_pt->pt_co = real_hitpt_co, true);
+		return (r_ray_hit_check_doors_sec(map, hit_pt, rdata, real_hitpt_co));
 	}
 	if (!rdata->shift)
 		return (false);

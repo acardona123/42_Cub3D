@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/21 20:27:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/26 01:19:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,43 @@
 
 #ifdef BONUS
 
-static const t_collision_function	g_collision_function[8]
-	= {r_ray_hit_n_ne, r_ray_hit_ne_e, r_ray_hit_e_se, r_ray_hit_se_s,
-	r_ray_hit_s_sw, r_ray_hit_sw_w, r_ray_hit_w_nw, r_ray_hit_nw_n};
+bool	r_ray_hit_check_doors_prim(t_map *map, t_hitpoint *hitpoint,
+	t_ray_data *rdata, t_coord_f real_hitpoint_co)
+{
+	t_coord_f			hit_mid_shunck;
+	float				inf_value;
 
-bool	r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
+	if (rdata->prim == PRIMARY_H)
+	{
+		inf_value = floor(hitpoint->pt_co.x);
+		hit_mid_shunck.x = hitpoint->pt_co.x + 0.5 * rdata->delta_x;
+		if (hit_mid_shunck.x <= inf_value || hit_mid_shunck.x >= inf_value + 1)
+			return (false);
+		//to do
+	}
+	else
+	{
+		//to do
+	}
+	return (false);
+}
+
+static void	_r_ray_update_door(t_chunk *chunk, size_t time_now)
+{
+	static size_t	time_last_update = 0;
+	static t_chunk	*chunk_last_update = NULL;
+
+	//to do
+}
+
+bool	r_ray_hit_check_doors_sec(t_map *map, t_hitpoint *hitpoint,
 	t_ray_data *rdata, t_coord_f real_hitpoint_co)
 {
 	(void)map;
 	(void)hitpoint;
 	(void)rdata;
 	(void)real_hitpoint_co;
-	(void)g_collision_function;
+	//to do
 	return (false);
 }
 
@@ -38,6 +63,7 @@ bool	r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
 	(void)hitpoint;
 	(void)rdata;
 	(void)real_hitpoint_co;
+	//to do
 	return (false);
 }
 
