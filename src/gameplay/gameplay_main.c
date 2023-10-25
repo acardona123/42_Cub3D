@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/22 01:28:30 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 00:59:23 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	gp_looping(void *gen_)
 	gp_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		delay);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
-			[(int)gen->player.p_co.y].type, CHARS_MAP_BORDER))
+			[(int)gen->player.p_co.y].type, CHARS_OBSTACLE))
 		img = gen->disp.img_out_map->img;
 	else
 		img = rc_raycasting_frame_build(gen, now_time);
@@ -62,7 +62,7 @@ int	gp_looping(void *gen_)
 	gp_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		FIXED_DELAY);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
-			[(int)gen->player.p_co.y].type, CHARS_MAP_BORDER))
+			[(int)gen->player.p_co.y].type, CHARS_OBSTACLE))
 		img = gen->disp.img_out_map->img;
 	else
 		img = rc_raycasting_frame_build(gen, 0);

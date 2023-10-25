@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 01:39:30 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:19:15 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ static bool	_int_3_is_character_surrounding_ok(char chunk_type, t_map *map,
 {
 	if (chunk_type == NOTHING)
 	{
-		if ((x != 0 && !ft_isinset(map->map[x - 1][y].type, CHARS_MAP_BORDER))
+		if ((x != 0 && !ft_isinset(map->map[x - 1][y].type, CHARS_OBSTACLE))
 			|| (y != map->height && !ft_isinset(map->map[x][y +1].type,
-			CHARS_MAP_BORDER)))
+			CHARS_OBSTACLE)))
 			return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 		return (true);
 	}
@@ -142,9 +142,9 @@ static bool	_int_3_is_character_surrounding_ok(char chunk_type, t_map *map,
 {
 	if (chunk_type == NOTHING)
 	{
-		if ((x != 0 && !ft_isinset(map->map[x - 1][y].type, CHARS_MAP_BORDER))
+		if ((x != 0 && !ft_isinset(map->map[x - 1][y].type, CHARS_OBSTACLE))
 			|| (y != map->height && !ft_isinset(map->map[x][y +1].type,
-			CHARS_MAP_BORDER)))
+			CHARS_OBSTACLE)))
 			return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 		return (true);
 	}

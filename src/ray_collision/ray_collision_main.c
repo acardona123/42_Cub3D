@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/23 04:10:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:23:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ int	main(int ac, char **av)
 	
 
 	gen = (t_general){0};
-	
+
 	init_main(ac, av, &gen);
-	
-	printf("player co: (%f, %f)\n", gen.player.p_co.x, gen.player.p_co.y);
-	// gen.player.p_co.x = 18.;
-	// gen.player.p_co.y = 9.5;
+
+	gen.player.p_co.x -= 0.5;
+	gen.player.p_co.y -= 0.5;
+	printf("player co: (%f, %f)\n\n", gen.player.p_co.x, gen.player.p_co.y);
 	angle_deg = 0.;
-	while (angle_deg < 360.)
+	while (angle_deg < 360)
 	{
-		printf("\e[103mangle: %f (%f)\e[0m\n", angle_deg, angle_deg * M_PI / 180);
+		printf("angle: %f (%f)\n", angle_deg, angle_deg * M_PI / 180);
 		hitpoint = r_ray_hit(&gen.player.p_co, angle_deg * M_PI / 180,
 				&gen.map, false);
 		printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
@@ -73,7 +73,7 @@ int	main(int ac, char **av)
 				hitpoint.chunk_co_y,
 				gen.map.map[hitpoint.chunk_co_x][hitpoint.chunk_co_y].type);
 		else
-			printf("\e[33m chunk: no\e[0m\n");
+			printf("chunk: no\n");
 		angle_deg += 5.;
 	}
 	return (0);

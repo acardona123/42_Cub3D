@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/23 04:10:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:31:00 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_texture_pack
 #  define CHARS_ALLOWED "01 NESW"
 # endif
 # define CHARS_PLAYER "NESW"
-# define CHARS_MAP_BORDER "1 "
+# define CHARS_OBSTACLE "1 "
 # define CHARS_TRANSPARENT " 0NSEW"
 
 typedef enum e_chunk_type
