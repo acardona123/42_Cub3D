@@ -6,13 +6,16 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:43:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 00:37:00 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/30 19:38:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //cc test_wrong_maps.c -o test_wrong_maps.exe
 
-#include "../includes/shared.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdbool.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <string.h>
