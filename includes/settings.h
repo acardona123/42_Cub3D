@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/25 17:58:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/30 00:10:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <X11/keysym.h>
 
 //force bonus mode:
-// # ifndef BONUS
-// #  define BONUS
-// # endif
+# ifndef BONUS
+#  define BONUS
+# endif
 
 //window parameters
 # define WIN_HEIGHT 900
@@ -44,7 +44,7 @@
 # define DIST_WALL_MIN 0.015625
 # ifdef BONUS
 #  define ROTATE_SPEED_MOUSE_INCREMENT 0.001
-#  define DOOR_ACTION_TIME 1000
+#  define DOOR_ACTION_TIME 1000.
 # else
 #  define FIXED_DELAY 20
 # endif

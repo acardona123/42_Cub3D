@@ -70,6 +70,10 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 						angles_set \
 					)
 
+FILES_DOORS		=	$(addprefix doors/doors_, \
+						update \
+					)
+
 FILES_NAMES			=	\
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
@@ -77,7 +81,8 @@ FILES_NAMES			=	\
 						$(FILES_RAY_COLLISION) \
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \
-						main 
+						$(FILES_DOORS) \
+						# main 
 
 
 SRC_DIR			=	src

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/25 17:42:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/30 03:14:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_chunk
 	char				status;
 	size_t				t0;
 	size_t				tlast_action;
+	float				extra_data;
 	t_animated_texture	*textures[4];
 }	t_chunk;
 

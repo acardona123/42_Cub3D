@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/26 01:19:42 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/30 03:21:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,139 @@
 
 #ifdef BONUS
 
-bool	r_ray_hit_check_doors_prim(t_map *map, t_hitpoint *hitpoint,
-	t_ray_data *rdata, t_coord_f real_hitpoint_co)
-{
-	t_coord_f			hit_mid_shunck;
-	float				inf_value;
+static bool		_r_ray_hit_check_doors_h(t_chunk *door, t_hitpoint *hit_pt,
+					t_coord_f real_hitpoint_co, t_ray_data *rdata);
+static bool		_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
+					t_coord_f real_hitpoint_co, t_ray_data *rdata);
 
+/**
+ * @brief checks if the ray that touched a door chunk on its primary axis really
+ *	hit the door panel.
+ * 
+ * @param map 
+ * @param hit_pt points toward the hitpoint with the door chunk border, is
+ *		updated if the door is hit.
+ * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
+ * @param rdata 
+ * @return true if the door panel is hit, the the hitpoint is updated to this
+ *		impact point and the door chunk extra data is updated to the position of
+ *		the impact relativly to the door texture (between 0 and 1).
+ * @return false if the ray doesn't hit the door panel, hitpoint untouched.
+ */
+bool	r_ray_hit_check_doors_prim(t_map *map, t_ray_data *rdata,
+	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
+{
+	doors_update_status(&map->map[hit_point->chunk_co_x][hit_point->chunk_co_y],
+		rdata->time_now);
+	if (map->map[hit_point->chunk_co_x]
+		[hit_point->chunk_co_y].status == DOOR_OPEN)
+		return (false);
+	if (rdata->shift)//ie the ray is used to check movement obstacle an not visual ones
+		return (hit_point->pt_co = real_hitpoint_co, true);
 	if (rdata->prim == PRIMARY_H)
-	{
-		inf_value = floor(hitpoint->pt_co.x);
-		hit_mid_shunck.x = hitpoint->pt_co.x + 0.5 * rdata->delta_x;
-		if (hit_mid_shunck.x <= inf_value || hit_mid_shunck.x >= inf_value + 1)
-			return (false);
-		//to do
-	}
-	else
-	{
-		//to do
-	}
-	return (false);
+		return (_r_ray_hit_check_doors_h(&map->map[hit_point->chunk_co_x]
+				[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
+	return (_r_ray_hit_check_doors_v(&map->map[hit_point->chunk_co_x]
+			[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
 }
 
-static void	_r_ray_update_door(t_chunk *chunk, size_t time_now)
+/**
+ * @brief checks if the ray that touched a door chunk on its secondary axis
+ *	really hit the door panel.
+ * 
+ * @param map 
+ * @param hit_pt points toward the hitpoint with the door chunk border, is
+ *		updated if the door is hit.
+ * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
+ * @param rdata 
+ * @return true if the door panel is hit, the the hitpoint is updated to this
+ *		impact point and the door chunk extra data is updated to the position of
+ *		the impact relativly to the door texture (between 0 and 1).
+ * @return false if the ray doesn't hit the door panel, hitpoint untouched.
+ */
+bool	r_ray_hit_check_doors_sec(t_map *map, t_ray_data *rdata,
+	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
 {
-	static size_t	time_last_update = 0;
-	static t_chunk	*chunk_last_update = NULL;
-
-	//to do
+	doors_update_status(&map->map[hit_point->chunk_co_x][hit_point->chunk_co_y],
+		rdata->time_now);
+	if (map->map[hit_point->chunk_co_x]
+		[hit_point->chunk_co_y].status == DOOR_OPEN)
+		return (false);
+	if (rdata->shift)//ie the ray is used to check movement obstacle an not visual ones
+		return (hit_point->pt_co = real_hitpoint_co, true);
+	if (rdata->prim == PRIMARY_H)
+		return (_r_ray_hit_check_doors_v(&map->map[hit_point->chunk_co_x]
+				[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
+	return (_r_ray_hit_check_doors_h(&map->map[hit_point->chunk_co_x]
+			[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
 }
 
-bool	r_ray_hit_check_doors_sec(t_map *map, t_hitpoint *hitpoint,
-	t_ray_data *rdata, t_coord_f real_hitpoint_co)
+/**
+ * @brief Same as _r_ray_hit_check_doors_v but for horizontal doors:
+ *		checks if the ray hits the horizontal door which chunk it crosses.
+ *		note: in this version the door is a one chunk large gliding panel,
+ *		without any width, positioned at the middle of the chunk 
+ * 
+ * @param door chunk of the door
+ * @param hit_pt points toward the hitpoint with the door chunk border, is
+ *		updated if the door is hit.
+ * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
+ * @param rdata 
+ * @return true if the ray hit the door, in this case the hitpoint is updated 
+ *		to this impact point and the door extra data is updated to the position
+ *		of the impact relativly to the door texture (between 0 and 1).
+ * @return false 
+ */
+static bool	_r_ray_hit_check_doors_h(t_chunk *door, t_hitpoint *hit_pt,
+	t_coord_f real_hitpoint_co, t_ray_data *rdata)
 {
-	(void)map;
-	(void)hitpoint;
-	(void)rdata;
-	(void)real_hitpoint_co;
-	//to do
-	return (false);
+	float	hit_door_x;
+	float	inf_value;
+
+	inf_value = floor(real_hitpoint_co.x);
+	hit_door_x = real_hitpoint_co.x + 0.5 * rdata->delta_x;
+	if (hit_door_x < inf_value + door->extra_data
+		|| hit_door_x > inf_value + 1.)
+		return (false);
+	door->extra_data = hit_door_x - inf_value - door->extra_data;
+	hit_pt->pt_co.x = hit_door_x;
+	hit_pt->pt_co.y = real_hitpoint_co.y
+		+ 0.5 * (1. - 2. * (rdata->dial >= E_SE && rdata->dial <= SW_W));
+	return (true);
+}
+
+/**
+ * @brief Same as _r_ray_hit_check_doors_h but for vertical doors:
+ *		checks if the ray hits the vertical door which chunk it crosses.
+ *		note: in this version the door is a one chunk large gliding panel,
+ *		without any width, positioned at the middle of the chunk 
+ * 
+ * @param door chunk of the door
+ * @param hit_pt points toward the hitpoint with the door chunk border, is
+ *		updated if the door is hit.
+ * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
+ * @param rdata 
+ * @return true if the ray hit the door, in this case the hitpoint is updated 
+ *		to this impact point and the door extra data is updated to the position
+ *		of the impact relativly to the door texture (between 0 and 1).
+ * @return false 
+ */
+static bool	_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
+	t_coord_f real_hitpoint_co, t_ray_data *rdata)
+{
+	float	hit_door_y;
+	float	inf_value;
+
+	inf_value = floor(real_hitpoint_co.y);
+	hit_door_y = real_hitpoint_co.y + 0.5 * rdata->delta_y;
+	if (hit_door_y < inf_value + door->extra_data
+		|| hit_door_y > inf_value + 1.)
+		return (false);
+	door->extra_data = hit_door_y - inf_value - door->extra_data;
+	hit_pt->pt_co.x = real_hitpoint_co.y
+		+ 0.5 * (1. - 2. * (rdata->dial >= S_SW));
+	hit_pt->pt_co.y = hit_door_y;
+	return (true);
 }
 
 #else
@@ -63,8 +158,19 @@ bool	r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
 	(void)hitpoint;
 	(void)rdata;
 	(void)real_hitpoint_co;
-	//to do
-	return (false);
+	return (hitpoint->pt_co = real_hitpoint_co, true);
 }
 
 #endif
+
+// /*
+//tests 
+
+int main(int ac, char **av)
+{
+	(void)ac;
+	(void)av;
+	printf("Tests have to be done on hit_check_door and doors_update\n");
+	return (0);
+}
+// */
