@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/24 23:34:03 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:26:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef enum e_1st_type
 {
 	FIRST_H,
 	FIRST_V,
-	FIRST_IS_ANY
+	FIRST_ANY
 }	t_1st_type;
 
 typedef enum e_dial

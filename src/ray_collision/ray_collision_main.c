@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/25 04:23:14 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/31 01:12:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
 	while (angle_ray > 2 * M_PI)
 		angle_ray -= 2 * M_PI;
 	rdata = (t_ray_data){0};
-	rdata.dial = (int)(angle_ray * 4 / M_PI);
+	rdata.dial = (int)(angle_ray * 4. / M_PI);
+	if (rdata.dial == N_NE || rdata.dial == SE_S
+		|| rdata.dial == S_SW || rdata.dial == NW_N)
+		rdata.prim = PRIMARY_H;
+	else
+		rdata.prim = PRIMARY_V;
 	rdata.shift = obstacles_shift * DIST_WALL_MIN;
 	last_hit = r_ray_init_rdata_hitpoint(p_co, angle_ray, map, &rdata);
 	return (g_collision_function[rdata.dial](map, last_hit, rdata));
@@ -51,22 +56,24 @@ int	main(int ac, char **av)
 {
 	t_general	gen;
 	t_hitpoint	hitpoint;
-	float 		angle_deg;
-	
+	float		angle_deg;
+	bool		obstacle_shit = false;
 
 	gen = (t_general){0};
-
 	init_main(ac, av, &gen);
-
-	gen.player.p_co.x -= 0.5;
-	gen.player.p_co.y -= 0.5;
+	// gen.player.p_co.x = 2.5;
+	// gen.player.p_co.y = 3.5;
+	// gen.player.p_co.x -= 0.5 + DIST_WALL_MIN;
+	// gen.player.p_co.y += 0.5 - DIST_WALL_MIN;
+	// gen.player.p_co.x -= .5;
+	gen.player.p_co.y += .5;
 	printf("player co: (%f, %f)\n\n", gen.player.p_co.x, gen.player.p_co.y);
 	angle_deg = 0.;
 	while (angle_deg < 360)
 	{
 		printf("angle: %f (%f)\n", angle_deg, angle_deg * M_PI / 180);
 		hitpoint = r_ray_hit(&gen.player.p_co, angle_deg * M_PI / 180,
-				&gen.map, false);
+				&gen.map, obstacle_shit);
 		printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
 		if (hitpoint.chunk_co_x >= 0.)
 			printf(" chunk: (%d, %d) -> \'%c\'\n\n", hitpoint.chunk_co_x,
