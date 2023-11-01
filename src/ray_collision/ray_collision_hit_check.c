@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/31 01:15:27 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/31 01:25:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool	_r_ray_check_no_shift_diag(t_map *map, t_dial dial,
 
 #ifdef BONUS
 
-static const float	g_max_dec_to_wall = 1. - DIST_WALL_MIN;
+static const double	g_max_dec_to_wall = 1. - DIST_WALL_MIN;
 
 static bool	_r_ray_check_shift_diag_touch_h(t_map *map, t_ray_data *rdata,
 				t_hitpoint *hit_pt, t_coord_f real_hitpt_co);
@@ -168,7 +168,7 @@ static bool	_r_ray_check_shift_diag_touch_h(t_map *map, t_ray_data *rdata,
 static bool	_r_ray_check_shift_diag_touch_v(t_map *map, t_ray_data *rdata,
 	t_hitpoint *hit_pt, t_coord_f real_hitpt_co)
 {
-	float	dec;
+	double	dec;
 
 	dec = real_hitpt_co.y - floor(real_hitpt_co.y);
 	if (!rdata->shift)
