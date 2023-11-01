@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 08:47:37 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/01 19:25:43 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ void	in_3_map_content_init(t_general *gen, t_lists *lst_init)
 	int		x;
 	int		y;
 
-	gen->map = (t_map){lst_init->map_max_x, lst_init->map_max_y,
-		lst_init->map_max_x - 1, lst_init->map_max_y - 1, NULL};
+	gen->map = (t_map){lst_init->map_nb_col, lst_init->map_nb_lines,
+		lst_init->map_nb_col, lst_init->map_nb_lines, NULL};
 	if (_in_3_alloc_tabmap(&gen->map))
 		in_init_destroy_lists_exit(gen, lst_init, MSG_BAD_ALLOC, EXIT_INIT_3);
 	srand((unsigned int)to_getime());
 	tmp = lst_init->lst_map;
-	y = gen->map.height;
+	y = gen->map.height - 1;
 	while (tmp)
 	{
 		x = -1;
 		while (tmp->content[++x])
 			if (!in_3_map_content_fill_chunk_ok(gen, tmp->content[x], x, y))
 				in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_3);
-		while (x < gen->map.width + 1)
+		while (x < gen->map.width)
 			if (!in_3_map_content_fill_chunk_ok(gen, NOTHING, x++, y))
 				in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_3);
 		--y;
@@ -65,12 +65,12 @@ static bool	_in_3_alloc_tabmap(t_map *map)
 	int	x;
 
 	x = 0;
-	map->map = ft_calloc(map->width + 1, sizeof(t_chunk *));
+	map->map = ft_calloc(map->width, sizeof(t_chunk *));
 	if (!map->map)
 		return (true);
-	while (x <= map->width)
+	while (x < map->width)
 	{
-		map->map[x] = ft_calloc(map->height + 1, sizeof(t_chunk));
+		map->map[x] = ft_calloc(map->height, sizeof(t_chunk));
 		if (!map->map[x])
 			return (true);
 		++x;
@@ -92,7 +92,7 @@ int	main(int ac, char **av)
 	write(1, "\n===== PARAM ====\n", 18);
 	ft_lstprint(init_lists.lst_param);
 	printf("\n\nmaps_size:(%d, %d)\nMap content init :\n\n",
-		init_lists.map_max_x, init_lists.map_max_y);
+		init_lists.map_nb_col, init_lists.map_nb_lines);
 	in_3_map_content_init(&gen, &init_lists);
 	to_lstfree(&init_lists.lst_param);
 	to_lstfree(&init_lists.lst_map);
