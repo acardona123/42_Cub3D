@@ -59,7 +59,8 @@ FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 
 FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
 							main \
-							movements \
+							turn_head \
+							walk \
 						)
 
 FILES_TOOLS		=	$(addprefix tools/tools_, \
