@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 01:36:56 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 02:39:22 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <X11/keysym.h>
 
 //force bonus mode:
-// # ifndef BONUS
-// #  define BONUS
-// # endif
+# ifndef BONUS
+#  define BONUS
+# endif
 
 //window parameters
 # define WIN_HEIGHT 900
