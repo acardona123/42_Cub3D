@@ -16,9 +16,8 @@ static void				_r_frame_build_column(t_general *gen, int idx_ray,
 							register t_hitpoint hitpoint, size_t time);
 static t_static_texture	*_r_get_column_texture(
 							t_animated_texture*texture, size_t time, size_t t0);
-static int				_r_get_pixel_color(
-							double height, t_static_texture *texture,
-							double ratio_col);
+static int				_r_get_pixel_color(t_chunk *chunk, t_hitpoint *hit_pt,
+							long int height, t_static_texture *texture);
 static void				r_frame_empty_column(t_data *buff, int idx_ray);
 
 /**
@@ -85,7 +84,7 @@ static void	r_frame_empty_column(t_data *buff, int idx_ray)
  * @param time time when building the image (used for texture animation)
  */
 static void	_r_frame_build_column(t_general *gen, int idx_ray,
-	register t_hitpoint hitpoint, size_t time)
+	t_hitpoint hitpoint, size_t time)
 {
 	register long int	y;
 	register long int	tmp_y;
@@ -104,11 +103,11 @@ static void	_r_frame_build_column(t_general *gen, int idx_ray,
 		*(int *)(addr_x + y * gen->disp.buff->line_len) = gen->textures.color_c;
 	tmp_y = (WIN_HEIGHT + h_theoric) >> 1;
 	--y;
-	_r_get_pixel_color(0, NULL, 0);
+	_r_get_pixel_color(NULL, NULL, 0, NULL);
 	while (++y < tmp_y && y < WIN_HEIGHT)
 		*(int *)(addr_x + y * gen->disp.buff->line_len) = _r_get_pixel_color(\
-			h_theoric, texture, hitpoint.pt_co.x - floor(hitpoint.pt_co.x)
-				+ hitpoint.pt_co.y - floor(hitpoint.pt_co.y));
+			&gen->map.map[hitpoint.chunk_co_x][hitpoint.chunk_co_y], &hitpoint,
+				h_theoric, texture);
 	--y;
 	while (++y < WIN_HEIGHT)
 		*(int *)(addr_x + y * gen->disp.buff->line_len) = gen->textures.color_f;
@@ -147,28 +146,38 @@ static t_static_texture	*_r_get_column_texture(t_animated_texture
  * @brief gets the pixel corresponding to the given texture at a certain column
  *			and height.
  *			Before each change of column the functon need to be reset (static
- *			variable inside) by calling it with a NULL texture
+ *			variable inside) by calling it with a NULL chunk
  * 
+ * @param  chunk chunk hit (need type and extra_data)
+ * @param  hitpoint hitpoint data usedd to differentiate if it is a door (then
+ *		the value used to find the column is in hit_pt->extra_data), or a wall
+ *		(the the value is the decimal value of the x or y coordinate depending
+ *		on the orientation of the face hitted)
  * @param height theorical hight of the texture img (can be > of WIN_HEIGHT)
- * @param texture 
- * @param ratio_col between 0. and 1. => the column to draw is this
- *			value * img_width
+ * @param texture the texture to use
  * @return int the color of the searched pixel
  */
-static int	_r_get_pixel_color(double height, t_static_texture *texture,
-	double ratio_col)
+static int	_r_get_pixel_color(t_chunk *chunk, t_hitpoint *hit_pt,
+	long int height, t_static_texture *texture)
 {
 	static unsigned int	y = 0;
-	static double		ratio_height = 1.;
+	static float		ratio_height = 1.;
+	float				ratio_col; //between 0. and 1. => the column to draw is this value * img_width
 
-	if (!texture)
+	if (!chunk)
 		return (y = 0, 0);
-	if (!y && texture)
+	if (!y)
 	{
 		if (height > WIN_HEIGHT)
 			y = (int)(height - WIN_HEIGHT) / 2;
-		ratio_height = texture->img_height / height;
+		ratio_height = (float)texture->img_height / height;
 	}
+	if (chunk->type == DOOR)
+		ratio_col = chunk->extra_data;
+	else if (hit_pt->hit_face == FACE_N || hit_pt->hit_face == FACE_S)
+		ratio_col = hit_pt->pt_co.x - floor(hit_pt->pt_co.x);
+	else
+		ratio_col = hit_pt->pt_co.y - floor(hit_pt->pt_co.y);
 	++y;
 	return (*(int *)(texture->data.addr
 		+ ((int)(ratio_col * texture->data.pix_width)) * texture->data.opp

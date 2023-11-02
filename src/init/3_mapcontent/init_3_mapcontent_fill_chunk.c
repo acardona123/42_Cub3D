@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 01:09:39 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 03:37:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,10 @@ static bool	_int_3_is_character_surrounding_ok(char chunk_type, t_map *map,
 		|| map->map[x][y + 1].type == NOTHING))
 		return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 	else if (y < map->height - 1 && map->map[x][y + 1].type == DOOR
-		&& !(map->map[x][y].type == WALL && map->map[x][y + 2].type == WALL)
+		&& !(chunk_type == WALL && map->map[x][y + 2].type == WALL)
 		&& !(map->map[x + 1][y + 1].type == WALL
 			&& map->map[x - 1][y + 1].type == WALL))
-		return (to_error_msg(MSG_DOOR_ISOLATED), false);
+		return (printf("chunk: (%d, %d)\n", x, y + 1), to_error_msg(MSG_DOOR_ISOLATED), false);//printf to remove
 	return (true);
 }
 

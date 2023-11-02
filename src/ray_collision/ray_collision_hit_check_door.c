@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 02:13:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 03:39:17 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ static bool	_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
 		|| hit_door_y > inf_value + 1.)
 		return (false);
 	door->extra_data = hit_door_y - inf_value - door->extra_data;
-	hit_pt->pt_co.x = real_hitpoint_co.y
+	hit_pt->pt_co.x = real_hitpoint_co.x
 		+ 0.5 * (1. - 2. * (rdata->dial >= S_SW));
 	hit_pt->pt_co.y = hit_door_y;
 	return (true);
