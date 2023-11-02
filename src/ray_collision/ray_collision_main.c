@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/25 17:34:54 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 01:49:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static const t_collision_function	g_collision_function[8]
 
 /**
  * @brief sendsd a ray from the player, in a certain direction and returns the
- *	impact point with the first visual obstacle found.
+ *	impact point with the first obstacle found.
  *	(if no obstacle found the abscisse of the returned obstacle is set to -1.)
  * 
  * @param p_co player coordinates
@@ -28,8 +28,8 @@ static const t_collision_function	g_collision_function[8]
  * @return t_hitpoint structure contining the datas oh the first bloc hitten and
  *		the imact point.
  */
-t_hitpoint	r_ray_hit_view(t_coord_f *p_co, float angle_ray, t_map *map,
-	size_t time_now)
+t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
+	bool obstacles_shift)
 {
 	t_hitpoint	last_hit;
 	t_ray_data	rdata;
@@ -39,39 +39,13 @@ t_hitpoint	r_ray_hit_view(t_coord_f *p_co, float angle_ray, t_map *map,
 	while (angle_ray > 2 * M_PI)
 		angle_ray -= 2 * M_PI;
 	rdata = (t_ray_data){0};
-	rdata.time_now = time_now;
-	rdata.dial = (int)(angle_ray * 4 / M_PI);
-	rdata.shift = 0.;
-	last_hit = r_ray_init_rdata_hitpoint(p_co, angle_ray, map, &rdata);
-	return (g_collision_function[rdata.dial](map, last_hit, rdata));
-}
-
-/**
- * @brief sendsd a ray from the player, in a certain direction and returns the
- *	impact point with the first visual obstacle found.
- *	(if no obstacle found the abscisse of the returned obstacle is set to -1.)
- * 
- * @param p_co player coordinates
- * @param angle_ray absolute angle of the ray (between -2 * M_PI and 4 * M_PI)
- *	rlatively to the north of the map
- * @param map 
- * @return t_hitpoint structure contining the datas oh the first bloc hitten and
- *		the imact point.
- */
-t_hitpoint	r_ray_hit_move(t_coord_f *p_co, float angle_ray, t_map *map,
-	size_t time_now)
-{
-	t_hitpoint	last_hit;
-	t_ray_data	rdata;
-
-	while (angle_ray < 0)
-		angle_ray += 2 * M_PI;
-	while (angle_ray > 2 * M_PI)
-		angle_ray -= 2 * M_PI;
-	rdata = (t_ray_data){0};
-	rdata.time_now = time_now;
-	rdata.dial = (int)(angle_ray * 4 / M_PI);
-	rdata.shift = DIST_WALL_MIN;
+	rdata.dial = (int)(angle_ray * 4. / M_PI);
+	if (rdata.dial == N_NE || rdata.dial == SE_S
+		|| rdata.dial == S_SW || rdata.dial == NW_N)
+		rdata.prim = PRIMARY_H;
+	else
+		rdata.prim = PRIMARY_V;
+	rdata.shift = obstacles_shift * DIST_WALL_MIN;
 	last_hit = r_ray_init_rdata_hitpoint(p_co, angle_ray, map, &rdata);
 	return (g_collision_function[rdata.dial](map, last_hit, rdata));
 }
@@ -82,22 +56,24 @@ int	main(int ac, char **av)
 {
 	t_general	gen;
 	t_hitpoint	hitpoint;
-	float 		angle_deg;
-	
+	float		angle_deg;
+	bool		obstacle_shit = false;
 
 	gen = (t_general){0};
-
 	init_main(ac, av, &gen);
-
-	gen.player.p_co.x -= 0.5;
-	gen.player.p_co.y -= 0.5;
+	// gen.player.p_co.x = 2.5;
+	// gen.player.p_co.y = 3.5;
+	// gen.player.p_co.x -= 0.5 + DIST_WALL_MIN;
+	// gen.player.p_co.y += 0.5 - DIST_WALL_MIN;
+	// gen.player.p_co.x -= .5;
+	gen.player.p_co.y += .5;
 	printf("player co: (%f, %f)\n\n", gen.player.p_co.x, gen.player.p_co.y);
 	angle_deg = 0.;
 	while (angle_deg < 360)
 	{
 		printf("angle: %f (%f)\n", angle_deg, angle_deg * M_PI / 180);
-		hitpoint = r_ray_hit_view(&gen.player.p_co, angle_deg * M_PI / 180,
-				&gen.map, false);
+		hitpoint = r_ray_hit(&gen.player.p_co, angle_deg * M_PI / 180,
+				&gen.map, obstacle_shit);
 		printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
 		if (hitpoint.chunk_co_x >= 0.)
 			printf(" chunk: (%d, %d) -> \'%c\'\n\n", hitpoint.chunk_co_x,

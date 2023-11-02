@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/30 03:14:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 01:44:18 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,8 +233,8 @@ void		end_destroy_exit(t_general *gen, t_exit_values n);
 void		init_main(int ac, char **av, t_general	*gen);
 
 // ray_collision
-t_hitpoint	r_ray_hit_view(t_coord_f *p_co, float angle_ray, t_map *map,
-				size_t time_now);
+t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
+				bool obstacles_shift);
 
 // raycasting
 void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);

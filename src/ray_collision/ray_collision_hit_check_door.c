@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/30 03:21:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 02:13:38 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ bool	r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
 
 #endif
 
-// /*
+/*
 //tests 
 
 int main(int ac, char **av)
@@ -173,4 +173,4 @@ int main(int ac, char **av)
 	printf("Tests have to be done on hit_check_door and doors_update\n");
 	return (0);
 }
-// */
+*/

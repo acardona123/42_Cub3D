@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 15:31:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/01 18:59:47 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ typedef struct s_init_lists
 {
 	t_list			*lst_param;
 	t_list			*lst_map;
-	unsigned int	map_max_y;
-	unsigned int	map_max_x;
+	unsigned int	map_nb_lines;
+	unsigned int	map_nb_col;
 }	t_lists;
 
 typedef enum e_texture_int_index

@@ -40,7 +40,7 @@ void	*rc_raycasting_frame_build(t_general *gen, size_t last_time)
 	idx_ray = -1;
 	while (++idx_ray < WIN_WIDTH)
 	{
-		hit_pt = r_ray_hit_view(&p_co,
+		hit_pt = r_ray_hit(&p_co,
 				p_angle + gen->angles_set[idx_ray], &gen->map, false);
 		if (hit_pt.pt_co.x <= 0.)
 			r_frame_empty_column(gen->disp.buff, idx_ray);

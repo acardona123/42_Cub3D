@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/25 01:55:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 00:42:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@
  * @param map 
  * @param last 
  * @param rdata 
+static const float	g_angle_dir[3][3] = {{5. * M_PI_4, 3. * M_PI_2, 7 * M_PI_4},
+{M_PI, 0., 0.}, {3 * M_PI_4, M_PI_2, M_PI_4}};
  * @return t_hitpoint 
  */
 t_hitpoint	r_ray_hit_n_ne(t_map *map, t_hitpoint last, t_ray_data rdata)
 {
-						printf("  first: %c\n", "HVA"[rdata.first]);//
-						printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
-	rdata.prim = PRIMARY_H;
+							//printf("  first: %c\n", "HVA"[rdata.first]);//
+							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	if (rdata.first == FIRST_V && r_ray_hit_sec(map, &last, &rdata, last.pt_co))
-		return (last);
-						printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+		return (last.pt_co.x -= EPSILON, last);
+							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_v.x -= (rdata.first == FIRST_H && rdata.check_v);
 	rdata.last_v.y -= rdata.delta_y * (rdata.first == FIRST_H
 			&& rdata.check_v);
@@ -38,10 +39,10 @@ t_hitpoint	r_ray_hit_n_ne(t_map *map, t_hitpoint last, t_ray_data rdata)
 	while (++last.pt_co.y <= map->y_max - 1. - rdata.shift)
 	{
 		++last.chunk_co_y;
-							printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+								//printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+								//printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(map, &last, &rdata))
-			return (last);
+			return (last.pt_co.y -= EPSILON, last);
 		last.pt_co.x += rdata.delta_x;
 		if (rdata.check_v && last.pt_co.x - rdata.last_v.x >= 1.)
 		{
@@ -50,7 +51,7 @@ t_hitpoint	r_ray_hit_n_ne(t_map *map, t_hitpoint last, t_ray_data rdata)
 			++last.chunk_co_x;
 			rdata.last_v.y += rdata.delta_y;
 			if (r_ray_hit_sec(map, &last, &rdata, rdata.last_v))
-				return (last.hit_face = FACE_W, last);
+				return (last.hit_face = FACE_W, last.pt_co.x -= EPSILON, last);
 		}
 	}
 	return (last.pt_co.x = -1., last);
@@ -66,14 +67,13 @@ t_hitpoint	r_ray_hit_n_ne(t_map *map, t_hitpoint last, t_ray_data rdata)
  */
 t_hitpoint	r_ray_hit_ne_e(t_map *map, t_hitpoint last, t_ray_data rdata)
 {
-						printf("  first: %c\n", "HVA"[rdata.first]);
-						printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
-	rdata.prim = PRIMARY_V;
+							//printf("  first: %c\n", "HVA"[rdata.first]);
+							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	if (rdata.first == FIRST_H && r_ray_hit_sec(map, &last, &rdata, last.pt_co))
-		return (last);
-						printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+		return (last.pt_co.y -= EPSILON, last);
+							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_h.x -= rdata.delta_x * (rdata.first == FIRST_V
 			&& rdata.check_h);
 	rdata.last_h.y -= (rdata.first == FIRST_V && rdata.check_h);
@@ -82,10 +82,10 @@ t_hitpoint	r_ray_hit_ne_e(t_map *map, t_hitpoint last, t_ray_data rdata)
 	while (++last.pt_co.x <= map->x_max - 1. - rdata.shift)
 	{
 		++last.chunk_co_x;
-							printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+								//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+								//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(map, &last, &rdata))
-			return (last);
+			return (last.pt_co.x -= EPSILON, last);
 		last.pt_co.y += rdata.delta_y;
 		if (rdata.check_h && last.pt_co.y - rdata.last_h.y >= 1.)
 		{
@@ -94,7 +94,7 @@ t_hitpoint	r_ray_hit_ne_e(t_map *map, t_hitpoint last, t_ray_data rdata)
 			++last.chunk_co_y;
 			rdata.last_h.x += rdata.delta_x;
 			if (r_ray_hit_sec(map, &last, &rdata, rdata.last_h))
-				return (last.hit_face = FACE_S, last);
+				return (last.pt_co.y -= EPSILON, last.hit_face = FACE_S, last);
 		}
 	}
 	return (last.pt_co.x = -1., last);
@@ -110,14 +110,13 @@ t_hitpoint	r_ray_hit_ne_e(t_map *map, t_hitpoint last, t_ray_data rdata)
  */
 t_hitpoint	r_ray_hit_e_se(t_map *map, t_hitpoint last, t_ray_data rdata)
 {
-						printf("  first: %c\n", "HVA"[rdata.first]);//
-						printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
-	rdata.prim = PRIMARY_V;
+							//printf("  first: %c\n", "HVA"[rdata.first]);//
+							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	if (rdata.first == FIRST_H && r_ray_hit_sec(map, &last, &rdata, last.pt_co))
-		return (last);
-						printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+		return (last.pt_co.y += EPSILON, last);
+							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_h.x -= rdata.delta_x * (rdata.first == FIRST_V
 			&& rdata.check_h);
 	rdata.last_h.y += (rdata.first == FIRST_V && rdata.check_h);
@@ -126,10 +125,10 @@ t_hitpoint	r_ray_hit_e_se(t_map *map, t_hitpoint last, t_ray_data rdata)
 	while (++last.pt_co.x <= map->x_max - 1. - rdata.shift)
 	{
 		++last.chunk_co_x;
-							printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+								//printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+								//printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(map, &last, &rdata))
-			return (last);
+			return (last.pt_co.x -= EPSILON, last);
 		last.pt_co.y += rdata.delta_y;
 		if (rdata.check_h && rdata.last_h.y - last.pt_co.y >= 1.)
 		{
@@ -138,7 +137,7 @@ t_hitpoint	r_ray_hit_e_se(t_map *map, t_hitpoint last, t_ray_data rdata)
 			--last.chunk_co_y;
 			rdata.last_h.x += rdata.delta_x;
 			if (r_ray_hit_sec(map, &last, &rdata, rdata.last_h))
-				return (last.hit_face = FACE_N, last);
+				return (last.pt_co.y += EPSILON, last.hit_face = FACE_N, last);
 		}
 	}
 	return (last.pt_co.x = -1., last);
@@ -154,14 +153,13 @@ t_hitpoint	r_ray_hit_e_se(t_map *map, t_hitpoint last, t_ray_data rdata)
  */
 t_hitpoint	r_ray_hit_se_s(t_map *map, t_hitpoint last, t_ray_data rdata)
 {
-						printf("  first: %c\n", "HVA"[rdata.first]);//
-						printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
-	rdata.prim = PRIMARY_H;
+							//printf("  first: %c\n", "HVA"[rdata.first]);//
+							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	if (rdata.first == FIRST_V && r_ray_hit_sec(map, &last, &rdata, last.pt_co))
-		return (last);
-						printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-						printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+		return (last.pt_co.x -= EPSILON, last);
+							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_v.x -= (rdata.first == FIRST_H && rdata.check_v);
 	rdata.last_v.y -= rdata.delta_y * (rdata.first == FIRST_H
 			&& rdata.check_v);
@@ -170,10 +168,10 @@ t_hitpoint	r_ray_hit_se_s(t_map *map, t_hitpoint last, t_ray_data rdata)
 	while (--last.pt_co.y >= 1. + rdata.shift)
 	{
 		--last.chunk_co_y;
-							printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
+								//printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
+								//printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(map, &last, &rdata))
-			return (last);
+			return (last.pt_co.y += EPSILON, last);
 		last.pt_co.x += rdata.delta_x;
 		if (rdata.check_v && last.pt_co.x - rdata.last_v.x >= 1.)
 		{
@@ -182,7 +180,7 @@ t_hitpoint	r_ray_hit_se_s(t_map *map, t_hitpoint last, t_ray_data rdata)
 			++last.chunk_co_x;
 			rdata.last_v.y += rdata.delta_y;
 			if (r_ray_hit_sec(map, &last, &rdata, rdata.last_v))
-				return (last.hit_face = FACE_W, last);
+				return (last.pt_co.x -= EPSILON, last.hit_face = FACE_W, last);
 		}
 	}
 	return (last.pt_co.x = -1., last);

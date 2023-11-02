@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/30 03:12:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 01:39:16 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef enum e_1st_type
 {
 	FIRST_H,
 	FIRST_V,
-	FIRST_IS_ANY
+	FIRST_ANY
 }	t_1st_type;
 
 typedef enum e_dial
@@ -69,10 +69,8 @@ typedef struct s_init_chunks
 typedef t_hitpoint	(*t_collision_function)(t_map*, t_hitpoint, t_ray_data);
 
 //raycasting_collision.c
-t_hitpoint	r_ray_hit_view(t_coord_f *p_co, float angle_ray, t_map *map,
-				size_t time_now);
-t_hitpoint	r_ray_hit_move(t_coord_f *p_co, float angle_ray, t_map *map,
-				size_t time_now);
+t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
+				bool obstacles_shift);
 
 //raycasting_collision_init.c
 t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,

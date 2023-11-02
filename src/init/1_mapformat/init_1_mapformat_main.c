@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 15:33:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/01 18:59:47 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ static void	_in_1_map_mapcontent_check(t_general *gen, t_lists *lists,
 			close(fd_input);
 			in_init_destroy_lists_exit(gen, lists, MSG_BAD_ALLOC, EXIT_INIT_1);
 		}
-		lists->map_max_y++;
-		if (ft_strlen(*line) > lists->map_max_x)
-			lists->map_max_x = ft_strlen(*line);
+		lists->map_nb_lines++;
+		if (ft_strlen(*line) > lists->map_nb_col)
+			lists->map_nb_col = ft_strlen(*line);
 		*line = get_next_line(fd_input);
 	}
 }

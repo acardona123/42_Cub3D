@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:55:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 01:04:02 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:12:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 t_bool	in_3_map_locate_textures(t_texture_pack *texturepack,
 	t_animated_texture *chunk_textures_array[], char chunk_type)
 {
-	if (chunk_type == WALL)
+	if (chunk_type == WALL || chunk_type == NOTHING)
 	{
 		chunk_textures_array[FACE_N] = texturepack->wall_n;
 		chunk_textures_array[FACE_S] = texturepack->wall_s;

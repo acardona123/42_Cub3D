@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/25 17:43:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 01:09:39 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 		gen->map.map[x][y].status = DOOR_CLOSED;
 	else
 		gen->map.map[x][y].status = INACTIVE;
-	if (y < gen->map.y_max && gen->map.map[x][y + 1].type == DOOR)
+	if (y < gen->map.y_max - 1 && gen->map.map[x][y + 1].type == DOOR)
 		in_3_map_add_door_sides_textures(gen->map.map, &gen->textures,
 			x, y + 1);
 	return (true);
@@ -85,7 +85,7 @@ static bool	_in_3_character_is_valid(t_general *gen, char letter, int x,
 		gen->player.p_co.y = y + 0.5;
 		player_found = true;
 	}
-	else if (x == gen->map.width && y == 0 && player_found == false)
+	else if (x == gen->map.width - 1 && y == 0 && player_found == false)
 		return (to_error_msg(MSG_NO_PLAYER), false);
 	return (_int_3_is_character_surrounding_ok(letter, &gen->map, x, y));
 }
@@ -109,17 +109,17 @@ static bool	_int_3_is_character_surrounding_ok(char chunk_type, t_map *map,
 	if (chunk_type == NOTHING)
 	{
 		if ((x != 0 && !ft_isinset(map->map[x - 1][y].type, CHARS_OBSTACLE))
-			|| (y != map->height && !ft_isinset(map->map[x][y +1].type,
+			|| (y != map->height - 1 && !ft_isinset(map->map[x][y + 1].type,
 			CHARS_OBSTACLE)))
 			return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 		return (true);
 	}
 	else if (chunk_type != WALL
-		&& (x == 0 || x == map->width || y == 0 || y == map->height \
+		&& (x == 0 || x == map->width - 1 || y == 0 || y == map->height - 1 \
 		|| map->map[x - 1][y].type == NOTHING
 		|| map->map[x][y + 1].type == NOTHING))
 		return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
-	else if (y < map->height && map->map[x][y + 1].type == DOOR
+	else if (y < map->height - 1 && map->map[x][y + 1].type == DOOR
 		&& !(map->map[x][y].type == WALL && map->map[x][y + 2].type == WALL)
 		&& !(map->map[x + 1][y + 1].type == WALL
 			&& map->map[x - 1][y + 1].type == WALL))
@@ -145,13 +145,13 @@ static bool	_int_3_is_character_surrounding_ok(char chunk_type, t_map *map,
 	if (chunk_type == NOTHING)
 	{
 		if ((x != 0 && !ft_isinset(map->map[x - 1][y].type, CHARS_OBSTACLE))
-			|| (y != map->height && !ft_isinset(map->map[x][y +1].type,
+			|| (y != map->height - 1 && !ft_isinset(map->map[x][y + 1].type,
 			CHARS_OBSTACLE)))
 			return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 		return (true);
 	}
 	else if (chunk_type != WALL
-		&& (x == 0 || x == map->width || y == 0 || y == map->height \
+		&& (x == 0 || x == map->width - 1 || y == 0 || y == map->height - 1 \
 		|| map->map[x - 1][y].type == NOTHING
 		|| map->map[x][y + 1].type == NOTHING))
 		return (to_error_msg(MSG_MAP_NOT_CLOSED), false);

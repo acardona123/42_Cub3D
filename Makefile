@@ -59,7 +59,8 @@ FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 
 FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
 							main \
-							movements \
+							turn_head \
+							walk \
 						)
 
 FILES_TOOLS		=	$(addprefix tools/tools_, \
@@ -82,7 +83,7 @@ FILES_NAMES			=	\
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \
 						$(FILES_DOORS) \
-						# main 
+						main 
 
 
 SRC_DIR			=	src
