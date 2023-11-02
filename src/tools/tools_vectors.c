@@ -6,14 +6,14 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:09:01 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/12 20:47:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/31 01:26:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/tools.h"
 
 /**
- * @brief prints a vector's coords (floats)
+ * @brief prints a vector's coords (double)
  * 
  * @param v 
  */

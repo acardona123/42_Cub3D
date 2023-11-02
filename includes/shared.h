@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 01:53:37 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:31:00 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ typedef struct s_static_texture
 typedef struct s_animated_texture
 {
 	unsigned int		frame_number;
-	unsigned int		frame_ms;//time between 2 consecutive frames without pause
+	unsigned int		frame_ms;
 	unsigned int		frame_pause_ms;
-	unsigned int		frame_cycle_short;//time to display all frames without pause
-	unsigned int		frame_cycle_long;//time of the complete cycle including pause
+	unsigned int		frame_cycle_short;
+	unsigned int		frame_cycle_long;
 	t_static_texture	*frame_array;
 }	t_animated_texture;
 
@@ -77,7 +77,7 @@ typedef struct s_texture_pack
 #  define CHARS_ALLOWED "01 NESW"
 # endif
 # define CHARS_PLAYER "NESW"
-# define CHARS_MAP_BORDER "1 "
+# define CHARS_OBSTACLE "1 "
 # define CHARS_TRANSPARENT " 0NSEW"
 
 typedef enum e_chunk_type
@@ -118,7 +118,7 @@ typedef struct s_chunk
 {
 	t_chunk_type		type;
 	char				status;
-	size_t				t0;//ref time for the animations
+	size_t				t0;
 	t_animated_texture	*textures[4];
 }	t_chunk;
 
@@ -134,7 +134,8 @@ typedef struct s_map
 typedef struct s_hitpoint
 {
 	t_coord_f			pt_co;
-	t_coord_i			chunk_co;
+	int					chunk_co_x;
+	int					chunk_co_y;
 	t_chunk_face		hit_face;
 	double				dist;
 }	t_hitpoint;
@@ -217,20 +218,29 @@ typedef struct s_general
 /* ---- End: General ----
 
 
-==== end_destroy ==== */
-//end_destroy_display_close.c
-void	end_destroy_display(t_display *disp);
+==== Public functions prototypes ==== */
 
-// end_destroy_map.c
-void	end_destroy_map(t_map *map);
+// end_destroy
+void		end_destroy_display(t_display *disp);
+void		end_destroy_map(t_map *map);
+void		end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
+void		end_destroy_general(t_general *gen);
+void		end_destroy_exit(t_general *gen, t_exit_values n);
 
-//end_detroy_texture_pack.c
-void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
+// init
+void		init_main(int ac, char **av, t_general	*gen);
 
-//end_destroy_general.c
-void	end_destroy_general(t_general *gen);
+// ray_collision
+t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
+				bool obstacles_shift);
 
-//end_destroy_exit.c
-void	end_destroy_exit(t_general *gen, t_exit_values n);
+// raycasting
+void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);
+
+// gameplay
+int			gp_looping(void *void_gen);
+
+// tools
+//all the tools header is usefull and therefore has been included
 
 #endif

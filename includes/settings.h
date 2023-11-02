@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 01:07:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/22 13:11:36 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 // # endif
 
 //window parameters
-# define WIN_HEIGHT 1080
-# define WIN_WIDTH 1920
+# define WIN_HEIGHT 900
+# define WIN_WIDTH 1500
 # define WIN_NAME "Cub3D"
 
 //game default parameters
@@ -34,7 +34,7 @@
 # define DEFAULT_DELAY 1
 
 //game settings
-# define DIST_WALL_MIN 0.125
+# define DIST_WALL_MIN 0.015625
 # define ROTATE_SPEED_KEY_INCREMENT 0.001
 # define ROTATE_SPEED_MOUSE_INCREMENT 0.001
 # define WALK_SPEED_INCREMENT 0.05

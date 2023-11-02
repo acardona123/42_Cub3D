@@ -6,38 +6,20 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:35:01 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/17 17:00:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:29:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-#ifdef BONUS
-
 int	main(int ac, char **av)
 {
 	t_general	gen;
 
 	gen = (t_general){0};
 	init_main(ac, av, &gen);
-	mlx_loop_hook(gen.disp.mlx, game_looping, &gen);
+	mlx_loop_hook(gen.disp.mlx, gp_looping, &gen);
 	mlx_loop(gen.disp.mlx);
 	end_destroy_general(&gen);
 	return (0);
 }
-
-#else
-
-int	main(int ac, char **av)
-{
-	t_general	gen;
-
-	gen = (t_general){0};
-	init_main(ac, av, &gen);
-	mlx_loop_hook(gen.disp.mlx, game_looping, &gen);
-	mlx_loop(gen.disp.mlx);
-	end_destroy_general(&gen);
-	return (0);
-}
-
-#endif

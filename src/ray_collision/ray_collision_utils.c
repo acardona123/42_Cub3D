@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting_tools.c                                 :+:      :+:    :+:   */
+/*   ray_collision_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:11:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/16 14:41:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/10/29 01:35:11 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raycasting.h"
+#include "../../includes/ray_collision.h"
 
 /**
  * @brief checks if a point (x, y) is outside the map (ie insides the exterior
@@ -28,37 +28,24 @@ bool	r_point_outside_map(t_map *map, t_coord_f P)
 }
 
 /**
- * @brief checks if the chunk in which the point (float coordinates) is an
- *		obstacle for the ray (not floor or nothing)
+ * @brief tests if the given chunk is solid ie the player can't go in it
  * 
  * @param map 
- * @param x 
- * @param y 
- * @return true is an ostacle
- * @return false is "transparent" to the ray
+ * @param chunk_co_x 
+ * @param chunk_co_y 
+ * @return true if solid
+ * @return false if not solid (reachable for the player)
  */
-bool	r_is_obstacle_f(t_map *map, float x, float y)
+bool	r_ray_hit_check_solid_chunk(t_chunk **map, int chunk_co_x,
+	int chunk_co_y)
 {
-	if (map->map[(int)x][(int)y].type != NOTHING
-		&& map->map[(int)x][(int)y].type != FLOOR)
+	if (map[chunk_co_x][chunk_co_y].type == WALL)
 		return (true);
-	return (false);
-}
-
-/**
- * @brief checks if the chunk designated by the coordinates x and y is an
- *		obstacle for the ray (not floor or nothing)
- * 
- * @param map 
- * @param x 
- * @param y 
- * @return true is an ostacle
- * @return false is "transparent" to the ray
- */
-bool	r_is_obstacle_i(t_map *map, int x, int y)
-{
-	if (map->map[x][y].type != NOTHING
-		&& map->map[x][y].type != FLOOR)
+	if (map[chunk_co_x][chunk_co_y].type == NOTHING)
 		return (true);
+	if (map[chunk_co_x][chunk_co_y].type == DOOR)
+		return (map[chunk_co_x][chunk_co_y].status != DOOR_OPEN);
+	// if (ft_isinset(map[chunk_co_x][chunk_co_y].type, CHARS_TRANSPARENT))
+	// 	return (false);
 	return (false);
 }

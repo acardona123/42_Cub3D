@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:43:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/23 16:08:48 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 01:05:39 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 cc test_wrong_maps.c -o test_wrong_maps.exe
 */
 
-#include "../includes/shared.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdbool.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <sys/stat.h>

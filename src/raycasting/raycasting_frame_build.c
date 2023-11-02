@@ -28,7 +28,7 @@ static void				r_frame_empty_column(t_data *buff, int idx_ray);
  * @param gen 
  * @param time used for getting the right animation
  */
-void	*r_frame_construction(t_general *gen, size_t last_time)
+void	*rc_raycasting_frame_build(t_general *gen, size_t last_time)
 {
 	register int		idx_ray;
 	register t_hitpoint	hit_pt;
@@ -41,7 +41,7 @@ void	*r_frame_construction(t_general *gen, size_t last_time)
 	while (++idx_ray < WIN_WIDTH)
 	{
 		hit_pt = r_ray_hit(&p_co,
-				p_angle + gen->angles_set[idx_ray], &gen->map);
+				p_angle + gen->angles_set[idx_ray], &gen->map, false);
 		if (hit_pt.pt_co.x <= 0.)
 			r_frame_empty_column(gen->disp.buff, idx_ray);
 		else
@@ -58,7 +58,7 @@ void	*r_frame_construction(t_general *gen, size_t last_time)
 /**
  * @brief draw a gray column if no ostacle is found. This shouldn't happen
  *	(can only happend if outside the map boundaries, but in this case a black
- *	screen is displayed so r_frame_construction isn't called)
+ *	screen is displayed so rc_raycasting_frame_build isn't called)
  * 
  * @param buff 
  * @param idx_ray 
@@ -93,9 +93,9 @@ static void	_r_frame_build_column(t_general *gen, int idx_ray,
 	register char		*addr_x;
 	t_static_texture	*texture;
 
-	texture = _r_get_column_texture(gen->map.map[hitpoint.chunk_co.x]
-		[hitpoint.chunk_co.y].textures[hitpoint.hit_face], time,
-			gen->map.map[hitpoint.chunk_co.x][hitpoint.chunk_co.y].t0);
+	texture = _r_get_column_texture(gen->map.map[hitpoint.chunk_co_x]
+		[hitpoint.chunk_co_y].textures[hitpoint.hit_face], time,
+			gen->map.map[hitpoint.chunk_co_x][hitpoint.chunk_co_y].t0);
 	h_theoric = 1 / (gen->angle_correc[idx_ray] * hitpoint.dist) * WIN_HEIGHT;
 	addr_x = gen->disp.buff->addr + idx_ray * gen->disp.buff->opp;
 	tmp_y = (WIN_HEIGHT - h_theoric) / 2;
