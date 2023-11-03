@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:23:38 by marvin            #+#    #+#             */
-/*   Updated: 2023/09/27 17:28:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:40:34 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_putnbr_fd(int n, int fd);
 char	**ft_split(char const *s, char c);
 void	ft_tabfree(char **tab);
 ssize_t	ft_tablen(char **tab);
+void	ft_try_free(void **to_free);
 /*Bonus :*/
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *newelem);
@@ -88,6 +89,7 @@ void	ft_ptrswap(void **old_ptr, void *new_ptr);
 void	ft_itoa_simple(char dst[11], int n);
 char	*ft_strndup(const char *s, size_t n);
 int		ft_isinset(char c, char *set);
+int		ft_isinset_index(char c, char *set);
 char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif
