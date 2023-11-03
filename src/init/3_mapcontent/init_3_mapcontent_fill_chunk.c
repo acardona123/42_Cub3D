@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 03:47:15 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 22:13:43 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,43 @@ static bool	_int_3_is_character_surrounding_ok(char c, t_map *map, int x,
 
 #ifdef BONUS
 
-bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
+/**
+ * @brief fills all the chunk data except the action structure and the status
+ * 
+ * @param gen 
+ * @param c_type 
+ * @param x 
+ * @param y 
+ * @return true if chunk successfully filled
+ * @return false if error, error msg displayed
+ */
+bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
 	gen->map.map[x][y].type = c_type;
+	gen->map.map[x][y].status = INACTIVE;
 	gen->map.map[x][y].t0 = to_getime() - rand() % 1000;
-	gen->map.map[x][y].tlast_action = 0;
-	if (in_3_map_locate_textures(&gen->textures, gen->map.map[x][y].textures,
-		c_type) == FAIL)
+	if (in_3_map_add_locate_textures(&gen->textures,
+			gen->map.map[x][y].textures, c_type) == FAIL)
 		return (false);
-	if (c_type == DOOR)
-		gen->map.map[x][y].status = DOOR_CLOSED;
-	else
-		gen->map.map[x][y].status = INACTIVE;
 	if (y < gen->map.y_max - 1 && gen->map.map[x][y + 1].type == DOOR)
-		in_3_map_add_door_sides_textures(gen->map.map, &gen->textures,
-			x, y + 1);
+		in_3_map_add_door_sides_textures(gen->map.map, &gen->textures, x,
+			y + 1);
 	return (true);
 }
 
 #else
 
-bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
+bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
 	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].status = INACTIVE;
 	gen->map.map[x][y].t0 = 0;
-	gen->map.map[x][y].tlast_action = 0;
-	in_3_map_locate_textures(&gen->textures, gen->map.map[x][y].textures,
+	gen->map.map[x][y].time_last_act = 0;
+	in_3_map_add_locate_textures(&gen->textures, gen->map.map[x][y].textures,
 		c_type);
 	return (true);
 }

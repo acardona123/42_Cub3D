@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:27:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:26:42 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/03 03:45:05 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	in_0_hooks_init(t_general *gen)
  *
  * @param key 
  * @param gen 
- * @return int 
+ * @return int 0 anyway
  */
 static int	_in_0_hooks_keys_press(int key, t_general *gen)
 {
@@ -52,6 +52,8 @@ static int	_in_0_hooks_keys_press(int key, t_general *gen)
 	// 	return (, 0);//wsa
 	if (_in_0_hooks_keys_settings(gen, key) == SUCCESS)
 		return (0);
+	if (key == KEY_ACT)
+		return (gp_action_do(gen), 0);
 	if (key == XK_Escape)
 		end_destroy_exit(gen, 0);
 	return (0);

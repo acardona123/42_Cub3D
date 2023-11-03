@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:28:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/03 04:14:04 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
  */
 static t_bool	_in_0_display_empty_img_init(void *mlx, t_data **img_dst)
 {
-	*img_dst = calloc(1, sizeof(t_data));
+	*img_dst = ft_calloc(1, sizeof(t_data));
 	if (!*img_dst)
 		return (to_error_msg("Mem allocation error in display init"), FAIL);
 	(*img_dst)->img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);

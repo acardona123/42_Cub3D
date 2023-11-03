@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/01 18:59:47 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 22:13:06 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ void	in_0_hooks_init(t_general *gen);
 =============== 2_texturepack/ =============== */
 // init_2_texturepack_main.c
 void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init);
+// init_2_texturepack_check_texture_defined.c
+bool	in_2_are_all_mandatory_textures_init(t_texture_pack *texturepack,
+			bool *colors_defined);
 //init_2_texturepack_set_color.c
 t_bool	in_2_set_color(int *dest_color, char **line_arg,
 			bool *already_done);
@@ -125,15 +128,15 @@ void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
 
 =============== 3_mapcontent/ =============== */
 // init_3_mapcontent.c
-void	in_3_map_content_init(t_general *gen, t_lists *lst_init);
+void	in_3_mapcontent_init(t_general *gen, t_lists *lst_init);
 // init_3_mapcontent_fill_chunk.c
-bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x,
+bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x,
 			int y);
 // init_3_mapcontent_locate_texture.c
-t_bool	in_3_map_locate_textures(t_texture_pack *texturepack,
+t_bool	in_3_map_add_locate_textures(t_texture_pack *texturepack,
 			t_animated_texture **tex, char c);
 void	in_3_map_add_door_sides_textures(t_chunk **map,
 			t_texture_pack *textures, int door_x, int door_y);
-//init_3_mapcontent_utils.c
-
+// init_3_mapcontent_set_status_action.c
+t_bool	in_3_mapcontent_status_action_init(t_map *map);
 #endif

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 15:35:52 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 19:31:09 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static t_bool	_in_2_init_texture_or_color(void *mlx,
 					t_texture_pack *text_pack, char **line_arg,
 					bool *already_done);
-static bool		_in_2_are_all_mandatory_textures_init(
-					t_texture_pack *texturepack, bool *colors_defined);
+static int		_in_2_init_texture_or_color_bonus(void *mlx,
+					t_texture_pack *text_pack, char **line_arg);
 
 /**
  * @brief initializes the texturepack structure by reading the input file,
@@ -52,13 +52,27 @@ void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init)
 		elem = elem->next;
 	}
 	to_lstfree(&lst_init->lst_param);
-	if (!_in_2_are_all_mandatory_textures_init(&gen->textures, colors_defined))
+	if (!in_2_are_all_mandatory_textures_init(&gen->textures, colors_defined))
 		in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_2);
 }
 
+/**
+ * @brief based on the arguments lines, extract the textures
+ * 
+ * @param mlx 
+ * @param text_pack 
+ * @param line_arg 
+ * @param already_done 
+ * @return t_bool	SUCCESS if the textre has been successfully imported
+ *					FAIL if the accronym isn't a correct one or if there has
+ *					been an error in the texture initialisation.
+ *					err msg displayed
+ */
 static t_bool	_in_2_init_texture_or_color(void *mlx,
 	t_texture_pack *text_pack, char **line_arg, bool *already_done)
 {
+	int	bonuses_init;
+
 	if (!ft_strcmp(*line_arg, "NO"))
 		return (in_2_anim_textu_init(mlx, &text_pack->wall_n, line_arg));
 	else if (!ft_strcmp(*line_arg, "SO"))
@@ -67,45 +81,68 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
 		return (in_2_anim_textu_init(mlx, &text_pack->wall_w, line_arg));
 	else if (!ft_strcmp(*line_arg, "EA"))
 		return (in_2_anim_textu_init(mlx, &text_pack->wall_e, line_arg));
-	else if (!ft_strcmp(*line_arg, "DF"))
-		return (in_2_anim_textu_init(mlx, &text_pack->door_front, line_arg));
-	else if (!ft_strcmp(*line_arg, "DS"))
-		return (in_2_anim_textu_init(mlx, &text_pack->door_side, line_arg));
 	else if (!ft_strcmp(*line_arg, "F"))
 		return (in_2_set_color(&text_pack->color_f, line_arg,
 				&already_done[IDX_FLOOR]));
 	else if (!ft_strcmp(*line_arg, "C"))
 		return (in_2_set_color(&text_pack->color_c, line_arg,
 				&already_done[IDX_CEIL]));
+	bonuses_init = _in_2_init_texture_or_color_bonus(mlx, text_pack, line_arg);
+	if (bonuses_init == SUCCESS)
+		return (SUCCESS);
+	else if (bonuses_init == FAIL)
+		return (FAIL);
 	return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
 }
 
+#ifdef BONUS
+
 /**
- * @brief checks if all the wall's faces textures and the floor and ceilling
- *		colors have been set
+ * @brief 
  * 
- * @param texturepack 
- * @param colors_defined 
- * @return true successfully set
- * @return false missing texture
+ * @param mlx 
+ * @param text_pack 
+ * @param line_arg 
+ * @param already_done 
+ * @return int	SUCCESS if the texture has been successfully init
+ *				FAIL if there has been an error in the texture importation
+ *				-1	if the accronym doesn't correspond to any texture accronym
  */
-static bool	_in_2_are_all_mandatory_textures_init(t_texture_pack *texturepack,
-	bool *colors_defined)
+static int	_in_2_init_texture_or_color_bonus(void *mlx,
+	t_texture_pack *text_pack, char **line_arg)
 {
-	if (!texturepack->wall_n)
-		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_N), false);
-	if (!texturepack->wall_e)
-		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_E), false);
-	if (!texturepack->wall_s)
-		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_S), false);
-	if (!texturepack->wall_w)
-		return (to_error_msg(MSG_TEXTURE_MISSING_WALL_W), false);
-	if (!colors_defined[IDX_FLOOR])
-		return (to_error_msg(MSG_COLOR_MISSING_FLOOR), false);
-	if (!colors_defined[IDX_CEIL])
-		return (to_error_msg(MSG_COLOR_MISSING_CEIL), false);
-	return (true);
+	if (!ft_strcmp(*line_arg, "DF"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_front, line_arg));
+	else if (!ft_strcmp(*line_arg, "DC"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_side_close,
+				line_arg));
+	else if (!ft_strcmp(*line_arg, "DOOD"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_opened,
+				line_arg));
+	else if (!ft_strcmp(*line_arg, "DOOG"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_opening,
+				line_arg));
+	else if (!ft_strcmp(*line_arg, "DOCD"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_closed,
+				line_arg));
+	else if (!ft_strcmp(*line_arg, "DOCG"))
+		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_closing,
+				line_arg));
+	return (-1);
 }
+
+#else
+
+static int	_in_2_init_texture_or_color_bonus(void *mlx,
+	t_texture_pack *text_pack, char **line_arg)
+{
+	(void)mlx;
+	(void)text_pack;
+	(void)line_arg;
+	return (-1);
+}
+
+#endif
 
 /*
 int	main(int ac, char **av)
@@ -122,7 +159,7 @@ int	main(int ac, char **av)
 	//affichage des textures generees:
 	t_animated_texture *table[7] = {gen.textures.wall_n, gen.textures.wall_s,
 		gen.textures.wall_e, gen.textures.wall_w, gen.textures.door_front,
-		gen.textures.door_side_l, gen.textures.door_side_r};
+		gen.textures.door_side_l, gen.textures.door_sideide_r};
 	printf("floor color : %x\nceil color: %x\n", gen.textures.color_f,
 		gen.textures.color_c);
 	int	i = 0;

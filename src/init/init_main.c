@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/19 22:01:23 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 22:04:33 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ void	init_main(int ac, char **av, t_general	*gen)
 	if (WIN_HEIGHT <= 0 || WIN_WIDTH <= 0 || DEFAULT_FOV <= 0
 		|| DIST_WALL_MIN <= 0)
 	{
-		to_error_msg("Settings: defined settings are invalids \
-(not strictly positiv)");
+		to_error_msg("Settings: defined settings are invalid \
+(not strictly positive)");
 		exit(EXIT_INIT_0);
 	}
+	srand((unsigned int)to_getime());
 	in_0_init_display(gen);
 	init_lists = in_1_map_format_check(ac, av, gen);
 	in_2_init_texture_pack(gen, &init_lists);
-	in_3_map_content_init(gen, &init_lists);
+	in_3_mapcontent_init(gen, &init_lists);
 	_init_settings_angleset(gen);
 }
 

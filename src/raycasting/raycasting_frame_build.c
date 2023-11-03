@@ -39,8 +39,8 @@ void	*rc_raycasting_frame_build(t_general *gen, size_t last_time)
 	idx_ray = -1;
 	while (++idx_ray < WIN_WIDTH)
 	{
-		hit_pt = r_ray_hit(&p_co,
-				p_angle + gen->angles_set[idx_ray], &gen->map, false);
+		hit_pt = r_ray_hit(gen, &p_co,
+				p_angle + gen->angles_set[idx_ray], false);
 		if (hit_pt.pt_co.x <= 0.)
 			r_frame_empty_column(gen->disp.buff, idx_ray);
 		else
@@ -148,9 +148,9 @@ static t_static_texture	*_r_get_column_texture(t_animated_texture
  *			Before each change of column the functon need to be reset (static
  *			variable inside) by calling it with a NULL chunk
  * 
- * @param  chunk chunk hit (need type and extra_data)
+ * @param  chunk chunk hit (need type and extra_data_f)
  * @param  hitpoint hitpoint data usedd to differentiate if it is a door (then
- *		the value used to find the column is in hit_pt->extra_data), or a wall
+ *		the value used to find the column is in hit_pt->extra_data_f), or a wall
  *		(the the value is the decimal value of the x or y coordinate depending
  *		on the orientation of the face hitted)
  * @param height theorical hight of the texture img (can be > of WIN_HEIGHT)
@@ -173,7 +173,7 @@ static int	_r_get_pixel_color(t_chunk *chunk, t_hitpoint *hit_pt,
 		ratio_height = (float)texture->img_height / height;
 	}
 	if (chunk->type == DOOR)
-		ratio_col = chunk->extra_data;
+		ratio_col = chunk->extra_data_f;
 	else if (hit_pt->hit_face == FACE_N || hit_pt->hit_face == FACE_S)
 		ratio_col = hit_pt->pt_co.x - floor(hit_pt->pt_co.x);
 	else

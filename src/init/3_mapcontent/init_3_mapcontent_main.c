@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/01 19:25:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/02 22:12:05 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	_in_3_alloc_tabmap(t_map *map);
  * @param gen 
  * @return EXIT if faillure
  */
-void	in_3_map_content_init(t_general *gen, t_lists *lst_init)
+void	in_3_mapcontent_init(t_general *gen, t_lists *lst_init)
 {
 	t_list	*tmp;
 	int		x;
@@ -34,21 +34,22 @@ void	in_3_map_content_init(t_general *gen, t_lists *lst_init)
 		lst_init->map_nb_col, lst_init->map_nb_lines, NULL};
 	if (_in_3_alloc_tabmap(&gen->map))
 		in_init_destroy_lists_exit(gen, lst_init, MSG_BAD_ALLOC, EXIT_INIT_3);
-	srand((unsigned int)to_getime());
 	tmp = lst_init->lst_map;
 	y = gen->map.height - 1;
 	while (tmp)
 	{
 		x = -1;
 		while (tmp->content[++x])
-			if (!in_3_map_content_fill_chunk_ok(gen, tmp->content[x], x, y))
+			if (!in_3_mapcontent_fill_chunk_ok(gen, tmp->content[x], x, y))
 				in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_3);
 		while (x < gen->map.width)
-			if (!in_3_map_content_fill_chunk_ok(gen, NOTHING, x++, y))
+			if (!in_3_mapcontent_fill_chunk_ok(gen, NOTHING, x++, y))
 				in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_3);
 		--y;
 		tmp = tmp->next;
 	}
+	if (in_3_mapcontent_status_action_init(&gen->map) == FAIL)
+		in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_3);
 	to_lstfree(&lst_init->lst_map);
 }
 
@@ -93,7 +94,7 @@ int	main(int ac, char **av)
 	ft_lstprint(init_lists.lst_param);
 	printf("\n\nmaps_size:(%d, %d)\nMap content init :\n\n",
 		init_lists.map_nb_col, init_lists.map_nb_lines);
-	in_3_map_content_init(&gen, &init_lists);
+	in_3_mapcontent_init(&gen, &init_lists);
 	to_lstfree(&init_lists.lst_param);
 	to_lstfree(&init_lists.lst_map);
 	

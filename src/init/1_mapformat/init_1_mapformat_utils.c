@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:14:57 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 15:22:40 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/03 04:05:34 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ bool	in_1_line_is_parameter(char *line)
 	if (!*line || !ft_strncmp("SO ", line, 3) || !ft_strncmp("NO ", line, 3)
 		|| !ft_strncmp("WE ", line, 3) || !ft_strncmp("EA ", line, 3)
 		|| !ft_strncmp("F ", line, 2) || !ft_strncmp("C ", line, 2)
-		|| !ft_strncmp("DF ", line, 3) || !ft_strncmp("DS ", line, 3))
+		|| !ft_strncmp("DF ", line, 3) || !ft_strncmp("DC ", line, 3)
+		|| !ft_strncmp("DOOD ", line, 5) || !ft_strncmp("DOOG ", line, 5)
+		|| !ft_strncmp("DOCD ", line, 5) || !ft_strncmp("DOCG ", line, 5))
 		return (true);
 	return (false);
 }

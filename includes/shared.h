@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 01:44:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/03 04:22:19 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_animated_texture
 	t_static_texture	*frame_array;
 }	t_animated_texture;
 
-# define NUMBER_OF_TEXTURES 6
+# define NUMBER_OF_TEXTURES 10
 
 typedef struct s_texture_pack
 {
@@ -60,7 +60,11 @@ typedef struct s_texture_pack
 	t_animated_texture	*wall_e;
 	t_animated_texture	*wall_w;
 	t_animated_texture	*door_front;
-	t_animated_texture	*door_side;
+	t_animated_texture	*door_side_close;
+	t_animated_texture	*door_side_open_opened;
+	t_animated_texture	*door_side_open_opening;
+	t_animated_texture	*door_side_open_closed;
+	t_animated_texture	*door_side_open_closing;
 	int					color_f;
 	int					color_c;
 }	t_texture_pack;
@@ -71,15 +75,14 @@ typedef struct s_texture_pack
 
 ==== Map datas ==== */
 
+# define CHARS_PLAYER "NESW"
+# define CHARS_OBSTACLE "1 "
+# define CHARS_TRANSPARENT " 0NSEW"
 # ifdef BONUS
 #  define CHARS_ALLOWED "01d NESW"
 # else
 #  define CHARS_ALLOWED "01 NESW"
 # endif
-# define CHARS_PLAYER "NESW"
-# define CHARS_OBSTACLE "1 "
-# define CHARS_TRANSPARENT " 0NSEW"
-
 typedef enum e_chunk_type
 {
 	FLOOR = '0',
@@ -100,27 +103,77 @@ typedef enum e_chunk_face
 	FACE_W
 }	t_chunk_face;
 
-typedef enum e_door_status
-{
-	DOOR_OPEN,
-	DOOR_OPENING,
-	DOOR_CLOSING,
-	DOOR_CLOSED
-}	t_door_status;
-
 typedef enum e_other_status
 {
 	INACTIVE,
 	ACTIVE
 }	t_other_status;
 
+typedef enum e_activable_faces
+{
+	ACTIVE_NONE,
+	ACTIVE_N = 1,
+	ACTIVE_E = 1 << 1,
+	ACTIVE_S = 1 << 2,
+	ACTIVE_W = 1 << 3
+}	t_activable_faces;
+
+struct			s_chunk;
+struct			s_general;
+struct			s_chunk;
+struct			s_action;
+struct			s_hitpoint;
+typedef void	(*t_execute)(struct s_general *gen,
+					struct s_action *action_data, t_chunk_face face);
+
+# ifdef BONUS
+
+typedef enum e_door_orentation
+{
+	DOOR_VERTICAL,
+	DOOR_HORIZONTAL
+}	t_door_orietation;
+
+typedef enum e_door_status
+{
+	DOOR_CLOSED,
+	DOOR_CLOSING,
+	DOOR_OPEN,
+	DOOR_OPENING
+}	t_door_status;
+
+typedef enum e_door_action_target
+{
+	TARGET_DOOR_ITSELF,
+	TARGET_DOOR_SIDE
+}	t_door_action_target;
+
+
+typedef struct s_action
+{
+	int				active_faces;
+	float			dist_range;
+	struct s_chunk	**targets;
+	t_execute		execute;
+	size_t			time_last_act;
+}	t_action;
+
+# else
+
+typedef struct s_action
+{
+}	t_action;
+
+# endif
+
 typedef struct s_chunk
 {
 	t_chunk_type		type;
-	char				status;
 	size_t				t0;
-	size_t				tlast_action;
-	float				extra_data;
+	char				status;
+	float				extra_data_f;
+	int					extra_data_i;//used for door to keep the face orientation of the door
+	t_action			*action;
 	t_animated_texture	*textures[4];
 }	t_chunk;
 
@@ -233,7 +286,7 @@ void		end_destroy_exit(t_general *gen, t_exit_values n);
 void		init_main(int ac, char **av, t_general	*gen);
 
 // ray_collision
-t_hitpoint	r_ray_hit(t_coord_f *p_co, float angle_ray, t_map *map,
+t_hitpoint	r_ray_hit(t_general *gen, t_coord_f *p_co, float angle_ray,
 				bool obstacles_shift);
 
 // raycasting
@@ -241,6 +294,15 @@ void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);
 
 // gameplay
 int			gp_looping(void *void_gen);
+void		gp_action_do(t_general *gen);
+
+//doors
+float		doors_update_status(t_texture_pack *texture_pack, t_chunk *door,
+				size_t time);
+void		doors_update_texture_main_side(t_texture_pack *texture_pack,
+				t_chunk *door);
+void		doors_action(t_general *gen, t_action *action_data,
+				t_chunk_face face);
 
 // tools
 //all the tools header is usefull and therefore has been included

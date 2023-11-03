@@ -31,14 +31,16 @@ FILES_INIT			=	$(addprefix init/, \
 							$(addprefix 2_texturepack/init_2_texturepack_, \
 								main \
 								animated_texture \
-								set_color \
 								static_texture \
+								set_color \
+								check_texture_defined \
 								utils \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
 								fill_chunk \
 								locate_texture \
+								set_status_action \
 							) \
 						)
 
@@ -61,6 +63,7 @@ FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
 							main \
 							turn_head \
 							walk \
+							action \
 						)
 
 FILES_TOOLS		=	$(addprefix tools/tools_, \
@@ -73,6 +76,7 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 
 FILES_DOORS		=	$(addprefix doors/doors_, \
 						update \
+						action \
 					)
 
 FILES_NAMES			=	\

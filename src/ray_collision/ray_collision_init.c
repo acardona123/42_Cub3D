@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/30 23:46:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/03 03:21:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,6 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y + rdata->shift) - 1;
 	else
 		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y + rdata->shift);
-	
-	// hitpoint.chunk_co_x = (int)(hitpoint.pt_co.x
-	// 		+ rdata->shift * (1. - 2 * (rdata->dial >= SW_W)));
-	// hitpoint.chunk_co_x -= (hitpoint.hit_face == FACE_E
-	// 		|| (rdata->first == FIRST_ANY && hitpoint.pt_co.x <= p_co->x));
-	// hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y
-	// 		+ rdata->shift * (1. - 2 * (rdata->dial >= E_SE
-	// 				&& rdata->dial <= SW_W)));
-	// hitpoint.chunk_co_y -= (hitpoint.hit_face == FACE_N
-	// 		|| (rdata->first == FIRST_ANY && hitpoint.pt_co.y <= p_co->y));
 	return (hitpoint);
 }
 
