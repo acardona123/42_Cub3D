@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:17:08 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:54:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/05 00:53:00 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
 	//printf("directions: (%d, %d)\n", dir_xp, dir_yp);
 	//printf("Target: (%f, %f)\n\n", target.x, target.y);//
 	//printf("\n\e[103mFirst step:\e[0m\n p_co: (%f, %f)\n angle: %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y,gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1], (gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1])* 180 / M_PI);
-	hit_pt = r_ray_hit(gen, &gen->player.p_co, gen->player.p_angle
+	hit_pt = r_ray_hit(&gen->map, &gen->player.p_co, gen->player.p_angle
 			+ g_angle_dir[dir_xp + 1][dir_yp + 1], true);
 	if (to_vector_norm_sqr(gen->player.p_co, hit_pt.pt_co)
 		> to_vector_norm_sqr(gen->player.p_co, target))
@@ -87,8 +87,8 @@ static void	_gp_walk_slide_along_wall(t_general *gen, t_coord_f target,
 	{
 				// printf("\e[105mSecond step (along x):\e[0m\n p_co: (%f, %f)\n angle: %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y, g_angle_dir[dir_x + 1][1], (g_angle_dir[dir_x + 1][1]) * 180 / M_PI);
 					// printf("ray_slide x:\n");//
-		hitpoint = r_ray_hit(gen, &gen->player.p_co, g_angle_dir[dir_x + 1][1],
-				true);
+		hitpoint = r_ray_hit(&gen->map, &gen->player.p_co,
+				g_angle_dir[dir_x + 1][1], true);
 					// printf(" hitpoint slide x: (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);//
 		if ((dir_x > 0 && hitpoint.pt_co.x <= target.x)
 			|| (dir_x < 0 && hitpoint.pt_co.x >= target.x))
@@ -100,8 +100,8 @@ static void	_gp_walk_slide_along_wall(t_general *gen, t_coord_f target,
 	{
 		// printf("ray_slide y:\n");//
 		// printf("\e[105mSecond step (along y):\e[0m\n p_co: (%f, %f)\n angle: %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y, g_angle_dir[1][dir_y + 1], (g_angle_dir[1][dir_y + 1]) * 180 / M_PI);
-		hitpoint = r_ray_hit(gen, &gen->player.p_co, g_angle_dir[1][dir_y + 1],
-				true);
+		hitpoint = r_ray_hit(&gen->map, &gen->player.p_co,
+				g_angle_dir[1][dir_y + 1], true);
 		// printf(" -> hitpoint slide y: (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);//
 		if ((dir_y > 0 && hitpoint.pt_co.y <= target.y)
 			|| (dir_y < 0 && hitpoint.pt_co.y >= target.y))

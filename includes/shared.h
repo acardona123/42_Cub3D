@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 04:22:19 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/05 00:14:17 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ typedef struct s_texture_pack
 # define CHARS_PLAYER "NESW"
 # define CHARS_OBSTACLE "1 "
 # define CHARS_TRANSPARENT " 0NSEW"
+
 # ifdef BONUS
+
 #  define CHARS_ALLOWED "01d NESW"
-# else
-#  define CHARS_ALLOWED "01 NESW"
-# endif
+
 typedef enum e_chunk_type
 {
 	FLOOR = '0',
@@ -95,6 +95,23 @@ typedef enum e_chunk_type
 	PLAYER_W = 'W'
 }	t_chunk_type;
 
+# else
+
+#  define CHARS_ALLOWED "01 NESW"
+
+typedef enum e_chunk_type
+{
+	FLOOR = '0',
+	WALL = '1',
+	NOTHING = ' ',
+	PLAYER_N = 'N',
+	PLAYER_E = 'E',
+	PLAYER_S = 'S',
+	PLAYER_W = 'W'
+}	t_chunk_type;
+
+# endif
+
 typedef enum e_chunk_face
 {
 	FACE_N,
@@ -103,68 +120,11 @@ typedef enum e_chunk_face
 	FACE_W
 }	t_chunk_face;
 
-typedef enum e_other_status
+typedef enum e_default_status
 {
 	INACTIVE,
 	ACTIVE
-}	t_other_status;
-
-typedef enum e_activable_faces
-{
-	ACTIVE_NONE,
-	ACTIVE_N = 1,
-	ACTIVE_E = 1 << 1,
-	ACTIVE_S = 1 << 2,
-	ACTIVE_W = 1 << 3
-}	t_activable_faces;
-
-struct			s_chunk;
-struct			s_general;
-struct			s_chunk;
-struct			s_action;
-struct			s_hitpoint;
-typedef void	(*t_execute)(struct s_general *gen,
-					struct s_action *action_data, t_chunk_face face);
-
-# ifdef BONUS
-
-typedef enum e_door_orentation
-{
-	DOOR_VERTICAL,
-	DOOR_HORIZONTAL
-}	t_door_orietation;
-
-typedef enum e_door_status
-{
-	DOOR_CLOSED,
-	DOOR_CLOSING,
-	DOOR_OPEN,
-	DOOR_OPENING
-}	t_door_status;
-
-typedef enum e_door_action_target
-{
-	TARGET_DOOR_ITSELF,
-	TARGET_DOOR_SIDE
-}	t_door_action_target;
-
-
-typedef struct s_action
-{
-	int				active_faces;
-	float			dist_range;
-	struct s_chunk	**targets;
-	t_execute		execute;
-	size_t			time_last_act;
-}	t_action;
-
-# else
-
-typedef struct s_action
-{
-}	t_action;
-
-# endif
+}	t_default_status;
 
 typedef struct s_chunk
 {
@@ -173,7 +133,7 @@ typedef struct s_chunk
 	char				status;
 	float				extra_data_f;
 	int					extra_data_i;//used for door to keep the face orientation of the door
-	t_action			*action;
+	struct s_action		*action;
 	t_animated_texture	*textures[4];
 }	t_chunk;
 
@@ -272,6 +232,75 @@ typedef struct s_general
 
 /* ---- End: General ----
 
+*/
+
+# ifdef BONUS
+/*
+
+==== Doors ==== */
+
+typedef enum e_door_data
+{
+	DOOR_VERTICAL,
+	DOOR_HORIZONTAL,
+	DOOR_TEXTURE_NEED_UPDATE
+}	t_door_data;
+
+typedef enum e_door_status
+{
+	DOOR_CLOSED,
+	DOOR_CLOSING,
+	DOOR_OPEN,
+	DOOR_OPENING
+}	t_door_status;
+
+typedef enum e_door_action_target
+{
+	TARGET_DOOR_ITSELF,
+	TARGET_DOOR_SIDE
+}	t_door_action_target;
+
+/* ---- End: Doors ----
+
+
+
+==== Actions ==== */
+
+typedef enum e_activable_faces
+{
+	ACTIVE_NONE,
+	ACTIVE_N = 1,
+	ACTIVE_E = 1 << 1,
+	ACTIVE_S = 1 << 2,
+	ACTIVE_W = 1 << 3
+}	t_activable_faces;
+
+struct			s_action;
+typedef void	(*t_execute)(struct s_general *gen,
+					struct s_action *action_data, t_chunk_face face);
+
+typedef struct s_action
+{
+	int				active_faces;
+	float			dist_range;
+	struct s_chunk	**targets;
+	t_execute		execute;
+	size_t			time_last_act;
+}	t_action;
+
+/* ---- End: Actions ----*/
+
+# else
+
+typedef struct s_action
+{
+}	t_action;
+
+# endif
+
+/*
+
+
 
 ==== Public functions prototypes ==== */
 
@@ -286,7 +315,7 @@ void		end_destroy_exit(t_general *gen, t_exit_values n);
 void		init_main(int ac, char **av, t_general	*gen);
 
 // ray_collision
-t_hitpoint	r_ray_hit(t_general *gen, t_coord_f *p_co, float angle_ray,
+t_hitpoint	r_ray_hit(t_map *map, t_coord_f *p_co, float angle_ray,
 				bool obstacles_shift);
 
 // raycasting
@@ -296,13 +325,16 @@ void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);
 int			gp_looping(void *void_gen);
 void		gp_action_do(t_general *gen);
 
+# ifdef BONUS
+
 //doors
-float		doors_update_status(t_texture_pack *texture_pack, t_chunk *door,
-				size_t time);
+float		doors_update_status(t_chunk *door, size_t time);
 void		doors_update_texture_main_side(t_texture_pack *texture_pack,
 				t_chunk *door);
 void		doors_action(t_general *gen, t_action *action_data,
 				t_chunk_face face);
+
+# endif
 
 // tools
 //all the tools header is usefull and therefore has been included

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 05:09:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/05 00:12:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ static const t_collision_function	g_collision_function[8]
  *	impact point with the first obstacle found.
  *	(if no obstacle found the abscisse of the returned obstacle is set to -1.)
  * 
- * @param gen
  * @param p_co coordinates of the origin point for the ray (generaly player
  *					coordinates)
  * @param angle_ray absolute angle of the ray (between -2 * M_PI and 4 * M_PI)
  *	rlatively to the north of the map
+ * @param map 
  * @return t_hitpoint structure contining the datas oh the first bloc hitten and
  *		the imact point.
  */
-t_hitpoint	r_ray_hit(t_general *gen, t_coord_f *p_co, float angle_ray,
-	bool obstacles_shift)//changer p_co en start_co et ne plus en faire un pointeur
+t_hitpoint	r_ray_hit(t_map *map, t_coord_f *p_co, float angle_ray,
+	bool obstacles_shift)
 {
 	t_hitpoint	last_hit;
 	t_ray_data	rdata;
@@ -48,8 +48,8 @@ t_hitpoint	r_ray_hit(t_general *gen, t_coord_f *p_co, float angle_ray,
 	else
 		rdata.prim = PRIMARY_V;
 	rdata.shift = obstacles_shift * DIST_WALL_MIN;
-	last_hit = r_ray_init_rdata_hitpoint(p_co, angle_ray, &gen->map, &rdata);
-	return (g_collision_function[rdata.dial](gen, last_hit, rdata));
+	last_hit = r_ray_init_rdata_hitpoint(p_co, angle_ray, map, &rdata);
+	return (g_collision_function[rdata.dial](map, last_hit, rdata));
 }
 
 /*
@@ -74,8 +74,8 @@ int	main(int ac, char **av)
 	while (angle_deg < 360)
 	{
 		printf("angle: %f (%f)\n", angle_deg, angle_deg * M_PI / 180);
-		hitpoint = r_ray_hit(&gen, &gen.player.p_co, angle_deg * M_PI / 180,
-				obstacle_shit);
+		hitpoint = r_ray_hit(&gen.player.p_co, angle_deg * M_PI / 180,
+				&gen.map, obstacle_shit);
 		printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
 		if (hitpoint.chunk_co_x >= 0.)
 			printf(" chunk: (%d, %d) -> \'%c\'\n\n", hitpoint.chunk_co_x,

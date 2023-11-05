@@ -56,6 +56,7 @@ FILES_RAY_COLLISION	=	$(addprefix ray_collision/ray_collision_, \
 
 FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 							frame_build \
+							use_texture \
 						)
 
 

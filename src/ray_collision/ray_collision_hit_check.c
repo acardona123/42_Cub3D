@@ -6,22 +6,22 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 02:39:48 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/04 23:09:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ray_collision.h"
 
-static bool	_r_ray_check_no_shift_diag(t_general *gen, t_dial dial,
+static bool	_r_ray_check_no_shift_diag(t_map *map, t_dial dial,
 				t_hitpoint *hit_pt, t_vector_f real_hitpt_co);
 
 #ifdef BONUS
 
 static const double	g_max_dec_to_wall = 1. - DIST_WALL_MIN;
 
-static bool	_r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
+static bool	_r_ray_check_shift_diag_touch_h(t_map *map, t_ray_data *rdata,
 				t_hitpoint *hit_pt, t_coord_f real_hitpt_co);
-static bool	_r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
+static bool	_r_ray_check_shift_diag_touch_v(t_map *map, t_ray_data *rdata,
 				t_hitpoint *hit_pt, t_coord_f real_hitpt_co);
 
 /**
@@ -40,21 +40,21 @@ static bool	_r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
  * @return true if the ray hit an obstacle, hit_pt updated if hit a door.
  * @return false if no obstacle
  */
-bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
+bool	r_ray_hit_primary(t_map *map, t_hitpoint *hit_pt, t_ray_data *rdata)
 {
 	if (hit_pt->pt_co.x <= -EPSILON)
 		return (true);
-	if (gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL
-		|| gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == NOTHING)
+	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL
+		|| map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == NOTHING)
 		return (true);
-	if (rdata->prim == PRIMARY_H && _r_ray_check_shift_diag_touch_h(gen, rdata,
+	if (rdata->prim == PRIMARY_H && _r_ray_check_shift_diag_touch_h(map, rdata,
 			hit_pt, hit_pt->pt_co))
 		return (true);
-	if (rdata->prim != PRIMARY_H && _r_ray_check_shift_diag_touch_v(gen, rdata,
+	if (rdata->prim != PRIMARY_H && _r_ray_check_shift_diag_touch_v(map, rdata,
 			hit_pt, hit_pt->pt_co))
 		return (true);
-	if (gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
-		return (r_ray_hit_check_doors_prim(gen, rdata, hit_pt, hit_pt->pt_co));
+	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
+		return (r_ray_hit_check_doors_prim(map, rdata, hit_pt, hit_pt->pt_co));
 	return (false);
 }
 
@@ -71,22 +71,22 @@ bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
  *	real_hitpt_co) and are modified if hit a door
  * @return false if no obstacle, hit_pt unchanged
  */
-bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
+bool	r_ray_hit_sec(t_map *map, t_hitpoint *hit_pt,
 	t_ray_data *rdata, t_vector_f real_hitpt_co)
 {
 	if (real_hitpt_co.x <= -EPSILON)
 		return (hit_pt->pt_co.x = -1., true);
-	if (gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL
-		|| gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == NOTHING)
+	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL
+		|| map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == NOTHING)
 		return (hit_pt->pt_co = real_hitpt_co, true);
-	if (rdata->prim != PRIMARY_H && _r_ray_check_shift_diag_touch_h(gen,
+	if (rdata->prim != PRIMARY_H && _r_ray_check_shift_diag_touch_h(map,
 			rdata, hit_pt, real_hitpt_co))
 		return (true);
-	if (rdata->prim == PRIMARY_H && _r_ray_check_shift_diag_touch_v(gen,
+	if (rdata->prim == PRIMARY_H && _r_ray_check_shift_diag_touch_v(map,
 			rdata, hit_pt, real_hitpt_co))
 		return (true);
-	if (gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
-		return (r_ray_hit_check_doors_sec(gen, rdata, hit_pt, real_hitpt_co));
+	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
+		return (r_ray_hit_check_doors_sec(map, rdata, hit_pt, real_hitpt_co));
 	return (false);
 }
 
@@ -104,7 +104,7 @@ bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
  * @return true if an obstacle is hit
  * @return false if no obstacle hit
  */
-static bool	_r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
+static bool	_r_ray_check_shift_diag_touch_h(t_map *map, t_ray_data *rdata,
 	t_hitpoint *hit_pt, t_coord_f real_hitpt_co)
 {
 	double	dec;
@@ -112,21 +112,20 @@ static bool	_r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
 	dec = real_hitpt_co.x - floor(real_hitpt_co.x);
 	// printf(" dec_h (%f, %f): %f\n", real_hitpt_co.x, real_hitpt_co.y, dec);//pb d'arrondi ici qd sur une verticale
 	if (!rdata->shift)
-		return ((dec == 0. && _r_ray_check_no_shift_diag(gen, rdata->dial,
+		return ((dec == 0. && _r_ray_check_no_shift_diag(map, rdata->dial,
 					hit_pt, real_hitpt_co)));
 	if (dec == DIST_WALL_MIN || dec == g_max_dec_to_wall)
-		return (_r_ray_check_no_shift_diag(gen, rdata->dial, hit_pt,
-				real_hitpt_co));
+		return (_r_ray_check_no_shift_diag(map, rdata->dial, hit_pt, real_hitpt_co));
 	if (dec < DIST_WALL_MIN)
 	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map,
+		if (r_ray_hit_check_solid_chunk(map->map,
 				hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y))
 			return (--hit_pt->chunk_co_x, true);
 		return (false);
 	}
 	else if (dec > g_max_dec_to_wall)
 	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map,
+		if (r_ray_hit_check_solid_chunk(map->map,
 				hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y))
 			return (++hit_pt->chunk_co_x, true);
 		return (false);//useless as there is the same line just after this line
@@ -148,28 +147,27 @@ static bool	_r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
  * @return true if an obstacle is hit
  * @return false if no obstacle hit
  */
-static bool	_r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
+static bool	_r_ray_check_shift_diag_touch_v(t_map *map, t_ray_data *rdata,
 	t_hitpoint *hit_pt, t_coord_f real_hitpt_co)
 {
 	double	dec;
 
 	dec = real_hitpt_co.y - floor(real_hitpt_co.y);
 	if (!rdata->shift)
-		return ((dec == 0. && _r_ray_check_no_shift_diag(gen, rdata->dial,
+		return ((dec == 0. && _r_ray_check_no_shift_diag(map, rdata->dial,
 					hit_pt, real_hitpt_co)));
 	if (dec == DIST_WALL_MIN || dec == g_max_dec_to_wall)
-		return (_r_ray_check_no_shift_diag(gen, rdata->dial, hit_pt,
-				real_hitpt_co));
+		return (_r_ray_check_no_shift_diag(map, rdata->dial, hit_pt, real_hitpt_co));
 	if (dec < DIST_WALL_MIN)
 	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x,
+		if (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x,
 				hit_pt->chunk_co_y - 1))
 			return (--hit_pt->chunk_co_y, true);
 		return (false);
 	}
 	else if (dec > g_max_dec_to_wall)
 	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x,
+		if (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x,
 				hit_pt->chunk_co_y + 1))
 			return (++hit_pt->chunk_co_y, true);
 		return (false);//useless as there is the same line just after this line
@@ -191,18 +189,18 @@ static bool	_r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
  * @return true if the ray hit an obstacle, hit_pt updated if hit a door.
  * @return false if no obstacle
  */
-bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
+bool	r_ray_hit_primary(t_map *map, t_hitpoint *hit_pt, t_ray_data *rdata)
 {
 	(void)rdata;
 	if (hit_pt->pt_co.x <= -EPSILON)
 		return (true);
-	if (gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL)
+	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL)
 		return (true);
 	if ((rdata->prim == PRIMARY_H
 			&& hit_pt->pt_co.x == floor(hit_pt->pt_co.x))
 		|| (rdata->prim == PRIMARY_V
 			&& hit_pt->pt_co.y == floor(hit_pt->pt_co.y)))
-		return (_r_ray_check_no_shift_diag(gen, rdata->dial, hit_pt,
+		return (_r_ray_check_no_shift_diag(map, rdata->dial, hit_pt,
 				hit_pt->pt_co));
 	return (false);
 }
@@ -219,13 +217,13 @@ bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
  *	real_hitpt_co)
  * @return false if no obstacle, hit_pt unchanged
  */
-bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
+bool	r_ray_hit_sec(t_map *map, t_hitpoint *hit_pt,
 	t_ray_data *rdata, t_vector_f real_hitpt_co)
 {
 	(void)rdata;
 	if (real_hitpt_co.x <= -EPSILON)
 		return (hit_pt->pt_co.x = -1., true);
-	if (gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL)
+	if (map->map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == WALL)
 		return (hit_pt->pt_co = real_hitpt_co, true);
 	return (false);
 }
@@ -251,52 +249,52 @@ bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
 /*
 //version longue mais plus claire, ne permet pas de redefinir le chunk d'impacte
 //si impacte
-static bool	_r_ray_check_no_shift_diag(t_general *gen, t_hitpoint *hit_pt,
+static bool	_r_ray_check_no_shift_diag(t_map *map, t_hitpoint *hit_pt,
 	t_ray_data *rdata, t_vector_f real_hitpt_co)
 {
 	int	rtn;
 
 	if (rdata->dial == SW_W || rdata->dial == S_SW) //arrive par cadran sup droit
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x,
+		rtn = (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x,
 					hit_pt->chunk_co_y + 1) || r_ray_hit_check_solid_chunk
-				(gen->map.map, hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y));
+				(map->map, hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y));
 	else if (rdata->dial == NW_N || rdata->dial == W_NW) //arrive par cadran inf droit
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x,
+		rtn = (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x,
 					hit_pt->chunk_co_y - 1) || r_ray_hit_check_solid_chunk
-				(gen->map.map, hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y));
+				(map->map, hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y));
 	else if (rdata->dial == N_NE || rdata->dial == NE_E) //arrive par cadran inf gauche
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x - 1,
+		rtn = (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x - 1,
 					hit_pt->chunk_co_y) || r_ray_hit_check_solid_chunk
-				(gen->map.map, hit_pt->chunk_co_x, hit_pt->chunk_co_y - 1));
+				(map->map, hit_pt->chunk_co_x, hit_pt->chunk_co_y - 1));
 	else //arrive par cadran sup gauche
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x,
+		rtn = (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x,
 					hit_pt->chunk_co_y + 1) || r_ray_hit_check_solid_chunk
-				(gen->map.map, hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y));
+				(map->map, hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y));
 	if (rtn)
 		return (hit_pt->pt_co = real_hitpt_co, true);
 	return (false);
 }
 //verion courte qui change la nature du bloc touchee par celle du bloc rencontre
 */
-static bool	_r_ray_check_no_shift_diag(t_general *gen, t_dial dial,
+static bool	_r_ray_check_no_shift_diag(t_map *map, t_dial dial,
 	t_hitpoint *hit_pt, t_vector_f real_hitpt_co)
 {
 	if (dial >= S_SW)//cadrans gauche
 	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x + 1,
+		if (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x + 1,
 				hit_pt->chunk_co_y))
 			return (++hit_pt->chunk_co_x, hit_pt->pt_co = real_hitpt_co, true);
 	}
-	else if (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x - 1,
-			hit_pt->chunk_co_y))
+	else if (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x - 1,
+		hit_pt->chunk_co_y))
 		return (--hit_pt->chunk_co_x, hit_pt->pt_co = real_hitpt_co, true);
 	if (dial >= E_SE && dial <= SW_W)//cadran inf
 	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x,
+		if (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x,
 				hit_pt->chunk_co_y + 1))
 			return (++hit_pt->chunk_co_y, hit_pt->pt_co = real_hitpt_co, true);
 	}
-	else if (r_ray_hit_check_solid_chunk(gen->map.map, hit_pt->chunk_co_x,
+	else if (r_ray_hit_check_solid_chunk(map->map, hit_pt->chunk_co_x,
 			hit_pt->chunk_co_y - 1))
 		return (--hit_pt->chunk_co_y, hit_pt->pt_co = real_hitpt_co, true);
 	return (false);

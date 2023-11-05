@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:21:14 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 04:39:52 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/04 23:47:29 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ t_bool	_in_3_mapcontent_status_action_door(t_map *map, int x, int y)
 	{
 		map->map[x][y].action->targets[TARGET_DOOR_SIDE] = &map->map[x + 1][y];
 		map->map[x][y].action->active_faces = ACTIVE_N | ACTIVE_S;
-		map->map[x][y].extra_data_i = DOOR_HORIZONTAL;
+		map->map[x][y].extra_data_i = 1 << DOOR_HORIZONTAL;
 	}
 	else
 	{
 		map->map[x][y].action->targets[TARGET_DOOR_SIDE] = &map->map[x][y + 1];
 		map->map[x][y].action->active_faces = ACTIVE_E | ACTIVE_W;
-		map->map[x][y].extra_data_i = DOOR_VERTICAL;
+		map->map[x][y].extra_data_i = 1 << DOOR_VERTICAL;
 	}
 	map->map[x][y].action->dist_range = DOOR_ACTION_DIST_RANGE;
 	map->map[x][y].action->time_last_act = 0;
