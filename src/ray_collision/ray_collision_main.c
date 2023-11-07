@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/05 00:12:59 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:32:31 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,73 @@ static const t_collision_function	g_collision_function[8]
 	= {r_ray_hit_n_ne, r_ray_hit_ne_e, r_ray_hit_e_se, r_ray_hit_se_s,
 	r_ray_hit_s_sw, r_ray_hit_sw_w, r_ray_hit_w_nw, r_ray_hit_nw_n};
 
+static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata);
+
 /**
  * @brief sendsd a ray from the player, in a certain direction and returns the
  *	impact point with the first obstacle found.
  *	(if no obstacle found the abscisse of the returned obstacle is set to -1.)
  * 
- * @param p_co coordinates of the origin point for the ray (generaly player
- *					coordinates)
- * @param angle_ray absolute angle of the ray (between -2 * M_PI and 4 * M_PI)
- *	rlatively to the north of the map
- * @param map 
+ * @param gen 
+ * @param params structure contining the characterstics of the ray
  * @return t_hitpoint structure contining the datas oh the first bloc hitten and
  *		the imact point.
  */
-t_hitpoint	r_ray_hit(t_map *map, t_coord_f *p_co, float angle_ray,
-	bool obstacles_shift)
+t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params)
 {
 	t_hitpoint	last_hit;
 	t_ray_data	rdata;
 
-	while (angle_ray < 0)
-		angle_ray += 2 * M_PI;
-	while (angle_ray > 2 * M_PI)
-		angle_ray -= 2 * M_PI;
+	while (params.ray_angle < 0)
+		params.ray_angle += 2 * M_PI;
+	while (params.ray_angle > 2 * M_PI)
+		params.ray_angle -= 2 * M_PI;
+	// printf("\n\np_co: (%f, %f)\nangle: %f (%f)\n", params.ray_start_point.x, params.ray_start_point.y, params.ray_angle, params.ray_angle * 180 / M_PI);//
 	rdata = (t_ray_data){0};
-	rdata.time_now = to_getime();
-	rdata.dial = (int)(angle_ray * 4. / M_PI);
-	if (rdata.dial == N_NE || rdata.dial == SE_S
-		|| rdata.dial == S_SW || rdata.dial == NW_N)
-		rdata.prim = PRIMARY_H;
+	_r_ray_extract_param(&params, &rdata);
+	last_hit = r_ray_init_rdata_hitpoint(&params.ray_start_point,
+			params.ray_angle, &gen->map, &rdata);
+	return (g_collision_function[rdata.dial](gen, last_hit, rdata));
+}
+
+/**
+ * @brief extract parameters from params to fill rdata elements
+ * 
+ * @param params 
+ * @param rdata 
+ */
+static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata)
+{
+	rdata->time_now = params->ray_time;
+	rdata->dial = (int)(params->ray_angle * 4. / M_PI);
+	if (rdata->dial == N_NE || rdata->dial == SE_S
+		|| rdata->dial == S_SW || rdata->dial == NW_N)
+		rdata->prim = PRIMARY_H;
 	else
-		rdata.prim = PRIMARY_V;
-	rdata.shift = obstacles_shift * DIST_WALL_MIN;
-	last_hit = r_ray_init_rdata_hitpoint(p_co, angle_ray, map, &rdata);
-	return (g_collision_function[rdata.dial](map, last_hit, rdata));
+		rdata->prim = PRIMARY_V;
+	if (params->ray_type == ray_raycasting)
+	{
+		rdata->obstacles = CHARS_OBSTACLE_RAYCASTING;
+		rdata->door_behaviour = ray_pass_door_no_touch;
+	}
+	else if (params->ray_type == ray_walk)
+	{
+		rdata->shift = DIST_WALL_MIN;
+		rdata->obstacles = CHARS_OBSTACLE_WALK;
+		rdata->door_behaviour = ray_pass_door_fully_open;
+	}
+	else //if params->ray_type == ray_action
+		rdata->obstacles = CHARS_OBSTACLE_ACTION;
 }
 
 /*
 #include "../../includes/cub3d.h"
 int	main(int ac, char **av)
 {
-	t_general	gen;
-	t_hitpoint	hitpoint;
-	float		angle_deg;
-	bool		obstacle_shit = false;
+	t_general		gen;
+	t_hitpoint		hitpoint;
+	float			angle_deg;
+	t_ray_type		ray_type = ray_raycasting;
 
 	gen = (t_general){0};
 	init_main(ac, av, &gen);
@@ -68,14 +91,15 @@ int	main(int ac, char **av)
 	// gen.player.p_co.x -= 0.5 + DIST_WALL_MIN;
 	// gen.player.p_co.y += 0.5 - DIST_WALL_MIN;
 	// gen.player.p_co.x -= .5;
-	gen.player.p_co.y += .5;
+	// gen.player.p_co.y += .5;
 	printf("player co: (%f, %f)\n\n", gen.player.p_co.x, gen.player.p_co.y);
-	angle_deg = 0.;
-	while (angle_deg < 360)
+	angle_deg = 45.;
+	while (angle_deg < 46)
 	{
 		printf("angle: %f (%f)\n", angle_deg, angle_deg * M_PI / 180);
-		hitpoint = r_ray_hit(&gen.player.p_co, angle_deg * M_PI / 180,
-				&gen.map, obstacle_shit);
+
+		hitpoint = r_ray_hit(&gen, (t_ray_params){ray_type, to_getime(),
+				gen.player.p_co, angle_deg * M_PI / 180});
 		printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
 		if (hitpoint.chunk_co_x >= 0.)
 			printf(" chunk: (%d, %d) -> \'%c\'\n\n", hitpoint.chunk_co_x,

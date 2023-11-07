@@ -35,9 +35,9 @@ void	*rc_raycasting_frame_build(t_general *gen, size_t time_frame)
 	idx_ray = -1;
 	while (++idx_ray < WIN_WIDTH)
 	{
-		hit_pt = r_ray_hit(&gen->map, &p_co,
-				p_angle + gen->angles_set[idx_ray], false);
-		r_update_texture(&gen->textures, &gen->map, &hit_pt, time_frame);
+		hit_pt = r_ray_hit(gen, (t_ray_params){ray_raycasting, time_frame,
+				gen->player.p_co,
+				gen->player.p_angle + gen->angles_set[idx_ray]});
 		if (hit_pt.pt_co.x <= 0.)
 			r_frame_empty_column(gen->disp.buff, idx_ray);
 		else

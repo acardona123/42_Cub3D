@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/05 00:49:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 02:43:37 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,23 @@ static bool		_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
  *		the impact relativly to the door texture (between 0 and 1).
  * @return false if the ray doesn't hit the door panel, hitpoint untouched.
  */
-bool	r_ray_hit_check_doors_prim(t_map *map, t_ray_data *rdata,
+bool	r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
 	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
 {
-	doors_update_status(&map->map[hit_point->chunk_co_x][hit_point->chunk_co_y],
-		rdata->time_now);
-	if (map->map[hit_point->chunk_co_x]
+	if (doors_update_status(&gen->map.map[hit_point->chunk_co_x]
+			[hit_point->chunk_co_y], rdata->time_now))
+		doors_update_texture_main_side(&gen->textures,
+			&gen->map.map[hit_point->chunk_co_x][hit_point->chunk_co_y]);
+	if (rdata->door_behaviour == ray_pass_door_always
+		|| gen->map.map[hit_point->chunk_co_x]
 		[hit_point->chunk_co_y].status == DOOR_OPEN)
 		return (false);
-	if (rdata->shift)//ie the ray is used to check movement obstacle an not visual ones
+	if (rdata->door_behaviour == ray_pass_door_fully_open)
 		return (hit_point->pt_co = real_hitpoint_co, true);
 	if (rdata->prim == PRIMARY_H)
-		return (_r_ray_hit_check_doors_h(&map->map[hit_point->chunk_co_x]
+		return (_r_ray_hit_check_doors_h(&gen->map.map[hit_point->chunk_co_x]
 				[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
-	return (_r_ray_hit_check_doors_v(&map->map[hit_point->chunk_co_x]
+	return (_r_ray_hit_check_doors_v(&gen->map.map[hit_point->chunk_co_x]
 			[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
 }
 
@@ -64,20 +67,23 @@ bool	r_ray_hit_check_doors_prim(t_map *map, t_ray_data *rdata,
  *		the impact relativly to the door texture (between 0 and 1).
  * @return false if the ray doesn't hit the door panel, hitpoint untouched.
  */
-bool	r_ray_hit_check_doors_sec(t_map *map, t_ray_data *rdata,
+bool	r_ray_hit_check_doors_sec(t_general *gen, t_ray_data *rdata,
 	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
 {
-	doors_update_status(&map->map[hit_point->chunk_co_x][hit_point->chunk_co_y],
-		rdata->time_now);
-	if (map->map[hit_point->chunk_co_x]
+	if (doors_update_status(&gen->map.map[hit_point->chunk_co_x]
+			[hit_point->chunk_co_y], rdata->time_now))
+		doors_update_texture_main_side(&gen->textures,
+			&gen->map.map[hit_point->chunk_co_x][hit_point->chunk_co_y]);
+	if (rdata->door_behaviour == ray_pass_door_always
+		|| gen->map.map[hit_point->chunk_co_x]
 		[hit_point->chunk_co_y].status == DOOR_OPEN)
 		return (false);
-	if (rdata->shift)//ie the ray is used to check movement obstacle an not visual ones
+	if (rdata->door_behaviour == ray_pass_door_fully_open)
 		return (hit_point->pt_co = real_hitpoint_co, true);
 	if (rdata->prim == PRIMARY_H)
-		return (_r_ray_hit_check_doors_v(&map->map[hit_point->chunk_co_x]
+		return (_r_ray_hit_check_doors_v(&gen->map.map[hit_point->chunk_co_x]
 				[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
-	return (_r_ray_hit_check_doors_h(&map->map[hit_point->chunk_co_x]
+	return (_r_ray_hit_check_doors_h(&gen->map.map[hit_point->chunk_co_x]
 			[hit_point->chunk_co_y], hit_point, real_hitpoint_co, rdata));
 }
 
@@ -151,10 +157,10 @@ static bool	_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
 
 #else
 
-bool	r_ray_hit_check_doors(t_map *map, t_hitpoint *hitpoint,
+bool	r_ray_hit_check_doors(t_general *gen, t_hitpoint *hitpoint,
 	t_ray_data *rdata, t_coord_f real_hitpoint_co)
 {
-	(void)map;
+	(void)gen;
 	(void)hitpoint;
 	(void)rdata;
 	(void)real_hitpoint_co;

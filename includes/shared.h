@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/05 00:14:17 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 02:15:01 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,9 +232,46 @@ typedef struct s_general
 
 /* ---- End: General ----
 
+
+
+
+==== Ray caracterisation ====  */
+
+typedef enum e_ray_type
+{
+	ray_raycasting,
+	ray_walk,
+	ray_action
+}	t_ray_type;
+
+typedef struct s_ray_params
+{
+	t_ray_type	ray_type;
+	size_t		ray_time;
+	t_coord_f	ray_start_point;
+	float		ray_angle;
+}	t_ray_params;
+
+typedef enum e_ray_door_behaviour
+{
+	ray_pass_door_never, //in this case the door appears in the obstacles string
+	ray_pass_door_always,
+	ray_pass_door_fully_open,
+	ray_pass_door_no_touch
+}	t_ray_door_behaviour;
+
+# define CHARS_OBSTACLE_RAYCASTING "1 "
+# define CHARS_OBSTACLE_WALK "1 "
+# define CHARS_OBSTACLE_ACTION "1d "
+
+/* ---- End: Ray caracterisation ----
+	return (false);
+
+
 */
 
 # ifdef BONUS
+
 /*
 
 ==== Doors ==== */
@@ -276,7 +313,7 @@ typedef enum e_activable_faces
 }	t_activable_faces;
 
 struct			s_action;
-typedef void	(*t_execute)(struct s_general *gen,
+typedef void	(*t_execute)(struct s_general *gen, size_t time_now,
 					struct s_action *action_data, t_chunk_face face);
 
 typedef struct s_action
@@ -315,8 +352,7 @@ void		end_destroy_exit(t_general *gen, t_exit_values n);
 void		init_main(int ac, char **av, t_general	*gen);
 
 // ray_collision
-t_hitpoint	r_ray_hit(t_map *map, t_coord_f *p_co, float angle_ray,
-				bool obstacles_shift);
+t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params);
 
 // raycasting
 void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);
@@ -328,10 +364,10 @@ void		gp_action_do(t_general *gen);
 # ifdef BONUS
 
 //doors
-float		doors_update_status(t_chunk *door, size_t time);
+bool		doors_update_status(t_chunk *door, size_t time);
 void		doors_update_texture_main_side(t_texture_pack *texture_pack,
 				t_chunk *door);
-void		doors_action(t_general *gen, t_action *action_data,
+void		doors_action(t_general *gen, size_t time_now, t_action *action_data,
 				t_chunk_face face);
 
 # endif

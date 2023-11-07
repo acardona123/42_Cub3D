@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:36:00 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/04 23:33:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 01:34:47 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ typedef struct s_door_last_update
 }	t_door_last_update;
 
 //doors_update.c
-float	doors_update_status(t_chunk *door, size_t time);
+bool	doors_update_status(t_chunk *door, size_t time);
 void	doors_update_texture_main_side(t_texture_pack *texture_pack,
 			t_chunk *door);
 //doors_action.c
-void	doors_action(t_general *gen, t_action *action_data,
+void	doors_action(t_general *gen, size_t time_now, t_action *action_data,
 			t_chunk_face face);
 
 #endif

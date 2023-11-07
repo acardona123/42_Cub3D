@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 22:13:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 01:44:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static bool	_int_3_is_character_surrounding_ok(char c, t_map *map, int x,
  */
 bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
-	if (!_in_3_character_is_valid(gen, c_type, x, y))
-		return (false);
 	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].status = INACTIVE;
+	if (!_in_3_character_is_valid(gen, c_type, x, y))
+		return (false);
 	gen->map.map[x][y].t0 = to_getime() - rand() % 1000;
 	if (in_3_map_add_locate_textures(&gen->textures,
 			gen->map.map[x][y].textures, c_type) == FAIL)
@@ -49,10 +49,10 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 
 bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
-	if (!_in_3_character_is_valid(gen, c_type, x, y))
-		return (false);
 	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].status = INACTIVE;
+	if (!_in_3_character_is_valid(gen, c_type, x, y))
+		return (false);
 	gen->map.map[x][y].t0 = 0;
 	gen->map.map[x][y].time_last_act = 0;
 	in_3_map_add_locate_textures(&gen->textures, gen->map.map[x][y].textures,

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:44:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/05 00:48:13 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 01:42:06 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
  *		door goes through
  * 
  * @param gen 
+ * @param time_now
  * @param action_data 
  * @param face face hited by the ray 
  */
-void	doors_action(t_general *gen, t_action *action_data, t_chunk_face face)
+void	doors_action(t_general *gen, size_t time_now, t_action *action_data,
+	t_chunk_face face)
 {
-	size_t			now;
 	t_chunk_face	face_to_update;
 	int				old_status;
 
@@ -35,7 +36,6 @@ void	doors_action(t_general *gen, t_action *action_data, t_chunk_face face)
 		+ FACE_S * (face == FACE_E || face == FACE_W);
 	old_status = action_data->targets[TARGET_DOOR_ITSELF]->status;
 				//printf("old_statut: %c\n", "CcOo"[old_status]);//
-	now = to_getime();
 	if (old_status == DOOR_CLOSED || old_status == DOOR_CLOSING)
 	{
 				//printf("ici\n");
@@ -51,19 +51,18 @@ void	doors_action(t_general *gen, t_action *action_data, t_chunk_face face)
 	}
 				//printf("new_statut: %c\n", "CcOo"[(int)action_data->targets[TARGET_DOOR_ITSELF]->status]);//
 				//printf("now: %ld\nold_time: %ld\n", now, action_data->time_last_act);//
-	action_data->time_last_act = now
+	action_data->time_last_act = time_now
 		- (old_status == DOOR_CLOSING || old_status == DOOR_OPENING)
-		* (action_data->time_last_act + DOOR_ACTION_TIME - now);
+		* (action_data->time_last_act + DOOR_ACTION_TIME - time_now);
 				//printf("new_time: %ld\n", action_data->time_last_act);//
-	action_data->targets[TARGET_DOOR_ITSELF]->extra_data_i
-		|= 1 << DOOR_TEXTURE_NEED_UPDATE;
 }
 
 #else
 
-void	doors_action(t_general *gen, t_action *action_data, t_chunk_face face)
+void	doors_action(t_general *gen, size_t time_now, t_action *action_data, t_chunk_face face)
 {
 	(void)gen;
+	(void)time_now;
 	(void)action_data;
 	(void)face;
 }

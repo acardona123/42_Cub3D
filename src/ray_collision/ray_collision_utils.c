@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:11:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/29 01:35:11 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:25:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ bool	r_point_outside_map(t_map *map, t_coord_f P)
  * @return true if solid
  * @return false if not solid (reachable for the player)
  */
-bool	r_ray_hit_check_solid_chunk(t_chunk **map, int chunk_co_x,
-	int chunk_co_y)
+bool	r_ray_hit_check_solid_chunk(t_chunk **map, t_ray_data *rdata,
+	int chunk_co_x, int chunk_co_y)
 {
-	if (map[chunk_co_x][chunk_co_y].type == WALL)
+	if (ft_isinset(map[chunk_co_x][chunk_co_y].type, rdata->obstacles))
 		return (true);
-	if (map[chunk_co_x][chunk_co_y].type == NOTHING)
-		return (true);
-	if (map[chunk_co_x][chunk_co_y].type == DOOR)
+	if (rdata->door_behaviour != ray_pass_door_always
+		&& map[chunk_co_x][chunk_co_y].type == DOOR)
 		return (map[chunk_co_x][chunk_co_y].status != DOOR_OPEN);
 	// if (ft_isinset(map[chunk_co_x][chunk_co_y].type, CHARS_TRANSPARENT))
 	// 	return (false);
