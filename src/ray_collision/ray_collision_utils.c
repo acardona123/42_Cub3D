@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:11:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 15:25:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:24:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ bool	r_point_outside_map(t_map *map, t_coord_f P)
 {
 	return (P.x < 1. || P.y < 1. || P.x > map->x_max - 1. || P.y > map->y_max);
 }
+
+#ifdef BONUS
 
 /**
  * @brief tests if the given chunk is solid ie the player can't go in it
@@ -48,3 +50,26 @@ bool	r_ray_hit_check_solid_chunk(t_chunk **map, t_ray_data *rdata,
 	// 	return (false);
 	return (false);
 }
+
+#else
+
+/**
+ * @brief tests if the given chunk is solid ie the player can't go in it
+ * 
+ * @param map 
+ * @param chunk_co_x 
+ * @param chunk_co_y 
+ * @return true if solid
+ * @return false if not solid (reachable for the player)
+ */
+bool	r_ray_hit_check_solid_chunk(t_chunk **map, t_ray_data *rdata,
+	int chunk_co_x, int chunk_co_y)
+{
+	if (ft_isinset(map[chunk_co_x][chunk_co_y].type, rdata->obstacles))
+		return (true);
+	// if (ft_isinset(map[chunk_co_x][chunk_co_y].type, CHARS_TRANSPARENT))
+	// 	return (false);
+	return (false);
+}
+
+#endif

@@ -6,11 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:15:20 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 01:38:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:30:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/gameplay.h"
+
+#ifdef BONUS
 
 /**
  * @brief sends a ray in front of the player. If the chunk touched triger an
@@ -42,3 +44,18 @@ void	gp_action_do(t_general *gen)
 	(*hit_chunk->action->execute)(gen, time_now, hit_chunk->action,
 		hit_point.hit_face);
 }
+
+#else
+
+/**
+ * @brief sends a ray in front of the player. If the chunk touched triger an
+ *		action and is close enough then the action is done.
+ * 
+ * @param gen 
+ */
+void	gp_action_do(t_general *gen)
+{
+	(void)gen;
+}
+
+#endif

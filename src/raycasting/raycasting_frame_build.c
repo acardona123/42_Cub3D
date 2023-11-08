@@ -36,13 +36,19 @@ void	*rc_raycasting_frame_build(t_general *gen, size_t time_frame)
 	while (++idx_ray < WIN_WIDTH)
 	{
 		hit_pt = r_ray_hit(gen, (t_ray_params){ray_raycasting, time_frame,
-				gen->player.p_co,
-				gen->player.p_angle + gen->angles_set[idx_ray]});
+				p_co, 
+				
+				
+				
+				
+				
+				
+				p_angle + gen->angles_set[idx_ray]});
 		if (hit_pt.pt_co.x <= 0.)
 			r_frame_empty_column(gen->disp.buff, idx_ray);
 		else
 		{
-			hit_pt.dist = to_vector_norm(hit_pt.pt_co, gen->player.p_co);
+			hit_pt.dist = to_vector_norm(hit_pt.pt_co, p_co);
 			if (hit_pt.dist < DIST_WALL_MIN)
 				hit_pt.dist = DIST_WALL_MIN;
 			_r_frame_build_column(gen, idx_ray, hit_pt, time_frame);

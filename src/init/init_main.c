@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 22:04:33 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:22:07 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_main(int ac, char **av, t_general	*gen)
 static void	_init_settings_angleset(t_general *gen)
 {
 	gen->settings = (t_settings){DEFAULT_WALK_SPEED, DEFAULT_ROTATE_SPEED_KEY,
-		DEFAULT_ROTATE_SPEED_MOUSE, DEFAULT_FOV};
+		0, DEFAULT_FOV};
 	to_angle_set_init(&gen->settings.fov, DEFAULT_FOV, gen->angles_set,
 		gen->angle_correc);
 }

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 04:19:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:58:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 # define DEFAULT_FOV 1.4
 # define DEFAULT_DELAY 1
 # define DEFAULT_WALK_SPEED 0.0016
-# define DEFAULT_ROTATE_SPEED_KEY 0.0008
+# define DEFAULT_ROTATE_SPEED_KEY 0.0011
 # ifdef BONUS
 #  define DEFAULT_ROTATE_SPEED_MOUSE 0.1
-#  define DOOR_ACTION_DIST_RANGE 1.
+#  define DOOR_ACTION_DIST_RANGE 1.5
 # endif
 
 //game settings

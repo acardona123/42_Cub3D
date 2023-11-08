@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 14:44:02 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:50:25 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ bool	doors_update_status(t_chunk *door, size_t time)
 		return (door->extra_data_f = last.data, false);
 	last = (t_door_last_update){time, door, time - door->action->time_last_act};//here the data is just temporary used as a buffer for the delta-time value, for norm puposes
 	if (door->status == DOOR_OPEN)
-		return (last.data = 1., false);
-	if (door->status == DOOR_CLOSED)
-		return (last.data = 0., false);
+		last.data = 1.;
+	else if (door->status == DOOR_CLOSED)
+		last.data = 0.;
 	else if (door->status == DOOR_CLOSING && last.data >= DOOR_ACTION_TIME)
 		return (door->status = DOOR_CLOSED, last.data = 0.,
-			door->extra_data_f = 0., true);
+			door->extra_data_f = last.data, true);
 	else if (door->status == DOOR_CLOSING)
 		last.data = 1. - last.data / DOOR_ACTION_TIME;
 	else if (door->status == DOOR_OPENING && last.data >= DOOR_ACTION_TIME)

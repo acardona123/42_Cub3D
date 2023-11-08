@@ -6,11 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 22:51:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 04:16:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:23:49 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shared.h"
+
+#ifdef BONUS
 
 void	end_destroy_map(t_map *map)
 {
@@ -40,3 +42,25 @@ void	end_destroy_map(t_map *map)
 	}
 	free(map->map);
 }
+
+#else
+
+
+void	end_destroy_map(t_map *map)
+{
+	int	x;
+
+	if (!map || !map->map)
+		return ;
+	x = -1;
+	while (++x < map->width)
+	{
+		if (map->map[x])
+			free(map->map[x]);
+		else
+			break ;
+	}
+	free(map->map);
+}
+
+#endif

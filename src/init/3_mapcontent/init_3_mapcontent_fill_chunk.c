@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 01:44:48 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:22:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
 	gen->map.map[x][y].t0 = 0;
-	gen->map.map[x][y].time_last_act = 0;
 	in_3_map_add_locate_textures(&gen->textures, gen->map.map[x][y].textures,
 		c_type);
 	return (true);
