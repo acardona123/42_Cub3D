@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 16:32:49 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/09 22:11:49 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static bool	_r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
  */
 bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
 {
+	// printf("\e[31mcheck : (%d, %d)\e[0m\n", hit_pt->chunk_co_x, hit_pt->chunk_co_y);//
 	if (hit_pt->pt_co.x <= -EPSILON)
 		return (true);
 	if (ft_isinset(gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type,

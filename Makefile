@@ -88,7 +88,7 @@ FILES_NAMES			=	\
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \
 						$(FILES_DOORS) \
-						main 
+						# main 
 
 
 SRC_DIR			=	src

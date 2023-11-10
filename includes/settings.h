@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/08 15:58:48 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:39:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@
 # define FOV_MAX 3.14
 # define WALK_SPEED_INCREMENT 0.05
 # define ROTATE_SPEED_KEY_INCREMENT 0.001
-# define DIST_WALL_MIN 0.015625
+# define DIST_WALL_MIN 0.25
+// # define DIST_WALL_MIN 0.015625
 # ifdef BONUS
 #  define ROTATE_SPEED_MOUSE_INCREMENT 0.001
 #  define DOOR_ACTION_TIME 1000.

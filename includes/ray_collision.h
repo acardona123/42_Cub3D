@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 01:01:21 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:41:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ bool		r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
 bool		r_ray_hit_check_doors_sec(t_general *gen, t_ray_data *rdata,
 				t_hitpoint *hitpoint, t_coord_f real_hitpoint_co);
 
-//raycasting_tools.c
+//ray_collision_tools.c
 bool		r_point_outside_map(t_map *map, t_coord_f p_co);
 bool		r_ray_hit_check_solid_chunk(t_chunk **map, t_ray_data *rdata,
 				int chunk_co_x, int chunk_co_y);

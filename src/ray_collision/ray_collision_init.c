@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:21:59 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:05:28 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,31 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 		hitpoint.pt_co.x = -1;
 	if (hitpoint.hit_face == FACE_E
 		|| (rdata->first == FIRST_ANY && rdata->dial >= S_SW))
-		hitpoint.chunk_co_x = (int)(hitpoint.pt_co.x + rdata->shift) - 1;
+		hitpoint.chunk_co_x = (int)(hitpoint.pt_co.x - rdata->shift) - 1;
 	else
-		hitpoint.chunk_co_x = (int)(hitpoint.pt_co.x + rdata->shift);
+		hitpoint.chunk_co_x = (int)(hitpoint.pt_co.x
+				+ rdata->shift * (1 - 2 * (rdata->dial >= S_SW)));
 	if (hitpoint.hit_face == FACE_N
 		|| (rdata->first == FIRST_ANY && rdata->dial >= E_SE
 			&& rdata->dial <= SW_W))
-		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y + rdata->shift) - 1;
+		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y - rdata->shift) - 1;
 	else
-		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y + rdata->shift);
+		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y + rdata->shift
+				* (1 - 2 * (rdata->dial >= E_SE && rdata->dial <= SW_W)));
+	printf("--- INIT:---\n");//
+		printf("H:\n check_H: %d\n first_h: (%.4f, %.4f) -> first_h - (int)player :\
+	(%.4f, %.4f)\n delta_x: %.4f\n",
+			rdata->check_h,
+			rdata->last_h.x, rdata->last_h.y,
+			rdata->last_h.x - floor(p_co->x), rdata->last_h.y - floor(p_co->y),
+			rdata->delta_x);
+		printf("V:\n check_V: %d\n first_v: (%.4f, %.4f) -> first_v - (int)player :\
+	(%.4f, %.4f)\n delta_y: %.4f\n",
+			rdata->check_v,
+			rdata->last_v.x, rdata->last_v.y,
+			rdata->last_v.x - floor(p_co->x), rdata->last_v.y - floor(p_co->y),
+			rdata->delta_y);
+		printf("==>\n -angle: %f\n -hit_pt: (%.3f, %.3f)\n -chunk: (%d, %d)\n---- End init\n", angle_ray, hitpoint.pt_co.x, hitpoint.pt_co.y, hitpoint.chunk_co_x, hitpoint.chunk_co_y);//
 	return (hitpoint);
 }
 
@@ -203,19 +219,19 @@ static t_1st_type	_r_ray_init_get_first_type(t_coord_f *pco,
 #include "../../includes/cub3d.h"
 
 static void			_test_r_ray_full_one(t_general	*gen, t_coord_f *p_co,
-						float angle_deg, bool obstacles_shift);
+						float angle_deg, t_ray_type ray_type);
 static void			_test_r_ray_for_top_l_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_top_right_deg,
-						bool obstacles_shift);
+						t_ray_type ray_type);
 static void			_test_r_ray_for_top_r_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_top_right_deg,
-						bool obstacles_shift);
+						t_ray_type ray_type);
 static void			_test_r_ray_for_bot_l_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_top_right_deg,
-						bool obstacles_shift);
+						t_ray_type ray_type);
 static void			_test_r_ray_for_bot_r_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_top_right_deg,
-						bool obstacles_shift);
+						t_ray_type ray_type);
 static void			_test_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata,
 						float angle_ray);
 static void			_test_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata,
@@ -228,7 +244,7 @@ int	main(int ac, char **av)
 	t_general	gen;
 	float		angle_deg;
 	t_coord_f	p_co_init;
-	bool		obstacles_shift = false;
+	t_ray_type	ray_type = ray_raycasting;
 
 
 	gen = (t_general){0};
@@ -241,19 +257,19 @@ int	main(int ac, char **av)
 	if (true) //tests different angles
 	{
 		printf("===========\nMultiple angles from position\n===========\n\n");
-		gen.player.p_co.x -= 0.5;
-		gen.player.p_co.y += 0.5;
+		// gen.player.p_co.x -= 0.5;
+		// gen.player.p_co.y += 0.5;
 		printf("Player_co : (%f, %f)\n\n", gen.player.p_co.x,
 			gen.player.p_co.y);
 		// printf("new player data:\n co: (%f, %f)\nangle: %f (%f deg)\n\n",
 		// 	gen.player.p_co.x, gen.player.p_co.y, gen.player.p_angle,
 		// 	gen.player.p_angle * 180 / M_PI);
 		angle_deg = 0.;
-		while (angle_deg < 10)
+		while (angle_deg < 360)
 		{
 			_test_r_ray_full_one(&gen, &gen.player.p_co, angle_deg,
-				obstacles_shift);
-			angle_deg += 5.;
+				ray_type);
+			angle_deg += 15.;
 		}
 	}
 	if (false) //test top right angle
@@ -261,28 +277,28 @@ int	main(int ac, char **av)
 		printf("\n\n===========\nTop right angle\n===========\n\n");
 		float	alpha_to_angle = 10;// [0,90]
 		_test_r_ray_for_top_r_angle(&gen, p_co_init, alpha_to_angle,
-			obstacles_shift);
+			ray_type);
 	}
 	if (false) //test top left angle
 	{
 		printf("\n\n===========\nTop left angle\n===========\n\n");
 		float	alpha_to_angle = 10;// [0,90]
 		_test_r_ray_for_top_l_angle(&gen, p_co_init, alpha_to_angle,
-			obstacles_shift);
+			ray_type);
 	}
 	if (false) //test bottom left angle
 	{
 		printf("\n\n===========\nBottom left angle\n===========\n\n");
 		float	alpha_to_angle = 10;// [0,90]
 		_test_r_ray_for_bot_l_angle(&gen, p_co_init, alpha_to_angle,
-			obstacles_shift);
+			ray_type);
 	}
 	if (false) //test bottom right angle
 	{
 		printf("\n\n===========\nBottom right angle\n===========\n\n");
 		float	alpha_to_angle = 10;// [0,90]
 		_test_r_ray_for_bot_r_angle(&gen, p_co_init, alpha_to_angle,
-			obstacles_shift);
+			ray_type);
 	}
 	return (0);
 }
@@ -293,7 +309,7 @@ int	main(int ac, char **av)
 
 static void	_test_r_ray_for_top_r_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_top_right_deg,
-						bool obstacles_shift)
+						t_ray_type ray_type)
 {
 	float	angle_deg;
 
@@ -304,12 +320,12 @@ static void	_test_r_ray_for_top_r_angle(t_general *gen,
 	printf("Player_co : (%f, %f)\n", gen->player.p_co.x,
 		gen->player.p_co.y);
 	angle_deg = 90 - alpha_top_right_deg;
-	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, obstacles_shift);
+	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, ray_type);
 }
 
 static void	_test_r_ray_for_top_l_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_top_left_deg,
-						bool obstacles_shift)
+						t_ray_type ray_type)
 {
 	float	angle_deg;
 
@@ -320,12 +336,12 @@ static void	_test_r_ray_for_top_l_angle(t_general *gen,
 	printf("Player_co : (%f, %f)\n", gen->player.p_co.x,
 		gen->player.p_co.y);
 	angle_deg = 360 - (90 - alpha_top_left_deg);
-	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, obstacles_shift);
+	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, ray_type);
 }
 
 static void	_test_r_ray_for_bot_l_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_bot_left_deg,
-						bool obstacles_shift)
+						t_ray_type ray_type)
 {
 	float	angle_deg;
 
@@ -336,12 +352,12 @@ static void	_test_r_ray_for_bot_l_angle(t_general *gen,
 	printf("Player_co : (%f, %f)\n", gen->player.p_co.x,
 		gen->player.p_co.y);
 	angle_deg = 180 + (90 - alpha_bot_left_deg);
-	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, obstacles_shift);
+	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, ray_type);
 }
 
 static void	_test_r_ray_for_bot_r_angle(t_general *gen,
 						t_coord_f p_co_init, float alpha_bot_right_deg,
-						bool obstacles_shift)
+						t_ray_type ray_type)
 {
 	float	angle_deg;
 
@@ -352,43 +368,60 @@ static void	_test_r_ray_for_bot_r_angle(t_general *gen,
 	printf("Player_co : (%f, %f)\n", gen->player.p_co.x,
 		gen->player.p_co.y);
 	angle_deg = 180 - (90 - alpha_bot_right_deg);
-	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, obstacles_shift);
+	_test_r_ray_full_one(gen, &gen->player.p_co, angle_deg, ray_type);
+}
+
+static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata)
+{
+	rdata->time_now = params->ray_time;
+	rdata->dial = (int)(params->ray_angle * 4. / M_PI);
+	if (rdata->dial == N_NE || rdata->dial == SE_S
+		|| rdata->dial == S_SW || rdata->dial == NW_N)
+		rdata->prim = PRIMARY_H;
+	else
+		rdata->prim = PRIMARY_V;
+	if (params->ray_type == ray_raycasting)
+	{
+		rdata->obstacles = CHARS_OBSTACLE_RAYCASTING;
+		rdata->door_behaviour = ray_pass_door_no_touch;
+	}
+	else if (params->ray_type == ray_walk)
+	{
+		rdata->shift = DIST_WALL_MIN;
+		rdata->obstacles = CHARS_OBSTACLE_WALK;
+		rdata->door_behaviour = ray_pass_door_fully_open;
+	}
+	else //if params->ray_type == ray_action
+		rdata->obstacles = CHARS_OBSTACLE_ACTION;
 }
 
 // end position related to grid intersection
 
 static void	_test_r_ray_full_one(t_general	*gen, t_coord_f *p_co,
-	float angle_deg, bool obstacles_shift)
+	float angle_deg, t_ray_type ray_type)
 {
-	t_ray_data	rdata;
-	float		angle_rad;
+	t_ray_data		rdata;
+	float			angle_rad;
+	t_ray_params	params;
 
 	angle_rad = angle_deg * M_PI / 180.;
 	printf("\n-----------------------\nangle: %.2f (%.4f)\n\n",
 		angle_deg, angle_rad);
 	rdata = (t_ray_data){0};
-	rdata.dial = (int)(angle_rad * 4 / M_PI);
-	if (rdata.dial == N_NE || rdata.dial == SE_S
-		|| rdata.dial == S_SW || rdata.dial == NW_N)
-		rdata.prim = PRIMARY_H;
-	else
-		rdata.prim = PRIMARY_V;
-	rdata.shift = obstacles_shift * DIST_WALL_MIN;
+	params = (t_ray_params){ray_type, to_getime(), *p_co, angle_deg};
+	_r_ray_extract_param(&params, &rdata);
 	printf("first h and first v detection :\n");
-	_test_r_ray_init_h(p_co, &rdata, angle_deg
-		* M_PI / 180.);
-	_test_r_ray_init_v(p_co, &rdata, angle_deg
-		* M_PI / 180.);
+	_test_r_ray_init_h(p_co, &rdata, angle_rad);
+	_test_r_ray_init_v(p_co, &rdata, angle_rad);
 	printf("\nAfter selection:\n");
-	_test_r_ray_init_rdata_hitpoint(p_co,
-		angle_deg * M_PI / 180, &gen->map, &rdata);
+	_test_r_ray_init_rdata_hitpoint(p_co, angle_rad, &gen->map, &rdata);
 }
 
 static void	_test_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata,
 				float angle_ray)
 {
 	_r_ray_init_h(p_co, rdata, angle_ray);
-	printf("H:\n check_H: %d\n first_h: (%.4f, %.4f) -> first_h - (int)player :\
+	printf("H:\n check_H: %d\n first_h: (%.4f, %.4f)\n  -> first_h - (int)player :\
  (%.4f, %.4f)\n delta_x: %.4f\n",
 		rdata->check_h,
 		rdata->last_h.x, rdata->last_h.y,
@@ -400,7 +433,7 @@ static void	_test_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata,
 				float angle_ray)
 {
 	_r_ray_init_v(p_co, rdata, angle_ray);
-	printf("V:\n check_V: %d\n first_v: (%.4f, %.4f) -> first_v - (int)player :\
+	printf("V:\n check_V: %d\n first_v: (%.4f, %.4f)\n  -> first_v - (int)player :\
  (%.4f, %.4f)\n delta_y: %.4f\n",
 		rdata->check_v,
 		rdata->last_v.x, rdata->last_v.y,
@@ -422,8 +455,8 @@ static void	_test_r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 //  (%.4f, %.4f)\n delta_y: %.4f\n", rdata->check_v, rdata->last_v.x,
 // 		rdata->last_v.y, rdata->last_v.x - floor(p_co->x),
 // 		rdata->last_v.y - floor(p_co->y), rdata->delta_y);
-	printf("\nFirst hitpoint:\n first: %c\n pt_co : (%.4f, %.4f) -> pt_co - \
-player_co : (%.3f, %.3f)\n chunk_co: (%d, %d) -> chunk_co - player_co :\
+	printf("First hitpoint:\n first: %c\n pt_co : (%.4f, %.4f) -> pt_co - \
+player_co : (%.3f, %.3f)\n chunk_co: (%d, %d)\n  -> chunk_co - player_co :\
  (%d, %d)\n face: %c\n",
 		"HVA"[rdata->first],
 		first.pt_co.x, first.pt_co.y,

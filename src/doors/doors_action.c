@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:44:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 01:42:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:30:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	doors_action(t_general *gen, size_t time_now, t_action *action_data,
 
 #else
 
-void	doors_action(t_general *gen, size_t time_now, t_action *action_data, t_chunk_face face)
+void	doors_action(t_general *gen, size_t time_now, t_action *action_data,
+	t_chunk_face face)
 {
 	(void)gen;
 	(void)time_now;

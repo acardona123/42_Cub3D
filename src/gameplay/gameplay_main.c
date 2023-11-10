@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 00:34:16 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:32:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ int	gp_looping(void *gen_)
 		delay);
 	gp_turn_head(gen, gen->next_moove[TURN_R] - gen->next_moove[TURN_L],
 		delay);
+		printf("p_co: (%f, %f), angle: %f\n", gen->player.p_co.x, gen->player.p_co.y, gen->player.p_angle);//
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]
 			[(int)gen->player.p_co.y].type, CHARS_OBSTACLE))
-	{//
-		// end_destroy_general(gen);//
 		img = gen->disp.img_out_map->img;
-	}//
 	else
-		// (img = gen->disp.img_out_map->img, usleep(23));//
 		img = rc_raycasting_frame_build(gen, now_time);
 	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win, img, 0, 0);
 	return (0);

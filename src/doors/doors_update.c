@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/08 15:50:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:31:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	doors_update_texture_main_side(t_texture_pack *texture_pack,
 {
 	t_chunk_face	face_to_update;
 
-	// printf("update dooooooooooooooooooooor : %c\n", "CcOo"[(int)door->status]);
 	if (door->extra_data_i & 1 << DOOR_HORIZONTAL)
 		face_to_update = FACE_W;
 	else
