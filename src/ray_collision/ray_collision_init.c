@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/10 16:05:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:45:43 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,20 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 	else
 		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y + rdata->shift
 				* (1 - 2 * (rdata->dial >= E_SE && rdata->dial <= SW_W)));
-	printf("--- INIT:---\n");//
-		printf("H:\n check_H: %d\n first_h: (%.4f, %.4f) -> first_h - (int)player :\
-	(%.4f, %.4f)\n delta_x: %.4f\n",
-			rdata->check_h,
-			rdata->last_h.x, rdata->last_h.y,
-			rdata->last_h.x - floor(p_co->x), rdata->last_h.y - floor(p_co->y),
-			rdata->delta_x);
-		printf("V:\n check_V: %d\n first_v: (%.4f, %.4f) -> first_v - (int)player :\
-	(%.4f, %.4f)\n delta_y: %.4f\n",
-			rdata->check_v,
-			rdata->last_v.x, rdata->last_v.y,
-			rdata->last_v.x - floor(p_co->x), rdata->last_v.y - floor(p_co->y),
-			rdata->delta_y);
-		printf("==>\n -angle: %f\n -hit_pt: (%.3f, %.3f)\n -chunk: (%d, %d)\n---- End init\n", angle_ray, hitpoint.pt_co.x, hitpoint.pt_co.y, hitpoint.chunk_co_x, hitpoint.chunk_co_y);//
+	// printf("--- INIT:---\n");//
+	// 	printf("H:\n check_H: %d\n first_h: (%.4f, %.4f) -> first_h - (int)player :\
+	// (%.4f, %.4f)\n delta_x: %.4f\n",
+	// 		rdata->check_h,
+	// 		rdata->last_h.x, rdata->last_h.y,
+	// 		rdata->last_h.x - floor(p_co->x), rdata->last_h.y - floor(p_co->y),
+	// 		rdata->delta_x);
+	// 	printf("V:\n check_V: %d\n first_v: (%.4f, %.4f) -> first_v - (int)player :\
+	// (%.4f, %.4f)\n delta_y: %.4f\n",
+	// 		rdata->check_v,
+	// 		rdata->last_v.x, rdata->last_v.y,
+	// 		rdata->last_v.x - floor(p_co->x), rdata->last_v.y - floor(p_co->y),
+	// 		rdata->delta_y);
+	// 	printf("==>\n -angle: %f\n -hit_pt: (%.3f, %.3f)\n -chunk: (%d, %d)\n---- End init\n", angle_ray, hitpoint.pt_co.x, hitpoint.pt_co.y, hitpoint.chunk_co_x, hitpoint.chunk_co_y);//
 	return (hitpoint);
 }
 

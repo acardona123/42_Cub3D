@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doors.h                                            :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 01:36:00 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 23:56:17 by acardona         ###   ########.fr       */
+/*   Created: 2023/11/11 19:46:27 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/11 23:55:03 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOORS_H
-# define DOORS_H
+#ifndef MAP_H
+# define MAP_H
 
 # include "shared.h"
 
-typedef struct s_door_last_update
-{
-	size_t	time;
-	t_chunk	*chunk;
-	float	data;
-}	t_door_last_update;
+// map_main.c
+void	map_draw_minimap(t_general *gen);
+void	map_draw_bigmap(t_general *gen);
 
-//doors_update.c
-bool	doors_update_status(t_general *gen, t_chunk *door, size_t time);
-void	doors_update_texture_main_side(t_texture_pack *texture_pack,
-			t_chunk *door);
-//doors_action.c
-void	doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
-			t_chunk_face face);
+// map_get_pixel_color.c
+int		map_get_pixel_color(t_general *gen, int delta_x, int delta_y);
+
+// map_update_world.c
+void	map_update_world_door(t_general *gen, t_chunk *chunk);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:17:08 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 02:50:15 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:17:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,18 @@ void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
 	if (!dir_xp && !dir_yp)
 		return ;
 	target = _gp_walk_get_target(gen, dir_xp, dir_yp, delay);
-	//printf("directions: (%d, %d)\n", dir_xp, dir_yp);
-	//printf("Target: (%f, %f)\n\n", target.x, target.y);//
-	//printf("\n\e[103mFirst step:\e[0m\n p_co: (%f, %f)\n angle: %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y,gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1], (gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1])* 180 / M_PI);
-	hit_pt = r_ray_hit(gen, (t_ray_params){ray_walk, to_getime(),
-			gen->player.p_co, gen->player.p_angle
-			+ g_angle_dir[dir_xp + 1][dir_yp + 1]});
+	hit_pt = r_ray_hit(gen, (t_ray_params){ray_walk, to_getime(), gen->player
+			.p_co, gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1]});
 	if (to_vector_norm_sqr(gen->player.p_co, hit_pt.pt_co)
 		> to_vector_norm_sqr(gen->player.p_co, target))
 	{
-		// printf("go to target without sliding\n");
-		gen->player.p_co.x = target.x + EPSILON * ((hit_pt.hit_face == FACE_E) - (hit_pt.hit_face == FACE_W));
-		gen->player.p_co.y = target.y + EPSILON * ((hit_pt.hit_face == FACE_N) - (hit_pt.hit_face == FACE_S));
+		gen->player.p_co.x = target.x + EPSILON * ((hit_pt.hit_face == FACE_E)
+				- (hit_pt.hit_face == FACE_W));
+		gen->player.p_co.y = target.y + EPSILON * ((hit_pt.hit_face == FACE_N)
+				- (hit_pt.hit_face == FACE_S));
 	}
 	else
 	{
-		//printf("Select hitpt, need slide\n");
 		gen->player.p_co = hit_pt.pt_co;
 		_gp_walk_slide_along_wall(gen, target,
 			((hit_pt.hit_face == FACE_N) || (hit_pt.hit_face == FACE_S))
@@ -65,7 +61,6 @@ void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
 			((hit_pt.hit_face == FACE_E) || (hit_pt.hit_face == FACE_W))
 			* (1 - 2 * (hit_pt.pt_co.y > target.y)));
 	}
-	//printf("-> After slide: p_co = (%f, %f)\n\n\n", gen->player.p_co.x, gen->player.p_co.y);//
 }
 
 /**

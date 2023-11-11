@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 02:43:37 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 23:55:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool		_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
 bool	r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
 	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
 {
-	if (doors_update_status(&gen->map.map[hit_point->chunk_co_x]
+	if (doors_update_status(gen, &gen->map.map[hit_point->chunk_co_x]
 			[hit_point->chunk_co_y], rdata->time_now))
 		doors_update_texture_main_side(&gen->textures,
 			&gen->map.map[hit_point->chunk_co_x][hit_point->chunk_co_y]);
@@ -70,7 +70,7 @@ bool	r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
 bool	r_ray_hit_check_doors_sec(t_general *gen, t_ray_data *rdata,
 	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
 {
-	if (doors_update_status(&gen->map.map[hit_point->chunk_co_x]
+	if (doors_update_status(gen, &gen->map.map[hit_point->chunk_co_x]
 			[hit_point->chunk_co_y], rdata->time_now))
 		doors_update_texture_main_side(&gen->textures,
 			&gen->map.map[hit_point->chunk_co_x][hit_point->chunk_co_y]);

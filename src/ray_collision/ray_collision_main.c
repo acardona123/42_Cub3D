@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/10 16:39:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/10 21:48:02 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata)
 		rdata->obstacles = CHARS_OBSTACLE_ACTION;
 }
 
-// /*
+/*
 #include "../../includes/cub3d.h"
 int    main(int ac, char **av)
 {
@@ -112,4 +112,4 @@ int    main(int ac, char **av)
     }
     return (0);
 }
-// */
+*/

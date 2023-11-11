@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 22:13:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:28:37 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #  include <dirent.h>
 # endif
 
+# define MSG_SETINGS_ERROR "Initialisation: wrong settings in defines"
 # define MSG_BAD_ALLOC "Map: memory allocation error during initialisation"
 # define MSG_BAD_XPM_TO_IMG "mlx: .xpm to image conversion failed"
 # define MSG_MAP_FILE_FORMAT "Map: format incorrect, requieres a .cub file"
@@ -139,4 +140,9 @@ void	in_3_map_add_door_sides_textures(t_chunk **map,
 			t_texture_pack *textures, int door_x, int door_y);
 // init_3_mapcontent_set_status_action.c
 t_bool	in_3_mapcontent_status_action_init(t_map *map);
+/*
+
+=============== 4_minimap/ =============== */
+void	in_4_minimap_init(t_general *gen);
+
 #endif
