@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 17:22:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 23:39:23 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static bool	_int_3_is_character_surrounding_ok(char c, t_map *map, int x,
  */
 bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
+	gen->map.map[x][y].chunk_co.x = x;
+	gen->map.map[x][y].chunk_co.y = y;
 	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].status = INACTIVE;
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
@@ -88,6 +90,8 @@ static bool	_in_3_character_is_valid(t_general *gen, char letter, int x,
 			gen->player.p_angle += M_PI / 2;
 		gen->player.p_co.x = x + 0.5;
 		gen->player.p_co.y = y + 0.5;
+		gen->player.p_chunk.x = x;
+		gen->player.p_chunk.y = y;
 		player_found = true;
 	}
 	else if (x == gen->map.width - 1 && y == 0 && player_found == false)

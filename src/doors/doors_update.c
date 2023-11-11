@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/08 16:31:14 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/12 00:11:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@
  *	consecutive ray hit the same door in the same frame during the raycasting
  *	
  * 
+ * @param gen
  * @param door chunk of the map correspondingto the door to update
  * @param time time at which the ray has been thrown
  * @return true the door status changed due to time, the textre has to beupdated
  * @return false no change in the door sttus
  *		
  */
-bool	doors_update_status(t_chunk *door, size_t time)
+bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
 {
 	static t_door_last_update	last = {0, NULL, 0.};
 
@@ -49,8 +50,8 @@ bool	doors_update_status(t_chunk *door, size_t time)
 	else if (door->status == DOOR_CLOSING)
 		last.data = 1. - last.data / DOOR_ACTION_TIME;
 	else if (door->status == DOOR_OPENING && last.data >= DOOR_ACTION_TIME)
-		return (door->status = DOOR_OPEN, last.data = 1.,
-			door->extra_data_f = 1., true);
+		return (door->status = DOOR_OPEN, map_update_world_door(gen, door),
+			last.data = 1., door->extra_data_f = 1., true);
 	else if (door->status == DOOR_OPENING)
 		last.data = last.data / DOOR_ACTION_TIME;
 	// printf("Door status: %c\n -> update: %d\n", "CcOo"[(int)door->status], (door->extra_data_i & 1 << DOOR_TEXTURE_NEED_UPDATE));//
@@ -95,7 +96,7 @@ void	doors_update_texture_main_side(t_texture_pack *texture_pack,
  * @param time 
  * @return float 
  */
-bool	doors_update_status(t_chunk *door, size_t time)
+bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
 {
 	(void)door;
 	(void)time;

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:44:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/08 16:30:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/12 00:13:47 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,31 @@
  * @param action_data 
  * @param face face hited by the ray 
  */
-void	doors_action(t_general *gen, size_t time_now, t_action *action_data,
+void	doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
 	t_chunk_face face)
 {
 	t_chunk_face	face_to_update;
 	int				old_status;
 
-				// printf("in door action\n");//
 	face_to_update = FACE_W * (face == FACE_N || face == FACE_S)
 		+ FACE_S * (face == FACE_E || face == FACE_W);
-	old_status = action_data->targets[TARGET_DOOR_ITSELF]->status;
-				//printf("old_statut: %c\n", "CcOo"[old_status]);//
+	old_status = chunk->action->targets[TARGET_DOOR_ITSELF]->status;
 	if (old_status == DOOR_CLOSED || old_status == DOOR_CLOSING)
 	{
-				//printf("ici\n");
-		action_data->targets[TARGET_DOOR_ITSELF]->status = DOOR_OPENING;
-		action_data->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
+		chunk->action->targets[TARGET_DOOR_ITSELF]->status = DOOR_OPENING;
+		chunk->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
 			= gen->textures.door_side_open_opening;
 	}
 	else if (old_status == DOOR_OPEN || old_status == DOOR_OPENING)
 	{
-		action_data->targets[TARGET_DOOR_ITSELF]->status = DOOR_CLOSING;
-		action_data->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
+		chunk->action->targets[TARGET_DOOR_ITSELF]->status = DOOR_CLOSING;
+		chunk->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
 			= gen->textures.door_side_open_closing;
 	}
-				//printf("new_statut: %c\n", "CcOo"[(int)action_data->targets[TARGET_DOOR_ITSELF]->status]);//
-				//printf("now: %ld\nold_time: %ld\n", now, action_data->time_last_act);//
-	action_data->time_last_act = time_now
+	chunk->action->time_last_act = time_now
 		- (old_status == DOOR_CLOSING || old_status == DOOR_OPENING)
-		* (action_data->time_last_act + DOOR_ACTION_TIME - time_now);
-				//printf("new_time: %ld\n", action_data->time_last_act);//
+		* (chunk->action->time_last_act + DOOR_ACTION_TIME - time_now);
+	map_update_world_door(gen, chunk->action->targets[TARGET_DOOR_ITSELF]);
 }
 
 #else

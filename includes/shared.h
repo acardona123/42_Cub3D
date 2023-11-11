@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 02:15:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 23:54:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_texture_pack
 # ifdef BONUS
 
 #  define CHARS_ALLOWED "01d NESW"
+#  define CHARS_NUMBER 8
 
 typedef enum e_chunk_type
 {
@@ -98,6 +99,7 @@ typedef enum e_chunk_type
 # else
 
 #  define CHARS_ALLOWED "01 NESW"
+#  define CHARS_NUMBER 7
 
 typedef enum e_chunk_type
 {
@@ -128,6 +130,7 @@ typedef enum e_default_status
 
 typedef struct s_chunk
 {
+	t_coord_i			chunk_co;
 	t_chunk_type		type;
 	size_t				t0;
 	char				status;
@@ -159,11 +162,23 @@ typedef struct s_hitpoint
 
 
 
+==== Minimap ==== */
+
+typedef struct s_minimap
+{
+	t_data	world;
+}	t_minimap;
+
+/* ---- End: Minimap ----
+
+
+
 ==== Player ==== */
 
 typedef struct s_player
 {
 	t_coord_f	p_co;
+	t_coord_i	p_chunk;
 	float		p_angle;
 }	t_player;
 
@@ -193,8 +208,11 @@ typedef struct s_settings
 {
 	float		walk_speed;
 	float		key_turn_speed;
-	float		mouse_turn_speed;
 	float		fov;
+	float		mouse_turn_speed;
+	int			minimap_size;
+	int			minimap_zoom;
+	int			map_zoom;
 }	t_settings;
 
 /* ---- End: Settings ----
@@ -228,6 +246,7 @@ typedef struct s_general
 	double				angles_set[WIN_WIDTH];
 	double				angle_correc[WIN_WIDTH];
 	bool				next_moove[6];
+	t_minimap			minimap;
 }	t_general;
 
 /* ---- End: General ----
@@ -314,7 +333,7 @@ typedef enum e_activable_faces
 
 struct			s_action;
 typedef void	(*t_execute)(struct s_general *gen, size_t time_now,
-					struct s_action *action_data, t_chunk_face face);
+					t_chunk *chunk, t_chunk_face face);
 
 typedef struct s_action
 {
@@ -364,11 +383,16 @@ void		gp_action_do(t_general *gen);
 # ifdef BONUS
 
 //doors
-bool		doors_update_status(t_chunk *door, size_t time);
+bool		doors_update_status(t_general *gen, t_chunk *door, size_t time);
 void		doors_update_texture_main_side(t_texture_pack *texture_pack,
 				t_chunk *door);
-void		doors_action(t_general *gen, size_t time_now, t_action *action_data,
+void		doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
 				t_chunk_face face);
+
+//maps
+void		map_draw_minimap(t_general *gen);
+void		map_draw_bigmap(t_general *gen);
+void		map_update_world_door(t_general *gen, t_chunk *chunk);
 
 # endif
 

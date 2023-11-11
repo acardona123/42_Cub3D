@@ -6,27 +6,39 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 17:22:07 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 22:21:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/init.h"
 
-static void	_init_settings_angleset(t_general *gen);
+static void	_init_settings(t_general *gen);
+
+#ifdef BONUS
 
 void	init_main(int ac, char **av, t_general	*gen)
 {
 	t_lists	init_lists;
 
-	*gen = (t_general){0};
-	if (WIN_HEIGHT <= 0 || WIN_WIDTH <= 0 || DEFAULT_FOV <= 0
-		|| DIST_WALL_MIN <= 0)
-	{
-		to_error_msg("Settings: defined settings are invalid \
-(not strictly positive)");
-		exit(EXIT_INIT_0);
-	}
 	srand((unsigned int)to_getime());
+	*gen = (t_general){0};
+	_init_settings(gen);
+	in_0_init_display(gen);
+	init_lists = in_1_map_format_check(ac, av, gen);
+	in_2_init_texture_pack(gen, &init_lists);
+	in_3_mapcontent_init(gen, &init_lists);
+	in_4_minimap_init(gen);
+}
+
+#else
+
+void	init_main(int ac, char **av, t_general	*gen)
+{
+	t_lists	init_lists;
+
+	srand(0);
+	*gen = (t_general){0};
+	_init_settings(gen);
 	in_0_init_display(gen);
 	init_lists = in_1_map_format_check(ac, av, gen);
 	in_2_init_texture_pack(gen, &init_lists);
@@ -34,10 +46,23 @@ void	init_main(int ac, char **av, t_general	*gen)
 	_init_settings_angleset(gen);
 }
 
-static void	_init_settings_angleset(t_general *gen)
+#endif
+
+static void	_init_settings(t_general *gen)
 {
-	gen->settings = (t_settings){DEFAULT_WALK_SPEED, DEFAULT_ROTATE_SPEED_KEY,
-		0, DEFAULT_FOV};
+	if ( 0 ) //to_do define error
+	{
+		to_error_msg(MSG_SETINGS_ERROR);
+		exit (EXIT_INIT_SETTINGS);
+	}
+	gen->settings.walk_speed = DEFAULT_WALK_SPEED;
+	gen->settings.key_turn_speed = DEFAULT_ROTATE_SPEED_KEY;
+	gen->settings.fov = DEFAULT_FOV;
+	gen->settings.mouse_turn_speed = DEFAULT_ROTATE_SPEED_MOUSE;
+	gen->settings.minimap_size
+		= (int)(MINIMAP_SIZE_DEFAULT * ft_min(WIN_HEIGHT, WIN_WIDTH));
+	gen->settings.minimap_zoom = MINIMAP_ZOOM_DEFAULT;
+	gen->settings.map_zoom = MAP_ZOOM_DEFAULT;
 	to_angle_set_init(&gen->settings.fov, DEFAULT_FOV, gen->angles_set,
 		gen->angle_correc);
 }

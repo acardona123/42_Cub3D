@@ -42,6 +42,9 @@ FILES_INIT			=	$(addprefix init/, \
 								locate_texture \
 								set_status_action \
 							) \
+							$(addprefix 4_minimap/init_4_minimap_, \
+								main \
+							) \
 						)
 
 FILES_RAY_COLLISION	=	$(addprefix ray_collision/ray_collision_, \
@@ -80,6 +83,12 @@ FILES_DOORS		=	$(addprefix doors/doors_, \
 						action \
 					)
 
+FILES_MAP		=	$(addprefix map/map_, \
+						main \
+						get_pixel_color \
+						update_world \
+					)
+
 FILES_NAMES			=	\
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
@@ -88,7 +97,8 @@ FILES_NAMES			=	\
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \
 						$(FILES_DOORS) \
-						# main 
+						$(FILES_MAP) \
+						main 
 
 
 SRC_DIR			=	src

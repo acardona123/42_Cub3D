@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:15:20 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 17:30:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 23:41:31 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	gp_action_do(t_general *gen)
 	hit_point.dist = to_vector_norm(gen->player.p_co, hit_point.pt_co);
 	if (hit_point.dist > hit_chunk->action->dist_range)
 		return ;
-	(*hit_chunk->action->execute)(gen, time_now, hit_chunk->action,
+	(*hit_chunk->action->execute)(gen, time_now, hit_chunk,
 		hit_point.hit_face);
 }
 

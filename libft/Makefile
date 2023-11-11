@@ -15,12 +15,16 @@ FILES_NAMES	=	ft_atoi \
 				ft_isdigit \
 				ft_isprint \
 				ft_itoa \
+				ft_itoa_simple \
+				ft_isinset \
+				ft_isinset_index \
 				ft_iswhitespace \
 				ft_memchr \
 				ft_memcmp \
 				ft_memcpy \
 				ft_memmove \
 				ft_memset \
+				ft_min \
 				ft_putchar_fd \
 				ft_putendl_fd \
 				ft_putnbr_fd \
@@ -48,9 +52,6 @@ FILES_NAMES	=	ft_atoi \
 				ft_strjoin3 \
 				ft_strlst_free \
 				ft_strlst_len \
-				ft_itoa_simple \
-				ft_isinset \
-				ft_isinset_index \
 				ft_strndup \
 				ft_strjoin_free \
 				ft_strlst_disp \

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:23:38 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/02 17:40:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/12 00:29:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstprint(t_list *lst);
 
 int		ft_int_abs(int n);
+int		ft_min(int a, int b);
 size_t	ft_strlst_len(char **strlst);
 char	**ft_strlst_free(char **lst);
 void	ft_strlst_disp(char **lst);
