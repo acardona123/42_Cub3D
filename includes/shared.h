@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 23:54:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:41:12 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,12 @@ typedef struct s_hitpoint
 
 ==== Minimap ==== */
 
+typedef enum e_map_type
+{
+	MINIMAP,
+	BIGMAP
+}	t_map_type;
+
 typedef struct s_minimap
 {
 	t_data	world;
@@ -180,6 +186,8 @@ typedef struct s_player
 	t_coord_f	p_co;
 	t_coord_i	p_chunk;
 	float		p_angle;
+	float		p_angle_cos;
+	float		p_angle_sin;
 }	t_player;
 
 typedef enum e_head_rotate
@@ -212,7 +220,10 @@ typedef struct s_settings
 	float		mouse_turn_speed;
 	int			minimap_size;
 	int			minimap_zoom;
-	int			map_zoom;
+	int			minimap_player_size;
+	int			bigmap_zoom;
+	int			bigmap_player_size;
+	int			bigmap_size;
 }	t_settings;
 
 /* ---- End: Settings ----

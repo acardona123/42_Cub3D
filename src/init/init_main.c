@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 22:21:30 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:45:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	_init_settings(t_general *gen)
 {
 	if ( 0 ) //to_do define error
 	{
-		to_error_msg(MSG_SETINGS_ERROR);
+		to_error_msg(MSG_SETTINGS_ERROR);
 		exit (EXIT_INIT_SETTINGS);
 	}
 	gen->settings.walk_speed = DEFAULT_WALK_SPEED;
@@ -62,7 +62,12 @@ static void	_init_settings(t_general *gen)
 	gen->settings.minimap_size
 		= (int)(MINIMAP_SIZE_DEFAULT * ft_min(WIN_HEIGHT, WIN_WIDTH));
 	gen->settings.minimap_zoom = MINIMAP_ZOOM_DEFAULT;
-	gen->settings.map_zoom = MAP_ZOOM_DEFAULT;
+	gen->settings.minimap_player_size = MINIMAP_PLAYER_SIZE_DEFAULT
+		* gen->settings.minimap_size;
+	gen->settings.bigmap_size = ft_min(WIN_HEIGHT, WIN_WIDTH);
+	gen->settings.bigmap_zoom = BIGMAP_ZOOM_DEFAULT;
+	gen->settings.bigmap_player_size = BIGMAP_PLAYER_SIZE_DEFAULT
+		* gen->settings.bigmap_size;
 	to_angle_set_init(&gen->settings.fov, DEFAULT_FOV, gen->angles_set,
 		gen->angle_correc);
 }

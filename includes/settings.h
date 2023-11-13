@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/12 00:16:44 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/13 19:49:31 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@
 
 # ifdef BONUS
 //map settings
-#  define MINIMAP_SIZE_DEFAULT		.33
-#  define MINIMAP_SIZE_INCREMENT	1.
-#  define MINIMAP_ZOOM_DEFAULT		15
-#  define MINIMAP_ZOOM_INCREMENT	1
-#  define MAP_ZOOM_DEFAULT			15
-#  define MAP_ZOOM_INCREMENT	1
+#  define MINIMAP_SIZE_DEFAULT			.33
+#  define MINIMAP_SIZE_INCREMENT		1.
+#  define MINIMAP_ZOOM_DEFAULT			15
+#  define MINIMAP_ZOOM_INCREMENT		1
+#  define MINIMAP_PLAYER_SIZE_DEFAULT	.1
+#  define BIGMAP_ZOOM_DEFAULT			15
+#  define BIGMAP_ZOOM_INCREMENT			1
+#  define BIGMAP_PLAYER_SIZE_DEFAULT	.1
 # endif
 
 //controls :
@@ -77,8 +79,7 @@
 # define MINIMAP_COLOR_W		0xe0e0e0
 # define MINIMAP_COLOR_D_OPEN	0x5AD000
 # define MINIMAP_COLOR_D_CLOSED	0xD25E5E
-# define MINIMAP_COLOR_PLAYER	0xcaf9ff
-
+# define MINIMAP_COLOR_PLAYER	0x80FF
 typedef enum e_commands
 {
 	KEY_FORWARD			= XK_w,

@@ -84,7 +84,7 @@ FILES_DOORS		=	$(addprefix doors/doors_, \
 					)
 
 FILES_MAP		=	$(addprefix map/map_, \
-						main \
+						minimap_main \
 						get_pixel_color \
 						update_world \
 					)

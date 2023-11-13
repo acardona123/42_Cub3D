@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 23:39:23 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:58:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ static bool	_in_3_character_is_valid(t_general *gen, char letter, int x,
 		i = -1;
 		while (letter != CHARS_PLAYER[++i])
 			gen->player.p_angle += M_PI / 2;
+		gen->player.p_angle_cos = cosf(gen->player.p_angle);
+		gen->player.p_angle_sin = sinf(gen->player.p_angle);
 		gen->player.p_co.x = x + 0.5;
 		gen->player.p_co.y = y + 0.5;
 		gen->player.p_chunk.x = x;
