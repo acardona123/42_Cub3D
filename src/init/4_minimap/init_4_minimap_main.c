@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:11:57 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 22:26:21 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/12 00:36:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	in_4_minimap_init(t_general *gen)
 	gen->minimap.world.img = mlx_new_image(gen->disp.mlx, gen->map.width,
 			gen->map.height);
 	if (!gen->minimap.world.img)
+	{
+		to_error_msg(MSG_MLX_NEW_IMG);
 		end_destroy_exit(gen, EXIT_INIT_4);
+	}
 	gen->minimap.world.addr = mlx_get_data_addr(gen->minimap.world.img,
 			&gen->minimap.world.opp, &gen->minimap.world.line_len,
 			&gen->minimap.world.endian);

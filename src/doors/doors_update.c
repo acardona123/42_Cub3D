@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/12 00:11:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:00:28 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	doors_update_texture_main_side(t_texture_pack *texture_pack,
  */
 bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
 {
+	(void)gen;
 	(void)door;
 	(void)time;
 	return (0.);

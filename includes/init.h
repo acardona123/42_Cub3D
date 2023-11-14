@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/12 00:36:50 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:23:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@
 # endif
 
 # define MSG_SETTINGS_ERROR "Initialisation: wrong settings in defines"
-# define MSG_BAD_ALLOC "Map: memory allocation error during initialisation"
-# define MSG_BAD_XPM_TO_IMG "mlx: .xpm to image conversion failed"
-# define MSG_MAP_FILE_FORMAT "Map: format incorrect, requieres a .cub file"
+# define MSG_BAD_ALLOC "Init: memory allocation error during initialisation"
 # define MSG_MAP_OPEN_FAIL "Map: cannot open the given map file"
+
+//mlx error
+# define MSG_MLX_INIT "mlx: fail of mlx_init"
 # define MSG_MLX_NEW_IMG "mlx: fail to create a new image"
+# define MSG_MLX_NEW_WINDOW "mlx: fail to create a new window"
+# define MSG_MLX_XPM_TO_IMG "mlx: .xpm to image conversion failed"
 
 //map parameters error messages
+# define MSG_MAP_FILE_FORMAT "Map: format incorrect, requieres a .cub file"
 # define MSG_WRONG_LINE_FORMAT "Map: wrong number of parameters in a texture \
 definition"
 # define MSG_WRONG_ACRONYME "Map: wrong acronym for a texture definition or \
