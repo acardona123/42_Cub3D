@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:23:38 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/12 00:29:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/15 05:01:35 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ size_t	ft_strlst_len(char **strlst);
 char	**ft_strlst_free(char **lst);
 void	ft_strlst_disp(char **lst);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
+char	*ft_strjoin4(const char *s1, const char *s2, const char *s3,
+			const char *s4);
 void	ft_ptrswap(void **old_ptr, void *new_ptr);
 void	ft_itoa_simple(char dst[11], int n);
 char	*ft_strndup(const char *s, size_t n);

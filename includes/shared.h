@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/13 17:41:12 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/15 02:16:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef struct s_texture_pack
 	t_animated_texture	*door_side_open_opening;
 	t_animated_texture	*door_side_open_closed;
 	t_animated_texture	*door_side_open_closing;
+	t_animated_texture	**leaks;
+	t_animated_texture	**crashes;
 	int					color_f;
 	int					color_c;
 }	t_texture_pack;
@@ -76,12 +78,12 @@ typedef struct s_texture_pack
 ==== Map datas ==== */
 
 # define CHARS_PLAYER "NESW"
-# define CHARS_OBSTACLE "1 "
-# define CHARS_TRANSPARENT " 0NSEW"
 
 # ifdef BONUS
 
 #  define CHARS_ALLOWED "01d NESW"
+#  define CHARS_OBSTACLE "1lc "
+#  define CHARS_TRANSPARENT " 0NSEW"
 #  define CHARS_NUMBER 8
 
 typedef enum e_chunk_type
@@ -89,6 +91,8 @@ typedef enum e_chunk_type
 	FLOOR = '0',
 	WALL = '1',
 	DOOR = 'd',
+	LEAKS = 'l',
+	CRASHES = 'c',
 	NOTHING = ' ',
 	PLAYER_N = 'N',
 	PLAYER_E = 'E',
@@ -99,6 +103,8 @@ typedef enum e_chunk_type
 # else
 
 #  define CHARS_ALLOWED "01 NESW"
+#  define CHARS_OBSTACLE "1 "
+#  define CHARS_TRANSPARENT " 0NSEW"
 #  define CHARS_NUMBER 7
 
 typedef enum e_chunk_type

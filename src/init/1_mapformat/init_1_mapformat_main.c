@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 16:22:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/15 02:33:38 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 	t_lists	lists;
 	char	*line;
 	int		fd_input;
-	int		i;
 
 	(void) ac;
 	fd_input = in_1_file_opening(av[1]);
@@ -45,11 +44,6 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 		in_init_destroy_lists_exit(gen, &lists, MSG_NO_MAP_CONTENT,
 			EXIT_INIT_1);
 	}
-	i = -1;
-	while (line[++i])
-		if (!ft_isinset(line[i], CHARS_ALLOWED))
-			(close(fd_input), in_init_destroy_lists_exit(gen, &lists,
-					MSG_WRONG_ACRONYME, EXIT_INIT_1));
 	_in_1_map_mapcontent_check(gen, &lists, fd_input, &line);
 	return (lists);
 }
@@ -70,19 +64,26 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
 	char **line)
 {
+	int	i;
+
 	*line = get_next_line(fd_input);//securisation du gnl ici
 	while (*line && in_1_line_is_parameter(*line))
 	{
 		if (in_1_line_is_empty(*line))
 			free(*line);
 		else if (ft_lstnewaddback(&lists->lst_param, *line))
-		{
-			free(*line);
-			close(fd_input);
-			in_init_destroy_lists_exit(gen, lists, MSG_BAD_ALLOC, EXIT_INIT_1);
-		}
+			(free(*line), close(fd_input), in_init_destroy_lists_exit(gen,
+					lists, MSG_BAD_ALLOC, EXIT_INIT_1));
 		*line = get_next_line(fd_input);
 	}
+	if (!(*line))
+		(close(fd_input), in_init_destroy_lists_exit(gen, lists,
+				MSG_NO_MAP_CONTENT, EXIT_INIT_1));
+	i = -1;
+	while ((*line)[++i])
+		if (!ft_isinset((*line)[i], CHARS_ALLOWED))
+			(close(fd_input), in_init_destroy_lists_exit(gen, lists,
+					MSG_WRONG_ACRONYME, EXIT_INIT_1));
 }
 
 /**

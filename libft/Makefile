@@ -34,6 +34,8 @@ FILES_NAMES	=	ft_atoi \
 				ft_strdup \
 				ft_striteri \
 				ft_strjoin \
+				ft_strjoin3 \
+				ft_strjoin4 \
 				ft_strlcat \
 				ft_strlcpy \
 				ft_strlen \
@@ -49,7 +51,6 @@ FILES_NAMES	=	ft_atoi \
 				ft_atoi_long \
 				ft_int_abs \
 				ft_ptrswap \
-				ft_strjoin3 \
 				ft_strlst_free \
 				ft_strlst_len \
 				ft_strndup \
