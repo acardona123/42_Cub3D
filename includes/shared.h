@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/13 17:41:12 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 21:20:29 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@
 
 
 ==== Textures ==== */
-
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		opp;
-	int		line_len;
-	int		pix_width;
-	int		pix_height;
-	int		endian;
-}	t_data;
 
 typedef struct s_static_texture
 {
@@ -173,6 +162,10 @@ typedef enum e_map_type
 typedef struct s_minimap
 {
 	t_data	world;
+	t_data	bigmap;
+	int		bigmap_size_ratio;
+	int		bigmap_offset_x;
+	int		bigmap_offset_y;
 }	t_minimap;
 
 /* ---- End: Minimap ----
@@ -221,7 +214,6 @@ typedef struct s_settings
 	int			minimap_size;
 	int			minimap_zoom;
 	int			minimap_player_size;
-	int			bigmap_zoom;
 	int			bigmap_player_size;
 	int			bigmap_size;
 }	t_settings;
@@ -232,12 +224,22 @@ typedef struct s_settings
 
 ==== Display ==== */
 
+typedef enum e_img_to_disp
+{
+	BLACK,
+	BIG_MAP,
+	INGAME
+}	t_img_to_disp;
+
 typedef struct s_display
 {
 	void			*mlx;
 	void			*win;
+	t_img_to_disp	img_select;
 	t_data			*buff;
 	t_data			*img_out_map;
+
+
 }	t_display;
 
 /* ---- End: Display ----
@@ -401,9 +403,12 @@ void		doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
 				t_chunk_face face);
 
 //maps
-void		map_draw_minimap(t_general *gen);
-void		map_draw_bigmap(t_general *gen);
-void		map_update_world_door(t_general *gen, t_chunk *chunk);
+void		maps_draw_minimap(t_general *gen);
+void		maps_world_update_door(t_general *gen, t_chunk *door);
+void		maps_bigmap_draw_chunk(t_minimap *minimap, int chunk_x,
+				int chunk_y);
+void		maps_bigmap_put_player_window(t_display *disp, t_minimap *minimap,
+				t_settings *settings, t_player *player);
 
 # endif
 

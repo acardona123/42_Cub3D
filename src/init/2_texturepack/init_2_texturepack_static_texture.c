@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 02:20:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 10:59:19 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:07:05 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 			&texture->img_height);
 	if (!texture->data.img)
 	{
-		to_error_msg(MSG_BAD_XPM_TO_IMG);
+		to_error_msg(MSG_MLX_XPM_TO_IMG);
 		texture->path = NULL;
 		return (FAIL);
 	}

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/13 19:49:31 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:03:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <X11/keysym.h>
 
 //force bonus mode:
-# ifndef BONUS
-#  define BONUS
-# endif
+// # ifndef BONUS
+// #  define BONUS
+// # endif
 
 //window parameters
 # define WIN_NAME		"Cub3D"
@@ -56,13 +56,12 @@
 # ifdef BONUS
 //map settings
 #  define MINIMAP_SIZE_DEFAULT			.33
-#  define MINIMAP_SIZE_INCREMENT		1.
-#  define MINIMAP_ZOOM_DEFAULT			15
-#  define MINIMAP_ZOOM_INCREMENT		1
-#  define MINIMAP_PLAYER_SIZE_DEFAULT	.1
-#  define BIGMAP_ZOOM_DEFAULT			15
-#  define BIGMAP_ZOOM_INCREMENT			1
-#  define BIGMAP_PLAYER_SIZE_DEFAULT	.1
+#  define MINIMAP_SIZE_INCREMENT		.125
+#  define MINIMAP_ZOOM_DEFAULT			.0625
+#  define MINIMAP_ZOOM_INCREMENT		.0625
+#  define MINIMAP_PLAYER_SIZE_DEFAULT	.125
+#  define BIGMAP_PLAYER_SIZE_DEFAULT	.05
+#  define BIGIMAP_PLAYER_SIZE_INCREMENT	.1
 # endif
 
 //controls :
@@ -90,6 +89,7 @@ typedef enum e_commands
 	KEY_LOOK_RIGHT		= XK_Right,
 
 	KEY_ACT				= XK_space,
+	KEY_BIG_MAP			= XK_m,
 
 	KEY_WALK_SPEED_UP	= XK_KP_8,//les kp ne marchent pas
 	KEY_WALK_SPEED_DOWN	= XK_KP_2,

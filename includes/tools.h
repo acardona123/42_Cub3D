@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 20:29:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 20:23:38 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,24 @@
 # include "../libft/libft.h"
 
 # include "settings.h"
+
+# define MSG_BAD_ALLOC "memory allocation error"
+//mlx error
+# define MSG_MLX_INIT "mlx: fail of mlx_init"
+# define MSG_MLX_NEW_IMG "mlx: fail to create a new image"
+# define MSG_MLX_NEW_WINDOW "mlx: fail to create a new window"
+# define MSG_MLX_XPM_TO_IMG "mlx: .xpm to image conversion failed"
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		opp;
+	int		line_len;
+	int		pix_width;
+	int		pix_height;
+	int		endian;
+}	t_data;
 
 typedef enum e_bool
 {
@@ -74,4 +92,12 @@ size_t	to_getime(void);
 //tools_anglesset.c
 void	to_angle_set_init(float *old_fov, float new_fov, double *angles_set,
 			double *angle_correc);
+
+//tools_mlx_image.c
+t_bool	to_mlx_new_empty_img(void *mlx, t_data *img_dst, int width,
+			int height);
+void	to_mlx_draw_rectangle(t_data *data, t_coord_i position,
+			t_coord_i dimensions, int color);
+void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
+			int color);
 #endif

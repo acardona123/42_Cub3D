@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 14:23:44 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:17:12 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,7 @@
 # endif
 
 # define MSG_SETTINGS_ERROR "Initialisation: wrong settings in defines"
-# define MSG_BAD_ALLOC "Init: memory allocation error during initialisation"
 # define MSG_MAP_OPEN_FAIL "Map: cannot open the given map file"
-
-//mlx error
-# define MSG_MLX_INIT "mlx: fail of mlx_init"
-# define MSG_MLX_NEW_IMG "mlx: fail to create a new image"
-# define MSG_MLX_NEW_WINDOW "mlx: fail to create a new window"
-# define MSG_MLX_XPM_TO_IMG "mlx: .xpm to image conversion failed"
 
 //map parameters error messages
 # define MSG_MAP_FILE_FORMAT "Map: format incorrect, requieres a .cub file"
@@ -71,6 +64,10 @@ face"
 # define MSG_DOOR_ISOLATED "Map: door not surrounded by at least two opposit\
  walls"
 # define MSG_EMPTY_LINE "Map: empty line in the map content"
+
+//big map warning
+# define MSG_WARNING_BIG_MAP "Warning: map dimensions bigger than the window. \
+You will not be abble to display a big global map\n"
 
 typedef struct s_init_lists
 {
@@ -149,5 +146,8 @@ t_bool	in_3_mapcontent_status_action_init(t_map *map);
 
 =============== 4_minimap/ =============== */
 void	in_4_minimap_init(t_general *gen);
+void	in_4_bigmap_init(t_general *gen);
 
+// init_4_maps_world.c
+void	in_4_world_init(t_general *gen);
 #endif

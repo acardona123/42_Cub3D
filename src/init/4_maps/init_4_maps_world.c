@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_4_minimap_main.c                              :+:      :+:    :+:   */
+/*   init_4_maps_world.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 18:11:57 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/12 00:36:54 by acardona         ###   ########.fr       */
+/*   Created: 2023/11/14 15:15:23 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/15 15:02:18 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,47 +18,47 @@ static int			g_colors[MINIMAP_NUMBER_COLORS - 1] = {MINIMAP_COLOR_F,
 	MINIMAP_COLOR_WALL, MINIMAP_COLOR_NOTHING, MINIMAP_COLOR_N,
 	MINIMAP_COLOR_E, MINIMAP_COLOR_S, MINIMAP_COLOR_W, MINIMAP_COLOR_D_OPEN,
 	MINIMAP_COLOR_D_CLOSED};
+
 static t_chunk_type	g_type[CHARS_NUMBER] = {FLOOR, WALL, NOTHING, PLAYER_N,
 	PLAYER_E, PLAYER_S, PLAYER_W, DOOR};
 
-static void	_in_4_minimap_set_chunk_pxl(t_general *gen, int x, int y);
+static int	_in_4_get_chunk_color_from_map(t_general *gen, int x, int y);
 
-void	in_4_minimap_init(t_general *gen)
+/**
+ * @brief creates an image where each pixel corresponds to a chunk. this image
+ *	named world is used to generate the minimap
+ * 
+ * @param gen 
+ */
+void	in_4_world_init(t_general *gen)
 {
 	int	x;
 	int	y;
 
-	gen->minimap.world.img = mlx_new_image(gen->disp.mlx, gen->map.width,
-			gen->map.height);
-	if (!gen->minimap.world.img)
-	{
-		to_error_msg(MSG_MLX_NEW_IMG);
+	if (to_mlx_new_empty_img(gen->disp.mlx, &gen->minimap.world, gen->map.width,
+			gen->map.height) == FAIL)
 		end_destroy_exit(gen, EXIT_INIT_4);
-	}
-	gen->minimap.world.addr = mlx_get_data_addr(gen->minimap.world.img,
-			&gen->minimap.world.opp, &gen->minimap.world.line_len,
-			&gen->minimap.world.endian);
-	gen->minimap.world.opp /= 8;
-	gen->minimap.world.pix_width = gen->map.width;
-	gen->minimap.world.pix_height = gen->map.height;
 	x = -1;
 	while (++x < gen->map.width)
 	{
 		y = -1;
 		while (++y < gen->map.height)
-			_in_4_minimap_set_chunk_pxl(gen, x, y);
+			*(int *)(gen->minimap.world.addr + gen->minimap.world.line_len
+					* (gen->map.height - y) + x * gen->minimap.world.opp)
+				= _in_4_get_chunk_color_from_map(gen, x, y);
 	}
 }
 
 /**
- * @brief set the pixel corresponding to the chunk (x, y) in the world minimap
- *	image, the colors for each type are defined in the settings
+ * @brief get the color of the pixel corresponding to the chunk (x, y)
+ *	in the world minimap image, the colors for each type are defined in
+ *	the settings
  * 
  * @param gen 
  * @param x 
  * @param y 
  */
-static void	_in_4_minimap_set_chunk_pxl(t_general *gen, int x, int y)
+static int	_in_4_get_chunk_color_from_map(t_general *gen, int x, int y)
 {
 	int	i;
 	int	color;
@@ -78,8 +78,7 @@ static void	_in_4_minimap_set_chunk_pxl(t_general *gen, int x, int y)
 	}
 	else
 		color = g_colors[i];
-	*(int *)(gen->minimap.world.addr + gen->minimap.world.line_len
-			* (gen->map.height - y) + x * gen->minimap.world.opp) = color;
+	return (color);
 }
 
 #endif

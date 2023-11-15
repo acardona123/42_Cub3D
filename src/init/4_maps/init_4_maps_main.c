@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_destroy_general.c                              :+:      :+:    :+:   */
+/*   init_4_maps_main.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 00:25:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 14:22:44 by acardona         ###   ########.fr       */
+/*   Created: 2023/11/10 18:11:57 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/15 15:02:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/end_destroy.h"
+#include "../../../includes/init.h"
 
-void	end_destroy_general(t_general *gen)
+#ifdef BONUS
+
+void	in_4_minimap_init(t_general *gen)
 {
-	end_destroy_map(&gen->map);
-	end_destroy_minimap(gen->disp.mlx, &gen->minimap);
-	end_destroy_texture_pack(gen->disp.mlx, &gen->textures);
-	end_destroy_display(&gen->disp);
+	in_4_world_init(gen);
+	in_4_bigmap_init(gen);
 }
+
+#endif

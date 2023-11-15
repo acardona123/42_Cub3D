@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:27:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:45:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:14:13 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static t_bool	_in_0_hooks_keys_move_press(t_general *gen, int key)
 		return (gen->next_moove[TURN_L] = true, SUCCESS);
 	if (key == KEY_LOOK_RIGHT)
 		return (gen->next_moove[TURN_R] = true, SUCCESS);
+	if (key == KEY_BIG_MAP)
+		return (gen->disp.img_select = BIG_MAP, SUCCESS);
 	return (FAIL);
 }
 
@@ -104,6 +106,8 @@ static int	_in_0_hooks_keys_move_release(int key, t_general *gen)
 		return (gen->next_moove[TURN_L] = false, SUCCESS);
 	if (key == KEY_LOOK_RIGHT)
 		return (gen->next_moove[TURN_R] = false, SUCCESS);
+	if (key == KEY_BIG_MAP)
+		return (gen->disp.img_select = INGAME, SUCCESS);
 	return (FAIL);
 }
 

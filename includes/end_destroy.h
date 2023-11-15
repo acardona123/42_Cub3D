@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 20:20:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/22 01:30:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:22:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
 void	end_destroy_general(t_general *gen);
 // end_destroy_exit
 void	end_destroy_exit(t_general *gen, t_exit_values n);
+// end_destroy_minimap.c
+void	end_destroy_minimap(void *mlx, t_minimap *minimap);
 
 #endif

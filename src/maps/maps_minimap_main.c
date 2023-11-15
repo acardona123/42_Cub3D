@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_minimap_main.c                                 :+:      :+:    :+:   */
+/*   maps_minimap_main.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:45:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/13 19:50:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:47:53 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/map.h"
+#include "../../includes/maps.h"
 
-static void	_map_draw_player_minimap(t_general *gen,
+#ifdef BONUS
+
+static void	_maps_draw_player_minimap(t_general *gen,
 				int x_center_player, int y_center_player);
 
-void	map_draw_minimap(t_general *gen)
+void	maps_draw_minimap(t_general *gen)
 {
 	register int	x_map;
 	register int	y_map;
@@ -38,13 +40,13 @@ void	map_draw_minimap(t_general *gen)
 		{
 			addr += gen->disp.buff->line_len;
 			if (pow(x_map - radius, 2) + pow(y_map - radius, 2) <= radius_pow2)
-				*(int *)addr = map_get_pixel_color(gen, MINIMAP, x_map, y_map);
+				*(int *)addr = maps_get_pixel_color_minimap(gen, x_map, y_map);
 		}
 	}
-	_map_draw_player_minimap(gen, radius, WIN_HEIGHT - radius - 1);
+	_maps_draw_player_minimap(gen, radius, WIN_HEIGHT - radius - 1);
 }
 
-static void	_map_draw_player_minimap(t_general *gen,
+static void	_maps_draw_player_minimap(t_general *gen,
 	register int x_center_player, register int y_center_player)
 {
 	register int	x;
@@ -69,3 +71,5 @@ static void	_map_draw_player_minimap(t_general *gen,
 		}
 	}
 }
+
+#endif

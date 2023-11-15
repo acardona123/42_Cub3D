@@ -6,14 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 14:23:50 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:08:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
 
 static t_bool	_in_0_display_elements_init(t_display *disp);
-static t_bool	_in_0_display_empty_img_init(void *mlx, t_data **img_dst);
 
 /**
  * @brief initializes the t_display structure that corresponds to the ui
@@ -44,33 +43,19 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
 	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
 	if (!disp->win)
 		return (to_error_msg(MSG_MLX_NEW_IMG), FAIL);
-	if (_in_0_display_empty_img_init(disp->mlx, &disp->buff) == FAIL)
-		return (FAIL);
-	if (_in_0_display_empty_img_init(disp->mlx, &disp->img_out_map) == FAIL)
-		return (FAIL);
-	return (SUCCESS);
-}
-
-/**
- * @brief used to initialise an empty image of the size of the window
- * 
- * @param mlx 
- * @return SUCCESS if success 
- * @return FAIL if faillure (err msg displayed)
- */
-static t_bool	_in_0_display_empty_img_init(void *mlx, t_data **img_dst)
-{
-	*img_dst = ft_calloc(1, sizeof(t_data));
-	if (!*img_dst)
+	disp->buff = ft_calloc(1, sizeof(t_data));
+	if (!disp->buff)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
-	(*img_dst)->img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!(*img_dst)->img)
-		return (to_error_msg(MSG_MLX_NEW_IMG), FAIL);
-	(*img_dst)->addr = mlx_get_data_addr((*img_dst)->img, &(*img_dst)->opp,
-			&(*img_dst)->line_len, &(*img_dst)->endian);
-	(*img_dst)->opp /= 8;
-	(*img_dst)->pix_height = WIN_HEIGHT;
-	(*img_dst)->pix_width = WIN_WIDTH;
+	if (to_mlx_new_empty_img(disp->mlx, disp->buff, WIN_WIDTH, WIN_HEIGHT)
+		== FAIL)
+		return (FAIL);
+	disp->img_out_map = ft_calloc(1, sizeof(t_data));
+	if (!disp->img_out_map)
+		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
+	if (to_mlx_new_empty_img(disp->mlx, disp->img_out_map, WIN_WIDTH,
+			WIN_HEIGHT) == FAIL)
+		return (FAIL);
+	disp->img_select = INGAME;
 	return (SUCCESS);
 }
 
