@@ -31,14 +31,19 @@ FILES_INIT			=	$(addprefix init/, \
 							$(addprefix 2_texturepack/init_2_texturepack_, \
 								main \
 								animated_texture \
-								set_color \
 								static_texture \
+								set_color \
+								check_texture_defined \
 								utils \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
 								fill_chunk \
 								locate_texture \
+								set_status_action \
+							) \
+							$(addprefix 4_minimap/init_4_minimap_, \
+								main \
 							) \
 						)
 
@@ -54,6 +59,7 @@ FILES_RAY_COLLISION	=	$(addprefix ray_collision/ray_collision_, \
 
 FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 							frame_build \
+							use_texture \
 						)
 
 
@@ -61,6 +67,7 @@ FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
 							main \
 							turn_head \
 							walk \
+							action \
 						)
 
 FILES_TOOLS		=	$(addprefix tools/tools_, \
@@ -71,6 +78,17 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 						angles_set \
 					)
 
+FILES_DOORS		=	$(addprefix doors/doors_, \
+						update \
+						action \
+					)
+
+FILES_MAP		=	$(addprefix map/map_, \
+						minimap_main \
+						get_pixel_color \
+						update_world \
+					)
+
 FILES_NAMES			=	\
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
@@ -78,6 +96,8 @@ FILES_NAMES			=	\
 						$(FILES_RAY_COLLISION) \
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \
+						$(FILES_DOORS) \
+						$(FILES_MAP) \
 						main 
 
 

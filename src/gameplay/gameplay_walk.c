@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:17:08 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 00:36:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:17:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,18 @@ void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
 	if (!dir_xp && !dir_yp)
 		return ;
 	target = _gp_walk_get_target(gen, dir_xp, dir_yp, delay);
-	//printf("directions: (%d, %d)\n", dir_xp, dir_yp);
-	//printf("Target: (%f, %f)\n\n", target.x, target.y);//
-	//printf("\n\e[103mFirst step:\e[0m\n p_co: (%f, %f)\n angle: %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y,gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1], (gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1])* 180 / M_PI);
-	hit_pt = r_ray_hit(&gen->player.p_co, gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1], &gen->map, true);
+	hit_pt = r_ray_hit(gen, (t_ray_params){ray_walk, to_getime(), gen->player
+			.p_co, gen->player.p_angle + g_angle_dir[dir_xp + 1][dir_yp + 1]});
 	if (to_vector_norm_sqr(gen->player.p_co, hit_pt.pt_co)
 		> to_vector_norm_sqr(gen->player.p_co, target))
 	{
-		// printf("go to target without sliding\n");
-		gen->player.p_co.x = target.x + EPSILON * ((hit_pt.hit_face == FACE_E) - (hit_pt.hit_face == FACE_W));
-		gen->player.p_co.y = target.y + EPSILON * ((hit_pt.hit_face == FACE_N) - (hit_pt.hit_face == FACE_S));
+		gen->player.p_co.x = target.x + EPSILON * ((hit_pt.hit_face == FACE_E)
+				- (hit_pt.hit_face == FACE_W));
+		gen->player.p_co.y = target.y + EPSILON * ((hit_pt.hit_face == FACE_N)
+				- (hit_pt.hit_face == FACE_S));
 	}
 	else
 	{
-		//printf("Select hitpt, need slide\n");
 		gen->player.p_co = hit_pt.pt_co;
 		_gp_walk_slide_along_wall(gen, target,
 			((hit_pt.hit_face == FACE_N) || (hit_pt.hit_face == FACE_S))
@@ -63,7 +61,6 @@ void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
 			((hit_pt.hit_face == FACE_E) || (hit_pt.hit_face == FACE_W))
 			* (1 - 2 * (hit_pt.pt_co.y > target.y)));
 	}
-	//printf("-> After slide: p_co = (%f, %f)\n\n\n", gen->player.p_co.x, gen->player.p_co.y);//
 }
 
 /**
@@ -81,14 +78,10 @@ static void	_gp_walk_slide_along_wall(t_general *gen, t_coord_f target,
 {
 	t_hitpoint	hitpoint;
 
-
 	if (dir_x)
 	{
-				// printf("\e[105mSecond step (along x):\e[0m\n p_co: (%f, %f)\n angle: %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y, g_angle_dir[dir_x + 1][1], (g_angle_dir[dir_x + 1][1]) * 180 / M_PI);
-					// printf("ray_slide x:\n");//
-		hitpoint = r_ray_hit(&gen->player.p_co, g_angle_dir[dir_x + 1][1],
-				&gen->map, true);
-					// printf(" hitpoint slide x: (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);//
+		hitpoint = r_ray_hit(gen, (t_ray_params){ray_walk, to_getime(),
+				gen->player.p_co, g_angle_dir[dir_x + 1][1]});
 		if ((dir_x > 0 && hitpoint.pt_co.x <= target.x)
 			|| (dir_x < 0 && hitpoint.pt_co.x >= target.x))
 			gen->player.p_co.x = hitpoint.pt_co.x;
@@ -97,11 +90,8 @@ static void	_gp_walk_slide_along_wall(t_general *gen, t_coord_f target,
 	}
 	else
 	{
-		// printf("ray_slide y:\n");//
-		// printf("\e[105mSecond step (along y):\e[0m\n p_co: (%f, %f)\n angle: %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y, g_angle_dir[1][dir_y + 1], (g_angle_dir[1][dir_y + 1]) * 180 / M_PI);
-		hitpoint = r_ray_hit(&gen->player.p_co, g_angle_dir[1][dir_y + 1],
-				&gen->map, true);
-		// printf(" -> hitpoint slide y: (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);//
+		hitpoint = r_ray_hit(gen, (t_ray_params){ray_walk, to_getime(),
+				gen->player.p_co, g_angle_dir[1][dir_y + 1]});
 		if ((dir_y > 0 && hitpoint.pt_co.y <= target.y)
 			|| (dir_y < 0 && hitpoint.pt_co.y >= target.y))
 			gen->player.p_co.y = hitpoint.pt_co.y;
@@ -146,7 +136,7 @@ void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
  * @param dir_x -1, 0 or 1. Abscisse the movement vector
  * @param dir_y idem dir_x om y axis
  * @param delay 
- * @return t_coord_f the coordinates of hte targeted position after the movement
+ * @return t_coord_f the coordinates of the targeted position after the movement
  */
 static t_coord_f	_gp_walk_get_target(t_general *gen, float dir_x,
 	float dir_y, size_t delay)

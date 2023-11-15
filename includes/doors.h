@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gameplay.h                                         :+:      :+:    :+:   */
+/*   doors.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 22:00:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:42:49 by acardona         ###   ########.fr       */
+/*   Created: 2023/10/30 01:36:00 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/11 23:56:17 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAMEPLAY_H
-# define GAMEPLAY_H
+#ifndef DOORS_H
+# define DOORS_H
 
 # include "shared.h"
 
-// gameplay_main
-int		gp_looping(void *elem);
-// gameplay_turn_head.c
-void	gp_turn_head(t_general *gen, t_head_rotate direction, size_t delay);
-// gameplay_walk.c
-void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay);
-// gameplay_action.c
-void	gp_action_do(t_general *gen);
+typedef struct s_door_last_update
+{
+	size_t	time;
+	t_chunk	*chunk;
+	float	data;
+}	t_door_last_update;
+
+//doors_update.c
+bool	doors_update_status(t_general *gen, t_chunk *door, size_t time);
+void	doors_update_texture_main_side(t_texture_pack *texture_pack,
+			t_chunk *door);
+//doors_action.c
+void	doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
+			t_chunk_face face);
+
 #endif

@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gameplay.h                                         :+:      :+:    :+:   */
+/*   ft_isinset_index.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 22:00:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:42:49 by acardona         ###   ########.fr       */
+/*   Created: 2023/05/15 23:08:43 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/02 16:37:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAMEPLAY_H
-# define GAMEPLAY_H
+#include "libft.h"
 
-# include "shared.h"
+/**
+ * @brief checks if a charis in a string.If so return the index in the string,
+ *		otherwise returns -1
+ * 
+ * @param c char to check
+ * @param set string to look in
+ * @return int 
+ */
+int	ft_isinset_index(char c, char *set)
+{
+	int	i;
 
-// gameplay_main
-int		gp_looping(void *elem);
-// gameplay_turn_head.c
-void	gp_turn_head(t_general *gen, t_head_rotate direction, size_t delay);
-// gameplay_walk.c
-void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay);
-// gameplay_action.c
-void	gp_action_do(t_general *gen);
-#endif
+	if (!set)
+		return (-1);
+	i = -1;
+	while (++i)
+		if (c == set[i])
+			return (i);
+	return (-1);
+}

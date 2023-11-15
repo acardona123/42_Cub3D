@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gameplay.h                                         :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 22:00:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:42:49 by acardona         ###   ########.fr       */
+/*   Created: 2023/11/11 19:46:27 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/13 16:25:19 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAMEPLAY_H
-# define GAMEPLAY_H
+#ifndef MAP_H
+# define MAP_H
 
 # include "shared.h"
 
-// gameplay_main
-int		gp_looping(void *elem);
-// gameplay_turn_head.c
-void	gp_turn_head(t_general *gen, t_head_rotate direction, size_t delay);
-// gameplay_walk.c
-void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay);
-// gameplay_action.c
-void	gp_action_do(t_general *gen);
+// map_main.c
+void	map_draw_minimap(t_general *gen);
+void	map_draw_bigmap(t_general *gen);
+
+// map_get_pixel_color.c
+int		map_get_pixel_color(t_general *gen, t_map_type type, int x_map,
+			int y_map);
+
+// map_update_world.c
+void	map_update_world_door(t_general *gen, t_chunk *chunk);
+
 #endif

@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gameplay.h                                         :+:      :+:    :+:   */
+/*   ft_try_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 22:00:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:42:49 by acardona         ###   ########.fr       */
+/*   Created: 2023/11/02 17:37:23 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/02 17:39:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAMEPLAY_H
-# define GAMEPLAY_H
+#include "libft.h"
 
-# include "shared.h"
-
-// gameplay_main
-int		gp_looping(void *elem);
-// gameplay_turn_head.c
-void	gp_turn_head(t_general *gen, t_head_rotate direction, size_t delay);
-// gameplay_walk.c
-void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay);
-// gameplay_action.c
-void	gp_action_do(t_general *gen);
-#endif
+/**
+ * @brief given a pointer to a target to free, checks if this target is non NULL
+ *		and if so frees it and reset it to NULL
+ * 
+ * @param to_free 
+ */
+void	ft_try_free(void **to_free)
+{
+	if (*to_free)
+	{
+		free(*to_free);
+		*to_free = NULL;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/23 04:18:16 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:29:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ typedef enum e_bool
 typedef enum e_exit_values
 {
 	EXIT_NORMAL,
+	EXIT_INIT_SETTINGS,
 	EXIT_INIT_0,
 	EXIT_INIT_1,
 	EXIT_INIT_2,
-	EXIT_INIT_3
+	EXIT_INIT_3,
+	EXIT_INIT_4
 }	t_exit_values;
 
 typedef struct s_coord_f

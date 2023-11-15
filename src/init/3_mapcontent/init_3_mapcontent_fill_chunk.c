@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 00:43:56 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:58:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,44 @@ static bool	_int_3_is_character_surrounding_ok(char c, t_map *map, int x,
 
 #ifdef BONUS
 
-bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
+/**
+ * @brief fills all the chunk data except the action structure and the status
+ * 
+ * @param gen 
+ * @param c_type 
+ * @param x 
+ * @param y 
+ * @return true if chunk successfully filled
+ * @return false if error, error msg displayed
+ */
+bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
+	gen->map.map[x][y].chunk_co.x = x;
+	gen->map.map[x][y].chunk_co.y = y;
+	gen->map.map[x][y].type = c_type;
+	gen->map.map[x][y].status = INACTIVE;
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
-	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].t0 = to_getime() - rand() % 1000;
-	if (in_3_map_locate_textures(&gen->textures, gen->map.map[x][y].textures,
-		c_type) == FAIL)
+	if (in_3_map_add_locate_textures(&gen->textures,
+			gen->map.map[x][y].textures, c_type) == FAIL)
 		return (false);
-	if (c_type == DOOR)
-		gen->map.map[x][y].status = DOOR_CLOSED;
-	else
-		gen->map.map[x][y].status = INACTIVE;
 	if (y < gen->map.y_max - 1 && gen->map.map[x][y + 1].type == DOOR)
-		in_3_map_add_door_sides_textures(gen->map.map, &gen->textures,
-			x, y + 1);
+		in_3_map_add_door_sides_textures(gen->map.map, &gen->textures, x,
+			y + 1);
 	return (true);
 }
 
 #else
 
-bool	in_3_map_content_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
+bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
-	if (!_in_3_character_is_valid(gen, c_type, x, y))
-		return (false);
 	gen->map.map[x][y].type = c_type;
 	gen->map.map[x][y].status = INACTIVE;
+	if (!_in_3_character_is_valid(gen, c_type, x, y))
+		return (false);
 	gen->map.map[x][y].t0 = 0;
-	in_3_map_locate_textures(&gen->textures, gen->map.map[x][y].textures,
+	in_3_map_add_locate_textures(&gen->textures, gen->map.map[x][y].textures,
 		c_type);
 	return (true);
 }
@@ -79,8 +88,12 @@ static bool	_in_3_character_is_valid(t_general *gen, char letter, int x,
 		i = -1;
 		while (letter != CHARS_PLAYER[++i])
 			gen->player.p_angle += M_PI / 2;
+		gen->player.p_angle_cos = cosf(gen->player.p_angle);
+		gen->player.p_angle_sin = sinf(gen->player.p_angle);
 		gen->player.p_co.x = x + 0.5;
 		gen->player.p_co.y = y + 0.5;
+		gen->player.p_chunk.x = x;
+		gen->player.p_chunk.y = y;
 		player_found = true;
 	}
 	else if (x == gen->map.width - 1 && y == 0 && player_found == false)
@@ -118,7 +131,7 @@ static bool	_int_3_is_character_surrounding_ok(char chunk_type, t_map *map,
 		|| map->map[x][y + 1].type == NOTHING))
 		return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 	else if (y < map->height - 1 && map->map[x][y + 1].type == DOOR
-		&& !(map->map[x][y].type == WALL && map->map[x][y + 2].type == WALL)
+		&& !(chunk_type == WALL && map->map[x][y + 2].type == WALL)
 		&& !(map->map[x + 1][y + 1].type == WALL
 			&& map->map[x - 1][y + 1].type == WALL))
 		return (to_error_msg(MSG_DOOR_ISOLATED), false);

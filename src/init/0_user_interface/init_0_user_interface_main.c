@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:28:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:23:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
 {
 	disp->mlx = mlx_init();
 	if (!disp->mlx)
-		return (to_error_msg("mlx_init faillure"), FAIL);
+		return (to_error_msg(MSG_MLX_INIT), FAIL);
 	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
 	if (!disp->win)
-		return (to_error_msg("mlx_new_window faillure"), FAIL);
+		return (to_error_msg(MSG_MLX_NEW_IMG), FAIL);
 	if (_in_0_display_empty_img_init(disp->mlx, &disp->buff) == FAIL)
 		return (FAIL);
 	if (_in_0_display_empty_img_init(disp->mlx, &disp->img_out_map) == FAIL)
@@ -60,12 +60,12 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
  */
 static t_bool	_in_0_display_empty_img_init(void *mlx, t_data **img_dst)
 {
-	*img_dst = calloc(1, sizeof(t_data));
+	*img_dst = ft_calloc(1, sizeof(t_data));
 	if (!*img_dst)
-		return (to_error_msg("Mem allocation error in display init"), FAIL);
+		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
 	(*img_dst)->img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!(*img_dst)->img)
-		return (to_error_msg("mlx_new_image faillure"), FAIL);
+		return (to_error_msg(MSG_MLX_NEW_IMG), FAIL);
 	(*img_dst)->addr = mlx_get_data_addr((*img_dst)->img, &(*img_dst)->opp,
 			&(*img_dst)->line_len, &(*img_dst)->endian);
 	(*img_dst)->opp /= 8;
