@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 19:08:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:10:28 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	in_0_init_display(t_general *gen)
 {
 	if (_in_0_display_elements_init(&gen->disp) == FAIL)
 		end_destroy_exit(gen, EXIT_INIT_1);
+	mlx_mouse_move(gen->disp.mlx, gen->disp.win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	in_0_hooks_init(gen);
 }
 

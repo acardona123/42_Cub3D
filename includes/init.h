@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 18:17:12 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:23:09 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ typedef enum e_texture_int_index
 	IDX_CEIL
 }	t_texture_int_index;
 
+typedef enum e_mouse_keys
+{
+	MOUSE_LEFT_CLICK = 1,
+	MOUSE_RIGHT_CLICK = 2,
+	MOUSE_MIDDLE_CLICK = 3,
+	MOUSE_SCROLL_UP = 4,
+	MOUSE_SCROLL_DOWN = 5
+}	t_mouse_keys;
+
 void	init_main(int ac, char **av, t_general	*gen);
 
 // init_3_utils.c
@@ -104,6 +113,12 @@ bool	in_1_line_is_empty(char *line);
 void	in_0_init_display(t_general *gen);
 // in_0_init_display_hooks.c
 void	in_0_hooks_init(t_general *gen);
+// init_0_user_interface_hooks_keys;
+int		in_0_hooks_keys_press(int key, t_general *gen);
+int		in_0_hooks_keys_release(int key, t_general *gen);
+// init_0_user_interface_hooks_mouse.c
+int		in_0_hooks_mouse_move(int x, int y, t_general *gen);
+int		in_0_hooks_mouse_button(int key, int x, int y, t_general *gen);
 
 /*
 

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:31:48 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 22:09:49 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:18:36 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
 	{
 		if (center.y + y >= 0 && center.y + y < data->pix_height)
 		{
-			addr = data->addr + (y + center.y) * data->line_len;
+			addr = data->addr + (y + center.y) * data->line_len
+				+ (center.x - radius) * data->opp;
 			x = -radius - 1;
 			while (++x < radius)
 			{
@@ -98,4 +99,3 @@ void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
 		}
 	}
 }
-

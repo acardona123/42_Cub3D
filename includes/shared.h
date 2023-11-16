@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 21:20:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:37:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,21 +183,19 @@ typedef struct s_player
 	float		p_angle_sin;
 }	t_player;
 
-typedef enum e_head_rotate
-{
-	TURN_SIGN_R = 1,
-	TURN_SIGN_L = -1
-}	t_head_rotate;
-
-typedef enum e_player_move
+typedef enum e_player_walk
 {
 	GO_FORWARD,
 	GO_RIGHT,
 	GO_BACK,
-	GO_LEFT,
+	GO_LEFT
+}	t_player_walk;
+
+typedef enum e_player_turn
+{
 	TURN_R,
 	TURN_L
-}	t_player_move;
+}	t_player_turn;
 
 /* ---- End: Player ----
 
@@ -210,7 +208,7 @@ typedef struct s_settings
 	float		walk_speed;
 	float		key_turn_speed;
 	float		fov;
-	float		mouse_turn_speed;
+	float		mouse_turn_sensibility;
 	int			minimap_size;
 	int			minimap_zoom;
 	int			minimap_player_size;
@@ -258,7 +256,9 @@ typedef struct s_general
 	t_settings			settings;
 	double				angles_set[WIN_WIDTH];
 	double				angle_correc[WIN_WIDTH];
-	bool				next_moove[6];
+	bool				next_walk[4];
+	bool				next_turn_key[2];
+	float				next_turn_mouse;
 	t_minimap			minimap;
 }	t_general;
 

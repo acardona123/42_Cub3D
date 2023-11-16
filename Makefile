@@ -23,7 +23,9 @@ FILES_INIT			=	$(addprefix init/, \
 							init_utils \
 							$(addprefix 0_user_interface/init_0_user_interface_, \
 								main \
-								hooks \
+								hooks_main \
+								hooks_keys \
+								hooks_mouse \
 							) \
 							$(addprefix 1_mapformat/init_1_mapformat_, \
 								main \
