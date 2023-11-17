@@ -36,14 +36,7 @@ void	*rc_raycasting_frame_build(t_general *gen, size_t time_frame)
 	while (++idx_ray < WIN_WIDTH)
 	{
 		hit_pt = r_ray_hit(gen, (t_ray_params){ray_raycasting, time_frame,
-				p_co, 
-				
-				
-				
-				
-				
-				
-				p_angle + gen->angles_set[idx_ray]});
+				p_co, p_angle + gen->angles_set[idx_ray]});
 		if (hit_pt.pt_co.x <= 0.)
 			r_frame_empty_column(gen->disp.buff, idx_ray);
 		else
@@ -95,11 +88,9 @@ static void	_r_frame_build_column(t_general *gen, int idx_ray,
 	register char		*addr_x;
 	t_static_texture	*texture;
 
-	texture = r_get_column_texture(gen->map.map[hitpoint.chunk_co_x]
-		[hitpoint.chunk_co_y].textures[hitpoint.hit_face], time,
-			gen->map.map[hitpoint.chunk_co_x][hitpoint.chunk_co_y].t0);
+	texture = r_get_texture_of_column(&gen->map, &hitpoint, time);
 	h_theoric = 1 / (gen->angle_correc[idx_ray] * hitpoint.dist) * WIN_HEIGHT;
-	addr_x = gen->disp.buff->addr + idx_ray * gen->disp.buff->opp;
+	addr_x = gen->disp.buff->addr + gen->disp.buff->opp * idx_ray;
 	tmp_y = (WIN_HEIGHT - h_theoric) / 2;
 	y = -1;
 	while (++y < tmp_y)
