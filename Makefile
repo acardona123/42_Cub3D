@@ -107,7 +107,7 @@ FILES_NAMES			=	\
 						$(FILES_GAMEPLAY) \
 						$(FILES_DOORS) \
 						$(FILES_MAPS) \
-						main 
+						# main 
 
 
 SRC_DIR			=	src

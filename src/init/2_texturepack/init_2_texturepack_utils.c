@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:34:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 00:40:17 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 02:41:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
  */
 bool	in_2_tools_is_xpm_file(struct dirent *elem)
 {
-	if (elem->d_type == DT_REG && ft_strlen(elem->d_name) >= 4
+	if (elem->d_type == DT_REG
+		&& *elem->d_name != '.'
+		&& ft_strlen(elem->d_name) >= 4
 		&& !ft_strcmp(elem->d_name + ft_strlen(elem->d_name) - 4, ".xpm"))
 		return (true);
 	return (false);

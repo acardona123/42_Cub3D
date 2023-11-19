@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 10:25:25 by rbitca            #+#    #+#             */
-/*   Updated: 2023/11/15 05:01:02 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 03:11:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ char	*ft_strjoin4(const char *s1, const char *s2, const char *s3,
 		full[curpos++] = s3[i++];
 	i = 0;
 	while (s4[i])
-		full[curpos++] = s3[i++];
+		full[curpos++] = s4[i++];
 	return (full);
 }

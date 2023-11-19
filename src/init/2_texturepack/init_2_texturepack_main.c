@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 19:31:09 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 04:51:27 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,25 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
 	int	bonuses_init;
 
 	if (!ft_strcmp(*line_arg, "NO"))
-		return (in_2_anim_textu_init(mlx, &text_pack->wall_n, line_arg));
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_n, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "SO"))
-		return (in_2_anim_textu_init(mlx, &text_pack->wall_s, line_arg));
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_s, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "WE"))
-		return (in_2_anim_textu_init(mlx, &text_pack->wall_w, line_arg));
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_w, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "EA"))
-		return (in_2_anim_textu_init(mlx, &text_pack->wall_e, line_arg));
+		return (in_2_anim_textu_init(mlx, &text_pack->wall_e, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "F"))
-		return (in_2_set_color(&text_pack->color_f, line_arg,
+		return (in_2_set_color(&text_pack->color_f, line_arg + 1,
 				&already_done[IDX_FLOOR]));
 	else if (!ft_strcmp(*line_arg, "C"))
-		return (in_2_set_color(&text_pack->color_c, line_arg,
+		return (in_2_set_color(&text_pack->color_c, line_arg + 1,
 				&already_done[IDX_CEIL]));
 	bonuses_init = _in_2_init_texture_or_color_bonus(mlx, text_pack, line_arg);
-	if (bonuses_init == SUCCESS)
-		return (SUCCESS);
+	if (bonuses_init == -1)
+		return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
 	else if (bonuses_init == FAIL)
 		return (FAIL);
-	return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
+	return (SUCCESS);
 }
 
 #ifdef BONUS
@@ -112,22 +112,22 @@ static int	_in_2_init_texture_or_color_bonus(void *mlx,
 	t_texture_pack *text_pack, char **line_arg)
 {
 	if (!ft_strcmp(*line_arg, "DF"))
-		return (in_2_anim_textu_init(mlx, &text_pack->door_front, line_arg));
+		return (in_2_anim_textu_init(mlx, &text_pack->door_front, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "DC"))
 		return (in_2_anim_textu_init(mlx, &text_pack->door_side_close,
-				line_arg));
+				line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "DOOD"))
 		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_opened,
-				line_arg));
+				line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "DOOG"))
 		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_opening,
-				line_arg));
+				line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "DOCD"))
 		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_closed,
-				line_arg));
+				line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "DOCG"))
 		return (in_2_anim_textu_init(mlx, &text_pack->door_side_open_closing,
-				line_arg));
+				line_arg + 1));
 	return (-1);
 }
 

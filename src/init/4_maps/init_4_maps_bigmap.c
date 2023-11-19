@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:45:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 14:57:21 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 03:47:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_bool	_in_4_bigmap_get_ratio(t_minimap *minimap, t_map *map)
 	ratio_height = WIN_HEIGHT / map->height;
 	if (ratio_width == 0 || ratio_height == 0)
 	{
-		printf(MSG_WARNING_BIG_MAP);
+		to_warning_msg(MSG_WARNING_BIG_MAP);
 		minimap->bigmap_size_ratio = -1;
 		return (FAIL);
 	}

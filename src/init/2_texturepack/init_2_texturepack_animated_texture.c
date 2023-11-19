@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 00:41:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 05:15:05 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_bool	in_2_anim_textu_init_folder(void *mlx,
  *				elem_acronym text_repo_containing_img frame_ms frame_pause_ms
  * 
  * @param texture 
- * @param line_arg 
+ * @param line_arg the line of arg starting AFTER the accronyme
  * @return SUCCESS (textures successfully loaded)
  * @return FAIL (err msg displayed. no argument freed)
  */
@@ -38,9 +38,9 @@ t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
 	*texture = ft_calloc(1, sizeof(t_animated_texture));
 	if (!texture)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
-	if (ft_tablen(line_arg) == 2)
+	if (ft_tablen(line_arg) == 1)
 		return (in_2_anim_textu_init_file(mlx, *texture, line_arg));
-	else if (ft_tablen(line_arg) == 4)
+	else if (ft_tablen(line_arg) == 3)
 		return (in_2_anim_textu_init_folder(mlx, *texture, line_arg));
 	return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
 }
@@ -52,7 +52,8 @@ t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
  * 
  * @param mlx ptr to the mlx
  * @param texture struct to fill
- * @param line_arg splited line of the input file to import
+ * @param line_arg splited line of the input file to import, starting AFTER the
+ *		accronym
  * @return SUCCESS: texture successfully imported, no arg freed
  * @return FAIL: err msg displayed, no arg freed
  */
@@ -67,16 +68,16 @@ static t_bool	in_2_anim_textu_init_file(void *mlx,
 	texture->frame_pause_ms = 0;
 	texture->frame_cycle_short = 0;
 	texture->frame_cycle_long = INT_MAX / 2;
-	texture->frame_array[0] = (t_static_texture){line_arg[1], 0, 0, .0,
+	texture->frame_array[0] = (t_static_texture){line_arg[0], 0, 0, .0,
 		(t_data){0}};
 	if (in_2_static_texture_init_one(mlx, &texture->frame_array[0],
-			line_arg[1]) == FAIL)
+			line_arg[0]) == FAIL)
 	{
 		free(texture->frame_array);
 		texture->frame_array = NULL;
 		return (FAIL);
 	}
-	line_arg[1] = line_arg[ft_tablen(line_arg) - 1];
+	line_arg[0] = line_arg[ft_tablen(line_arg) - 1];
 	line_arg[ft_tablen(line_arg) - 1] = NULL;
 	return (SUCCESS);
 }
@@ -100,20 +101,20 @@ static t_bool	in_2_anim_textu_init_folder(void *mlx,
 {
 	DIR				*dir;
 
-	if (ft_atoui_protected(line_arg[2], &tex->frame_ms)
-		|| ft_atoui_protected(line_arg[3], &tex->frame_pause_ms))
+	if (ft_atoui_protected(line_arg[1], &tex->frame_ms)
+		|| ft_atoui_protected(line_arg[2], &tex->frame_pause_ms))
 		return (to_error_msg(MSG_WRONG_TIME), FAIL);
-	if (in_2_tools_count_xpm_files_in_folder(line_arg[1], &tex->frame_number)
+	if (in_2_tools_count_xpm_files_in_folder(line_arg[0], &tex->frame_number)
 		== FAIL)
 		return (FAIL);
 	tex->frame_array = ft_calloc(tex->frame_number,
 			sizeof(t_static_texture));
 	if (!tex->frame_array)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
-	dir = opendir(line_arg[1]);
+	dir = opendir(line_arg[0]);
 	if (!dir)
 		return (to_error_msg(MSG_OPENDIR_FAIL), FAIL);
-	if (_in_2_get_textures_from_directory(mlx, dir, line_arg[1], tex) == FAIL)
+	if (_in_2_get_textures_from_directory(mlx, dir, line_arg[0], tex) == FAIL)
 		return (closedir(dir), FAIL);
 	closedir(dir);
 	tex->frame_cycle_short = tex->frame_number * tex->frame_ms;

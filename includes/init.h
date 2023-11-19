@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 01:50:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 04:26:27 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ wrong character in the top line of the map content"
 # define MSG_ACCEPT_ONLY_XPM "Map: to avoid mlx leaks this program can only \
 handle .xpm images as textures, sorry"
 # define MSG_ERR_OPEN_TEXTURE "Map: texture file not reachable/readable"
+# define MSG_ERR_OPEN_TEXTURE_DATA "Map: texture data file not \
+reachable/readable"
 # define MSG_TEXTURE_MISSING_WALL_N "Map: missing texture for the walls' north \
 face"
 # define MSG_TEXTURE_MISSING_WALL_E "Map: missing texture for the walls' east \
@@ -66,8 +68,11 @@ face"
 # define MSG_EMPTY_LINE "Map: empty line in the map content"
 
 //big map warning
-# define MSG_WARNING_BIG_MAP "Warning: map dimensions bigger than the window. \
-You will not be abble to display a big global map\n"
+# define MSG_WARNING_BIG_MAP "display: map dimensions bigger than the window. \
+You will not be abble to display a big global map"
+# define MSG_WARNING_TEXTURE_DATA_MISSING "map: one texture subdirectory \
+contains *.xpm files but the file \"frames_data.txt\" is missing/unreadable. \
+This textures subdirectory hasn't been imported."
 
 typedef struct s_init_lists
 {

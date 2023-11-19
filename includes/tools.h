@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 20:23:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 03:47:33 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ double	to_vector_norm_sqr(t_coord_f P0, t_coord_f P1);
 
 //tools_error
 void	to_error_msg(char *msg);
+void	to_warning_msg(char *msg);
 
 //tools_lst.c
 void	to_lstfree(t_list **lst);

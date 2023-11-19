@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 00:39:36 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 11:09:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 05:18:11 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	_in_2_set_color_get_end_component(char *str, int *dst);
  * @brief extracts rgb components of a line (previously splited arround spaces)
  * 
  * @param dest_color points to the t_texture_pack color value (e.g: &color_f)
- * @param line_arg splitted line to check
+ * @param line_arg splitted line to check, starting AFTER the accronyme
  * @param already_done indicates if this elem of the texturepack has already
  *		been treated in a previous line
  * @return SUCCESS if color succesfully set (already_done updated)
@@ -33,19 +33,19 @@ t_bool	in_2_set_color(int *dest_color, char **line_arg,
 
 	if (*already_done)
 		return (to_error_msg(MSG_COLOR_MULTIPLE_DEF), FAIL);
-	if (ft_tablen(line_arg) != 2)
+	if (ft_tablen(line_arg) != 1)
 		return (to_error_msg(MSG_WRONG_COLOR_FORMAT), FAIL);
 	*already_done = true;
-	start_idx = _in_2_set_color_get_end_component(line_arg[1], dest_color);
-	if (start_idx == -1 || line_arg[1][start_idx] != ',')
+	start_idx = _in_2_set_color_get_end_component(line_arg[0], dest_color);
+	if (start_idx == -1 || line_arg[0][start_idx] != ',')
 		return (to_error_msg(MSG_WRONG_COLOR_FORMAT), FAIL);
-	line_arg[1][start_idx] = 0;
-	start_idx = _in_2_set_color_get_end_component(line_arg[1], &subcolor);
-	if (start_idx == -1 || line_arg[1][start_idx] != ',')
+	line_arg[0][start_idx] = 0;
+	start_idx = _in_2_set_color_get_end_component(line_arg[0], &subcolor);
+	if (start_idx == -1 || line_arg[0][start_idx] != ',')
 		return (to_error_msg(MSG_WRONG_COLOR_FORMAT), FAIL);
 	*dest_color = *dest_color + (subcolor << 8);
-	line_arg[1][start_idx] = 0;
-	start_idx = _in_2_set_color_get_end_component(line_arg[1], &subcolor);
+	line_arg[0][start_idx] = 0;
+	start_idx = _in_2_set_color_get_end_component(line_arg[0], &subcolor);
 	if (start_idx != 0)
 		return (to_error_msg(MSG_WRONG_COLOR_FORMAT), FAIL);
 	*dest_color = *dest_color + (subcolor << 16);
