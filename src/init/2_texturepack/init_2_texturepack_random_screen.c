@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 03:14:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 05:22:33 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 01:45:05 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ static t_bool	_in_2_check_subdir_contains_texture(char *subdir_name,
 static t_bool	_in_2_import_all_textures(void *mlx,
 					t_animated_texture **textures, char *dir_name,
 					unsigned int number_of_textures);
+static t_bool	_in_2_import_one_texture(void *mlx, char *dir_parent_name,
+					t_animated_texture ***texture_dst, struct dirent *elem);
 static char		**_in_2_line_arg_from_directory(char *dir_parent_name,
 					char *dir_name);
 static char		**_in_2_line_arg_from_file(char *dir_parent_name,
 					char *dir_name);
 
-t_bool	in_2_anim_textu_random_screen(void *mlx, t_animated_texture **textures,
+t_bool	in_2_anim_textu_random_screen(void *mlx, t_animated_texture ***textures,
 	char **line_arg)
 {
 	unsigned int	cpt_textures;
@@ -33,16 +35,37 @@ t_bool	in_2_anim_textu_random_screen(void *mlx, t_animated_texture **textures,
 		return (FAIL);
 	if (!cpt_textures)
 		return (SUCCESS);
-	if (*line_arg[0] != '/' && line_arg[0][ft_strlen(line_arg[0]) - 1] == '/')
+	if (ft_strlen(line_arg[0]) > 1
+		&& line_arg[0][ft_strlen(line_arg[0]) - 1] == '/')
 		line_arg[0][ft_strlen(line_arg[0]) - 1] = 0;
-	*textures = ft_calloc(cpt_textures + 1, sizeof(t_animated_texture *));
-	if (!*textures)
+	**textures = ft_calloc(cpt_textures + 1, sizeof(t_animated_texture *));
+	if (!**textures)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
-	
+	return (_in_2_import_all_textures(mlx, *textures, line_arg[0],
+			cpt_textures));
 }
 
-static t_bool	_in_2_count_textures(char *dir_name,
-	unsigned int *cpt_textures)
+/**
+ * @brief counts if the given repository contains at least one valid texture,
+ *	which is ether:
+ *	- a .xpm file at the root of this directory (later considered
+ *	as a static texture)
+ *	- a subdirectory containing at least one .xpm file and, if there are
+ *	multiple .xpm files, a file named frames_data.txt (later used for describing
+ *	the frame rates of the animated textured composed by the .xpm files of the
+ *	subdirectory.
+*	The number of valid textures is stored in cpt_textures
+ * 
+ * @param dir_name the name of the directory to check
+ * @param cpt_textures its value is updated to the number of textures found in
+ *		the directory
+ * @return t_bool	SUCCESS if the directory has successfully been opened and
+ *						valid textures have been found in it. In this case
+ *						*cpt_textures is the number of texture ( > 0 )
+					FAIL in case of opendir failure
+					
+ */
+static t_bool	_in_2_count_textures(char *dir_name, unsigned int *cpt_textures)
 {
 	DIR				*dir;
 	struct dirent	*elem;
@@ -55,9 +78,7 @@ static t_bool	_in_2_count_textures(char *dir_name,
 	elem = readdir(dir);
 	while (elem)
 	{
-		if ((elem->d_type == DT_REG && ft_strlen(elem->d_name) >= 4
-				&& !ft_strcmp(elem->d_name + ft_strlen(elem->d_name) - 4,
-					".xpm")))
+		if (in_2_tools_is_xpm_file(elem))
 			++*cpt_textures;
 		if (elem->d_type == DT_DIR && _in_2_check_subdir_contains_texture
 			(elem->d_name, cpt_textures) == FAIL)
@@ -76,11 +97,14 @@ static t_bool	_in_2_count_textures(char *dir_name,
  *	if som add 1 to 
  * 
  * @param subdir_name 
- * @param cpt 
- * @return t_bool 
+ * @param cpt_textures 
+ * @return t_bool	FAIL if opendir fail, err msg displayed
+ *					SUCCESS if opendir worked, if the subdir contains a valid
+ *					texture ( at least one .xpm file and, if there are
+ *					multiple .xpm files, a file named frames_data.txt)
  */
 static t_bool	_in_2_check_subdir_contains_texture(char *subdir_name,
-	unsigned int *cpt)
+	unsigned int *cpt_textures)
 {
 	DIR				*dir;
 	struct dirent	*elem;
@@ -95,9 +119,7 @@ static t_bool	_in_2_check_subdir_contains_texture(char *subdir_name,
 	elem = readdir(dir);
 	while (elem)
 	{
-		if ((elem->d_type == DT_REG && ft_strlen(elem->d_name) >= 4
-				&& !ft_strcmp(elem->d_name + ft_strlen(elem->d_name) - 4,
-					".xpm")))
+		if (in_2_tools_is_xpm_file(elem))
 			contains_xpm = true;
 		if (elem->d_type == DT_REG
 			&& !ft_strcmp(elem->d_name, "frames_data.txt"))
@@ -105,47 +127,60 @@ static t_bool	_in_2_check_subdir_contains_texture(char *subdir_name,
 		elem = readdir(dir);
 	}
 	closedir(dir);
-	return (*cpt += (contains_xpm && (contains_data_txt == 1)), SUCCESS);
+	if (contains_xpm && (contains_data_txt <= 1
+			&& (contains_xpm == 1 || contains_data_txt)))
+		++cpt_textures;
+	return (SUCCESS);
 }
 
 static t_bool	_in_2_import_all_textures(void *mlx,
 	t_animated_texture **textures, char *dir_name,
 	unsigned int number_of_textures)
 {
-	DIR				*dir;
-	struct dirent	*elem;
-	unsigned int	textu_idx;
-	int				is_texture;
+	DIR					*dir;
+	struct dirent		*elem;
+	t_animated_texture	**next_texture_dest;
 
-	textu_idx = 0;
-		dir = opendir(dir_name);
+	dir = opendir(dir_name);
 	if (!dir)
 		return (to_error_msg(MSG_OPENDIR_FAIL), FAIL);
+	next_texture_dest = textures;
 	elem = readdir(dir);
 	while (elem)
 	{
-		
+		elem = readdir(dir);
+		if (_in_2_import_one_texture(mlx, dir_name, &next_texture_dest, elem)
+			== FAIL)
+			return (closedir(dir), FAIL);
+		elem = readdir(dir);
 	}
+	closedir(dir);
+	return (SUCCESS);
 }
+
 /**
- * @brief 
- * 
+ * @brief if elem is a valid texture, imports it in the table of animated
+ *		textures *texture_dst and moves texture_dst to the next index in the 
+ *		table
+ * texture_dst
  * @param mlx 
- * @param textures 
- * @param textu_idx 
- * @param elem 
- * @return t_bool 
+ * @param dir_parent_name 
+ * @param texture_dst pointer to where the pointer of the animated texture will
+ *				be saved
+ * @param elem the element of a directory that we try to import
+ * @return t_bool	FAIL if elem is a valid texture but there was an error in
+ *						 its importation. Error msg displayed.
+ *					SUCCESS if elem is a texture successfully imported in
+ *						**texture_dst.
  */
-static t_bool	_in_2_import_one_texture(void *mlx, char *dir_parent_name, 
-	t_animated_texture **textures, unsigned int *textu_idx,
-	struct dirent *elem)
+static t_bool	_in_2_import_one_texture(void *mlx, char *dir_parent_name,
+	t_animated_texture ***texture_dst, struct dirent *elem)
 {
 	unsigned int	cpt;
 	char			**line_arg;
 
 	cpt = 0;
-	if ((elem->d_type == DT_REG && ft_strlen(elem->d_name) >= 4
-			&& !ft_strcmp(elem->d_name + ft_strlen(elem->d_name) - 4, ".xpm")))
+	if (in_2_tools_is_xpm_file(elem))
 		line_arg = _in_2_line_arg_from_file(dir_parent_name, elem->d_name);
 	else if (elem->d_type == DT_DIR)
 	{
@@ -158,10 +193,9 @@ static t_bool	_in_2_import_one_texture(void *mlx, char *dir_parent_name,
 	else
 		return (SUCCESS);
 	if (!line_arg
-		|| in_2_anim_textu_init(mlx, textures + *textu_idx, line_arg) == FAIL)
+		|| in_2_anim_textu_init(mlx, *(texture_dst++), line_arg) == FAIL)
 		return (ft_strlst_free(line_arg), FAIL);
 	ft_strlst_free(line_arg);
-	++(*textu_idx);
 	return (SUCCESS);
 }
 
@@ -195,7 +229,7 @@ static char	**_in_2_line_arg_from_directory(char *dir_parent_name,
 	if (!arg)
 		return (to_error_msg(MSG_BAD_ALLOC), close (fd), NULL);
 	arg[0] = ft_strjoin3(dir_parent_name, "/", dir_name);
-	if (!arg)
+	if (!arg[0])
 		return (to_error_msg(MSG_BAD_ALLOC), close(fd), ft_tabfree(arg), NULL);
 	arg[1] = get_next_line(fd);
 	if (!arg[1])
@@ -231,3 +265,5 @@ static char	**_in_2_line_arg_from_file(char *dir_parent_name, char *dir_name)
 		return (to_error_msg(MSG_BAD_ALLOC), free(arg), NULL);
 	return (arg);
 }
+
+

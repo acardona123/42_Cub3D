@@ -34,6 +34,7 @@ FILES_INIT			=	$(addprefix init/, \
 								static_texture \
 								set_color \
 								check_texture_defined \
+								random_screen \
 								utils \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/20 13:19:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 00:41:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,7 @@ static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
 	elem = readdir(dir);
 	while (elem && i < tex->frame_number)
 	{
-		if (elem->d_type == DT_REG && ft_strlen(elem->d_name) >= 4
-			&& !ft_strcmp(elem->d_name + ft_strlen(elem->d_name) - 4, ".xpm"))
+		if (in_2_tools_is_xpm_file(elem))
 		{
 			path = ft_strjoin3(dir_name, "/", elem->d_name);
 			if (!path)
