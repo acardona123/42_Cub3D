@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 00:39:51 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 01:50:18 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,7 @@
 # endif
 
 # define MSG_SETTINGS_ERROR "Initialisation: wrong settings in defines"
-# define MSG_BAD_ALLOC "Init: memory allocation error during initialisation"
 # define MSG_MAP_OPEN_FAIL "Map: cannot open the given map file"
-
-//mlx error
-# define MSG_MLX_INIT "mlx: fail of mlx_init"
-# define MSG_MLX_NEW_IMG "mlx: fail to create a new image"
-# define MSG_MLX_NEW_WINDOW "mlx: fail to create a new window"
-# define MSG_MLX_XPM_TO_IMG "mlx: .xpm to image conversion failed"
 
 //map parameters error messages
 # define MSG_MAP_FILE_FORMAT "Map: format incorrect, requieres a .cub file"
@@ -72,6 +65,10 @@ face"
  walls"
 # define MSG_EMPTY_LINE "Map: empty line in the map content"
 
+//big map warning
+# define MSG_WARNING_BIG_MAP "Warning: map dimensions bigger than the window. \
+You will not be abble to display a big global map\n"
+
 typedef struct s_init_lists
 {
 	t_list			*lst_param;
@@ -85,6 +82,15 @@ typedef enum e_texture_int_index
 	IDX_FLOOR,
 	IDX_CEIL
 }	t_texture_int_index;
+
+typedef enum e_mouse_keys
+{
+	MOUSE_LEFT_CLICK = 1,
+	MOUSE_RIGHT_CLICK = 2,
+	MOUSE_MIDDLE_CLICK = 3,
+	MOUSE_SCROLL_UP = 4,
+	MOUSE_SCROLL_DOWN = 5
+}	t_mouse_keys;
 
 void	init_main(int ac, char **av, t_general	*gen);
 
@@ -107,6 +113,12 @@ bool	in_1_line_is_empty(char *line);
 void	in_0_init_display(t_general *gen);
 // in_0_init_display_hooks.c
 void	in_0_hooks_init(t_general *gen);
+// init_0_user_interface_hooks_keys;
+int		in_0_hooks_keys_press(int key, t_general *gen);
+int		in_0_hooks_keys_release(int key, t_general *gen);
+// init_0_user_interface_hooks_mouse.c
+int		in_0_hooks_mouse_move(int x, int y, t_general *gen);
+int		in_0_hooks_mouse_button(int key, int x, int y, t_general *gen);
 
 /*
 
@@ -150,5 +162,8 @@ t_bool	in_3_mapcontent_status_action_init(t_map *map);
 
 =============== 4_minimap/ =============== */
 void	in_4_minimap_init(t_general *gen);
+void	in_4_bigmap_init(t_general *gen);
 
+// init_4_maps_world.c
+void	in_4_world_init(t_general *gen);
 #endif

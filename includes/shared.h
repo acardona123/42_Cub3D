@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 02:16:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/19 01:50:36 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@
 
 
 ==== Textures ==== */
-
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		opp;
-	int		line_len;
-	int		pix_width;
-	int		pix_height;
-	int		endian;
-}	t_data;
 
 typedef struct s_static_texture
 {
@@ -179,6 +168,10 @@ typedef enum e_map_type
 typedef struct s_minimap
 {
 	t_data	world;
+	t_data	bigmap;
+	int		bigmap_size_ratio;
+	int		bigmap_offset_x;
+	int		bigmap_offset_y;
 }	t_minimap;
 
 /* ---- End: Minimap ----
@@ -196,21 +189,19 @@ typedef struct s_player
 	float		p_angle_sin;
 }	t_player;
 
-typedef enum e_head_rotate
-{
-	TURN_SIGN_R = 1,
-	TURN_SIGN_L = -1
-}	t_head_rotate;
-
-typedef enum e_player_move
+typedef enum e_player_walk
 {
 	GO_FORWARD,
 	GO_RIGHT,
 	GO_BACK,
-	GO_LEFT,
+	GO_LEFT
+}	t_player_walk;
+
+typedef enum e_player_turn
+{
 	TURN_R,
 	TURN_L
-}	t_player_move;
+}	t_player_turn;
 
 /* ---- End: Player ----
 
@@ -223,11 +214,10 @@ typedef struct s_settings
 	float		walk_speed;
 	float		key_turn_speed;
 	float		fov;
-	float		mouse_turn_speed;
+	float		mouse_turn_sensibility;
 	int			minimap_size;
 	int			minimap_zoom;
 	int			minimap_player_size;
-	int			bigmap_zoom;
 	int			bigmap_player_size;
 	int			bigmap_size;
 }	t_settings;
@@ -238,12 +228,22 @@ typedef struct s_settings
 
 ==== Display ==== */
 
+typedef enum e_img_to_disp
+{
+	BLACK,
+	BIG_MAP,
+	INGAME
+}	t_img_to_disp;
+
 typedef struct s_display
 {
 	void			*mlx;
 	void			*win;
+	t_img_to_disp	img_select;
 	t_data			*buff;
 	t_data			*img_out_map;
+
+
 }	t_display;
 
 /* ---- End: Display ----
@@ -262,7 +262,9 @@ typedef struct s_general
 	t_settings			settings;
 	double				angles_set[WIN_WIDTH];
 	double				angle_correc[WIN_WIDTH];
-	bool				next_moove[6];
+	bool				next_walk[4];
+	bool				next_turn_key[2];
+	float				next_turn_mouse;
 	t_minimap			minimap;
 }	t_general;
 
@@ -407,9 +409,12 @@ void		doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
 				t_chunk_face face);
 
 //maps
-void		map_draw_minimap(t_general *gen);
-void		map_draw_bigmap(t_general *gen);
-void		map_update_world_door(t_general *gen, t_chunk *chunk);
+void		maps_draw_minimap(t_general *gen);
+void		maps_world_update_door(t_general *gen, t_chunk *door);
+void		maps_bigmap_draw_chunk(t_minimap *minimap, int chunk_x,
+				int chunk_y);
+void		maps_bigmap_put_player_window(t_display *disp, t_minimap *minimap,
+				t_settings *settings, t_player *player);
 
 # endif
 

@@ -14,6 +14,7 @@ FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
 							display \
 							exit \
 							map \
+							minimap \
 							texture_pack \
 						)
 
@@ -22,7 +23,9 @@ FILES_INIT			=	$(addprefix init/, \
 							init_utils \
 							$(addprefix 0_user_interface/init_0_user_interface_, \
 								main \
-								hooks \
+								hooks_main \
+								hooks_keys \
+								hooks_mouse \
 							) \
 							$(addprefix 1_mapformat/init_1_mapformat_, \
 								main \
@@ -43,8 +46,10 @@ FILES_INIT			=	$(addprefix init/, \
 								locate_texture \
 								set_status_action \
 							) \
-							$(addprefix 4_minimap/init_4_minimap_, \
+							$(addprefix 4_maps/init_4_maps_, \
 								main \
+								bigmap \
+								world \
 							) \
 						)
 
@@ -60,7 +65,8 @@ FILES_RAY_COLLISION	=	$(addprefix ray_collision/ray_collision_, \
 
 FILES_RAYCASTING	=	$(addprefix raycasting/raycasting_, \
 							frame_build \
-							use_texture \
+							get_pixel_color \
+							get_texture_column \
 						)
 
 
@@ -77,6 +83,7 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 						lst \
 						time \
 						angles_set \
+						mlx_img \
 					)
 
 FILES_DOORS		=	$(addprefix doors/doors_, \
@@ -84,9 +91,10 @@ FILES_DOORS		=	$(addprefix doors/doors_, \
 						action \
 					)
 
-FILES_MAP		=	$(addprefix map/map_, \
+FILES_MAPS		=	$(addprefix maps/maps_, \
 						minimap_main \
-						get_pixel_color \
+						tools_bigmap \
+						tools_minimap \
 						update_world \
 					)
 
@@ -98,7 +106,7 @@ FILES_NAMES			=	\
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \
 						$(FILES_DOORS) \
-						$(FILES_MAP) \
+						$(FILES_MAPS) \
 						main 
 
 

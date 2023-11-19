@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 13:59:59 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:06:26 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static void	_init_settings(t_general *gen)
 
 static void	_init_settings_bonus(t_general *gen)
 {
-	gen->settings.mouse_turn_speed = DEFAULT_ROTATE_SPEED_MOUSE;
+	gen->settings.mouse_turn_sensibility = DEFAULT_ROTATE_MOUSE_SENSIBILITY;
 	gen->settings.minimap_size
 		= (int)(MINIMAP_SIZE_DEFAULT * ft_min(WIN_HEIGHT, WIN_WIDTH));
-	gen->settings.minimap_zoom = MINIMAP_ZOOM_DEFAULT;
-	gen->settings.minimap_player_size = MINIMAP_PLAYER_SIZE_DEFAULT
-		* gen->settings.minimap_size;
+	gen->settings.minimap_zoom = ft_max(1, (int)(MINIMAP_ZOOM_DEFAULT
+				* gen->settings.minimap_size));
+	gen->settings.minimap_player_size = (int)(MINIMAP_PLAYER_SIZE_DEFAULT
+		* gen->settings.minimap_size);
 	gen->settings.bigmap_size = ft_min(WIN_HEIGHT, WIN_WIDTH);
-	gen->settings.bigmap_zoom = BIGMAP_ZOOM_DEFAULT;
 	gen->settings.bigmap_player_size = BIGMAP_PLAYER_SIZE_DEFAULT
 		* gen->settings.bigmap_size;
 }

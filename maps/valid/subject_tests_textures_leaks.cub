@@ -1,0 +1,26 @@
+SO /media/alexandm/CARDONA/cub3d_textures/leak1/leak1.xpm
+NO /media/alexandm/CARDONA/cub3d_textures/leak2/leak2.xpm
+EA /media/alexandm/CARDONA/cub3d_textures/leak3/leak3.xpm
+WE /media/alexandm/CARDONA/cub3d_textures/crash4/crash4_xpm 100 0
+DF ./textures/random_tests/door_face 500 5000
+DC ./textures/random_tests/door_side_closed 300 0
+DOOD ./textures/random_tests/door_side_open_opened 300 0
+DOOG ./textures/random_tests/door_side_open_opening 300 0
+DOCD ./textures/random_tests/door_side_open_closed 300 0
+DOCG ./textures/random_tests/door_side_open_closing 300 0
+F 100,60,60
+C 60,160,255
+        1111111111111111111111111
+        1000000000110000000000001
+        1011000001110000000000001
+        1001000000000000000001001
+111111111011000000N00000000000001
+100000000011000000000111111111111
+11110111111111000000000010001
+11110111111110000101010010001
+11000000110100011100000010001
+10000000000000001100000010001
+10000000000000001101010010001
+11000001110101011111011110001
+11110111 1110101 101111010001
+11111111 1111111 111111111111

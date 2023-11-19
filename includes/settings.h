@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/13 19:49:31 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:41:26 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define DEFAULT_WALK_SPEED				0.0016
 # define DEFAULT_ROTATE_SPEED_KEY		0.0011
 # ifdef BONUS
-#  define DEFAULT_ROTATE_SPEED_MOUSE	0.1
+#  define DEFAULT_ROTATE_MOUSE_SENSIBILITY	0.001
 #  define DOOR_ACTION_DIST_RANGE 		100.5
 # endif
 
@@ -42,31 +42,35 @@
 # define FOV_MAX		3.14
 
 //movement settings
-# define WALK_SPEED_INCREMENT			0.05
+# define WALK_SPEED_INCREMENT			0.0001
 # define ROTATE_SPEED_KEY_INCREMENT		0.001
 # define DIST_WALL_MIN					0.25
 // # define DIST_WALL_MIN 0.015625
 # ifdef BONUS
-#  define ROTATE_SPEED_MOUSE_INCREMENT	0.001
 #  define DOOR_ACTION_TIME				1000.
+#  define ROTATE_SPEED_MOUSE_INCREMENT	0.001
 # else
 #  define FIXED_DELAY	20
 # endif
 
 # ifdef BONUS
+
+//cursor
+
+#  define CURSOR_SIZE_RATIO			.01f
+#  define CURSOR_COLOR_BACKGROUND	0xFFFFFF
+#  define CURSOR_COLOR_CROSS		0x202020
+#  define CURSOR_CROSS_WIDTH_RATIO	0.25f
+
 //map settings
 #  define MINIMAP_SIZE_DEFAULT			.33
-#  define MINIMAP_SIZE_INCREMENT		1.
-#  define MINIMAP_ZOOM_DEFAULT			15
-#  define MINIMAP_ZOOM_INCREMENT		1
-#  define MINIMAP_PLAYER_SIZE_DEFAULT	.1
-#  define BIGMAP_ZOOM_DEFAULT			15
-#  define BIGMAP_ZOOM_INCREMENT			1
-#  define BIGMAP_PLAYER_SIZE_DEFAULT	.1
+#  define MINIMAP_SIZE_INCREMENT		.125
+#  define MINIMAP_ZOOM_DEFAULT			.0625
+#  define MINIMAP_ZOOM_INCREMENT		.0625
+#  define MINIMAP_PLAYER_SIZE_DEFAULT	.125
+#  define BIGMAP_PLAYER_SIZE_DEFAULT	.05
+#  define BIGIMAP_PLAYER_SIZE_INCREMENT	.1
 # endif
-
-//controls :
-# define NUMBER_KEY 12
 
 //minimap colors
 # define MINIMAP_NUMBER_COLORS	10
@@ -80,6 +84,10 @@
 # define MINIMAP_COLOR_D_OPEN	0x5AD000
 # define MINIMAP_COLOR_D_CLOSED	0xD25E5E
 # define MINIMAP_COLOR_PLAYER	0x80FF
+
+//controls :
+# define NUMBER_KEY 12
+
 typedef enum e_commands
 {
 	KEY_FORWARD			= XK_w,
@@ -90,6 +98,7 @@ typedef enum e_commands
 	KEY_LOOK_RIGHT		= XK_Right,
 
 	KEY_ACT				= XK_space,
+	KEY_BIG_MAP			= XK_m,
 
 	KEY_WALK_SPEED_UP	= XK_KP_8,//les kp ne marchent pas
 	KEY_WALK_SPEED_DOWN	= XK_KP_2,

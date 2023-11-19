@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gameplay.h                                         :+:      :+:    :+:   */
+/*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 22:00:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 15:58:04 by acardona         ###   ########.fr       */
+/*   Created: 2023/11/11 21:50:22 by acardona          #+#    #+#             */
+/*   Updated: 2023/11/14 21:45:16 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAMEPLAY_H
-# define GAMEPLAY_H
+#include "libft.h"
 
-# include "shared.h"
-
-// gameplay_main
-int		gp_looping(void *elem);
-// gameplay_turn_head.c
-void	gp_turn_head(t_general *gen, size_t delay);
-// gameplay_walk.c
-void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay);
-// gameplay_action.c
-void	gp_action_do(t_general *gen);
-#endif
+int	ft_max(int a, int b)
+{
+	if (a >= b)
+		return (a);
+	return (b);
+}
