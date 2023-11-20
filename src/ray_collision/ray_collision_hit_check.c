@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/09 22:11:49 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:38:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ static bool	_r_ray_check_no_shift_diag(t_general *gen, t_ray_data *rdata,
 
 #ifdef BONUS
 
-static const double	g_max_dec_to_wall = 1. - DIST_WALL_MIN;
-
 static bool	_r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
 				t_hitpoint *hit_pt, t_coord_f real_hitpt_co);
 static bool	_r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
 				t_hitpoint *hit_pt, t_coord_f real_hitpt_co);
+static bool	_r_ray_check_shift_diag_border_x(t_chunk **map, t_ray_data *rdata,
+				t_coord_f dec, t_coord_i *chunk);
+static bool	_r_ray_check_shift_diag(t_general *gen, t_ray_data *rdata,
+				t_hitpoint *hit_pt, t_vector_f real_hitpt_co);
 
 /**
  * @brief Used to check the obstacles on the primary axis
@@ -48,15 +50,15 @@ bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
 	if (ft_isinset(gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type,
 		rdata->obstacles))
 		return (true);
+	if (rdata->door_behaviour != ray_pass_door_always
+		&& gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
+		return (r_ray_hit_check_doors_prim(gen, rdata, hit_pt, hit_pt->pt_co));
 	if (rdata->prim == PRIMARY_H && _r_ray_check_shift_diag_touch_h(gen, rdata,
 			hit_pt, hit_pt->pt_co))
 		return (true);
 	if (rdata->prim != PRIMARY_H && _r_ray_check_shift_diag_touch_v(gen, rdata,
 			hit_pt, hit_pt->pt_co))
 		return (true);
-	if (rdata->door_behaviour != ray_pass_door_always
-		&& gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
-		return (r_ray_hit_check_doors_prim(gen, rdata, hit_pt, hit_pt->pt_co));
 	return (false);
 }
 
@@ -117,22 +119,8 @@ static bool	_r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
 	if (!rdata->shift)
 		return ((dec == 0. && _r_ray_check_no_shift_diag(gen, rdata,
 					hit_pt, real_hitpt_co)));
-	if (dec == DIST_WALL_MIN || dec == g_max_dec_to_wall)
-		return (_r_ray_check_no_shift_diag(gen, rdata, hit_pt, real_hitpt_co));
-	if (dec < DIST_WALL_MIN)
-	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, rdata,
-				hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y))
-			return (--hit_pt->chunk_co_x, true);
-		return (false);
-	}
-	else if (dec > g_max_dec_to_wall)
-	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, rdata,
-				hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y))
-			return (++hit_pt->chunk_co_x, true);
-		return (false);//useless as there is the same line just after this line
-	}
+	if (dec <= rdata->shift || dec >= 1.f - rdata->shift)
+		return (_r_ray_check_shift_diag(gen, rdata, hit_pt, real_hitpt_co));
 	return (false);
 }
 
@@ -159,22 +147,8 @@ static bool	_r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
 	if (!rdata->shift)
 		return ((dec == 0. && _r_ray_check_no_shift_diag(gen, rdata,
 					hit_pt, real_hitpt_co)));
-	if (dec == DIST_WALL_MIN || dec == g_max_dec_to_wall)
-		return (_r_ray_check_no_shift_diag(gen, rdata, hit_pt, real_hitpt_co));
-	if (dec < DIST_WALL_MIN)
-	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, rdata, hit_pt->chunk_co_x,
-				hit_pt->chunk_co_y - 1))
-			return (--hit_pt->chunk_co_y, true);
-		return (false);
-	}
-	else if (dec > g_max_dec_to_wall)
-	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, rdata, hit_pt->chunk_co_x,
-				hit_pt->chunk_co_y + 1))
-			return (++hit_pt->chunk_co_y, true);
-		return (false);//useless as there is the same line just after this line
-	}
+	if (dec <= rdata->shift || dec >= 1.f - rdata->shift)
+		return (_r_ray_check_shift_diag(gen, rdata, hit_pt, real_hitpt_co));
 	return (false);
 }
 
@@ -244,69 +218,99 @@ bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
 /**
  * @brief Used when a raycasting ray is sent (id rdata.shift == 0) and the ray
  *		hits the corner of a chunk. In this case checks the chunks adjacents to
- *		this point except the one from wich the ray comes from. In this case the
- *		impact is confirmed by a return true and the hitpoint coordinates are
-*		updated to real_hitpoint_co
+ *		this point. In this case the impact is confirmed by a return true and
+ *		the hitpoint coordinates are updated to real_hitpoint_co
  * 
  * @param gen 
+ * @param rdata 
  * @param hit_pt contains the updated hit hunk_co but not necessarly the right
  *		hitpoint coordinates
- * @param rdata 
  * @param real_hitpt_co the real hitpoint coordinates
- * @return true if an non tranparent object is hit on any of the three adjacent
- *		chunk, chunk_co updated
+ * @return true if a non tranparent object is hit on any of the adjacent chunks,
+ *			chunk_co updated
  * @return false otherwise
  */
-/*
-//version longue mais plus claire, ne permet pas de redefinir le chunk d'impacte
-//si impacte
-static bool	_r_ray_check_no_shift_diag(t_general *gen, t_hitpoint *hit_pt,
-	t_ray_data *rdata, t_vector_f real_hitpt_co)
-{
-	int	rtn;
-
-	if (rdata->dial == SW_W || rdata->dial == S_SW) //arrive par cadran sup droit
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, rdata, hit_pt->chunk_co_x,
-					hit_pt->chunk_co_y + 1) || r_ray_hit_check_solid_chunk
-				(gen->map.map, rdata, hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y));
-	else if (rdata->dial == NW_N || rdata->dial == W_NW) //arrive par cadran inf droit
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, rdata, hit_pt->chunk_co_x,
-					hit_pt->chunk_co_y - 1) || r_ray_hit_check_solid_chunk
-				(gen->map.map, rdata, hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y));
-	else if (rdata->dial == N_NE || rdata->dial == NE_E) //arrive par cadran inf gauche
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, rdata, hit_pt->chunk_co_x - 1,
-					hit_pt->chunk_co_y) || r_ray_hit_check_solid_chunk
-				(gen->map.map, rdata, hit_pt->chunk_co_x, hit_pt->chunk_co_y - 1));
-	else //arrive par cadran sup gauche
-		rtn = (r_ray_hit_check_solid_chunk(gen->map.map, rdata, hit_pt->chunk_co_x,
-					hit_pt->chunk_co_y + 1) || r_ray_hit_check_solid_chunk
-				(gen->map.map, rdata, hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y));
-	if (rtn)
-		return (hit_pt->pt_co = real_hitpt_co, true);
-	return (false);
-}
-//version courte qui change la nature du bloc touche par celle du bloc rencontre
-*/
 static bool	_r_ray_check_no_shift_diag(t_general *gen, t_ray_data *rdata,
 	t_hitpoint *hit_pt, t_vector_f real_hitpt_co)
 {
-	if (rdata->dial >= S_SW)//cadrans gauche
-	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, rdata,
-				hit_pt->chunk_co_x + 1, hit_pt->chunk_co_y))
-			return (++hit_pt->chunk_co_x, hit_pt->pt_co = real_hitpt_co, true);
-	}
-	else if (r_ray_hit_check_solid_chunk(gen->map.map, rdata,
+	int		chunk_x;
+	int		chunk_y;
+	bool	rtn;
+
+	chunk_x = (int)real_hitpt_co.x;
+	chunk_y = (int)real_hitpt_co.y;
+	rtn = true;
+	if (r_ray_hit_is_solid_chunk(gen->map.map, rdata,
 			hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y))
-		return (--hit_pt->chunk_co_x, hit_pt->pt_co = real_hitpt_co, true);
-	if (rdata->dial >= E_SE && rdata->dial <= SW_W)//cadran inf
+		--chunk_x;
+	else if (r_ray_hit_is_solid_chunk(gen->map.map, rdata,
+			hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y - 1))
 	{
-		if (r_ray_hit_check_solid_chunk(gen->map.map, rdata, hit_pt->chunk_co_x,
-				hit_pt->chunk_co_y + 1))
-			return (++hit_pt->chunk_co_y, hit_pt->pt_co = real_hitpt_co, true);
+		--chunk_x;
+		--chunk_y;
 	}
-	else if (r_ray_hit_check_solid_chunk(gen->map.map, rdata,
+	else if (r_ray_hit_is_solid_chunk(gen->map.map, rdata,
 			hit_pt->chunk_co_x, hit_pt->chunk_co_y - 1))
-		return (--hit_pt->chunk_co_y, hit_pt->pt_co = real_hitpt_co, true);
+		--chunk_y;
+	else if (!r_ray_hit_is_solid_chunk(gen->map.map, rdata,
+			hit_pt->chunk_co_x, hit_pt->chunk_co_y))
+		return (false);
+	return (hit_pt->chunk_co_x = chunk_x, hit_pt->chunk_co_x = chunk_x,
+		hit_pt->pt_co = real_hitpt_co, true);
+}
+
+/**
+ * @brief 
+ * 
+ * @param gen 
+ * @param rdata 
+ * @param hit_pt 
+ * @param real_hitpt_co 
+ * @return true 
+ * @return false 
+ */
+static bool	_r_ray_check_shift_diag(t_general *gen, t_ray_data *rdata,
+	t_hitpoint *hit_pt, t_vector_f real_hitpt_co)
+{
+	t_coord_f	dec;
+	t_coord_i	chunk;
+
+	dec.x = real_hitpt_co.x - floor(real_hitpt_co.x);
+	dec.y = real_hitpt_co.y - floor(real_hitpt_co.y);
+	chunk = (t_coord_i){(int)real_hitpt_co.x, (int)real_hitpt_co.y};
+	if ((dec.x <= rdata->shift || dec.x >= 1.f - rdata->shift)
+		&& _r_ray_check_shift_diag_border_x(gen->map.map, rdata, dec, &chunk))
+		return (hit_pt->chunk_co_x = chunk.x, hit_pt->chunk_co_y = chunk.y,
+			hit_pt->pt_co = real_hitpt_co, true);
+	if (dec.y <= rdata->shift && r_ray_hit_is_solid_chunk(gen->map.map, rdata,
+			chunk.x, chunk.y - 1))
+		return (hit_pt->chunk_co_x = chunk.x, hit_pt->chunk_co_y = chunk.y - 1,
+			hit_pt->pt_co = real_hitpt_co, true);
+	if (dec.y >= 1.f - rdata->shift
+		&& r_ray_hit_is_solid_chunk(gen->map.map, rdata, chunk.x, chunk.y + 1))
+		return (hit_pt->chunk_co_x = chunk.x, hit_pt->chunk_co_y = chunk.y + 1,
+			hit_pt->pt_co = real_hitpt_co, true);
+	return (false);
+}
+
+static bool	_r_ray_check_shift_diag_border_x(t_chunk **map, t_ray_data *rdata,
+	t_coord_f dec, t_coord_i *chunk)
+{
+	chunk->x += 1 - 2 * (dec.x <= rdata->shift);
+	if (r_ray_hit_is_solid_chunk(map, rdata, chunk->x, chunk->y))
+		return (true);
+	if (dec.y <= rdata->shift && r_ray_hit_is_solid_chunk(
+			map, rdata, chunk->x, chunk->y - 1))
+	{
+		--chunk->y;
+		return (true);
+	}
+	if (dec.y >= 1.f - rdata->shift && r_ray_hit_is_solid_chunk(
+			map, rdata, chunk->x, chunk->y + 1))
+	{
+		++chunk->y;
+		return (true);
+	}
+	chunk->x -= 1 - 2 * (dec.x <= rdata->shift);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 21:00:03 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:24:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	gp_looping(void *gen_)
 	now_time = to_getime();
 	delay = now_time - last_time;
 	last_time = now_time;
+	// printf("p_co: (%f, %f), %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y, gen->player.p_angle, gen->player.p_angle * 180/ M_PI);//
+	// fflush(stdout);//
 	if (gen->disp.img_select == INGAME)
 		_gp_frame_ingame(gen, delay, now_time);
 	else if (gen->disp.img_select == BIG_MAP)
@@ -139,8 +141,8 @@ int	gp_looping(void *gen_)
 
 	gen = gen_;
 	gp_walk(gen,
-		(float)(gen->next_moove[GO_RIGHT] - gen->next_moove[GO_LEFT]),
-		(float)(gen->next_moove[GO_FORWARD] - gen->next_moove[GO_BACK]),
+		(float)(gen->next_walk[GO_RIGHT] - gen->next_walk[GO_LEFT]),
+		(float)(gen->next_walk[GO_FORWARD] - gen->next_walk[GO_BACK]),
 		FIXED_DELAY);
 	gp_turn_head(gen, FIXED_DELAY);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]

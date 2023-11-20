@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:35:01 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/25 04:29:51 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:30:36 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	main(int ac, char **av)
 
 	gen = (t_general){0};
 	init_main(ac, av, &gen);
+	gen.player.p_co.x = 6.837041;
+	gen.player.p_co.y = 4.544216;
+	gen.player.p_angle = 4.454997;
 	mlx_loop_hook(gen.disp.mlx, gp_looping, &gen);
 	mlx_loop(gen.disp.mlx);
 	end_destroy_general(&gen);
