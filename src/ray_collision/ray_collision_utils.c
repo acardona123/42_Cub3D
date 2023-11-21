@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:11:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 17:24:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:01:34 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	r_point_outside_map(t_map *map, t_coord_f P)
  * @return true if solid
  * @return false if not solid (reachable for the player)
  */
-bool	r_ray_hit_check_solid_chunk(t_chunk **map, t_ray_data *rdata,
+bool	r_ray_hit_is_solid_chunk(t_chunk **map, t_ray_data *rdata,
 	int chunk_co_x, int chunk_co_y)
 {
 	if (ft_isinset(map[chunk_co_x][chunk_co_y].type, rdata->obstacles))
@@ -62,7 +62,7 @@ bool	r_ray_hit_check_solid_chunk(t_chunk **map, t_ray_data *rdata,
  * @return true if solid
  * @return false if not solid (reachable for the player)
  */
-bool	r_ray_hit_check_solid_chunk(t_chunk **map, t_ray_data *rdata,
+bool	r_ray_hit_is_solid_chunk(t_chunk **map, t_ray_data *rdata,
 	int chunk_co_x, int chunk_co_y)
 {
 	if (ft_isinset(map[chunk_co_x][chunk_co_y].type, rdata->obstacles))
