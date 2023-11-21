@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/20 19:38:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:03:12 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static bool	_r_ray_check_shift_diag(t_general *gen, t_ray_data *rdata,
  */
 bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
 {
+	// printf(" Check (%f, %f):\n", hit_pt->pt_co.x, hit_pt->pt_co.y);//
 	// printf("\e[31mcheck : (%d, %d)\e[0m\n", hit_pt->chunk_co_x, hit_pt->chunk_co_y);//
 	if (hit_pt->pt_co.x <= -EPSILON)
 		return (true);
@@ -83,15 +84,15 @@ bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
 	if (ft_isinset(gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type,
 		rdata->obstacles))
 		return (hit_pt->pt_co = real_hitpt_co, true);
+	if (rdata->door_behaviour != ray_pass_door_always
+		&& gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
+		return (r_ray_hit_check_doors_sec(gen, rdata, hit_pt, real_hitpt_co));
 	if (rdata->prim != PRIMARY_H && _r_ray_check_shift_diag_touch_h(gen,
 			rdata, hit_pt, real_hitpt_co))
 		return (true);
 	if (rdata->prim == PRIMARY_H && _r_ray_check_shift_diag_touch_v(gen,
 			rdata, hit_pt, real_hitpt_co))
 		return (true);
-	if (rdata->door_behaviour != ray_pass_door_always
-		&& gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type == DOOR)
-		return (r_ray_hit_check_doors_sec(gen, rdata, hit_pt, real_hitpt_co));
 	return (false);
 }
 
@@ -240,22 +241,20 @@ static bool	_r_ray_check_no_shift_diag(t_general *gen, t_ray_data *rdata,
 	chunk_x = (int)real_hitpt_co.x;
 	chunk_y = (int)real_hitpt_co.y;
 	rtn = true;
-	if (r_ray_hit_is_solid_chunk(gen->map.map, rdata,
-			hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y))
+	if (r_ray_hit_is_solid_chunk(gen->map.map, rdata, chunk_x - 1, chunk_y))
 		--chunk_x;
-	else if (r_ray_hit_is_solid_chunk(gen->map.map, rdata,
-			hit_pt->chunk_co_x - 1, hit_pt->chunk_co_y - 1))
+	else if (r_ray_hit_is_solid_chunk(gen->map.map, rdata, chunk_x - 1,
+			chunk_y - 1))
 	{
 		--chunk_x;
 		--chunk_y;
 	}
-	else if (r_ray_hit_is_solid_chunk(gen->map.map, rdata,
-			hit_pt->chunk_co_x, hit_pt->chunk_co_y - 1))
+	else if (r_ray_hit_is_solid_chunk(gen->map.map, rdata, chunk_x,
+			chunk_y - 1))
 		--chunk_y;
-	else if (!r_ray_hit_is_solid_chunk(gen->map.map, rdata,
-			hit_pt->chunk_co_x, hit_pt->chunk_co_y))
+	else if (!r_ray_hit_is_solid_chunk(gen->map.map, rdata, chunk_x, chunk_y))
 		return (false);
-	return (hit_pt->chunk_co_x = chunk_x, hit_pt->chunk_co_x = chunk_x,
+	return (hit_pt->chunk_co_x = chunk_x, hit_pt->chunk_co_y = chunk_y,
 		hit_pt->pt_co = real_hitpt_co, true);
 }
 

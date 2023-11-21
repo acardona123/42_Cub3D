@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/10 21:48:02 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/21 14:44:23 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params)
 		params.ray_angle += 2 * M_PI;
 	while (params.ray_angle > 2 * M_PI)
 		params.ray_angle -= 2 * M_PI;
-	// printf("\n\np_co: (%f, %f)\nangle: %f (%f)\n", params.ray_start_point.x, params.ray_start_point.y, params.ray_angle, params.ray_angle * 180 / M_PI);//
+	// if (params.ray_type == ray_walk)//
+	// 	printf("\n\np_co: (%f, %f)\nangle: %f (%f)\n", params.ray_start_point.x, params.ray_start_point.y, params.ray_angle, params.ray_angle * 180 / M_PI);//
 	rdata = (t_ray_data){0};
 	_r_ray_extract_param(&params, &rdata);
 	last_hit = r_ray_init_rdata_hitpoint(&params.ray_start_point,
@@ -77,39 +78,41 @@ static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata)
 
 /*
 #include "../../includes/cub3d.h"
-int    main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_general        gen;
-    t_hitpoint        hitpoint;
-    float            angle_deg;
-    t_ray_type        ray_type = ray_walk;
+	t_general	gen;
+	t_hitpoint	hitpoint;
+	float		angle_deg;
+	t_ray_type	ray_type = ray_walk;
 
-    gen = (t_general){0};
-    init_main(ac, av, &gen);
-    // gen.player.p_co.x = 2.5;
-    // gen.player.p_co.y = 3.5;
-    // gen.player.p_co.x -= 0.5 + DIST_WALL_MIN;
-    // gen.player.p_co.y += 0.5 - DIST_WALL_MIN;
-    gen.player.p_co.x -= .4;
-    // gen.player.p_co.y += .5;
-    printf("player co: (%f, %f)\n\n", gen.player.p_co.x, gen.player.p_co.y);
-    angle_deg = 0.;
-    while (angle_deg < 360)
-    {
-        printf("angle: %f (%f)\n", angle_deg, angle_deg * M_PI / 180);
-
-        hitpoint = r_ray_hit(&gen, (t_ray_params){ray_type, to_getime(),
-                gen.player.p_co, angle_deg * M_PI / 180});
-        printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
-        if (hitpoint.chunk_co_x >= 0.)
-            printf(" chunk: (%d, %d) -> \'%c\'\n", hitpoint.chunk_co_x,
-                hitpoint.chunk_co_y,
-                gen.map.map[hitpoint.chunk_co_x][hitpoint.chunk_co_y].type);
-        else
-            printf("chunk: no\n");
-        printf(" face: %c\n\n", "NESW"[hitpoint.hit_face]);
-        angle_deg += 15.;
-    }
-    return (0);
+	gen = (t_general){0};
+	init_main(ac, av, &gen);
+	gen.player.p_co.x = 10.250001;
+	gen.player.p_co.y = 1.250001;
+	// gen.player.p_co.x -= 0.5 + DIST_WALL_MIN;
+	// gen.player.p_co.y += 0.5 - DIST_WALL_MIN;
+	// gen.player.p_co.x -= .4;
+	// gen.player.p_co.y += .5;
+	printf("player co: (%f, %f)\n\n", gen.player.p_co.x, gen.player.p_co.y);
+	angle_deg = 0.;
+	while (angle_deg < 360)
+	{
+		printf("angle: %f (%f)\n", angle_deg, angle_deg * M_PI / 180);
+		fflush(stdout);
+		hitpoint = r_ray_hit(&gen, (t_ray_params){ray_type, to_getime(),
+				gen.player.p_co, angle_deg * M_PI / 180});
+		printf(" last_hit : (%f, %f)\n", hitpoint.pt_co.x, hitpoint.pt_co.y);
+		fflush(stdout);
+		if (hitpoint.chunk_co_x >= 0.)
+			printf(" chunk: (%d, %d) -> \'%c\'\n", hitpoint.chunk_co_x,
+				hitpoint.chunk_co_y,
+				gen.map.map[hitpoint.chunk_co_x][hitpoint.chunk_co_y].type);
+		else
+			printf("chunk: no\n");
+		printf(" face: %c\n\n", "NESW"[hitpoint.hit_face]);
+		fflush(stdout);
+		angle_deg += 15.;
+	}
+	return (0);
 }
 */
