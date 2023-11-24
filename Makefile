@@ -1,13 +1,15 @@
-NAME			=	cub3D
+NAME				=	cub3D
 
-CC				=	cc
-CFLAGS			=	-Werror -Wall -Wextra -g
-DEPSFLAG		=	-MMD
+CC					=	cc
+CFLAGS				=	-Werror -Wall -Wextra -g
+DEPSFLAG			=	-MMD
 
-MLX_DIR			=	mlx
-MLX				=	$(MLX_DIR)/libmlx.a
-LIBFT_DIR		=	libft
-INCLUDE_LIB		=	-L$(MLX_DIR) -lmlx -lXext -lX11 -lm -L$(LIBFT_DIR) -lft
+MLX_DIR				=	mlx
+MLX					=	$(MLX_DIR)/libmlx.a
+LIBFT_DIR			=	libft
+INCLUDE_LIBFT		=	-L$(LIBFT_DIR) -lft
+INCLUDE_LIB_MLX		=	-L$(MLX_DIR) -lmlx -lXext -lX11
+INCLUDE_LIB			=	$(INCLUDE_LIB_MLX) $(INCLUDE_LIBFT) -lm
 
 FILES_END_DESTROY	=	$(addprefix end_destroy/end_destroy_, \
 							general \
@@ -34,10 +36,12 @@ FILES_INIT			=	$(addprefix init/, \
 							$(addprefix 2_texturepack/init_2_texturepack_, \
 								main \
 								animated_texture \
+								check_textures_defined \
 								static_texture \
 								set_color \
-								check_texture_defined \
-								random_screen \
+								group_of_textures \
+								group_of_textures_dir \
+								group_of_textures_dir_sub \
 								utils \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
@@ -84,6 +88,7 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 						time \
 						angles_set \
 						mlx_img \
+						file \
 					)
 
 FILES_DOORS		=	$(addprefix doors/doors_, \
@@ -107,7 +112,7 @@ FILES_NAMES			=	\
 						$(FILES_GAMEPLAY) \
 						$(FILES_DOORS) \
 						$(FILES_MAPS) \
-						# main 
+						main 
 
 
 SRC_DIR			=	src
@@ -164,11 +169,23 @@ lib_libft :
 	@make --no-print-directory -C $(LIBFT_DIR)
 	@echo "\e[32m---- End: libft compilation ----\e[0m\n"
 
+
+
+run : all
+	@echo "\n\n==============================================\n"
+	@echo "Runing the mandatory part with the following arguments:\n$(ARGS)\n{"
+	@./$(NAME) $(ARGS); echo "}\ndone\n=> Exit value : $$?";true
+
+run_bonus : bonus
+	@echo "\n\n==============================================\n"
+	@echo "Running the bonus part with the following arguments:\n$(ARGS)\n{"
+	@./$(NAME) $(ARGS); echo "}\ndone\n=> Exit value : $$?";true
+
 clean :
 	@echo "\e[31mRemoving object files\e[0m"
 	@rm -rf $(OBJ_DIR)
 	@make clean --no-print-directory -C $(LIBFT_DIR)
-	@make clean --no-print-directory -C $(MLX_DIR) >/dev/null 2>&1
+	@make clean --no-print-directory -C $(MLX_DIR) >/dev/null 2>&1 || true
 
 fclean : clean
 	@echo "\e[31mRemoving Libft library, mlx directory and executable\e[0m"
@@ -182,7 +199,6 @@ re : fclean all
 
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(DEPSFLAG) $(OBJ) $(INCLUDE_LIB) -o $(NAME)
-
 
 name_start :
 	@echo "\e[32m==== SOURCES COMPILATION ====\e[0m"
@@ -199,5 +215,42 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c Makefile
 	@if [ ! -d "$(dir $@)" ]; then mkdir $(dir $@); fi
 	$(CC) $(CFLAGS) $(DEPSFLAG) -c $< -o $@
 
+#leaks check
+LEAK_SUPPR_GENERATOR	=	generate_suppression_file.sh
+LEAK_SUPPR_DIR			=	.valgrind_suppr
+LEAK_SUPPR_FILE			=	.valgrind_suppr_mlx_mouse_hide
+LEAK_C_FILE				=	$(LEAK_SUPPR_DIR)/mlx_mouse_hide.c
+LEAK_LEAKING_FCT_0		=	mlx_mouse_hide
+LEAK_SUPP_COMPIL_ARG	=	-L$(shell pwd)/$(MLX_DIR) -lmlx -lXext -lX11
+LEAK_VALGRINDRC			=	.valgrindrc
 
-.PHONY : all clean fclean re bonus
+$(LEAK_VALGRINDRC) :
+	@touch .valgrindrc
+
+$(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE) : 
+	@echo "\e[33m==== GENERATING ERROR SUPPRESSION FILE FOR VALGRIND ====\e[0m"
+	@chmod 777 $(LEAK_SUPPR_GENERATOR)
+	@bash ./$(LEAK_SUPPR_GENERATOR) "$(LEAK_SUPPR_DIR)" "$(LEAK_SUPPR_FILE)" "$(LEAK_C_FILE)" "$(LEAK_SUPP_COMPIL_ARG)" "$(LEAK_LEAKING_FCT_0)"
+	@echo "\e[33m---- End: error suppression file ----\e[0m\n"
+
+check : all $(LEAK_VALGRINDRC) $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)
+	@echo "\e[32m==== MANDATORY LEAKS CHECK ====\e[0m"
+	@echo "Example to test with arguments :\nmake check ARGS=maps/valid/subject_tests_no_textures.cub"
+	valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes ./$(NAME) $(ARGS) || true
+	@echo "\e[32m==== End: Mandatory leaks check ====\e[0m"
+
+check_bonus : bonus $(LEAK_VALGRINDRC) $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)
+	@echo "\e[32m==== BONUS LEAKS CHECK ====\e[0m"
+	@echo "Example to test with arguments :\nmake check_bonus ARGS=maps/valid/subject_tests_no_textures.cub"
+	valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes ./$(NAME) $(ARGS) || true
+	@echo "\e[32m==== End: Bonus leaks check ====\e[0m"
+
+check_clean : clean
+	@rm -rf $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)
+	@rm -rf $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)_log.log
+
+check_fclean : fclean
+	@rm -rf $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)
+	@rm -rf $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)_log.log
+
+.PHONY : all clean fclean re bonus check ckeck_bonus check_clean check_fclean
