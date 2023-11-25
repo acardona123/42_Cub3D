@@ -1,16 +1,16 @@
-NO ./textures/random_tests/wall_n/walln1.xpm
-SO ./textures/random_tests/wall_s/walls.xpm
-WE ./textures/random_tests/wall_w/wallw.xpm
-EA ./textures/random_tests/wall_e/wall_e1.xpm
+NO ./textures/random_tests/wall_n/wall_n_0/wall_n_0_0.xpm
+SO ./textures/random_tests/wall_s/wall_s_0/wall_s_0_0.xpm
+WE ./textures/random_tests/wall_w/wall_w_0/wall_w_0_0.xpm
+EA ./textures/random_tests/wall_e/wall_e_0/wall_e_0_0.xpm
 F 100,60,60
 C 60,160,255
 
 
 
 1111111111111111111
-1000000000000000001
+1100000000000000011
 1000000000000010001
 10001N0000000000001
 1000000000000010001
-1000000001000000001
+1100000001000000011
 1111111111111111111

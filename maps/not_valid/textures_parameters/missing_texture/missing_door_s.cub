@@ -2,7 +2,7 @@ NO ./textures/random_tests/wall_n
 SO ./textures/random_tests/wall_s
 WE ./textures/random_tests/wall_w
 EA ./textures/random_tests/wall_e
-DF ./textures/random_tests/door_face 1145 5000
+DF ./textures/random_tests/door_face
 F 100,60,60
 C 60,160,255
 

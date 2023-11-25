@@ -1,8 +1,12 @@
 NO ./textures/random_tests/wall_n
 SO ./textures/random_tests/wall_s
 WE ./textures/random_tests/wall_w
-DF ./textures/random_tests/door_face 1145 5000
-DS ./textures/random_tests/door_side_se 12 2
+DF ./textures/random_tests/door_face
+DC ./textures/random_tests/door_side_closed
+DOOD ./textures/random_tests/door_side_open_opened
+DOOG ./textures/random_tests/door_side_open_opening
+DOCD ./textures/random_tests/door_side_open_closed
+DOCG ./textures/random_tests/door_side_open_closing
 F 100,60,60
 C 60,160,255
 
