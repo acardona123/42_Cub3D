@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 02:20:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 16:00:52 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/25 22:02:09 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 	char *path)
 {
 	if (_in_2_static_texture_init_one_check_path(path) == FAIL)
-		return (to_error_msg(MSG_WROND_FILE_FORMAT), FAIL);
+		return (FAIL);
 	if (texture->path != path)
 		texture->path = path;
 	texture->data.img = mlx_xpm_file_to_image(mlx, path, &texture->img_width,

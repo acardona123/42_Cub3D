@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 19:44:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/25 21:56:12 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ wrong character in the top line of the map content"
 # define MSG_NO_XPM_IN_FOLDER "Map: no .xpm file in a texture folder"
 # define MSG_ACCEPT_ONLY_XPM "Map: to avoid mlx leaks this program can only \
 handle .xpm images as textures, sorry"
+# define MSG_TEXTURE_DONT_EXIST "MAP: texture file/directory doesn't exist"
 # define MSG_ERR_OPEN_TEXTURE "Map: texture file not reachable/readable"
 # define MSG_ERR_OPEN_TEXTURE_DATA "Map: texture data file not \
 reachable/readable"

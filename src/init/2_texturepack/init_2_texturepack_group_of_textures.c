@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 03:14:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 19:35:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/25 21:56:19 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ t_bool	in_2_textu_group_init(void *mlx, t_group_of_textures *textures_group,
 	if (dir)
 		return (closedir(dir), in_2_textu_group_init_from_dir(mlx,
 				textures_group, *texture_name));
-	if (errno != ENOTDIR)
+	if (errno == ENOENT)
+		return (to_error_msg(MSG_TEXTURE_DONT_EXIST), FAIL);
+	else if (errno != ENOTDIR)
 		return (to_error_msg(MSG_OPENDIR_FAIL), FAIL);
 	return (_in_2_textu_group_init_from_file(mlx, textures_group,
 			texture_name));
