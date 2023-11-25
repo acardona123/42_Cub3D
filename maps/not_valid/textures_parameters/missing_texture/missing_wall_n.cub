@@ -1,6 +1,6 @@
-SO ./textures/random_tests/wall_s 500 0
-WE ./textures/random_tests/wall_w 500 0
-EA ./textures/random_tests/wall_e 500 0
+SO ./textures/random_tests/wall_s
+WE ./textures/random_tests/wall_w
+EA ./textures/random_tests/wall_e
 DF ./textures/random_tests/door_face 1145 5000
 DS ./textures/random_tests/door_side_se 12 2
 F 100,60,60

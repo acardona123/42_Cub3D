@@ -3,11 +3,11 @@ NO /media/alexandm/CARDONA/cub3d_textures/crash2/crash2.xpm
 EA /media/alexandm/CARDONA/cub3d_textures/crash2/crash2.xpm
 WE /media/alexandm/CARDONA/cub3d_textures/crash2/crash2.xpm
 DF /media/alexandm/CARDONA/cub3d_textures/crash2/crash2.xpm
-DC ./textures/random_tests/door_side_closed 300 0
-DOOD ./textures/random_tests/door_side_open_opened 300 0
-DOOG ./textures/random_tests/door_side_open_opening 300 0
-DOCD ./textures/random_tests/door_side_open_closed 300 0
-DOCG ./textures/random_tests/door_side_open_closing 300 0
+DC ./textures/random_tests/door_side_closed
+DOOD ./textures/random_tests/door_side_open_opened
+DOOG ./textures/random_tests/door_side_open_opening
+DOCD ./textures/random_tests/door_side_open_closed
+DOCG ./textures/random_tests/door_side_open_closing
 F 100,60,60
 C 60,160,255
         1111111111111111111111111
