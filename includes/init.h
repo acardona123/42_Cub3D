@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 04:26:27 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:44:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 definition"
 # define MSG_WRONG_ACRONYME "Map: wrong acronym for a texture definition or \
 wrong character in the top line of the map content"
+# define MSG_WROND_FILE_FORMAT "Map: the given texture isn't a .xpm file"
 # define MSG_OPENDIR_FORBIDDEN "Map: cannot open folder in the mandatory part"
 # define MSG_OPENDIR_FAIL "Map: fail to open a texture directory"
 # define MSG_NO_XPM_IN_FOLDER "Map: no .xpm file in a texture folder"
@@ -98,6 +99,8 @@ typedef enum e_mouse_keys
 }	t_mouse_keys;
 
 void	init_main(int ac, char **av, t_general	*gen);
+void	init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
+			t_group_of_textures *texture_group, bool new_seed);
 
 // init_3_utils.c
 void	in_init_destroy_lists_exit(t_general *gen, t_lists *lst_init,
@@ -134,8 +137,24 @@ void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init);
 bool	in_2_are_all_mandatory_textures_init(t_texture_pack *texturepack,
 			bool *colors_defined);
 //init_2_texturepack_set_color.c
-t_bool	in_2_set_color(int *dest_color, char **line_arg,
+t_bool	in_2_set_color(int *dest_color, char *str_color,
 			bool *already_done);
+//init_2_texturepack_group_of_textures.c
+t_bool	in_2_textu_group_init(void *mlx, t_group_of_textures *textures_group,
+			char **texture_name);
+//init_2_texturepack_group_of_textures_dir.c
+t_bool	in_2_textu_group_init_from_dir(void *mlx,
+			t_group_of_textures *textures_group, char *dir_name);
+//init_2_texturepack_group_of_textures_sub.c
+t_bool	in_2_textu_group_dir_count_textures(char *dir_name, unsigned int
+			*cpt_textures);
+t_bool	in_2_textu_group_dir_check_subdir_contains_texture(char *parent_dir,
+			char *subdir_name, bool *subdir_contains_textures);
+char	**in_2_textu_group_dir_line_arg_from_subdir(char *dir_parent_name,
+			char *dir_name);
+char	**in_2_textu_group_dir_line_arg_from_subfile(char *dir_parent_name,
+			char *file_name);
+void	in_2_textu_group_dir_sort_anim_textures(t_group_of_textures *group);
 //init_2_texturepack_animated_texture.c
 t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
 			char **line_arg);
@@ -157,10 +176,8 @@ void	in_3_mapcontent_init(t_general *gen, t_lists *lst_init);
 bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x,
 			int y);
 // init_3_mapcontent_locate_texture.c
-t_bool	in_3_map_add_locate_textures(t_texture_pack *texturepack,
-			t_animated_texture **tex, char c);
-void	in_3_map_add_door_sides_textures(t_chunk **map,
-			t_texture_pack *textures, int door_x, int door_y);
+t_bool	in_3_map_set_chunk_textures(t_texture_pack *texturepack,
+			t_chunk *chunk);
 // init_3_mapcontent_set_status_action.c
 t_bool	in_3_mapcontent_status_action_init(t_map *map);
 /*

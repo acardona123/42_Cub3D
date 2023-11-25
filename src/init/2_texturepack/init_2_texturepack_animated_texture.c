@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 05:15:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:07:34 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static t_bool	in_2_anim_textu_init_folder(void *mlx,
  * 
  * @param texture 
  * @param line_arg the line of arg starting AFTER the accronyme
- * @return SUCCESS (textures successfully loaded)
+ * @return SUCCESS (textures successfully loaded, line_arg updated to extract
+ *				line_arg[0] form it (to avoid it being freed))
  * @return FAIL (err msg displayed. no argument freed)
  */
 t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
@@ -54,7 +55,8 @@ t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
  * @param texture struct to fill
  * @param line_arg splited line of the input file to import, starting AFTER the
  *		accronym
- * @return SUCCESS: texture successfully imported, no arg freed
+ * @return SUCCESS: texture successfully imported, no line_arg freed (but arg[0]
+ *		extracted from line_arg)
  * @return FAIL: err msg displayed, no arg freed
  */
 static t_bool	in_2_anim_textu_init_file(void *mlx,
@@ -152,7 +154,7 @@ static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
 	{
 		if (in_2_tools_is_xpm_file(elem))
 		{
-			path = ft_strjoin3(dir_name, "/", elem->d_name);
+			path = to_file_build_path(dir_name, elem->d_name, NULL, NULL);
 			if (!path)
 				return (to_error_msg(MSG_BAD_ALLOC), FAIL);
 			if (in_2_static_texture_init_one (mlx, &tex->frame_array[i],

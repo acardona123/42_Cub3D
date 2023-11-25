@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 21:41:26 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:06:53 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # define WIN_NAME		"Cub3D"
 # define WIN_HEIGHT		900
 # define WIN_WIDTH		1500
+
+//textures settings
+# define TEXTURE_PARAMETERS_FILE_NAME "frames_data.txt"
 
 //game default parameters
 # define DEFAULT_FOV					1.4

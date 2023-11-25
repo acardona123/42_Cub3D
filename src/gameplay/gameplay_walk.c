@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:17:08 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 21:17:51 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:30:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void			_gp_walk_slide_along_wall(t_general *gen, t_coord_f target,
 						int dir_x, int dir_y);
 
 /**
- * @brief mooves the player in the direction dir. It tries to do a step of
+ * @brief moves the player in the direction dir. It tries to do a step of
  *		delay * walk_speed (to keep a constant velocity independant of the fps).
  *		If their is an obstacle on the way the player slides along it.
  * 

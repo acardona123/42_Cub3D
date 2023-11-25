@@ -6,16 +6,18 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/03 03:52:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:36:00 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shared.h"
 
+static void	_end_textures_destroy_group_of_texture(void *mlx,
+				t_group_of_textures *group);
 static void	_end_textures_destroy_one_animated_texture(void *mlx,
-				t_animated_texture *target);
+				t_animated_texture *textu_anim);
 static void	_end_textures_destroy_one_static_texture(void *mlx,
-				t_static_texture *target);
+				t_static_texture *textu_static);
 
 /**
  * @brief frees and destroys all the texture elements of the texture pack.
@@ -27,26 +29,45 @@ static void	_end_textures_destroy_one_static_texture(void *mlx,
  */
 void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
 {
-	t_animated_texture	***textures;
-	int					i;
+	t_group_of_textures	**groups;
+	int					i_group;
 
 	if (!pack)
 		return ;
-	textures = (t_animated_texture **[NUMBER_OF_TEXTURES]){&pack->wall_n,
+	groups = (t_group_of_textures *[NUMBER_OF_TEXTURES]){&pack->wall_n,
 		&pack->wall_s, &pack->wall_e, &pack->wall_w, &pack->door_front,
 		&pack->door_side_close,
 		&pack->door_side_open_opened, &pack->door_side_open_opening,
 		&pack->door_side_open_closed, &pack->door_side_open_closing};
-	i = -1;
-	while (++i < NUMBER_OF_TEXTURES)
+	i_group = -1;
+	while (++i_group < NUMBER_OF_TEXTURES)
+		_end_textures_destroy_group_of_texture(mlx, groups[i_group]);
+}
+
+/**
+ * @brief destroys the textures group content (array of animated texture with
+ *		all its animated textures it contains). 
+ * 
+ * @param mlx 
+ * @param group 
+ */
+static void	_end_textures_destroy_group_of_texture(void *mlx,
+	t_group_of_textures *group)
+{
+	size_t				i_anim_textu;
+
+	if (!group || !group->group_len)
+		return ;
+	i_anim_textu = 0;
+	while (group->textures_array[i_anim_textu])
 	{
-		if (*textures[i])
-		{
-			_end_textures_destroy_one_animated_texture(mlx, *textures[i]);
-			free(*textures[i]);
-			*textures[i] = NULL;
-		}
+		_end_textures_destroy_one_animated_texture(mlx, group->textures_array
+		[i_anim_textu]);
+		free(group->textures_array[i_anim_textu]);
+		++i_anim_textu;
 	}
+	free(group->textures_array);
+	group->group_len = 0;
 }
 
 /**
@@ -54,39 +75,42 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
  *			animation
  * 
  * @param mlx 
- * @param target 
+ * @param anim pointer to a t_animated_texture pointer which content must be
+ *	destroyed
  */
 static void	_end_textures_destroy_one_animated_texture(void *mlx,
-	t_animated_texture *target)
+	t_animated_texture *textu_anim)
 {
 	unsigned int	i;
 
-	if (!target || !target->frame_array)
+	if (!textu_anim || !textu_anim->frame_array)
 		return ;
 	i = 0;
-	while (target->frame_array && i < target->frame_number
-		&& target->frame_array[i].path)
+	while (i < textu_anim->frame_number
+		&& textu_anim->frame_array[i].path)
 	{
-		_end_textures_destroy_one_static_texture(mlx, &target->frame_array[i]);
+		_end_textures_destroy_one_static_texture(mlx,
+			&textu_anim->frame_array[i]);
 		++i;
 	}
-	free(target->frame_array);
+	free(textu_anim->frame_array);
 }
 
 /**
- * @brief destroys a static texture <=> it's path, image and image address
+ * @brief destroys a static texture content <=> it's path, image and image
+ *	address
  * 
  * @param mlx 
- * @param target 
+ * @param textu_static pointer untouched but value destroyed
  */
 static void	_end_textures_destroy_one_static_texture(void *mlx,
-	t_static_texture *target)
+	t_static_texture *textu_static)
 {
-	if (!target)
+	if (!textu_static)
 		return ;
-	free(target->path);
-	if (target->data.img)
-		mlx_destroy_image(mlx, target->data.img);
+	free(textu_static->path);
+	if (textu_static->data.img)
+		mlx_destroy_image(mlx, textu_static->data.img);
 }
 
 /*

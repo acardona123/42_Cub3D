@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:44:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 20:34:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:53:31 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
 	if (old_status == DOOR_CLOSED || old_status == DOOR_CLOSING)
 	{
 		chunk->action->targets[TARGET_DOOR_ITSELF]->status = DOOR_OPENING;
-		chunk->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
-			= gen->textures.door_side_open_opening;
+		init_chunk_set_texture(chunk->action->targets[TARGET_DOOR_SIDE],
+			face_to_update, &gen->textures.door_side_open_opening, false);
 	}
 	else if (old_status == DOOR_OPEN || old_status == DOOR_OPENING)
 	{
 		chunk->action->targets[TARGET_DOOR_ITSELF]->status = DOOR_CLOSING;
-		chunk->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
-			= gen->textures.door_side_open_closing;
+		init_chunk_set_texture(chunk->action->targets[TARGET_DOOR_SIDE],
+			face_to_update, &gen->textures.door_side_open_closing, false);
 	}
 	chunk->action->time_last_act = time_now
 		- (old_status == DOOR_CLOSING || old_status == DOOR_OPENING)

@@ -112,7 +112,7 @@ FILES_NAMES			=	\
 						$(FILES_GAMEPLAY) \
 						$(FILES_DOORS) \
 						$(FILES_MAPS) \
-						main 
+						main
 
 
 SRC_DIR			=	src
@@ -207,6 +207,10 @@ name_end :
 	@echo "\e[32m---- End: sources compilation ----\e[0m\n"
 
 ifeq ($(MAKECMDGOALS),bonus)
+CFLAGS += -D BONUS
+endif
+
+ifeq ($(MAKECMDGOALS),check_bonus)
 CFLAGS += -D BONUS
 endif
 

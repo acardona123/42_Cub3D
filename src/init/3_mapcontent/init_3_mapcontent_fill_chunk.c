@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/13 15:58:08 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/25 20:35:01 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ static bool	_int_3_is_character_surrounding_ok(char c, t_map *map, int x,
 				int y);
 
 #ifdef BONUS
+
+void	in_3_map_add_door_sides_textures(t_chunk **map,
+			t_texture_pack *textures, int door_x, int door_y);
 
 /**
  * @brief fills all the chunk data except the action structure and the status
@@ -37,13 +40,13 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 	gen->map.map[x][y].status = INACTIVE;
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
-	gen->map.map[x][y].t0 = to_getime() - rand() % 1000;
-	if (in_3_map_add_locate_textures(&gen->textures,
-			gen->map.map[x][y].textures, c_type) == FAIL)
+	gen->map.map[x][y].t0 = to_getime() - rand();
+	if (in_3_map_set_chunk_textures(&gen->textures, &gen->map.map[x][y])
+		== FAIL)
 		return (false);
 	if (y < gen->map.y_max - 1 && gen->map.map[x][y + 1].type == DOOR)
 		in_3_map_add_door_sides_textures(gen->map.map, &gen->textures, x,
-			y + 1);
+			y + 1); //retirer ca du header et le mettre uniquement dans la partie mandatory ?-----------------
 	return (true);
 }
 
@@ -56,8 +59,7 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
 	gen->map.map[x][y].t0 = 0;
-	in_3_map_add_locate_textures(&gen->textures, gen->map.map[x][y].textures,
-		c_type);
+	in_3_map_set_chunk_textures(&gen->textures, &gen->map.map[x][y]);
 	return (true);
 }
 

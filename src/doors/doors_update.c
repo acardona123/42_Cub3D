@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 20:34:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:46:35 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ void	doors_update_texture_main_side(t_texture_pack *texture_pack,
 	else
 		face_to_update = FACE_S;
 	if (door->status == DOOR_OPEN)
-		door->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
-			= texture_pack->door_side_open_opened;
+		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+			face_to_update, &texture_pack->door_side_open_opened, false);
 	else if (door->status == DOOR_OPENING)
-		door->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
-			= texture_pack->door_side_open_opening;
+		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+			face_to_update, &texture_pack->door_side_open_opening, false);
 	else if (door->status == DOOR_CLOSED)
-		door->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
-			= texture_pack->door_side_open_closed;
+		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+			face_to_update, &texture_pack->door_side_open_closed, false);
 	else if (door->status == DOOR_CLOSING)
-		door->action->targets[TARGET_DOOR_SIDE]->textures[face_to_update]
-			= texture_pack->door_side_open_closing;
+		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+			face_to_update, &texture_pack->door_side_open_closing, false);
 }
 
 #else

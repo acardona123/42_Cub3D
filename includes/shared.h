@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 01:50:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:40:11 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,28 @@ typedef struct s_animated_texture
 	t_static_texture	*frame_array;
 }	t_animated_texture;
 
+typedef struct s_group_of_textures
+{
+	unsigned int		group_len;
+	t_animated_texture	**textures_array;
+}	t_group_of_textures;
+
 # define NUMBER_OF_TEXTURES 10
 
 typedef struct s_texture_pack
 {
-	t_animated_texture	*wall_n;
-	t_animated_texture	*wall_s;
-	t_animated_texture	*wall_e;
-	t_animated_texture	*wall_w;
-	t_animated_texture	*door_front;
-	t_animated_texture	*door_side_close;
-	t_animated_texture	*door_side_open_opened;
-	t_animated_texture	*door_side_open_opening;
-	t_animated_texture	*door_side_open_closed;
-	t_animated_texture	*door_side_open_closing;
-	t_animated_texture	**leaks;
-	t_animated_texture	**crashes;
+	t_group_of_textures	wall_n;
+	t_group_of_textures	wall_s;
+	t_group_of_textures	wall_e;
+	t_group_of_textures	wall_w;
+	t_group_of_textures	door_front;
+	t_group_of_textures	door_side_close;
+	t_group_of_textures	door_side_open_opened;
+	t_group_of_textures	door_side_open_opening;
+	t_group_of_textures	door_side_open_closed;
+	t_group_of_textures	door_side_open_closing;
+	t_group_of_textures	leaks;
+	t_group_of_textures	crashes;
 	int					color_f;
 	int					color_c;
 }	t_texture_pack;
@@ -133,6 +139,8 @@ typedef struct s_chunk
 	int					extra_data_i;//used for door to keep the face orientation of the door
 	struct s_action		*action;
 	t_animated_texture	*textures[4];
+	unsigned int		textures_idx[4];
+	
 }	t_chunk;
 
 typedef struct s_map
@@ -388,6 +396,8 @@ void		end_destroy_exit(t_general *gen, t_exit_values n);
 
 // init
 void		init_main(int ac, char **av, t_general	*gen);
+void		init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
+				t_group_of_textures *texture_group, bool new_seed);
 
 // ray_collision
 t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params);

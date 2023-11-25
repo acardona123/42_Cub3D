@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 03:47:33 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/23 17:03:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <X11/keysym.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <errno.h>
 
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
@@ -75,6 +78,13 @@ typedef struct s_coord_i
 	int	y;
 }	t_coord_i;
 
+typedef enum e_type_of_file
+{
+	TYPE_IS_FILE,
+	TYPE_IS_DIRECTORY,
+	TYPE_IS_UNKNOWN
+}	t_type_of_file;
+
 //tools_tvectors
 void	to_vector_print(t_vector_f v);
 double	to_vector_norm(t_coord_f P0, t_coord_f P1);
@@ -83,6 +93,9 @@ double	to_vector_norm_sqr(t_coord_f P0, t_coord_f P1);
 //tools_error
 void	to_error_msg(char *msg);
 void	to_warning_msg(char *msg);
+
+//tools_file.c
+char	*to_file_build_path(char *name0, char *name1, char *name2, char *name3);
 
 //tools_lst.c
 void	to_lstfree(t_list **lst);
