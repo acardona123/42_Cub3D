@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 19:36:00 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 04:51:23 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	_end_textures_destroy_one_animated_texture(void *mlx,
 				t_animated_texture *textu_anim);
 static void	_end_textures_destroy_one_static_texture(void *mlx,
 				t_static_texture *textu_static);
+
+#ifdef BONUS
 
 /**
  * @brief frees and destroys all the texture elements of the texture pack.
@@ -38,11 +40,38 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
 		&pack->wall_s, &pack->wall_e, &pack->wall_w, &pack->door_front,
 		&pack->door_side_close,
 		&pack->door_side_open_opened, &pack->door_side_open_opening,
-		&pack->door_side_open_closed, &pack->door_side_open_closing};
+		&pack->door_side_open_closed, &pack->door_side_open_closing,
+		&pack->wall_crashes, &pack->wall_leaks, &pack->crashes, &pack->leaks};
 	i_group = -1;
 	while (++i_group < NUMBER_OF_TEXTURES)
 		_end_textures_destroy_group_of_texture(mlx, groups[i_group]);
 }
+
+#else
+
+/**
+ * @brief frees and destroys all the texture elements of the texture pack.
+ *			Can be used on a partially unitiallysed texture pack wich
+ *			initialisation have been stoped due to an error
+ * 
+ * @param mlx pointer to the mlx
+ * @param pack pointer toward general->textures
+ */
+void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
+{
+	t_group_of_textures	**groups;
+	int					i_group;
+
+	if (!pack)
+		return ;
+	groups = (t_group_of_textures *[NUMBER_OF_TEXTURES]){&pack->wall_n,
+		&pack->wall_s, &pack->wall_e, &pack->wall_w};
+	i_group = -1;
+	while (++i_group < NUMBER_OF_TEXTURES)
+		_end_textures_destroy_group_of_texture(mlx, groups[i_group]);
+}
+
+#endif
 
 /**
  * @brief destroys the textures group content (array of animated texture with

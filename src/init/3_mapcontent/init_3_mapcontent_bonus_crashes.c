@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:02:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:16:41 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 05:31:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,23 @@ t_bool	in_3_mapcontent_crashes_chunk_init_textures(t_texture_pack *texturepack,
 	int			i;
 
 	_in_3_mapcontent_crashes_get_active_faces(chunk_crash->type, &active_faces);
-	if (!check_texture_done && !texturepack->crashes.group_len)
+	if (!check_texture_done && (!texturepack->crashes.group_len
+			|| !texturepack->wall_crashes.group_len))
 		return (to_error_msg(MSG_TEXTURE_MISSING_CRASHES), FAIL);
 	check_texture_done = true;
-	if (active_faces & ACTIVE_N)
+	if (!(active_faces & ACTIVE_N))
 		init_chunk_set_texture(chunk_crash, FACE_N, &texturepack->wall_n, true);
-	else if (active_faces & ACTIVE_E)
+	else if (!(active_faces & ACTIVE_E))
 		init_chunk_set_texture(chunk_crash, FACE_E, &texturepack->wall_e, true);
-	else if (active_faces & ACTIVE_S)
+	else if (!(active_faces & ACTIVE_S))
 		init_chunk_set_texture(chunk_crash, FACE_S, &texturepack->wall_s, true);
-	else if (active_faces & ACTIVE_W)
+	else if (!(active_faces & ACTIVE_W))
 		init_chunk_set_texture(chunk_crash, FACE_W, &texturepack->wall_w, true);
 	i = -1;
 	while (++i < 4)
 		if (!chunk_crash->textures[i])
-			init_chunk_set_texture(chunk_crash, i, &texturepack->crashes, true);
+			init_chunk_set_texture(chunk_crash, i, &texturepack->wall_crashes,
+				true);
 	return (SUCCESS);
 }
 
@@ -88,6 +90,7 @@ t_bool	in_3_mapcontent_crashes_action_init(t_map *map, int x, int y)
 	_in_3_mapcontent_crashes_get_active_faces(chunk_crashes->type,
 		&chunk_crashes->action->active_faces);
 	chunk_crashes->action->execute = gp_action_leaks_or_crashes;
+	chunk_crashes->action->dist_range = ACTION_LEAKS_CRASHES_DIST_RANGE;
 	return (SUCCESS);
 }
 

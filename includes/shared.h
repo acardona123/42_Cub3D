@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:36:51 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 04:48:53 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_group_of_textures
 
 # ifdef BONUS
 
-#  define NUMBER_OF_TEXTURES 12
+#  define NUMBER_OF_TEXTURES 14
 
 typedef struct s_texture_pack
 {
