@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:15:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 15:02:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 02:40:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,27 @@
 
 #ifdef BONUS
 
-static int			g_colors[MINIMAP_NUMBER_COLORS - 1] = {MINIMAP_COLOR_F,
-	MINIMAP_COLOR_WALL, MINIMAP_COLOR_NOTHING, MINIMAP_COLOR_N,
-	MINIMAP_COLOR_E, MINIMAP_COLOR_S, MINIMAP_COLOR_W, MINIMAP_COLOR_D_OPEN,
-	MINIMAP_COLOR_D_CLOSED};
+static int			g_colors[CHARS_NUMBER + 1] = {
+	MINIMAP_COLOR_F,
+	MINIMAP_COLOR_WALL,
+	MINIMAP_COLOR_NOTHING,
+	MINIMAP_COLOR_N, MINIMAP_COLOR_E, MINIMAP_COLOR_S, MINIMAP_COLOR_W,
+	MINIMAP_COLOR_LEAKS, MINIMAP_COLOR_LEAKS, MINIMAP_COLOR_LEAKS,
+	MINIMAP_COLOR_LEAKS,
+	MINIMAP_COLOR_CRASHES, MINIMAP_COLOR_CRASHES, MINIMAP_COLOR_CRASHES,
+	MINIMAP_COLOR_CRASHES,
+	MINIMAP_COLOR_D_OPEN, MINIMAP_COLOR_D_CLOSED
+};
 
-static t_chunk_type	g_type[CHARS_NUMBER] = {FLOOR, WALL, NOTHING, PLAYER_N,
-	PLAYER_E, PLAYER_S, PLAYER_W, DOOR};
+static t_chunk_type	g_type[CHARS_NUMBER + 1] = {
+	FLOOR,
+	WALL,
+	NOTHING,
+	PLAYER_N, PLAYER_E, PLAYER_S, PLAYER_W,
+	LEAKS_N, LEAKS_E, LEAKS_S, LEAKS_W,
+	CRASHES_N, CRASHES_E, CRASHES_S, CRASHES_W,
+	DOOR, DOOR
+};
 
 static int	_in_4_get_chunk_color_from_map(t_general *gen, int x, int y);
 
@@ -64,20 +78,21 @@ static int	_in_4_get_chunk_color_from_map(t_general *gen, int x, int y)
 	int	color;
 
 	i = -1;
-	while (++i < CHARS_NUMBER)
+	while (++i < CHARS_NUMBER + 1)
 	{
 		if (g_type[i] == gen->map.map[x][y].type)
 			break ;
 	}
-	if (gen->map.map[x][y].type == DOOR)
-	{
-		if (gen->map.map[x][y].status == DOOR_OPEN)
-			color = MINIMAP_COLOR_D_OPEN;
-		else
-			color = MINIMAP_COLOR_D_CLOSED;
-	}
-	else
-		color = g_colors[i];
+
+	if (i == CHARS_NUMBER + 1)//only for testing, to delete
+	{//
+		printf("ERROR IN _in_4_get_chunk_color_from_map");//
+		exit(1);//
+	}//
+
+	i += (gen->map.map[x][y].type == DOOR
+			&& gen->map.map[x][y].status != DOOR_OPEN);
+	color = g_colors[i];
 	return (color);
 }
 

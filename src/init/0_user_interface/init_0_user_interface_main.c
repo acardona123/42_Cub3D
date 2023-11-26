@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 19:10:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 03:13:06 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
 	if (to_mlx_new_empty_img(disp->mlx, disp->img_out_map, WIN_WIDTH,
 			WIN_HEIGHT) == FAIL)
 		return (FAIL);
-	disp->img_select = INGAME;
+	disp->render_selec = RENDER_INGAME;
 	return (SUCCESS);
 }
 

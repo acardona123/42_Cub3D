@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:29:30 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 19:24:09 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 00:42:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	in_0_hooks_mouse_button(int key, int x, int y, t_general *gen)
 	(void)x;
 	(void)y;
 	if (key == MOUSE_LEFT_CLICK)
-		return (gp_action_do(gen), 0);
+		return (gp_action_main(gen), 0);
 	//mouse sensibility with scroll
 	return (0);
 }

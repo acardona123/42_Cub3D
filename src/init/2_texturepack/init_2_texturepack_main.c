@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 19:35:00 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 04:41:25 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_bool	_in_2_init_texture_or_color(void *mlx,
 					t_texture_pack *text_pack, char **line_arg,
 					bool *already_done);
-static int		_in_2_init_texture_or_color_bonus(void *mlx,
+static int		_in_2_init_texture_bonus(void *mlx,
 					t_texture_pack *text_pack, char **line_arg);
 
 /**
@@ -88,7 +88,7 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
 	else if (!ft_strcmp(*line_arg, "C"))
 		return (in_2_set_color(&textu_pack->color_c, line_arg[1],
 				&already_done[IDX_CEIL]));
-	bonuses_init = _in_2_init_texture_or_color_bonus(mlx, textu_pack, line_arg);
+	bonuses_init = _in_2_init_texture_bonus(mlx, textu_pack, line_arg);
 	if (bonuses_init == -1)
 		return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
 	else if (bonuses_init == FAIL)
@@ -97,6 +97,9 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
 }
 
 #ifdef BONUS
+
+static int		_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
+					char **line_arg);
 
 /**
  * @brief 
@@ -109,8 +112,8 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
  *				FAIL if there has been an error in the texture importation
  *				-1	if the accronym doesn't correspond to any texture accronym
  */
-static int	_in_2_init_texture_or_color_bonus(void *mlx,
-	t_texture_pack *text_pack, char **line_arg)
+static int	_in_2_init_texture_bonus(void *mlx, t_texture_pack *text_pack,
+	char **line_arg)
 {
 	if (!ft_strcmp(*line_arg, "DF"))
 		return (in_2_textu_group_init(mlx, &text_pack->door_front,
@@ -130,12 +133,28 @@ static int	_in_2_init_texture_or_color_bonus(void *mlx,
 	else if (!ft_strcmp(*line_arg, "DOCG"))
 		return (in_2_textu_group_init(mlx, &text_pack->door_side_open_closing,
 				line_arg + 1));
+	return (_in_2_init_texture_bonus_1(mlx, text_pack, line_arg));
+}
+
+static int	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
+	char **line_arg)
+{
+	if (!ft_strcmp(*line_arg, "LEAKS"))
+		return (in_2_textu_group_init(mlx, &text_pack->leaks, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "LEAKS_W"))
+		return (in_2_textu_group_init(mlx, &text_pack->wall_leaks,
+				line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "CRASHES"))
+		return (in_2_textu_group_init(mlx, &text_pack->crashes, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "CRASHES_W"))
+		return (in_2_textu_group_init(mlx, &text_pack->wall_crashes,
+				line_arg + 1));
 	return (-1);
 }
 
 #else
 
-static int	_in_2_init_texture_or_color_bonus(void *mlx,
+static int	_in_2_init_texture_bonus(void *mlx,
 	t_texture_pack *text_pack, char **line_arg)
 {
 	(void)mlx;

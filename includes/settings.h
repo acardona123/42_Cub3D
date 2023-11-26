@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/21 18:06:53 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 03:38:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 # define WIN_HEIGHT		900
 # define WIN_WIDTH		1500
 
-//textures settings
-# define TEXTURE_PARAMETERS_FILE_NAME "frames_data.txt"
-
 //game default parameters
 # define DEFAULT_FOV					1.4
 # define DEFAULT_DELAY					1
@@ -36,7 +33,6 @@
 # define DEFAULT_ROTATE_SPEED_KEY		0.0011
 # ifdef BONUS
 #  define DEFAULT_ROTATE_MOUSE_SENSIBILITY	0.001
-#  define DOOR_ACTION_DIST_RANGE 		100.5
 # endif
 
 //game settings
@@ -50,13 +46,22 @@
 # define DIST_WALL_MIN					0.25
 // # define DIST_WALL_MIN 0.015625
 # ifdef BONUS
-#  define DOOR_ACTION_TIME				1000.
 #  define ROTATE_SPEED_MOUSE_INCREMENT	0.001
 # else
 #  define FIXED_DELAY	20
 # endif
 
 # ifdef BONUS
+
+//textures settings
+#  define TEXTURE_PARAMETERS_FILE_NAME "frames_data.txt"
+
+//actions
+#  define ACTION_DOOR_TIME					1000.
+#  define ACTION_DOOR_DIST_RANGE 			100.
+#  define ACTION_LEAKS_CRASHES_DIST_RANGE	1.
+#  define ACTION_LEAKS_CRASHES_BORDER_INF	.3
+#  define ACTION_LEAKS_CRASHES_BORDER_SUP	.6
 
 //cursor
 
@@ -76,7 +81,6 @@
 # endif
 
 //minimap colors
-# define MINIMAP_NUMBER_COLORS	10
 # define MINIMAP_COLOR_F		0xe0e0e0
 # define MINIMAP_COLOR_WALL		0x424242
 # define MINIMAP_COLOR_NOTHING	0x696969
@@ -87,6 +91,8 @@
 # define MINIMAP_COLOR_D_OPEN	0x5AD000
 # define MINIMAP_COLOR_D_CLOSED	0xD25E5E
 # define MINIMAP_COLOR_PLAYER	0x80FF
+# define MINIMAP_COLOR_LEAKS	0xd0d0d0
+# define MINIMAP_COLOR_CRASHES	0xd8d8d8
 
 //controls :
 # define NUMBER_KEY 12

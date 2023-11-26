@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 19:46:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 02:51:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
 		last.data = 1.;
 	else if (door->status == DOOR_CLOSED)
 		last.data = 0.;
-	else if (door->status == DOOR_CLOSING && last.data >= DOOR_ACTION_TIME)
+	else if (door->status == DOOR_CLOSING && last.data >= ACTION_DOOR_TIME)
 		return (door->status = DOOR_CLOSED, last.data = 0.,
 			door->extra_data_f = last.data, true);
 	else if (door->status == DOOR_CLOSING)
-		last.data = 1. - last.data / DOOR_ACTION_TIME;
-	else if (door->status == DOOR_OPENING && last.data >= DOOR_ACTION_TIME)
+		last.data = 1. - last.data / ACTION_DOOR_TIME;
+	else if (door->status == DOOR_OPENING && last.data >= ACTION_DOOR_TIME)
 		return (door->status = DOOR_OPEN, maps_world_update_door(gen, door),
 			maps_bigmap_draw_chunk(&gen->minimap, door->chunk_co.x,
 				door->chunk_co.y), last.data = 1., door->extra_data_f = 1.,
 			true);
 	else if (door->status == DOOR_OPENING)
-		last.data = last.data / DOOR_ACTION_TIME;
+		last.data = last.data / ACTION_DOOR_TIME;
 	// printf("Door status: %c\n -> update: %d\n", "CcOo"[(int)door->status], (door->extra_data_i & 1 << DOOR_TEXTURE_NEED_UPDATE));//
 	return (door->extra_data_f = last.data, false);
 }

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/25 21:56:12 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 04:16:41 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ face"
 face"
 # define MSG_TEXTURE_MISSING_DOOR_F "Map: missing texture for the doors' front"
 # define MSG_TEXTURE_MISSING_DOOR_S "Map: missing texture for the doors' sides"
+# define MSG_TEXTURE_MISSING_LEAKS "Map: missing texture for the leaks' sides"
+# define MSG_TEXTURE_MISSING_CRASHES "Map: missing texture for the crashes' \
+sides"
 # define MSG_TEXTURE_MULTIPLE_DEF "Map: Multiple definition of texture"
 # define MSG_WRONG_COLOR_FORMAT "Map: wrong color format"
 # define MSG_COLOR_MISSING_CEIL "Map: missing color for the ceilling"
@@ -176,11 +179,25 @@ void	in_3_mapcontent_init(t_general *gen, t_lists *lst_init);
 // init_3_mapcontent_fill_chunk.c
 bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x,
 			int y);
-// init_3_mapcontent_locate_texture.c
-t_bool	in_3_map_set_chunk_textures(t_texture_pack *texturepack,
+// init_3_set_chunk_texture.c
+t_bool	in_3_mapcontent_set_chunk_textures(t_texture_pack *texturepack,
 			t_chunk *chunk);
+# ifdef BONUS
+// init_3_mapcontent_bonus_doors.c
+t_bool	in_3_mapcontent_doors_chunk_init(t_texture_pack *texturepack,
+			t_chunk *chunk_door);
+t_bool	in_3_mapcontent_door_status_action_init(t_map *map, int x, int y);
+// init_3_mapcontent_bonus_leaks.c
+t_bool	in_3_mapcontent_leaks_chunk_init_textures(t_texture_pack *texturepack,
+			t_chunk *chunk_leaks);
+t_bool	in_3_mapcontent_leaks_action_init(t_map *map, int x, int y);
+// init_3_mapcontent_bonus_crash.c
+t_bool	in_3_mapcontent_crashes_chunk_init_textures(t_texture_pack *texturepack,
+			t_chunk *chunk_crashes);
+t_bool	in_3_mapcontent_crashes_action_init(t_map *map, int x, int y);
 // init_3_mapcontent_set_status_action.c
 t_bool	in_3_mapcontent_status_action_init(t_map *map);
+# endif
 /*
 
 =============== 4_minimap/ =============== */

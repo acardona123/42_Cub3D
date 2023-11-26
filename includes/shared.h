@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 19:40:11 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 04:36:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ typedef struct s_group_of_textures
 	t_animated_texture	**textures_array;
 }	t_group_of_textures;
 
-# define NUMBER_OF_TEXTURES 10
+# ifdef BONUS
+
+#  define NUMBER_OF_TEXTURES 12
 
 typedef struct s_texture_pack
 {
@@ -54,6 +56,8 @@ typedef struct s_texture_pack
 	t_group_of_textures	wall_s;
 	t_group_of_textures	wall_e;
 	t_group_of_textures	wall_w;
+	t_group_of_textures	wall_leaks;
+	t_group_of_textures	wall_crashes;
 	t_group_of_textures	door_front;
 	t_group_of_textures	door_side_close;
 	t_group_of_textures	door_side_open_opened;
@@ -66,6 +70,22 @@ typedef struct s_texture_pack
 	int					color_c;
 }	t_texture_pack;
 
+# else
+
+#  define NUMBER_OF_TEXTURES 4
+
+typedef struct s_texture_pack
+{
+	t_group_of_textures	wall_n;
+	t_group_of_textures	wall_s;
+	t_group_of_textures	wall_e;
+	t_group_of_textures	wall_w;
+	int					color_f;
+	int					color_c;
+}	t_texture_pack;
+
+# endif
+
 /* ---- End: Textures ----
 
 
@@ -76,23 +96,32 @@ typedef struct s_texture_pack
 
 # ifdef BONUS
 
-#  define CHARS_ALLOWED "01d NESW"
-#  define CHARS_OBSTACLE "1lc "
+#  define CHARS_ALLOWED		"01 NESWdlkjhcvbx"
+#  define CHARS_LEAKS		"lkjh"
+#  define CHARS_CRASHES		"cvbx"
+#  define CHARS_WALLS		"1xcvblkjh"
+#  define CHARS_OBSTACLE	"1lkjhcvbn "
 #  define CHARS_TRANSPARENT " 0NSEW"
-#  define CHARS_NUMBER 8
+#  define CHARS_NUMBER 16
 
 typedef enum e_chunk_type
 {
-	FLOOR = '0',
-	WALL = '1',
-	DOOR = 'd',
-	LEAKS = 'l',
-	CRASHES = 'c',
-	NOTHING = ' ',
-	PLAYER_N = 'N',
-	PLAYER_E = 'E',
-	PLAYER_S = 'S',
-	PLAYER_W = 'W'
+	FLOOR		= '0',
+	WALL		= '1',
+	DOOR		= 'd',
+	LEAKS_N		= 'l',
+	LEAKS_E		= 'k',
+	LEAKS_S		= 'j',
+	LEAKS_W		= 'h',
+	CRASHES_N	= 'c',
+	CRASHES_E	= 'v',
+	CRASHES_S	= 'b',
+	CRASHES_W	= 'x',
+	NOTHING		= ' ',
+	PLAYER_N	= 'N',
+	PLAYER_E	= 'E',
+	PLAYER_S	= 'S',
+	PLAYER_W	= 'W'
 }	t_chunk_type;
 
 # else
@@ -238,20 +267,20 @@ typedef struct s_settings
 
 typedef enum e_img_to_disp
 {
-	BLACK,
-	BIG_MAP,
-	INGAME
+	RENDER_BLACK,
+	RENDER_BIG_MAP,
+	RENDER_INGAME,
+	RENDER_CRASHES,
+	RENDER_LEAKES
 }	t_img_to_disp;
 
 typedef struct s_display
 {
 	void			*mlx;
 	void			*win;
-	t_img_to_disp	img_select;
+	t_img_to_disp	render_selec;
 	t_data			*buff;
 	t_data			*img_out_map;
-
-
 }	t_display;
 
 /* ---- End: Display ----
@@ -306,9 +335,9 @@ typedef enum e_ray_door_behaviour
 	ray_pass_door_no_touch
 }	t_ray_door_behaviour;
 
-# define CHARS_OBSTACLE_RAYCASTING "1 "
-# define CHARS_OBSTACLE_WALK "1 "
-# define CHARS_OBSTACLE_ACTION "1d "
+# define CHARS_OBSTACLE_RAYCASTING "1lkjhxvb "
+# define CHARS_OBSTACLE_WALK "1lkjhxvb "
+# define CHARS_OBSTACLE_ACTION "1dlkjhxvb "
 
 /* ---- End: Ray caracterisation ----
 	return (false);
@@ -360,7 +389,7 @@ typedef enum e_activable_faces
 
 struct			s_action;
 typedef void	(*t_execute)(struct s_general *gen, size_t time_now,
-					t_chunk *chunk, t_chunk_face face);
+					t_hitpoint *hitpoint);
 
 typedef struct s_action
 {
@@ -407,7 +436,11 @@ void		*rc_raycasting_frame_build(t_general *gen, size_t last_time);
 
 // gameplay
 int			gp_looping(void *void_gen);
-void		gp_action_do(t_general *gen);
+void		gp_action_main(t_general *gen);
+void		gp_action_doors(t_general *gen, size_t time_now,
+				t_hitpoint *hit_pt);
+void		gp_action_leaks_or_crashes(t_general *gen, size_t time_now,
+			t_hitpoint *hit_pt);
 
 # ifdef BONUS
 
@@ -415,8 +448,6 @@ void		gp_action_do(t_general *gen);
 bool		doors_update_status(t_general *gen, t_chunk *door, size_t time);
 void		doors_update_texture_main_side(t_texture_pack *texture_pack,
 				t_chunk *door);
-void		doors_action(t_general *gen, size_t time_now, t_chunk *chunk,
-				t_chunk_face face);
 
 //maps
 void		maps_draw_minimap(t_general *gen);

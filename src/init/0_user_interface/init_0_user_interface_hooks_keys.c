@@ -30,7 +30,7 @@ int	in_0_hooks_keys_press(int key, t_general *gen)
 	if (_in_0_hooks_keys_press_settings(gen, key) == SUCCESS)
 		return (0);
 	if (key == KEY_ACT)
-		return (gp_action_do(gen), 0);
+		return (gp_action_main(gen), 0);
 	if (key == XK_Escape)
 		end_destroy_exit(gen, 0);
 	return (0);
@@ -47,6 +47,9 @@ int	in_0_hooks_keys_release(int key, t_general *gen)
 {
 	if (_in_0_hooks_keys_release_move(gen, key) == SUCCESS)
 		return (0);
+	if (key == KEY_ACT && (gen->disp.render_selec == RENDER_LEAKES
+			|| gen->disp.render_selec == RENDER_CRASHES))
+		return (gen->disp.render_selec = RENDER_INGAME, 0);
 	return (0);
 }
 
@@ -76,7 +79,7 @@ static t_bool	_in_0_hooks_keys_press_move(t_general *gen, int key)
 	if (key == KEY_LOOK_RIGHT)
 		return (gen->next_turn_key[TURN_R] = true, SUCCESS);
 	if (key == KEY_BIG_MAP)
-		return (gen->disp.img_select = BIG_MAP, SUCCESS);
+		return (gen->disp.render_selec = RENDER_BIG_MAP, SUCCESS);
 	return (FAIL);
 }
 
@@ -102,7 +105,7 @@ static int	_in_0_hooks_keys_release_move(t_general *gen, int key)
 	if (key == KEY_LOOK_RIGHT)
 		return (gen->next_turn_key[TURN_R] = false, SUCCESS);
 	if (key == KEY_BIG_MAP)
-		return (gen->disp.img_select = INGAME, SUCCESS);
+		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
 	return (FAIL);
 }
 

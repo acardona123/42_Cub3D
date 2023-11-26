@@ -46,8 +46,11 @@ FILES_INIT			=	$(addprefix init/, \
 							) \
 							$(addprefix 3_mapcontent/init_3_mapcontent_, \
 								main \
+								bonus_crashes \
+								bonus_doors \
+								bonus_leaks \
 								fill_chunk \
-								locate_texture \
+								set_chunk_texture \
 								set_status_action \
 							) \
 							$(addprefix 4_maps/init_4_maps_, \
@@ -78,7 +81,9 @@ FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
 							main \
 							turn_head \
 							walk \
-							action \
+							action_main \
+							action_doors \
+							action_leaks_crashes \
 						)
 
 FILES_TOOLS		=	$(addprefix tools/tools_, \
@@ -93,7 +98,6 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 
 FILES_DOORS		=	$(addprefix doors/doors_, \
 						update \
-						action \
 					)
 
 FILES_MAPS		=	$(addprefix maps/maps_, \

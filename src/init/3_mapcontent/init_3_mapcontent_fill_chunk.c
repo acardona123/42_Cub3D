@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/25 20:35:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/26 02:18:14 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	_int_3_is_character_surrounding_ok(char c, t_map *map, int x,
 
 #ifdef BONUS
 
-void	in_3_map_add_door_sides_textures(t_chunk **map,
+void	in_3_door_add_sides_textures(t_chunk **map,
 			t_texture_pack *textures, int door_x, int door_y);
 
 /**
@@ -41,14 +41,16 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
 	gen->map.map[x][y].t0 = to_getime() - rand();
-	if (in_3_map_set_chunk_textures(&gen->textures, &gen->map.map[x][y])
+	if (in_3_mapcontent_set_chunk_textures(&gen->textures, &gen->map.map[x][y])
 		== FAIL)
 		return (false);
 	if (y < gen->map.y_max - 1 && gen->map.map[x][y + 1].type == DOOR)
-		in_3_map_add_door_sides_textures(gen->map.map, &gen->textures, x,
-			y + 1); //retirer ca du header et le mettre uniquement dans la partie mandatory ?-----------------
+		in_3_door_add_sides_textures(gen->map.map, &gen->textures, x,
+			y + 1);
 	return (true);
 }
+
+
 
 #else
 
@@ -59,7 +61,7 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
 	gen->map.map[x][y].t0 = 0;
-	in_3_map_set_chunk_textures(&gen->textures, &gen->map.map[x][y]);
+	in_3_mapcontent_set_chunk_textures(&gen->textures, &gen->map.map[x][y]);
 	return (true);
 }
 
@@ -127,15 +129,16 @@ static bool	_int_3_is_character_surrounding_ok(char chunk_type, t_map *map,
 			return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 		return (true);
 	}
-	else if (chunk_type != WALL
+	else if (!ft_isinset(chunk_type, CHARS_WALLS)
 		&& (x == 0 || x == map->width - 1 || y == 0 || y == map->height - 1 \
 		|| map->map[x - 1][y].type == NOTHING
 		|| map->map[x][y + 1].type == NOTHING))
 		return (to_error_msg(MSG_MAP_NOT_CLOSED), false);
 	else if (y < map->height - 1 && map->map[x][y + 1].type == DOOR
-		&& !(chunk_type == WALL && map->map[x][y + 2].type == WALL)
-		&& !(map->map[x + 1][y + 1].type == WALL
-			&& map->map[x - 1][y + 1].type == WALL))
+		&& !(ft_isinset(chunk_type, CHARS_WALLS)
+			&& ft_isinset(map->map[x][y + 2].type, CHARS_WALLS))
+		&& !(ft_isinset(map->map[x + 1][y + 1].type, CHARS_WALLS)
+			&& ft_isinset(map->map[x - 1][y + 1].type, CHARS_WALLS)))
 		return (to_error_msg(MSG_DOOR_ISOLATED), false);
 	return (true);
 }
