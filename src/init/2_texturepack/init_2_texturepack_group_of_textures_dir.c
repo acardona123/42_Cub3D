@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 03:14:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/25 17:58:49 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:39:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static t_bool	_in_2_textu_group_dir_import_one_texture(void *mlx,
 	char			**line_arg;
 	bool			subdir_is_texture;
 
-	if (in_2_tools_is_xpm_file(elem))
+	if (in_2_utiles_is_xpm_file(elem))
 		line_arg = in_2_textu_group_dir_line_arg_from_subfile(dir_parent_name,
 				elem->d_name);
 	else if (elem->d_type == DT_DIR && *elem->d_name != '.')

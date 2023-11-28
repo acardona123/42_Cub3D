@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:16:41 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:43:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,9 @@ int		in_0_hooks_keys_press(int key, t_general *gen);
 int		in_0_hooks_keys_release(int key, t_general *gen);
 // init_0_user_interface_hooks_mouse.c
 int		in_0_hooks_mouse_move(int x, int y, t_general *gen);
-int		in_0_hooks_mouse_button(int key, int x, int y, t_general *gen);
+int		in_0_hooks_mouse_button_press(int key, int x, int y, t_general *gen);
+int		in_0_hooks_mouse_button_release(int key, int x, int y, t_general *gen);
+
 
 /*
 
@@ -165,12 +167,16 @@ t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
 //init_2_texturepack_static_texture.c
 t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 			char *path);
+# ifdef BONUS
+
 //init_2_texturepack_tools.c
-bool	in_2_tools_is_xpm_file(struct dirent *elem);
-t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
+bool	in_2_utiles_is_xpm_file(struct dirent *elem);
+t_bool	in_2_tools_utiles_xpm_files_in_folder(char *dir_name,
 			unsigned int *cpt);
-void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
+void	in_2_utiles_sort_anim_text_table(t_static_texture *frame_array,
 			unsigned int frame_number);
+# endif
+
 /*
 
 =============== 3_mapcontent/ =============== */

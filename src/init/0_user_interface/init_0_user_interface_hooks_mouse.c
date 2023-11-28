@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:29:30 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 00:42:44 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 18:00:33 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,22 @@ int	in_0_hooks_mouse_move(int x, int y, t_general *gen)
 	return (0);
 }
 
-int	in_0_hooks_mouse_button(int key, int x, int y, t_general *gen)
+int	in_0_hooks_mouse_button_press(int key, int x, int y, t_general *gen)
 {
 	(void)x;
 	(void)y;
 	if (key == MOUSE_LEFT_CLICK)
 		return (gp_action_main(gen), 0);
 	//mouse sensibility with scroll
+	return (0);
+}
+
+int	in_0_hooks_mouse_button_release(int key, int x, int y, t_general *gen)
+{
+	(void)x;
+	(void)y;
+	if (key == MOUSE_LEFT_CLICK && (gen->disp.render_selec == RENDER_LEAKES
+		|| gen->disp.render_selec == RENDER_CRASHES))
+		gen->disp.render_selec = RENDER_INGAME;
 	return (0);
 }

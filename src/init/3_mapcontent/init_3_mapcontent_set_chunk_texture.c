@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:55:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:15:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:45:16 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 t_bool	in_3_mapcontent_set_chunk_textures(t_texture_pack *texturepack,
 	t_chunk *chunk)
 {
-
 	if (chunk->type == WALL || chunk->type == NOTHING)
 	{
 		init_chunk_set_texture(chunk, FACE_N, &texturepack->wall_n, true);
@@ -42,7 +41,8 @@ t_bool	in_3_mapcontent_set_chunk_textures(t_texture_pack *texturepack,
 	else if (ft_isinset(chunk->type, CHARS_LEAKS))
 		return (in_3_mapcontent_leaks_chunk_init_textures(texturepack, chunk));
 	else if (ft_isinset(chunk->type, CHARS_CRASHES))
-		return (in_3_mapcontent_crashes_chunk_init_textures(texturepack, chunk));
+		return (in_3_mapcontent_crashes_chunk_init_textures(texturepack,
+				chunk));
 	return (SUCCESS);
 }
 
@@ -53,13 +53,12 @@ t_bool	in_3_mapcontent_set_chunk_textures(t_texture_pack *texturepack,
  *	faces' textures
  * 
  * @param texturepack 
- * @param chunk_textures_array 
- * @param chunk_type 
+ * @param chunk
  */
 t_bool	in_3_mapcontent_set_chunk_textures(t_texture_pack *texturepack,
-	t_animated_texture *chunk_textures_array[], char chunk_type)
+	t_chunk *chunk)
 {
-	if (chunk_type == WALL || chunk_type == NOTHING)
+	if (chunk->type == WALL || chunk->type == NOTHING)
 	{
 		init_chunk_set_texture(chunk, FACE_N, &texturepack->wall_n, true);
 		init_chunk_set_texture(chunk, FACE_S, &texturepack->wall_s, true);

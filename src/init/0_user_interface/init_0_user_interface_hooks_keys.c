@@ -47,6 +47,9 @@ int	in_0_hooks_keys_release(int key, t_general *gen)
 {
 	if (_in_0_hooks_keys_release_move(gen, key) == SUCCESS)
 		return (0);
+
+	if (key == KEY_BIG_MAP)
+		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
 	if (key == KEY_ACT && (gen->disp.render_selec == RENDER_LEAKES
 			|| gen->disp.render_selec == RENDER_CRASHES))
 		return (gen->disp.render_selec = RENDER_INGAME, 0);
@@ -104,8 +107,6 @@ static int	_in_0_hooks_keys_release_move(t_general *gen, int key)
 		return (gen->next_turn_key[TURN_L] = false, SUCCESS);
 	if (key == KEY_LOOK_RIGHT)
 		return (gen->next_turn_key[TURN_R] = false, SUCCESS);
-	if (key == KEY_BIG_MAP)
-		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
 	return (FAIL);
 }
 

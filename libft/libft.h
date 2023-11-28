@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 22:23:38 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/19 01:50:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:07:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ void	ft_lstprint(t_list *lst);
 
 int		ft_int_abs(int n);
 int		ft_min(int a, int b);
+float	ft_minf(float a, float b);
 int		ft_max(int a, int b);
+float	ft_maxf(float a, float b);
 size_t	ft_strlst_len(char **strlst);
 char	**ft_strlst_free(char **lst);
 void	ft_strlst_disp(char **lst);

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:02:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 05:51:17 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:45:33 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_bool	in_3_mapcontent_leaks_action_init(t_map *map, int x, int y)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
 	_in_3_mapcontent_leaks_get_active_faces(chunk_leaks->type,
 		&chunk_leaks->action->active_faces);
-	chunk_leaks->action->execute = gp_action_leaks_or_crashes;
+	chunk_leaks->action->execute = gp_leak_crash_action;
 	chunk_leaks->action->dist_range = ACTION_LEAKS_CRASHES_DIST_RANGE;
 	return (SUCCESS);
 }

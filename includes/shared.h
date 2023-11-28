@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:48:53 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 18:32:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ typedef struct s_texture_pack
 #  define CHARS_ALLOWED		"01 NESWdlkjhcvbx"
 #  define CHARS_LEAKS		"lkjh"
 #  define CHARS_CRASHES		"cvbx"
-#  define CHARS_WALLS		"1xcvblkjh"
-#  define CHARS_OBSTACLE	"1lkjhcvbn "
+#  define CHARS_WALLS		"1lkjhcvbx"
+#  define CHARS_OBSTACLE	"1lkjhcvbx "
 #  define CHARS_TRANSPARENT " 0NSEW"
 #  define CHARS_NUMBER 16
 
@@ -335,9 +335,9 @@ typedef enum e_ray_door_behaviour
 	ray_pass_door_no_touch
 }	t_ray_door_behaviour;
 
-# define CHARS_OBSTACLE_RAYCASTING "1lkjhxvb "
-# define CHARS_OBSTACLE_WALK "1lkjhxvb "
-# define CHARS_OBSTACLE_ACTION "1dlkjhxvb "
+# define CHARS_OBSTACLE_RAYCASTING "1lkjhcvbx "
+# define CHARS_OBSTACLE_WALK "1lkjhcvbx "
+# define CHARS_OBSTACLE_ACTION "1dlkjhcvbx "
 
 /* ---- End: Ray caracterisation ----
 	return (false);
@@ -439,7 +439,7 @@ int			gp_looping(void *void_gen);
 void		gp_action_main(t_general *gen);
 void		gp_action_doors(t_general *gen, size_t time_now,
 				t_hitpoint *hit_pt);
-void		gp_action_leaks_or_crashes(t_general *gen, size_t time_now,
+void		gp_leak_crash_action(t_general *gen, size_t time_now,
 			t_hitpoint *hit_pt);
 
 # ifdef BONUS

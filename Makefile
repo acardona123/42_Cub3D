@@ -218,6 +218,10 @@ ifeq ($(MAKECMDGOALS),check_bonus)
 CFLAGS += -D BONUS
 endif
 
+ifeq ($(MAKECMDGOALS),run_bonus)
+CFLAGS += -D BONUS
+endif
+
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c Makefile
 	@mkdir -p $(OBJ_DIR)
 	@if [ ! -d "$(dir $@)" ]; then mkdir $(dir $@); fi

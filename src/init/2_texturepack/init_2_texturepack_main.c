@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:41:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:59:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static t_bool	_in_2_init_texture_or_color(void *mlx,
 					t_texture_pack *text_pack, char **line_arg,
 					bool *already_done);
-static int		_in_2_init_texture_bonus(void *mlx,
-					t_texture_pack *text_pack, char **line_arg);
 
 /**
  * @brief initializes the texturepack structure by reading the input file,
@@ -55,6 +53,13 @@ void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init)
 		in_init_destroy_lists_exit(gen, lst_init, NULL, EXIT_INIT_2);
 }
 
+#ifdef BONUS
+
+static t_bool	_in_2_init_texture_bonus(void *mlx,
+					t_texture_pack *text_pack, char **line_arg);
+static t_bool	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
+					char **line_arg);
+
 /**
  * @brief based on the arguments lines, extract the textures
  * 
@@ -70,8 +75,6 @@ void	in_2_init_texture_pack(t_general *gen, t_lists *lst_init)
 static t_bool	_in_2_init_texture_or_color(void *mlx,
 	t_texture_pack *textu_pack, char **line_arg, bool *already_done)
 {
-	int	bonuses_init;
-
 	if (ft_strlst_len(line_arg) != 2)
 		return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
 	if (!ft_strcmp(*line_arg, "NO"))
@@ -88,18 +91,8 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
 	else if (!ft_strcmp(*line_arg, "C"))
 		return (in_2_set_color(&textu_pack->color_c, line_arg[1],
 				&already_done[IDX_CEIL]));
-	bonuses_init = _in_2_init_texture_bonus(mlx, textu_pack, line_arg);
-	if (bonuses_init == -1)
-		return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
-	else if (bonuses_init == FAIL)
-		return (FAIL);
-	return (SUCCESS);
+	return (_in_2_init_texture_bonus(mlx, textu_pack, line_arg));
 }
-
-#ifdef BONUS
-
-static int		_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
-					char **line_arg);
 
 /**
  * @brief 
@@ -108,11 +101,11 @@ static int		_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
  * @param text_pack 
  * @param line_arg 
  * @param already_done 
- * @return int	SUCCESS if the texture has been successfully init
+ * @return t_bool	SUCCESS if the texture has been successfully init
  *				FAIL if there has been an error in the texture importation
  *				-1	if the accronym doesn't correspond to any texture accronym
  */
-static int	_in_2_init_texture_bonus(void *mlx, t_texture_pack *text_pack,
+static t_bool	_in_2_init_texture_bonus(void *mlx, t_texture_pack *text_pack,
 	char **line_arg)
 {
 	if (!ft_strcmp(*line_arg, "DF"))
@@ -136,7 +129,7 @@ static int	_in_2_init_texture_bonus(void *mlx, t_texture_pack *text_pack,
 	return (_in_2_init_texture_bonus_1(mlx, text_pack, line_arg));
 }
 
-static int	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
+static t_bool	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
 	char **line_arg)
 {
 	if (!ft_strcmp(*line_arg, "LEAKS"))
@@ -149,18 +142,43 @@ static int	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
 	else if (!ft_strcmp(*line_arg, "CRASHES_W"))
 		return (in_2_textu_group_init(mlx, &text_pack->wall_crashes,
 				line_arg + 1));
-	return (-1);
+	return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
 }
 
 #else
 
-static int	_in_2_init_texture_bonus(void *mlx,
-	t_texture_pack *text_pack, char **line_arg)
+/**
+ * @brief based on the arguments lines, extract the textures
+ * 
+ * @param mlx 
+ * @param textu_pack 
+ * @param line_arg 
+ * @param already_done 
+ * @return t_bool	SUCCESS if the textre has been successfully imported
+ *					FAIL if the accronym isn't a correct one or if there has
+ *					been an error in the texture initialisation.
+ *					err msg displayed
+ */
+static t_bool	_in_2_init_texture_or_color(void *mlx,
+	t_texture_pack *textu_pack, char **line_arg, bool *already_done)
 {
-	(void)mlx;
-	(void)text_pack;
-	(void)line_arg;
-	return (-1);
+	if (ft_strlst_len(line_arg) != 2)
+		return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
+	if (!ft_strcmp(*line_arg, "NO"))
+		return (in_2_textu_group_init(mlx, &textu_pack->wall_n, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "SO"))
+		return (in_2_textu_group_init(mlx, &textu_pack->wall_s, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "WE"))
+		return (in_2_textu_group_init(mlx, &textu_pack->wall_w, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "EA"))
+		return (in_2_textu_group_init(mlx, &textu_pack->wall_e, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "F"))
+		return (in_2_set_color(&textu_pack->color_f, line_arg[1],
+				&already_done[IDX_FLOOR]));
+	else if (!ft_strcmp(*line_arg, "C"))
+		return (in_2_set_color(&textu_pack->color_c, line_arg[1],
+				&already_done[IDX_CEIL]));
+	return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
 }
 
 #endif

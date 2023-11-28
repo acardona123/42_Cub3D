@@ -26,6 +26,8 @@ FILES_NAMES	=	ft_atoi \
 				ft_memset \
 				ft_min \
 				ft_max \
+				ft_minf \
+				ft_maxf \
 				ft_putchar_fd \
 				ft_putendl_fd \
 				ft_putnbr_fd \

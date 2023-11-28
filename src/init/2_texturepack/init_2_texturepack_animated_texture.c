@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 16:07:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:41:25 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static t_bool	in_2_anim_textu_init_folder(void *mlx,
 	if (ft_atoui_protected(line_arg[1], &tex->frame_ms)
 		|| ft_atoui_protected(line_arg[2], &tex->frame_pause_ms))
 		return (to_error_msg(MSG_WRONG_TIME), FAIL);
-	if (in_2_tools_count_xpm_files_in_folder(line_arg[0], &tex->frame_number)
+	if (in_2_tools_utiles_xpm_files_in_folder(line_arg[0], &tex->frame_number)
 		== FAIL)
 		return (FAIL);
 	tex->frame_array = ft_calloc(tex->frame_number,
@@ -121,7 +121,7 @@ static t_bool	in_2_anim_textu_init_folder(void *mlx,
 	closedir(dir);
 	tex->frame_cycle_short = tex->frame_number * tex->frame_ms;
 	tex->frame_cycle_long = tex->frame_cycle_short + tex->frame_pause_ms;
-	in_2_tools_sort_anim_text_table(tex->frame_array, tex->frame_number);
+	in_2_utiles_sort_anim_text_table(tex->frame_array, tex->frame_number);
 	return (SUCCESS);
 }
 
@@ -152,7 +152,7 @@ static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
 	elem = readdir(dir);
 	while (elem && i < tex->frame_number)
 	{
-		if (in_2_tools_is_xpm_file(elem))
+		if (in_2_utiles_is_xpm_file(elem))
 		{
 			path = to_file_build_path(dir_name, elem->d_name, NULL, NULL);
 			if (!path)

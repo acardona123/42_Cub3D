@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:00:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 01:44:01 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:45:33 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define GAMEPLAY_H
 
 # include "shared.h"
+
+typedef struct s_padding
+{
+	int	pad_left;
+	int	pad_right;
+	int	pad_top;
+	int	pad_bottom;
+}	t_padding;
 
 // gameplay_main
 int		gp_looping(void *elem);
@@ -27,7 +35,9 @@ void	gp_action_main(t_general *gen);
 void	gp_action_doors(t_general *gen, size_t time_now,
 			t_hitpoint *hit_pt);
 // gameplay_action_leaks_crashes.c
-void	gp_action_leaks_or_crashes(t_general *gen, size_t time_now,
+void	gp_leak_crash_action(t_general *gen, size_t time_now,
 			t_hitpoint *hit_pt);
+void	gp_frame_leaks_or_craskes(t_general *gen,
+			size_t	now_time);
 
 #endif

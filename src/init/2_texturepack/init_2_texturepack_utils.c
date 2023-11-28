@@ -6,11 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:34:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 02:41:40 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:42:18 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
+
+#ifdef BONUS
 
 /**
  * @brief checks if an element of a directory is a .xpm regular file
@@ -19,7 +21,7 @@
  * @return true if it is
  * @return false else
  */
-bool	in_2_tools_is_xpm_file(struct dirent *elem)
+bool	in_2_utiles_is_xpm_file(struct dirent *elem)
 {
 	if (elem->d_type == DT_REG
 		&& *elem->d_name != '.'
@@ -29,8 +31,6 @@ bool	in_2_tools_is_xpm_file(struct dirent *elem)
 	return (false);
 }
 
-#ifdef BONUS
-
 /**
  * @brief counts the number of .xpm files in a repertory
  * 
@@ -39,7 +39,7 @@ bool	in_2_tools_is_xpm_file(struct dirent *elem)
  * @return true SUCCESS, updates cpt
  * @return FAIL FAILURE if can't open the directory
  */
-t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
+t_bool	in_2_tools_utiles_xpm_files_in_folder(char *dir_name,
 	unsigned int *cpt)
 {
 	DIR				*dir;
@@ -52,7 +52,7 @@ t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
 	elem = readdir(dir);
 	while (elem)
 	{
-		if (in_2_tools_is_xpm_file(elem))
+		if (in_2_utiles_is_xpm_file(elem))
 			++*cpt;
 		elem = readdir(dir);
 	}
@@ -62,15 +62,13 @@ t_bool	in_2_tools_count_xpm_files_in_folder(char *dir_name,
 	return (SUCCESS);
 }
 
-#endif
-
 /**
  * @brief sorts the frames table of the animated texture by ascii order
  * 
  * @param frame_array table of the t_animated_texture to sort
  * @param frame_number number of frames to sort 
  */
-void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
+void	in_2_utiles_sort_anim_text_table(t_static_texture *frame_array,
 	unsigned int frame_number)
 {
 	t_static_texture	tmp;
@@ -91,3 +89,5 @@ void	in_2_tools_sort_anim_text_table(t_static_texture *frame_array,
 		}
 	}
 }
+
+#endif

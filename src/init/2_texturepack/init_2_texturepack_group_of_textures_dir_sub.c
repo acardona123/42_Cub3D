@@ -6,11 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:01:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/25 17:57:59 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:39:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
+
+#ifdef BONUS
 
 /**
  * @brief counts if the given repository contains at least one valid texture,
@@ -45,7 +47,7 @@ t_bool	in_2_textu_group_dir_count_textures(char *dir_name,
 	while (elem)
 	{
 		elem_is_texture = false;
-		if (in_2_tools_is_xpm_file(elem))
+		if (in_2_utiles_is_xpm_file(elem))
 			elem_is_texture = true;
 		else if (elem->d_type == DT_DIR && *elem->d_name != '.'
 			&& in_2_textu_group_dir_check_subdir_contains_texture
@@ -92,7 +94,7 @@ t_bool	in_2_textu_group_dir_check_subdir_contains_texture(char *dir_name,
 	elem = readdir(dir);
 	while (elem)
 	{
-		cpt_xpm += in_2_tools_is_xpm_file(elem);
+		cpt_xpm += in_2_utiles_is_xpm_file(elem);
 		cpt_data_txt += (elem->d_type == DT_REG
 				&& !ft_strcmp(elem->d_name, TEXTURE_PARAMETERS_FILE_NAME));
 		elem = readdir(dir);
@@ -199,6 +201,8 @@ void	in_2_textu_group_dir_sort_anim_textures(t_group_of_textures *group)
 		++i;
 	}
 }
+
+#endif
 
 //tests
 /*

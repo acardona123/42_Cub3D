@@ -2,12 +2,14 @@ NO ./textures/random_tests/wall_n/wall_n_0/wall_n_0_0.xpm
 SO ./textures/random_tests/wall_s/wall_s_0/wall_s_0_0.xpm
 WE ./textures/random_tests/wall_w/wall_w_0/wall_w_0_0.xpm
 EA ./textures/random_tests/wall_e/wall_e_0/wall_e_0_0.xpm
-LEAKS ./textures/random_tests/leaks
-LEAKS_W ./textures/random_tests/wall_leaks
+CRASHES ./textures/random_tests/crashes
+CRASHES_W ./textures/random_tests/wall_crashes
 F 100,60,60
 C 60,160,255
 
-111l1l1l111111
-l000000000000l
-100S0000000001
-111l1l1l1l1111
+11111xcvb11111
+x000000000000x
+c00000S000000c
+v000000000000v
+b000000000000b
+11xcvcbc1c1111

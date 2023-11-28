@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 03:13:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:12:26 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static const t_coord_i	g_center
 static void	_gp_frame_ingame(t_general *gen, size_t delay, size_t now_time);
 static void	_gp_frame_bigmap(t_general *gen);
 static void	_gp_frame_ingame_cursor(t_data *buff);
-static void	_gp_frame_leaks_or_craskes(t_general *gen);
 
 /**
  * @brief function that loop to generate the frames according to the inputs
@@ -60,7 +59,7 @@ int	gp_looping(void *gen_)
 		_gp_frame_bigmap(gen);
 	else if (gen->disp.render_selec == RENDER_CRASHES
 		|| gen->disp.render_selec == RENDER_LEAKES)
-		_gp_frame_leaks_or_craskes(gen);
+		gp_frame_leaks_or_craskes(gen, now_time);
 	return (0);
 }
 
@@ -134,11 +133,6 @@ static void	_gp_frame_bigmap(t_general *gen)
 	if (gen->minimap.bigmap_size_ratio >= 0)
 		maps_bigmap_put_player_window(&gen->disp, &gen->minimap, &gen->settings,
 			&gen->player);
-}
-
-static void	_gp_frame_leaks_or_craskes(t_general *gen)
-{
-	(void)gen;
 }
 
 #else
