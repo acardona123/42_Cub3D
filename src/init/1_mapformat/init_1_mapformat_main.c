@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 02:33:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:34:24 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
 	i = -1;
 	while ((*line)[++i])
 		if (!ft_isinset((*line)[i], CHARS_ALLOWED))
-			(close(fd_input), in_init_destroy_lists_exit(gen, lists,
-					MSG_WRONG_ACRONYME, EXIT_INIT_1));
+			(close(fd_input), free(*line), in_init_destroy_lists_exit(gen,
+					lists, MSG_WRONG_ACRONYME, EXIT_INIT_1));
 }
 
 /**

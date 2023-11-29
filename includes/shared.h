@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 18:32:51 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:59:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,20 +327,29 @@ typedef struct s_ray_params
 	float		ray_angle;
 }	t_ray_params;
 
+# ifdef BONUS
+
 typedef enum e_ray_door_behaviour
 {
-	ray_pass_door_never, //in this case the door appears in the obstacles string
+	ray_pass_door_never,
 	ray_pass_door_always,
 	ray_pass_door_fully_open,
 	ray_pass_door_no_touch
 }	t_ray_door_behaviour;
 
-# define CHARS_OBSTACLE_RAYCASTING "1lkjhcvbx "
-# define CHARS_OBSTACLE_WALK "1lkjhcvbx "
-# define CHARS_OBSTACLE_ACTION "1dlkjhcvbx "
+#  define CHARS_OBSTACLE_RAYCASTING "1lkjhcvbx "
+#  define CHARS_OBSTACLE_WALK "1lkjhcvbx "
+#  define CHARS_OBSTACLE_ACTION "1dlkjhcvbx "
+
+# else
+
+#  define CHARS_OBSTACLE_RAYCASTING "1 "
+#  define CHARS_OBSTACLE_WALK "1 "
+
+# endif
 
 /* ---- End: Ray caracterisation ----
-	return (false);
+
 
 
 */
@@ -423,6 +432,10 @@ void		end_destroy_texture_pack(void *mlx, t_texture_pack *pack);
 void		end_destroy_general(t_general *gen);
 void		end_destroy_exit(t_general *gen, t_exit_values n);
 
+// shared
+void		init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
+				t_group_of_textures *texture_group, bool new_seed);
+
 // init
 void		init_main(int ac, char **av, t_general	*gen);
 void		init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
@@ -440,7 +453,7 @@ void		gp_action_main(t_general *gen);
 void		gp_action_doors(t_general *gen, size_t time_now,
 				t_hitpoint *hit_pt);
 void		gp_leak_crash_action(t_general *gen, size_t time_now,
-			t_hitpoint *hit_pt);
+				t_hitpoint *hit_pt);
 
 # ifdef BONUS
 

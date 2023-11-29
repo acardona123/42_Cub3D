@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/21 14:44:23 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:01:17 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,15 @@ t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params)
 		params.ray_angle += 2 * M_PI;
 	while (params.ray_angle > 2 * M_PI)
 		params.ray_angle -= 2 * M_PI;
-	// if (params.ray_type == ray_walk)//
-	// 	printf("\n\np_co: (%f, %f)\nangle: %f (%f)\n", params.ray_start_point.x, params.ray_start_point.y, params.ray_angle, params.ray_angle * 180 / M_PI);//
 	rdata = (t_ray_data){0};
 	_r_ray_extract_param(&params, &rdata);
 	last_hit = r_ray_init_rdata_hitpoint(&params.ray_start_point,
 			params.ray_angle, &gen->map, &rdata);
 	return (g_collision_function[rdata.dial](gen, last_hit, rdata));
 }
+
+
+#ifdef BONUS
 
 /**
  * @brief extract parameters from params to fill rdata elements
@@ -75,6 +76,28 @@ static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata)
 	else //if params->ray_type == ray_action
 		rdata->obstacles = CHARS_OBSTACLE_ACTION;
 }
+
+#else
+
+/**
+ * @brief extract parameters from params to fill rdata elements
+ * 
+ * @param params 
+ * @param rdata 
+ */
+static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata)
+{
+	rdata->time_now = params->ray_time;
+	rdata->dial = (int)(params->ray_angle * 4. / M_PI);
+	if (rdata->dial == N_NE || rdata->dial == SE_S
+		|| rdata->dial == S_SW || rdata->dial == NW_N)
+		rdata->prim = PRIMARY_H;
+	else
+		rdata->prim = PRIMARY_V;
+	rdata->obstacles = CHARS_OBSTACLE_RAYCASTING;
+}
+
+#endif
 
 /*
 #include "../../includes/cub3d.h"

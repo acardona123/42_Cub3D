@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/20 17:01:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:00:33 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef enum e_primary_axis
 	PRIMARY_V
 }	t_primary_axis;
 
+# ifdef BONUS
+
 typedef struct s_ray_data
 {
 	size_t					time_now;
@@ -59,6 +61,26 @@ typedef struct s_ray_data
 	char					*obstacles;
 	t_ray_door_behaviour	door_behaviour;
 }	t_ray_data;
+
+# else
+
+typedef struct s_ray_data
+{
+	size_t					time_now;
+	t_dial					dial;
+	t_primary_axis			prim;
+	t_1st_type				first;
+	bool					check_h;
+	t_coord_f				last_h;
+	bool					check_v;
+	t_coord_f				last_v;
+	float					delta_y;
+	float					delta_x;
+	float					shift;
+	char					*obstacles;
+}	t_ray_data;
+
+# endif
 
 typedef struct s_init_chunks
 {

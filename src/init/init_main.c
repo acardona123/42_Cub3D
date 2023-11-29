@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 19:43:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:29:19 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	init_main(int ac, char **av, t_general	*gen)
 {
 	t_lists	init_lists;
 
-	srand(0);
 	*gen = (t_general){0};
 	_init_settings(gen);
 	in_0_init_display(gen);
@@ -49,32 +48,6 @@ void	init_main(int ac, char **av, t_general	*gen)
 }
 
 #endif
-
-/**
- * @brief insert animated texture pointer in the chunk textures tables[face].
- *	The texture is one of those present in the given texture_group, it will be
- *	selected based on the value of chunk->textures_idx[face]. If idx_seed is
- *	false the seed used to select the texture is the chunk->textures_idx[face],
- *	else chunk->textures_idx[face] is set to idx_seed
- * 
- * @param chunk 
- * @param face face which texture needs to be set
- * @param texture_group group of textures from wich the texture will be
- *			extracted
- * @param idx_seed indicates if a new seed has to be generated for the
- *		designated texture.
- */
-void	init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
-	t_group_of_textures *texture_group, bool new_seed)
-{
-	if (new_seed)
-		chunk->textures_idx[face] = (unsigned int)rand();
-	else
-		new_seed = chunk->textures_idx[face];
-	chunk->textures[face]
-		= texture_group->textures_array[chunk->textures_idx[face]
-		% texture_group->group_len];
-}
 
 static void	_init_settings(t_general *gen)
 {

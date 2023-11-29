@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:43:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:42:22 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ typedef enum e_mouse_keys
 }	t_mouse_keys;
 
 void	init_main(int ac, char **av, t_general	*gen);
-void	init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
-			t_group_of_textures *texture_group, bool new_seed);
 
 // init_3_utils.c
 void	in_init_destroy_lists_exit(t_general *gen, t_lists *lst_init,

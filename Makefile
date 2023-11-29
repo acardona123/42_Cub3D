@@ -86,6 +86,10 @@ FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
 							action_leaks_crashes \
 						)
 
+FILES_SHARED		=	$(addprefix shared/shared_, \
+						set_texture \
+						)
+
 FILES_TOOLS		=	$(addprefix tools/tools_, \
 						error \
 						vectors \
@@ -111,6 +115,7 @@ FILES_NAMES			=	\
 						$(FILES_INIT) \
 						$(FILES_END_DESTROY) \
 						$(FILES_TOOLS) \
+						$(FILES_SHARED) \
 						$(FILES_RAY_COLLISION) \
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \

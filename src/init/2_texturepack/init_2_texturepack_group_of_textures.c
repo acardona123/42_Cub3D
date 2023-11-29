@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 03:14:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/25 21:56:19 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:43:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ t_bool	in_2_textu_group_init(void *mlx, t_group_of_textures *textures_group,
  * 
  * @param mlx 
  * @param textures_group 
- * @param file_name pointer to the name of the file
+ * @param file_name pointer to the name of the file, *file_name is moved in the
+ *	texture 
  * @return t_bool SUCCESS if texture imported, *file_name set to NULL to avoid
  *		futur free
  */
