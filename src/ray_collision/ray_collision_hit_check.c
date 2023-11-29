@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:51:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/29 19:49:03 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ static bool	_r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
 	double	dec;
 
 	dec = real_hitpt_co.x - floor(real_hitpt_co.x);
-	// printf(" dec_h (%f, %f): %f\n", real_hitpt_co.x, real_hitpt_co.y, dec);//pb d'arrondi ici qd sur une verticale
 	if (!rdata->shift)
 		return ((dec == 0. && _r_ray_check_no_shift_diag(gen, rdata,
 					hit_pt, real_hitpt_co)));
@@ -224,16 +223,15 @@ static bool	_r_ray_check_shift_diag_sub(t_chunk **map, t_ray_data *rdata,
  */
 bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
 {
-	(void)rdata;
 	if (hit_pt->pt_co.x <= -EPSILON)
 		return (true);
 	if (ft_isinset(gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type,
 		rdata->obstacles))
 		return (true);
 	if ((rdata->prim == PRIMARY_H
-			&& hit_pt->pt_co.x == floor(hit_pt->pt_co.x))
-		|| (rdata->prim == PRIMARY_V
-			&& hit_pt->pt_co.y == floor(hit_pt->pt_co.y)))
+			&& hit_pt->pt_co.x - floor(hit_pt->pt_co.x) == 0)
+		|| (rdata->prim != PRIMARY_H
+			&& hit_pt->pt_co.y - floor(hit_pt->pt_co.y) == 0))
 		return (_r_ray_check_no_shift_diag(gen, rdata, hit_pt,
 				hit_pt->pt_co));
 	return (false);
@@ -254,18 +252,17 @@ bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
 bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
 	t_ray_data *rdata, t_vector_f real_hitpt_co)
 {
-	(void)rdata;
 	if (real_hitpt_co.x <= -EPSILON)
 		return (hit_pt->pt_co.x = -1., true);
 	if (ft_isinset(gen->map.map[hit_pt->chunk_co_x][hit_pt->chunk_co_y].type,
 		rdata->obstacles))
 		return (hit_pt->pt_co = real_hitpt_co, true);
-	if ((rdata->prim == PRIMARY_H
-			&& hit_pt->pt_co.y == floor(hit_pt->pt_co.y))
-		|| (rdata->prim == PRIMARY_V
-			&& hit_pt->pt_co.x == floor(hit_pt->pt_co.x)))
+	if ((rdata->prim != PRIMARY_H
+			&& real_hitpt_co.x - floor(real_hitpt_co.x) == 0.)
+		|| (rdata->prim == PRIMARY_H
+			&& real_hitpt_co.y - floor(real_hitpt_co.y) == 0.))
 		return (_r_ray_check_no_shift_diag(gen, rdata, hit_pt,
-				hit_pt->pt_co));
+				real_hitpt_co));
 	return (false);
 }
 
