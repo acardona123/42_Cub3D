@@ -6,13 +6,15 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 03:13:06 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:12:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
 
 static t_bool	_in_0_display_elements_init(t_display *disp);
+
+#ifdef BONUS
 
 /**
  * @brief initializes the t_display structure that corresponds to the ui
@@ -28,6 +30,24 @@ void	in_0_init_display(t_general *gen)
 	mlx_mouse_move(gen->disp.mlx, gen->disp.win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	in_0_hooks_init(gen);
 }
+
+#else
+
+/**
+ * @brief initializes the t_display structure that corresponds to the ui
+ *			(window + hooks + images + hooks)
+ * 
+ * @param gen 
+ * @return EXIT on errors 
+ */
+void	in_0_init_display(t_general *gen)
+{
+	if (_in_0_display_elements_init(&gen->disp) == FAIL)
+		end_destroy_exit(gen, EXIT_INIT_1);
+	in_0_hooks_init(gen);
+}
+
+#endif
 
 /**
  * @brief initializes the t_display struct (mlx, window and empty buffer image)

@@ -66,6 +66,7 @@ FILES_RAY_COLLISION	=	$(addprefix ray_collision/ray_collision_, \
 							segments_east \
 							segments_west \
 							hit_check \
+							hit_check_sub \
 							hit_check_door \
 							utils \
 						)

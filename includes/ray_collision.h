@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:05:10 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 17:00:33 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:08:11 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,15 @@ bool		r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt,
 				t_ray_data *rdata);
 bool		r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
 				t_ray_data *rdata, t_vector_f real_hitpt_co);
+//raycasting_collision_hit_check_sub.c
+bool		r_ray_check_no_shift_diag(t_general *gen, t_ray_data *rdata,
+				t_hitpoint *hit_pt, t_vector_f real_hitpt_co);
+bool		r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
+				t_hitpoint *hit_pt, t_coord_f real_hitpt_co);
+bool		r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
+				t_hitpoint *hit_pt, t_coord_f real_hitpt_co);
+bool		r_ray_check_shift_diag(t_general *gen, t_ray_data *rdata,
+				t_hitpoint *hit_pt, t_vector_f real_hitpt_co);
 
 //raycasting_collision_hit_check_door.c
 bool		r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
