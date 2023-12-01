@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:02:34 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 17:19:41 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:32:22 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,3 @@ inline static t_vector_f	_maps_get_world_relative_position_minimap(
 }
 
 #endif
-

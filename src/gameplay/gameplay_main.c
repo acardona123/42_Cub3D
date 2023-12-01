@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 17:12:26 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:31:37 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	gp_looping(void *gen_)
 	now_time = to_getime();
 	delay = now_time - last_time;
 	last_time = now_time;
-	// printf("p_co: (%f, %f), %f (%f deg)\n", gen->player.p_co.x, gen->player.p_co.y, gen->player.p_angle, gen->player.p_angle * 180/ M_PI);//
-	// fflush(stdout);//
 	if (gen->disp.render_selec == RENDER_INGAME)
 		_gp_frame_ingame(gen, delay, now_time);
 	else if (gen->disp.render_selec == RENDER_BIG_MAP)

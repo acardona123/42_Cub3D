@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:30:52 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/25 23:14:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:23:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ void	in_3_mapcontent_init(t_general *gen, t_lists *lst_init)
 	to_lstfree(&lst_init->lst_map);
 }
 
-# endif
-
+#endif
 
 /**
  * @brief Calloc t_chunk **map;

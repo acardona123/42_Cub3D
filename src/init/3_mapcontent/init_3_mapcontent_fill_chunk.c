@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 02:18:14 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:23:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static bool	_int_3_is_character_surrounding_ok(char c, t_map *map, int x,
 
 #ifdef BONUS
 
-void	in_3_door_add_sides_textures(t_chunk **map,
-			t_texture_pack *textures, int door_x, int door_y);
+void		in_3_door_add_sides_textures(t_chunk **map,
+				t_texture_pack *textures, int door_x, int door_y);
 
 /**
  * @brief fills all the chunk data except the action structure and the status
@@ -49,8 +49,6 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 			y + 1);
 	return (true);
 }
-
-
 
 #else
 

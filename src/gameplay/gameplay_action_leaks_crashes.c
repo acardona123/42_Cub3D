@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:41:43 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 20:00:07 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:30:38 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,9 +148,9 @@ static void	gp_frame_leaks_or_craskes_fill_frame(t_data *buff,
 			else
 				*(int *)addr = *(int *)(static_textu->addr
 						+ (int)((buff_co.x - padding.pad_left) / size_ratio)
-							* static_textu->opp
+						*static_textu->opp
 						+ (int)((buff_co.y - padding.pad_top) / size_ratio)
-							* static_textu->line_len);
+						*static_textu->line_len);
 			addr += buff->opp;
 		}
 	}

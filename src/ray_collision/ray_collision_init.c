@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/19 01:59:44 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:36:58 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 	_r_ray_init_h(p_co, rdata, angle_ray);
 	_r_ray_init_v(p_co, rdata, angle_ray);
 	rdata->first = _r_ray_init_hitpoint(p_co, rdata, &hitpoint);
-	if (hitpoint.pt_co.x >= 0. && r_point_outside_map(map, hitpoint.pt_co))//ne peut pas arriver si le player est entre les murs de la map
+	if (hitpoint.pt_co.x >= 0. && r_point_outside_map(map, hitpoint.pt_co))
 		hitpoint.pt_co.x = -1;
 	if (hitpoint.hit_face == FACE_E
 		|| (rdata->first == FIRST_ANY && rdata->dial >= S_SW))
@@ -57,22 +57,6 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 	else
 		hitpoint.chunk_co_y = (int)(hitpoint.pt_co.y + rdata->shift
 				* (1 - 2 * (rdata->dial >= E_SE && rdata->dial <= SW_W)));
-	/* //to
-	printf("--- INIT:---\n");//
-		printf("H:\n check_H: %d\n first_h: (%.4f, %.4f) -> first_h - (int)player :\
-	(%.4f, %.4f)\n delta_x: %.4f\n",
-			rdata->check_h,
-			rdata->last_h.x, rdata->last_h.y,
-			rdata->last_h.x - floor(p_co->x), rdata->last_h.y - floor(p_co->y),
-			rdata->delta_x);
-		printf("V:\n check_V: %d\n first_v: (%.4f, %.4f) -> first_v - (int)player :\
-	(%.4f, %.4f)\n delta_y: %.4f\n",
-			rdata->check_v,
-			rdata->last_v.x, rdata->last_v.y,
-			rdata->last_v.x - floor(p_co->x), rdata->last_v.y - floor(p_co->y),
-			rdata->delta_y);
-		printf("==>\n -angle: %f\n -hit_pt: (%.3f, %.3f)\n -chunk: (%d, %d)\n---- End init\n", angle_ray, hitpoint.pt_co.x, hitpoint.pt_co.y, hitpoint.chunk_co_x, hitpoint.chunk_co_y);//
-	*/
 	return (hitpoint);
 }
 
@@ -92,11 +76,11 @@ static void	_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 		(angle_ray > M_PI * 1.5 - EPSILON && angle_ray < M_PI * 1.5 + EPSILON))
 		return ;
 	rdata->check_h = true;
-	if (rdata->dial >= W_NW || rdata->dial <= NE_E) // cadran sup
+	if (rdata->dial >= W_NW || rdata->dial <= NE_E)
 	{
 		rdata->delta_x = tan(angle_ray);
 		rdata->last_h.y = ceil(p_co->y + rdata->shift) - rdata->shift;
-		if ((rdata->shift && p_co->y == rdata->last_h.y) //the player is on a grid line
+		if ((rdata->shift && p_co->y == rdata->last_h.y)
 			|| (!rdata->shift && p_co->y == floor(p_co->y)))
 			rdata->last_h = *p_co;
 		else
@@ -128,7 +112,7 @@ static void	_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 		|| (angle_ray > M_PI - EPSILON && angle_ray < M_PI + EPSILON))
 		return ;
 	rdata->check_v = true;
-	if (rdata->dial <= SE_S) // cadran droit
+	if (rdata->dial <= SE_S)
 	{
 		rdata->delta_y = 1. / tan(angle_ray);
 		rdata->last_v.x = ceil(p_co->x + rdata->shift) - rdata->shift;
@@ -139,7 +123,7 @@ static void	_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 			rdata->last_v.y = p_co->y
 				+ (rdata->last_v.x - p_co->x) * rdata->delta_y;
 	}
-	else // gauche
+	else
 	{
 		rdata->delta_y = -1. / tan(angle_ray);
 		rdata->last_v.x = floor(p_co->x - rdata->shift) + rdata->shift;
@@ -165,10 +149,10 @@ static t_1st_type	_r_ray_init_hitpoint(t_coord_f *pco, t_ray_data *rdata,
 	*hitpt = (t_hitpoint){0};
 	first_type = _r_ray_init_get_first_type(pco, rdata);
 	if (first_type == FIRST_H
-		|| (first_type == FIRST_ANY && rdata->prim == PRIMARY_H))//hits an horizontal first
+		|| (first_type == FIRST_ANY && rdata->prim == PRIMARY_H))
 	{
 		hitpt->pt_co = rdata->last_h;
-		if (rdata->dial >= E_SE && rdata->dial <= SW_W)//looks down
+		if (rdata->dial >= E_SE && rdata->dial <= SW_W)
 			hitpt->hit_face = FACE_N;
 		else
 			hitpt->hit_face = FACE_S;

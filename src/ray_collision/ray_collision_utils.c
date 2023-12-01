@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:11:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/20 17:01:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:37:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ bool	r_ray_hit_is_solid_chunk(t_chunk **map, t_ray_data *rdata,
 	if (rdata->door_behaviour != ray_pass_door_always
 		&& map[chunk_co_x][chunk_co_y].type == DOOR)
 		return (map[chunk_co_x][chunk_co_y].status != DOOR_OPEN);
-	// if (ft_isinset(map[chunk_co_x][chunk_co_y].type, CHARS_TRANSPARENT))
-	// 	return (false);
 	return (false);
 }
 
@@ -65,11 +63,7 @@ bool	r_ray_hit_is_solid_chunk(t_chunk **map, t_ray_data *rdata,
 bool	r_ray_hit_is_solid_chunk(t_chunk **map, t_ray_data *rdata,
 	int chunk_co_x, int chunk_co_y)
 {
-	if (ft_isinset(map[chunk_co_x][chunk_co_y].type, rdata->obstacles))
-		return (true);
-	// if (ft_isinset(map[chunk_co_x][chunk_co_y].type, CHARS_TRANSPARENT))
-	// 	return (false);
-	return (false);
+	return (ft_isinset(map[chunk_co_x][chunk_co_y].type, rdata->obstacles));
 }
 
 #endif

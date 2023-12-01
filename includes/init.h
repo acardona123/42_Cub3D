@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 14:42:22 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:42:28 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int		in_0_hooks_keys_release(int key, t_general *gen);
 int		in_0_hooks_mouse_move(int x, int y, t_general *gen);
 int		in_0_hooks_mouse_button_press(int key, int x, int y, t_general *gen);
 int		in_0_hooks_mouse_button_release(int key, int x, int y, t_general *gen);
-
 
 /*
 

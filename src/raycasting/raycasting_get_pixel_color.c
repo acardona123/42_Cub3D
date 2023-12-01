@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_get_pixel_color.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:30:03 by alexandm          #+#    #+#             */
-/*   Updated: 2023/11/17 17:32:45 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:40:42 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	r_get_pixel_color(t_chunk *chunk, t_hitpoint *hit_pt, long int height,
 {
 	static unsigned int	y = 0;
 	static float		ratio_height = 1.;
-	float				ratio_col; //between 0. and 1. => the column to draw is this value * img_width
+	float				ratio_col;
 
 	if (!chunk)
 		return (y = 0, 0);
@@ -92,7 +92,7 @@ int	r_get_pixel_color(t_chunk *chunk, t_hitpoint *hit_pt, long int height,
 {
 	static unsigned int	y = 0;
 	static float		ratio_height = 1.;
-	float				ratio_col; //between 0. and 1. => the column to draw is this value * img_width
+	float				ratio_col;
 
 	if (!chunk)
 		return (y = 0, 0);

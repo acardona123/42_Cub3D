@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 02:51:54 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:29:03 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
 
 	if (time == last.time && door == last.chunk)
 		return (door->extra_data_f = last.data, false);
-	last = (t_door_last_update){time, door, time - door->action->time_last_act};//here the data is just temporary used as a buffer for the delta-time value, for norm puposes
+	last = (t_door_last_update){time, door, time - door->action->time_last_act};
 	if (door->status == DOOR_OPEN)
 		last.data = 1.;
 	else if (door->status == DOOR_CLOSED)
@@ -56,7 +56,6 @@ bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
 			true);
 	else if (door->status == DOOR_OPENING)
 		last.data = last.data / ACTION_DOOR_TIME;
-	// printf("Door status: %c\n -> update: %d\n", "CcOo"[(int)door->status], (door->extra_data_i & 1 << DOOR_TEXTURE_NEED_UPDATE));//
 	return (door->extra_data_f = last.data, false);
 }
 

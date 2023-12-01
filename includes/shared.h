@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 16:59:59 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:43:02 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,10 @@ typedef struct s_chunk
 	size_t				t0;
 	char				status;
 	float				extra_data_f;
-	int					extra_data_i;//used for door to keep the face orientation of the door
+	int					extra_data_i;
 	struct s_action		*action;
 	t_animated_texture	*textures[4];
 	unsigned int		textures_idx[4];
-	
 }	t_chunk;
 
 typedef struct s_map

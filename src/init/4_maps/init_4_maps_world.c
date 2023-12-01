@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:15:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 02:40:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:25:35 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,6 @@ static int	_in_4_get_chunk_color_from_map(t_general *gen, int x, int y)
 		if (g_type[i] == gen->map.map[x][y].type)
 			break ;
 	}
-
-	if (i == CHARS_NUMBER + 1)//only for testing, to delete
-	{//
-		printf("ERROR IN _in_4_get_chunk_color_from_map");//
-		exit(1);//
-	}//
-
 	i += (gen->map.map[x][y].type == DOOR
 			&& gen->map.map[x][y].status != DOOR_OPEN);
 	color = g_colors[i];

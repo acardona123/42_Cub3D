@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 17:01:17 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:39:36 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params)
 	return (g_collision_function[rdata.dial](gen, last_hit, rdata));
 }
 
-
 #ifdef BONUS
 
 /**
@@ -73,7 +72,7 @@ static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata)
 		rdata->obstacles = CHARS_OBSTACLE_WALK;
 		rdata->door_behaviour = ray_pass_door_fully_open;
 	}
-	else //if params->ray_type == ray_action
+	else
 		rdata->obstacles = CHARS_OBSTACLE_ACTION;
 }
 

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 22:51:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 17:23:49 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:29:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	end_destroy_map(t_map *map)
 }
 
 #else
-
 
 void	end_destroy_map(t_map *map)
 {

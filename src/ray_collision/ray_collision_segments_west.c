@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/07 15:26:47 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:38:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,8 @@
 t_hitpoint	r_ray_hit_s_sw(t_general *gen, t_hitpoint last,
 	t_ray_data rdata)
 {
-							//printf("  first: %c\n", "HVA"[rdata.first]);//
-							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//;
 	if (rdata.first == FIRST_V && r_ray_hit_sec(gen, &last, &rdata, last.pt_co))
 		return (last.pt_co.x += EPSILON, last);
-							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_v.x += (rdata.first == FIRST_H && rdata.check_v);
 	rdata.last_v.y -= rdata.delta_y * (rdata.first == FIRST_H
 			&& rdata.check_v);
@@ -38,8 +33,6 @@ t_hitpoint	r_ray_hit_s_sw(t_general *gen, t_hitpoint last,
 	while (--last.pt_co.y >= 1. + rdata.shift)
 	{
 		--last.chunk_co_y;
-								//printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-								//printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(gen, &last, &rdata))
 			return (last.pt_co.y += EPSILON, last);
 		last.pt_co.x += rdata.delta_x;
@@ -67,13 +60,8 @@ t_hitpoint	r_ray_hit_s_sw(t_general *gen, t_hitpoint last,
 t_hitpoint	r_ray_hit_sw_w(t_general *gen, t_hitpoint last,
 	t_ray_data rdata)
 {
-							//printf("  first: %c\n", "HVA"[rdata.first]);//
-							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	if (rdata.first == FIRST_H && r_ray_hit_sec(gen, &last, &rdata, last.pt_co))
 		return (last.pt_co.y += EPSILON, last);
-							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_h.x -= rdata.delta_x * (rdata.first == FIRST_V
 			&& rdata.check_h);
 	rdata.last_h.y += (rdata.first == FIRST_V && rdata.check_h);
@@ -82,8 +70,6 @@ t_hitpoint	r_ray_hit_sw_w(t_general *gen, t_hitpoint last,
 	while (--last.pt_co.x >= 1. + rdata.shift)
 	{
 		--last.chunk_co_x;
-								//printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-								//printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(gen, &last, &rdata))
 			return (last.pt_co.x += EPSILON, last);
 		last.pt_co.y += rdata.delta_y;
@@ -111,13 +97,8 @@ t_hitpoint	r_ray_hit_sw_w(t_general *gen, t_hitpoint last,
 t_hitpoint	r_ray_hit_w_nw(t_general *gen, t_hitpoint last,
 	t_ray_data rdata)
 {
-							//printf("  first: %c\n", "HVA"[rdata.first]);//
-							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	if (rdata.first == FIRST_H && r_ray_hit_sec(gen, &last, &rdata, last.pt_co))
 		return (last.pt_co.y -= EPSILON, last);
-							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_h.x -= rdata.delta_x * (rdata.first == FIRST_V
 			&& rdata.check_h);
 	rdata.last_h.y -= (rdata.first == FIRST_V && rdata.check_h);
@@ -126,8 +107,6 @@ t_hitpoint	r_ray_hit_w_nw(t_general *gen, t_hitpoint last,
 	while (--last.pt_co.x >= 1. + rdata.shift)
 	{
 		--last.chunk_co_x;
-								//printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-								//printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(gen, &last, &rdata))
 			return (last.pt_co.x += EPSILON, last);
 		last.pt_co.y += rdata.delta_y;
@@ -155,13 +134,8 @@ t_hitpoint	r_ray_hit_w_nw(t_general *gen, t_hitpoint last,
 t_hitpoint	r_ray_hit_nw_n(t_general *gen, t_hitpoint last,
 	t_ray_data rdata)
 {
-							//printf("  first: %c\n", "HVA"[rdata.first]);//
-							//printf("- before: last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  before: chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//;
 	if (rdata.first == FIRST_V && r_ray_hit_sec(gen, &last, &rdata, last.pt_co))
 		return (last.pt_co.x += EPSILON, last);
-							//printf("- begin last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-							//printf("  begin chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 	rdata.last_v.x += (rdata.first == FIRST_H && rdata.check_v);
 	rdata.last_v.y -= rdata.delta_y * (rdata.first == FIRST_H
 			&& rdata.check_v);
@@ -170,8 +144,6 @@ t_hitpoint	r_ray_hit_nw_n(t_general *gen, t_hitpoint last,
 	while (++last.pt_co.y <= gen->map.y_max - 1. - rdata.shift)
 	{
 		++last.chunk_co_y;
-								//printf("- last: (%f, %f)\n", last.pt_co.x, last.pt_co.y);//
-								//printf("  chunk_co: (%d, %d)\n", last.chunk_co_x, last.chunk_co_y);//
 		if (r_ray_hit_primary(gen, &last, &rdata))
 			return (last.pt_co.y -= EPSILON, last);
 		last.pt_co.x += rdata.delta_x;
