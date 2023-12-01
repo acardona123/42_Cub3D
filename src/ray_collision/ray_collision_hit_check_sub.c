@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/30 16:16:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:10:07 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 /**
  * @brief Used when a raycasting ray is sent (id rdata.shift == 0) and the ray
  *		hits the corner of a chunk. In this case checks the chunks adjacents to
- *		this point. In this case the impact is confirmed by a return true and
- *		the hitpoint coordinates are updated to real_hitpoint_co
+ *		this point. If one of htem is an obstacle, the impact is confirmed by
+ *		returning true and the hitpoint coordinates are updated to
+ *		real_hitpoint_co
  * 
  * @param gen 
  * @param rdata 
@@ -87,10 +88,10 @@ bool	r_ray_check_shift_diag_touch_h(t_general *gen, t_ray_data *rdata,
 
 /**
  * @brief used only when looking for collision with minimal distance to wall and
- *		the point hit an vertical surface: 
+ *		the point hits a vertical surface: 
  *		if the point is closed enough to the corner of a chunk it checks the
  *		closest diagonal chunk type to see if it's an obstacle and therefore if
- *		the hitpoint is truelly hitting a obstacle
+ *		the hitpoint is hitting a obstacle
  * 
  * @param gen 
  * @param rdata
@@ -114,9 +115,9 @@ bool	r_ray_check_shift_diag_touch_v(t_general *gen, t_ray_data *rdata,
 }
 
 /**
- * @brief checks if the ray hitpoint is closer to a neighbor chunk that he given
- *		shift (ex: DIST_WALL_MIN for ray_walk), if so checks if those neighbors
- *		generate a colision
+ * @brief checks if the ray hitpoint is closer to a neighbor chunk that the
+ *		given shift (ex: DIST_WALL_MIN for ray_walk), if so checks if those
+ *		neighbors generate a colision
  * 
  * @param gen 
  * @param rdata 
@@ -150,13 +151,13 @@ bool	r_ray_check_shift_diag(t_general *gen, t_ray_data *rdata,
 }
 
 /**
- * @brief 
+ * @brief subfunction of r_ray_check_shift_diag
  * 
  * @param map 
  * @param rdata 
  * @param dec 
  * @param chunk 
- * @return true 
+ * @return true neighbor chunk hit
  * @return false 
  */
 static bool	r_ray_check_shift_diag_sub(t_chunk **map, t_ray_data *rdata,

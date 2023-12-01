@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:21:08 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:05:51 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@
 # define MINIMAP_COLOR_LEAKS	0x353535
 # define MINIMAP_COLOR_CRASHES	0x353535
 
-# define LEAKS_CRASHES_BACKGROUND	0x696969
+# define LEAKS_CRASHES_BACKGROUND	0xFFFFFF
 
 //controls :
 # define NUMBER_KEY 12

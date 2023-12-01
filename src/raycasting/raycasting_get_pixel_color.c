@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 17:30:03 by alexandm          #+#    #+#             */
-/*   Updated: 2023/12/01 15:40:42 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:34:31 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@ inline static float	_r_get_pixel_color_door_ratio(t_chunk_face face,
  *			and height.
  *			Before each change of column the functon need to be reset (static
  *			variable inside) by calling it with a NULL chunk
+ *			(to recalculate the height for this new column texture)
  * 
  * @param  chunk chunk hit (need type and extra_data_f)
- * @param  hitpoint hitpoint data usedd to differentiate if it is a door (then
- *		the value used to find the column is in hit_pt->extra_data_f), or a wall
- *		(the the value is the decimal value of the x or y coordinate depending
- *		on the orientation of the face hitted)
- * @param height theorical hight of the texture img (can be > of WIN_HEIGHT)
+ * @param  hitpoint hitpoint data used to differentiate if it is a door (then
+ *		the value used to find the column is in hit_pt->extra_data_f), or
+ *		another obstacle (the value is the decimal value of the x or y hitpoint 
+ *		coordinate depending on the orientation of the face hit)
+ * @param height theorical height of the texture img (can be > of WIN_HEIGHT)
  * @param texture the texture to use
- * @return int the color of the searched pixel
+ * @return int the color of the searched pixel, starting from the bottom of the
+ *		column and going up by one each call of this function
  */
 int	r_get_pixel_color(t_chunk *chunk, t_hitpoint *hit_pt, long int height,
 	t_static_texture *texture)
@@ -77,15 +79,16 @@ inline static float	_r_get_pixel_color_door_ratio(t_chunk_face face,
  *			and height.
  *			Before each change of column the functon need to be reset (static
  *			variable inside) by calling it with a NULL chunk
+ *			(to recalculate the height for this new column texture)
  * 
  * @param  chunk chunk hit (need type and extra_data_f)
- * @param  hitpoint hitpoint data usedd to differentiate if it is a door (then
- *		the value used to find the column is in hit_pt->extra_data_f), or a wall
- *		(the the value is the decimal value of the x or y coordinate depending
- *		on the orientation of the face hitted)
- * @param height theorical hight of the texture img (can be > of WIN_HEIGHT)
+ * @param  hitpoint hitpoint data used to get the texture column used
+ *		(the value is the decimal value of the x or y coordinate depending
+ *		on the orientation of the face hit)
+ * @param height theorical height of the texture img (can be > of WIN_HEIGHT)
  * @param texture the texture to use
- * @return int the color of the searched pixel
+ * @return int the color of the searched pixel, starting from the bottom of the
+ *		column and going up by one each call of this function
  */
 int	r_get_pixel_color(t_chunk *chunk, t_hitpoint *hit_pt, long int height,
 	t_static_texture *texture)

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:23:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:32:04 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ void		in_3_door_add_sides_textures(t_chunk **map,
 				t_texture_pack *textures, int door_x, int door_y);
 
 /**
- * @brief fills all the chunk data except the action structure and the status
+ * @brief fills all the chunk data except the action structure and the chunk
+ *	specific status
  * 
  * @param gen 
- * @param c_type 
- * @param x 
- * @param y 
- * @return true if chunk successfully filled
+ * @param c_type char describing the chun in the map .cub file
+ * @param x coordinate x of the chunk
+ * @param y coordinate y of the chunk
+ * @return true if chunk data successfully filled
  * @return false if error, error msg displayed
  */
 bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
@@ -52,6 +53,17 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 
 #else
 
+/**
+ * @brief fills all the chunk data except the action structure and the chunk
+ *	specific status
+ * 
+ * @param gen 
+ * @param c_type char describing the chun in the map .cub file
+ * @param x coordinate x of the chunk
+ * @param y coordinate y of the chunk
+ * @return true if chunk data successfully filled
+ * @return false if error, error msg displayed
+ */
 bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 {
 	gen->map.map[x][y].type = c_type;
@@ -66,12 +78,15 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 #endif
 
 /**
- * @brief checks if the character c is a valid one:
+ * @brief checks if the character letter is a valid one:
  *			- it is a symbole of a map element
  *			- it does not 'open' the map (any floor or player position chunk
  *				isn't in contact with a "nothing" chunk)
- *			- a door is at least surrounde by two opposit walls
- * @param type chunk type 
+ *			- in BONUS: a door is at least surrounded by two opposit walls
+ * @param gen
+ * @param letter
+ * @param x
+ * @param y
  * @return true if the character is properly placed
  * @return false if the character brokes any of the previous rules
  */

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 00:38:30 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:53:58 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ char	*to_file_build_path(char *name0, char *name1, char *name2, char *name3);
 //tools_lst.c
 void	to_lstfree(t_list **lst);
 
-//tools_time.c
-size_t	to_getime(void);
-
 //tools_anglesset.c
 void	to_angle_set_init(float *old_fov, float new_fov, double *angles_set,
 			double *angle_correc);
@@ -114,4 +111,12 @@ void	to_mlx_draw_rectangle(t_data *data, t_coord_i position,
 			t_coord_i dimensions, int color);
 void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
 			int color);
+
+# ifdef BONUS
+
+//tools_time.c
+size_t	to_getime(void);
+
+# endif
+
 #endif

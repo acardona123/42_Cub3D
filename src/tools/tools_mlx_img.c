@@ -6,16 +6,19 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:31:48 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 20:18:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:51:02 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/tools.h"
 
 /**
- * @brief used to initialise an empty image of the given
+ * @brief used to initialise an empty image of the given dimensions
  * 
  * @param mlx 
+ * @param img_dst 
+ * @param width 
+ * @param height 
  * @return SUCCESS if success 
  * @return FAIL if faillure (err msg displayed)
  */
@@ -33,7 +36,7 @@ t_bool	to_mlx_new_empty_img(void *mlx, t_data *img_dst, int width, int height)
 }
 
 /**
- * @brief draws a monochrome rectangle on a given image, starting with its top
+ * @brief draws a monochrom rectangle on a given image, starting with its top
  *	left corner at the given position
  * 
  * @param data 
@@ -65,7 +68,7 @@ void	to_mlx_draw_rectangle(t_data *data, t_coord_i position,
 }
 
 /**
- * @brief draws a disc of a given radius arround the given center
+ * @brief draws a colored disc of a given radius arround the given center
  * 
  * @param data 
  * @param center 

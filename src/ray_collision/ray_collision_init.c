@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:36:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:16:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static t_1st_type	_r_ray_init_get_first_type(t_coord_f *pco,
 						t_ray_data *rdata);
 
 /**
- * @brief calculates the parameters used too check the ray intersection with the
- *		grid (deltas between consecutive horizontal/vertical line) set hitpoint
- *		float coordonites to the intersection with the closet
+ * @brief calculates the parameters used to check the ray intersection with the
+ *		grid (deltas between consecutive horizontal/vertical lines) set hitpoint
+ *		float coordinates to the intersection with the closest
  *		vertical/hirizontal grid line. 
  * 
  * @param p_co player coordinates
  * @param angle_ray angle of the ray in rad
  * @param map pointer to the map structure
- * @param rdata structure that will be used for the ray propagation calculation
+ * @param rdata structure that will be used for the ray propagation simulation
  * @return t_hitpoint , empty except for the pt_co that are set to the first
  *		intersection point with the grid
  */
@@ -61,11 +61,11 @@ t_hitpoint	r_ray_init_rdata_hitpoint(t_coord_f *p_co, float angle_ray,
 }
 
 /**
- * @brief calculates the coordonites of the first intersecton between the ray
- *		and a horizontal line and calculate the x step when jumping
+ * @brief calculates the coordinates of the first intersection between the ray
+ *		and a horizontal line and calculates the x step when jumping
  *		from one horizontal line to the next one
  * 
- * @param p_co coordonites of the player
+ * @param p_co coordinates of the player
  * @param rdata structure that will be partially completed
  * @param angle_ray angle of the ray in rad
  */
@@ -97,11 +97,11 @@ static void	_r_ray_init_h(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 }
 
 /**
- * @brief calculates the coordonites of the first intersecton between the ray
+ * @brief calculates the coordinates of the first intersection between the ray
  *		and a vertical line; and calculates the y step when jumping
  *		from one vertical line to the next one
  * 
- * @param P coordonites of the player
+ * @param P coordinates of the player
  * @param rdata structure that will be partially completed
  * @param angle_ray angle of the ray in rad
  */
@@ -134,7 +134,7 @@ static void	_r_ray_init_v(t_coord_f *p_co, t_ray_data *rdata, float angle_ray)
 
 /**
  * @brief calculates the first intersection point between the grid and the ray,
- *		this pt is the starting point for the ray projection at the closest one.
+ *		this pt is the starting point for the ray projection.
  *		Modifies rdata accordingly.
  * 
  * @param p_co 
@@ -168,6 +168,14 @@ static t_1st_type	_r_ray_init_hitpoint(t_coord_f *pco, t_ray_data *rdata,
 	return (first_type);
 }
 
+/**
+ * @brief checks if the first grid line crossed by the ray is a vertical or
+ *		horizontal one
+ * 
+ * @param pco 
+ * @param rdata 
+ * @return t_1st_type 
+ */
 static t_1st_type	_r_ray_init_get_first_type(t_coord_f *pco,
 	t_ray_data *rdata)
 {

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:02:34 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:32:22 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:57:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ inline static t_vector_f	_maps_get_world_relative_position_minimap(
 								float delta_y_map);
 
 /**
- * @brief get the color of the pixel correspondind to the chunk in the minimap
+ * @brief gets the color of the pixel correspondind to the chunk in the minimap
  * 
  * @param gen 
  * @param x the x position of the pixel in the minimap
@@ -38,13 +38,13 @@ int	maps_get_pixel_color_minimap(t_general *gen, int x_map, int y_map)
 	if (world_position.x < 0 || world_position.x >= gen->map.width
 		|| world_position.y < 0 || world_position.y >= gen->map.height)
 		return (MINIMAP_COLOR_NOTHING);
-	return (maps_world_get_chunk_color(&gen->minimap, gen->map.height,
-			(int)world_position.x, (int)world_position.y));
+	return (maps_world_get_chunk_color(&gen->minimap, (int)world_position.x,
+			(int)world_position.y));
 }
 
 /**
- * @brief gets the position of chunk targettedby the minimap pixel (in float),
- *		with map rotation and zoom
+ * @brief gets the position of the chunk targetted by the minimap pixel
+ *		(in float), with map rotation and zoom
  * 
  * @param gen 
  * @param delta_x_map coordinate x of the pixel in the minimap relative to its

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 03:14:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 16:43:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:08:23 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ static t_bool	_in_2_textu_group_init_from_file(void *mlx,
 #ifdef BONUS
 
 /**
- * @brief imports all the textures of the t_group_of_textures, base on the given
- *		texture_name that referes either to a file (the group will only contain
- *		one texture (without animations) or a directory that contains all
- *		animations files (for not animated textures) ou directories (animated))
+ * @brief imports all the textures of the t_group_of_textures, based on the
+ *		given texture_name that referes either to a file (the group will only
+ *		contain one texture (without animations) or to a directory that contains
+ *		all animations files (for not animated textures)
+ *		ou directories (animated))
  * 
  * @param mlx 
  * @param textures_group texture_group destination for the textures
  * @param texture_name pointer to the name of the file/directory, *texture_name
- *			is set to NULL if the it referes t a files (the string is directly
- *			used as path in the static texture and must not be extracted to
+ *			is set to NULL if it referes to a files (the string is directly
+ *			used as path in the static texture and need to be extracted to
  *			avoid free in parent function)
  * @return t_bool	SUCCESS if all textures have been imported (at least one),
- *						*texture_name updatde to NULL if it is a *.xpm file. 
+ *						*texture_name updatded to NULL if it is a *.xpm file. 
  *					FAIL if error during the importation or no texture found,
  *						err msg displayed.
  */
@@ -56,8 +57,8 @@ t_bool	in_2_textu_group_init(void *mlx, t_group_of_textures *textures_group,
 #else
 
 /**
- * @brief imports the texture of the t_group_of_textures, base on the given
- *		texture_name to a .xpm file (the group will only contain
+ * @brief imports the texture of the t_group_of_textures, based on the given
+ *		texture_name. It must be a.xpm file (the group will only contain
  *		one texture (without animations). Unlike with BONUS directories aren't
  *		allowed as textures containers.
  * 
@@ -87,15 +88,15 @@ t_bool	in_2_textu_group_init(void *mlx, t_group_of_textures *textures_group,
 #endif
 
 /**
- * @brief considere the given name (value) as a file. Imports the texture (with
+ * @brief consideres the given name (value) as a file. Imports the texture (with
  *		one frame) associated to it.
  * 
  * @param mlx 
  * @param textures_group 
  * @param file_name pointer to the name of the file, *file_name is moved in the
- *	texture 
+ *				texture 
  * @return t_bool SUCCESS if texture imported, *file_name set to NULL to avoid
- *		futur free
+ *				future free
  */
 static t_bool	_in_2_textu_group_init_from_file(void *mlx,
 	t_group_of_textures *textures_group, char **file_name)

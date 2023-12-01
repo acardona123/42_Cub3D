@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:46:27 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 21:20:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:57:25 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	maps_bigmap_put_player_window(t_display *disp, t_minimap *minimap,
 
 // maps_update_world.c
 void	maps_world_update_door(t_general *gen, t_chunk *chunk);
-int		maps_world_get_chunk_color(t_minimap *minimap, int map_height,
-			int chunk_x, int chunk_y);
+int		maps_world_get_chunk_color(t_minimap *minimap, int chunk_x,
+			int chunk_y);
 
 #endif

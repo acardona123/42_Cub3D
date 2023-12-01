@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 22:51:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:29:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:01:19 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 #ifdef BONUS
 
+/**
+ * @brief Destroys properly all t_map structure's elements
+ * 
+ * @param map 
+ */
 void	end_destroy_map(t_map *map)
 {
 	int	x;
@@ -45,6 +50,11 @@ void	end_destroy_map(t_map *map)
 
 #else
 
+/**
+ * @brief Destroys properly all t_map structure's elements
+ * 
+ * @param map 
+ */
 void	end_destroy_map(t_map *map)
 {
 	int	x;

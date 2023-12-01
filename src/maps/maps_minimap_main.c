@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:45:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 14:47:53 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:48:08 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 static void	_maps_draw_player_minimap(t_general *gen,
 				int x_center_player, int y_center_player);
 
+/**
+ * @brief draws the minimap, centered on the player position and oriented toward
+ *		the player angle
+ * 
+ * @param gen 
+ */
 void	maps_draw_minimap(t_general *gen)
 {
 	register int	x_map;
@@ -46,6 +52,13 @@ void	maps_draw_minimap(t_general *gen)
 	_maps_draw_player_minimap(gen, radius, WIN_HEIGHT - radius - 1);
 }
 
+/**
+ * @brief draws the player symbole (an arrow) on the minimap image
+ * 
+ * @param gen 
+ * @param x_center_player 
+ * @param y_center_player 
+ */
 static void	_maps_draw_player_minimap(t_general *gen,
 	register int x_center_player, register int y_center_player)
 {

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 00:39:36 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/21 21:56:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:14:15 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ t_bool	in_2_set_color(int *dest_color, char *str_color,
  * 
  * @param str the string to study
  * @param dst_value destination where the 0-255 value will be stored if found 
- * @return int success: return the index in str where the coma preceding the
- *				value is, the value is stored in dst_value
- *				(e.g : str = "1,125" => return 1, *dst_value = 125)
- *			FAILLURE : if wrong format, then return -1. undifined behaviour for
- *				the *dst_value. (err msg displayed, no argument freed)
+ * @return int 	success: returns the index in str where the coma preceding the
+ *					value is, the value is stored in dst_value
+ *					(e.g : str = "1,125" => return 1, *dst_value = 125)
+ *				fail : if wrong format, then return -1. undefined behaviour for
+ *					the *dst_value. (err msg displayed, no argument freed)
  */
 static int	_in_2_set_color_get_end_component(char *str, int *dst_value)
 {

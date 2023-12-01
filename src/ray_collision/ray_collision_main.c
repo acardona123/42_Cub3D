@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:14:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:39:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:21:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static const t_collision_function	g_collision_function[8]
 static void	_r_ray_extract_param(t_ray_params *params, t_ray_data *rdata);
 
 /**
- * @brief sendsd a ray from the player, in a certain direction and returns the
+ * @brief sends a ray from the player, in a certain direction and returns the
  *	impact point with the first obstacle found.
- *	(if no obstacle found the abscisse of the returned obstacle is set to -1.)
+ *	(if no obstacle found the abscissa of the returned obstacle is set to -1.)
  * 
  * @param gen 
- * @param params structure contining the characterstics of the ray
- * @return t_hitpoint structure contining the datas oh the first bloc hitten and
- *		the imact point.
+ * @param params structure containing the caracteristics of the ray
+ * @return t_hitpoint structure containing the data of the first bloc and the
+ *		impact point.
  */
 t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params)
 {
@@ -47,7 +47,7 @@ t_hitpoint	r_ray_hit(t_general *gen, t_ray_params params)
 #ifdef BONUS
 
 /**
- * @brief extract parameters from params to fill rdata elements
+ * @brief extracts parameters from params to fill rdata elements
  * 
  * @param params 
  * @param rdata 

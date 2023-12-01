@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:34:15 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:42:18 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:18:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ bool	in_2_utiles_is_xpm_file(struct dirent *elem)
  * @param dir_name 
  * @param cpt 
  * @return true SUCCESS, updates cpt
- * @return FAIL FAILURE if can't open the directory
+ * @return FAIL FAILURE if can't open the directory or if there isn't any .xpm
+ *		file in the repository
  */
 t_bool	in_2_tools_utiles_xpm_files_in_folder(char *dir_name,
 	unsigned int *cpt)
@@ -63,12 +64,12 @@ t_bool	in_2_tools_utiles_xpm_files_in_folder(char *dir_name,
 }
 
 /**
- * @brief sorts the frames table of the animated texture by ascii order
+ * @brief sorts the frames array of the animated texture by ascii order
  * 
- * @param frame_array table of the t_animated_texture to sort
+ * @param frame_array array of the t_animated_texture to sort
  * @param frame_number number of frames to sort 
  */
-void	in_2_utiles_sort_anim_text_table(t_static_texture *frame_array,
+void	in_2_utiles_sort_anim_text_array(t_static_texture *frame_array,
 	unsigned int frame_number)
 {
 	t_static_texture	tmp;

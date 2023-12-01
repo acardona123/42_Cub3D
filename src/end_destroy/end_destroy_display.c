@@ -6,14 +6,14 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:33:19 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:01:46 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:00:21 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shared.h"
 
 /**
- * @brief distroys display elements (mlx, window and buffer image).
+ * @brief distroys display elements (mlx, window and images).
  *! /!\ BEFORE DESTROYING DISPLAY: ALL THE IMAGES, INCLUDING THE ONES IN THE
  *! TEXTURE PACK, MUST HAVE BEEN DESTROYED USING END_DESTROY_TEXTURE_PACK
  * 

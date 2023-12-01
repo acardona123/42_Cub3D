@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:43:02 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:10:39 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,12 +432,20 @@ void		end_destroy_general(t_general *gen);
 void		end_destroy_exit(t_general *gen, t_exit_values n);
 
 // shared
-void		init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
+void		sh_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
 				t_group_of_textures *texture_group, bool new_seed);
+
+# ifdef BONUS
+
+bool		sh_doors_update_status(t_general *gen, t_chunk *door, size_t time);
+void		sh_doors_update_texture_main_side(t_texture_pack *texture_pack,
+				t_chunk *door);
+
+# endif
 
 // init
 void		init_main(int ac, char **av, t_general	*gen);
-void		init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
+void		sh_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
 				t_group_of_textures *texture_group, bool new_seed);
 
 // ray_collision
@@ -455,11 +463,6 @@ void		gp_leak_crash_action(t_general *gen, size_t time_now,
 				t_hitpoint *hit_pt);
 
 # ifdef BONUS
-
-//doors
-bool		doors_update_status(t_general *gen, t_chunk *door, size_t time);
-void		doors_update_texture_main_side(t_texture_pack *texture_pack,
-				t_chunk *door);
 
 //maps
 void		maps_draw_minimap(t_general *gen);

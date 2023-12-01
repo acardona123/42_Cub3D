@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:21:14 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:14:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:35:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #ifdef BONUS
 
 /**
- * @brief goes through the map tp initialise the actions and status related to
- *		each chunk.
+ * @brief goes through the map to initialise the actions and status related to
+ *		specific chunks as doors, leaks, crashes.
  * 
  * @param map 
  * @return t_bool	FAIL if malloc error, error msg displayed

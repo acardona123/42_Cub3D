@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 15:34:24 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:37:27 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ static void	_in_1_map_mapcontent_check(t_general *gen, t_lists *lists,
 				int fd_input, char **line);
 
 /**
- * @brief checks if the map format is correct according to the subject do not do
- *			anythig with the readen data
+ * @brief checks if the map format is correct according to the subject,
+ *		separates and saves the lines in two linked lists: the textures
+ *		descriptions (called parameters) in one and the map content lines
+ *		in the other one
  * @param ac 
  * @param av 
  * @param gen 
@@ -53,12 +55,12 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
  *		in the linked list lst->param 
  * 
  * @param gen general structure to fill
- * @param lists to linked list constaining string : one for the texture's
+ * @param lists two linked list constaining string : one for the texture's
  *		parameters lines in the map file, the other for the lines corresonding
  *		to the mapcontent elements -> will be updatedd to add a line
- * @param fd_input input map containing the parameters and the map
- * @param line pointer where the readed line will be stored (the last line will
- *		be used in the mapcontent_check later)
+ * @param fd_input input file fd containing the parameters and the map
+ * @param line pointer where the last read line will be stored (the last line
+ *		will be used in the mapcontent_check later)
  * @return EXIT if error
  */
 static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
@@ -87,8 +89,8 @@ static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
 }
 
 /**
- * @brief store the map in the linked list lst->map and check if there is
- *		empty_line in the map  
+ * @brief stores the map in the linked list lst->map and checks if there is an
+ *		empty line in the map  
  * 
  * @param gen idem _in_1_map_params_check
  * @param lists 

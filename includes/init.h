@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:42:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:20:13 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ t_bool	in_2_static_texture_init_one(void *mlx, t_static_texture *texture,
 bool	in_2_utiles_is_xpm_file(struct dirent *elem);
 t_bool	in_2_tools_utiles_xpm_files_in_folder(char *dir_name,
 			unsigned int *cpt);
-void	in_2_utiles_sort_anim_text_table(t_static_texture *frame_array,
+void	in_2_utiles_sort_anim_text_array(t_static_texture *frame_array,
 			unsigned int frame_number);
 # endif
 

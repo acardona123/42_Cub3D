@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:41:25 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:19:58 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 static t_bool	in_2_anim_textu_init_file(void *mlx,
 					t_animated_texture *texture, char **line_arg);
-static t_bool	in_2_anim_textu_init_folder(void *mlx,
+
+#ifdef BONUS
+
+static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 					t_animated_texture *texture, char **line_arg);
 
 /**
  * @brief initializes the t_animated_texture structure of a texture based on a
- *			fragmented line of the input file. Two pssible syntaxes:
- *			unanimated texture (stored as animated with inly one static textu):
- *				elem_acronym text_img_path
- *			animated texture:
- *				elem_acronym text_repo_containing_img frame_ms frame_pause_ms
+*	fragmented line of the input file. Two possible syntaxes:
+*	unanimated texture (stored as animated with only one static textu):
+*		"elem_acronym" "text_img_path.xpm"
+*	animated texture:
+*		"elem_acronym" "text_repo_containing_img" "frame_ms" "frame_pause_ms"
  * 
  * @param texture 
  * @param line_arg the line of arg starting AFTER the accronyme
@@ -42,16 +45,46 @@ t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
 	if (ft_tablen(line_arg) == 1)
 		return (in_2_anim_textu_init_file(mlx, *texture, line_arg));
 	else if (ft_tablen(line_arg) == 3)
-		return (in_2_anim_textu_init_folder(mlx, *texture, line_arg));
+		return (_in_2_anim_textu_init_folder(mlx, *texture, line_arg));
 	return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
 }
 
+#else
+
 /**
- * @brief generate the t_animated_texture in the case of only one path is given
- *		(without parametres for frame rates or so) => this path must be directly
- *		the xpm file path
+ * @brief initializes the t_animated_texture structure of a texture based on a
+*	fragmented line of the input file. One possible syntaxes only:
+*	static texture (stored as animated with only one static textu):
+*		"elem_acronym" "text_img_path.xpm"
  * 
- * @param mlx ptr to the mlx
+ * @param mlx 
+ * @param texture 
+ * @param line_arg the line of arg starting AFTER the accronyme
+ * @return SUCCESS (textures successfully loaded, line_arg updated to extract
+ *				line_arg[0] form it (to avoid it being freed))
+ * @return FAIL (err msg displayed. no argument freed)
+ */
+t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
+	char **line_arg)
+{
+	if (*texture)
+		return (to_error_msg(MSG_TEXTURE_MULTIPLE_DEF), FAIL);
+	*texture = ft_calloc(1, sizeof(t_animated_texture));
+	if (!texture)
+		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
+	if (ft_tablen(line_arg) == 1)
+		return (in_2_anim_textu_init_file(mlx, *texture, line_arg));
+	return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
+}
+
+#endif
+
+/**
+ * @brief generates the t_animated_texture when only one path is given
+ *		(without parameters for frames rate or so) => this path must be directly
+ *		the .xpm file path
+ * 
+ * @param mlx
  * @param texture struct to fill
  * @param line_arg splited line of the input file to import, starting AFTER the
  *		accronym
@@ -91,14 +124,14 @@ static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
 
 /**
  * @brief fills t_animated_texture structure based on the line_arg elements:
- *	elem_acronym text_repo_containing_img frame_ms frame_pause_ms
+ *	"elem_acronym" "text_repo_containing_img" "frame_ms" "frame_pause_ms"
  * @param mlx 
  * @param texture 
  * @param line_arg 
  * @return SUCCESS: textures successfully imported, no arg freed
  * @return FAIL : err msg displayed, no arg freed
  */
-static t_bool	in_2_anim_textu_init_folder(void *mlx,
+static t_bool	_in_2_anim_textu_init_folder(void *mlx,
 	t_animated_texture *tex, char **line_arg)
 {
 	DIR				*dir;
@@ -121,7 +154,7 @@ static t_bool	in_2_anim_textu_init_folder(void *mlx,
 	closedir(dir);
 	tex->frame_cycle_short = tex->frame_number * tex->frame_ms;
 	tex->frame_cycle_long = tex->frame_cycle_short + tex->frame_pause_ms;
-	in_2_utiles_sort_anim_text_table(tex->frame_array, tex->frame_number);
+	in_2_utiles_sort_anim_text_array(tex->frame_array, tex->frame_number);
 	return (SUCCESS);
 }
 
@@ -140,7 +173,7 @@ static t_bool	in_2_anim_textu_init_folder(void *mlx,
  *						-> error msg displayed, arguments untouched
  */
 static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
-	char *dir_name, t_animated_texture *tex)
+	char *dir_name, t_animated_texture *texture)
 {
 	struct dirent	*elem;
 	unsigned int	i;
@@ -150,14 +183,14 @@ static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
 	if (ft_strlen(dir_name) > 1 && dir_name[ft_strlen(dir_name) - 1] == '/')
 		dir_name[ft_strlen(dir_name) - 1] = 0;
 	elem = readdir(dir);
-	while (elem && i < tex->frame_number)
+	while (elem && i < texture->frame_number)
 	{
 		if (in_2_utiles_is_xpm_file(elem))
 		{
 			path = to_file_build_path(dir_name, elem->d_name, NULL, NULL);
 			if (!path)
 				return (to_error_msg(MSG_BAD_ALLOC), FAIL);
-			if (in_2_static_texture_init_one (mlx, &tex->frame_array[i],
+			if (in_2_static_texture_init_one (mlx, &texture->frame_array[i],
 					path) == FAIL)
 				return (free(path), FAIL);
 			++i;
@@ -165,25 +198,6 @@ static t_bool	_in_2_get_textures_from_directory(void *mlx, DIR *dir,
 		elem = readdir(dir);
 	}
 	return (SUCCESS);
-}
-
-#else
-
-/**
- * @brief can't open a folder in the mandatory part
- * 
- * @param mlx ignored
- * @param texture ignored
- * @param line_arg ignored
- * @return FAIL ALWAYS
- */
-static t_bool	in_2_anim_textu_init_folder(void *mlx,
-	t_animated_texture *tex, char **line_arg)
-{
-	(void)mlx;
-	(void)tex;
-	(void)line_arg;
-	return (to_error_msg(MSG_OPENDIR_FORBIDDEN), FAIL);
 }
 
 #endif

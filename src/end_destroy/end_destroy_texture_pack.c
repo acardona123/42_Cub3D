@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:51:23 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:05:02 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	_end_textures_destroy_one_static_texture(void *mlx,
 #ifdef BONUS
 
 /**
- * @brief frees and destroys all the texture elements of the texture pack.
+ * @brief frees and destroys all the elements of the texture pack.
  *			Can be used on a partially unitiallysed texture pack wich
  *			initialisation have been stoped due to an error
  * 
@@ -50,7 +50,7 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
 #else
 
 /**
- * @brief frees and destroys all the texture elements of the texture pack.
+ * @brief frees and destroys all the texture groups of the texture pack.
  *			Can be used on a partially unitiallysed texture pack wich
  *			initialisation have been stoped due to an error
  * 
@@ -75,7 +75,7 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
 
 /**
  * @brief destroys the textures group content (array of animated texture with
- *		all its animated textures it contains). 
+ *		all the animated textures it contains). 
  * 
  * @param mlx 
  * @param group 
@@ -100,7 +100,7 @@ static void	_end_textures_destroy_group_of_texture(void *mlx,
 }
 
 /**
- * @brief destroys an animated texture with all its static textures use for
+ * @brief destroys an animated texture with all its static textures used for
  *			animation
  * 
  * @param mlx 
@@ -126,8 +126,7 @@ static void	_end_textures_destroy_one_animated_texture(void *mlx,
 }
 
 /**
- * @brief destroys a static texture content <=> it's path, image and image
- *	address
+ * @brief destroys a static texture content <=> it's path, image
  * 
  * @param mlx 
  * @param textu_static pointer untouched but value destroyed

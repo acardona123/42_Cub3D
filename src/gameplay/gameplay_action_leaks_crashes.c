@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:41:43 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:30:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:15:30 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ static void		gp_frame_leaks_or_craskes_fill_frame(t_data *buff,
 					t_data *static_textu, float size_ratio, t_padding padding);
 
 /**
- * @brief triggers the display of a leak IF the ray heat the crashes/leaks
- *	chunks in the activation area (between the ACTION_LEAKS_CRASHES_BORDER_INF
- *	and ACTION_LEAKS_CRASHES_BORDER_SUP). If triggered then initializes
- *	_gp_action_get_img to reset it to the right texture;
+ * @brief triggers the display of a leak/rash meme IF the ray heat the
+ *	crashes/leaks chunks in the activation area (between the 
+ *	ACTION_LEAKS_CRASHES_BORDER_INF and ACTION_LEAKS_CRASHES_BORDER_SUP). If
+ *	triggered, then initializes _gp_action_get_img to reset it to the right
+ *	texture and set gen->disp.render_selec to display the meme;
  * 
  * @param gen 
  * @param now_time 
@@ -100,8 +101,8 @@ static t_data	*_gp_action_get_img( t_general *gen,
 }
 
 /**
- * @brief builds the buffer image to display based on the time, the animation
- *	frames and the screen dimensions
+ * @brief builds the buffer image to display the animation	frame based on the
+ *	time and the screen dimensions
  * 
  * @param gen 
  * @param now_time 
@@ -128,6 +129,15 @@ void	gp_frame_leaks_or_craskes(t_general *gen,
 		0, 0);
 }
 
+/**
+ * @brief subfunction of gp_frame_leaks_or_craskes, fills the buff image with
+ *	the resize static texture centered in the screen
+ * 
+ * @param buff 
+ * @param static_textu 
+ * @param size_ratio 
+ * @param padding 
+ */
 static void	gp_frame_leaks_or_craskes_fill_frame(t_data *buff,
 	t_data *static_textu, float size_ratio, t_padding padding)
 {

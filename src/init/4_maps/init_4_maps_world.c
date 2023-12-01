@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:15:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:25:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:43:06 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ static int	_in_4_get_chunk_color_from_map(t_general *gen, int x, int y);
 
 /**
  * @brief creates an image where each pixel corresponds to a chunk. this image
- *	named world is used to generate the minimap
+ *	named world is used to generate the minimap and to initialise the bigmap
  * 
  * @param gen 
+ * EXIT if faillure
  */
 void	in_4_world_init(t_general *gen)
 {

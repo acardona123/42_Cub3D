@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:16:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/23 16:55:53 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:47:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static size_t	_to_file_build_path_len(char *name0, char *name1, char *name2,
 					char *name3);
 
 /**
- * @brief returns the path formed by the succession of the names
- *		(ex: name0/name1/name2/name3
+ * @brief returns the path formed by the succession of direcoties/file names
+ *		(ex: name0/name1/name2/name3)
  *		or subparts of it if some arguments are null (ex: name0/name1))
  * 
  * @param name0 
@@ -55,7 +55,8 @@ char	*to_file_build_path(char *name0, char *name1, char *name2, char *name3)
 }
 
 /**
- * @brief gives the length of the path complete
+ * @brief subfunction of to_file_build_path: gives the length of the complete
+ *		path
  * 
  * @param name0 
  * @param name1 

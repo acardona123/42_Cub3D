@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 03:14:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:39:59 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:03:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static t_bool	_in_2_textu_group_dir_import_one_texture(void *mlx,
 
 /**
  * @brief inits the texture group corresponding to the given directory.
- *		It will generate a table of pointer to t_animated_textures based on this
+ *		It will generate a table of pointer of t_animated_textures based on this
  *		repo content:
  *		- *.xpm at the root of the repo are considered as independant static
  *			textures (animated textures with one frame)
- *		- each root subdirectories can be describing one animatedtexture if it
+ *		- each root subdirectories can be describing one animated texture if it
  *			contains:
  *			-- at least one *.xpm file
- *			-- one file names as defined by TEXTURE_PARAMETERS_FILE_NAME which
+ *			-- one file named as defined by TEXTURE_PARAMETERS_FILE_NAME which
  *				two first lines are the delay between each frames in ms and the
  *				pause delay in ms at the end of the frames cycle.
  * 
@@ -66,11 +66,11 @@ t_bool	in_2_textu_group_init_from_dir(void *mlx,
 
 /**
  * @brief given a directory name, imports all the textures it contains in the
- *	given textures_group textures array
+ *	given texture_group textures array
  * 
  * @param mlx 
  * @param textures_group 
- * @param dir_name name of the irectory containing the textures
+ * @param dir_name name of the directory containing the textures
  * @return t_bool	SUCCESS if all the textures have been successfully imported
  *					FAIL if error during the importation, error msg displayed
  */
@@ -113,7 +113,7 @@ static t_bool	_in_2_textu_group_dir_import_all_textures(void *mlx,
  * @return t_bool	FAIL if elem is a valid texture but there was an error in
  *						 its importation. Error msg displayed.
  *					SUCCESS if elem is a texture successfully imported in
- *						**texture_dst.
+ *						**texture_dst or if it is not a texture.
  */
 static t_bool	_in_2_textu_group_dir_import_one_texture(void *mlx,
 	char *dir_parent_name, t_animated_texture **texture_dst,

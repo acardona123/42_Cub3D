@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:02:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 18:56:56 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:27:40 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #ifdef BONUS
 
 /**
- * @brief initialize a bool[4] that indicates if a face of a crashes chunk is
+ * @brief initializes a bool[4] that indicates if a face of a crashes chunk is
 *		active or not depending on its type
  * 
  * @param type ie character in the map .xpm file
@@ -34,12 +34,13 @@ static	void	_in_3_mapcontent_crashes_get_active_faces(t_chunk_type type,
 
 /**
  * @brief fills the textures arrays of a crashes chunk to point to each of its
- *	faces' textures. If it is the first time that a leak chunk is found, checks
- *	if crashes textures are availables (ie defined in the map)
+ *	faces' textures. If it is the first time that a crash chunk is found, checks
+ *	if crashs textures are availables (ie defined in the map)
  * 
  * @param texturepack 
- * @param chunk door chunk
- * @return t_bool	FAIL if texture missing in the map, err msg displayed
+ * @param chunk crashes chunk
+ * @return t_bool	FAIL if crashes textures are missing in the map,
+ *						err msg displayed
  *					SUCCESS otherwise
  */
 t_bool	in_3_mapcontent_crashes_chunk_init_textures(t_texture_pack *texturepack,
@@ -55,26 +56,26 @@ t_bool	in_3_mapcontent_crashes_chunk_init_textures(t_texture_pack *texturepack,
 		return (to_error_msg(MSG_TEXTURE_MISSING_CRASHES), FAIL);
 	check_texture_done = true;
 	if (!(active_faces & ACTIVE_N))
-		init_chunk_set_texture(chunk_crash, FACE_N, &texturepack->wall_n, true);
+		sh_chunk_set_texture(chunk_crash, FACE_N, &texturepack->wall_n, true);
 	if (!(active_faces & ACTIVE_E))
-		init_chunk_set_texture(chunk_crash, FACE_E, &texturepack->wall_e, true);
+		sh_chunk_set_texture(chunk_crash, FACE_E, &texturepack->wall_e, true);
 	if (!(active_faces & ACTIVE_S))
-		init_chunk_set_texture(chunk_crash, FACE_S, &texturepack->wall_s, true);
+		sh_chunk_set_texture(chunk_crash, FACE_S, &texturepack->wall_s, true);
 	if (!(active_faces & ACTIVE_W))
-		init_chunk_set_texture(chunk_crash, FACE_W, &texturepack->wall_w, true);
+		sh_chunk_set_texture(chunk_crash, FACE_W, &texturepack->wall_w, true);
 	i = -1;
 	while (++i < 4)
 		if (!chunk_crash->textures[i])
-			init_chunk_set_texture(chunk_crash, i, &texturepack->wall_crashes,
+			sh_chunk_set_texture(chunk_crash, i, &texturepack->wall_crashes,
 				true);
 	return (SUCCESS);
 }
 
 /**
- * @brief inits the action structure of crashes chunks
+ * @brief inits the action structure of a crashes chunk
  * 
  * @param map 
- * @param x 
+ * @param x coordinate x of the chunk
  * @param y 
  * @return t_bool	SUCCESS init done
  *					FAIL if memory allocation error, err msg displayed

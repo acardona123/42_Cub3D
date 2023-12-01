@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:33:27 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 15:52:50 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:41:55 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 #ifdef BONUS
 
 /**
- * @brief insert animated texture pointer in the chunk textures tables[face].
+ * @brief inserts animated texture pointer in the chunk textures array[face].
  *	The texture is one of those present in the given texture_group, it will be
  *	selected based on the value of chunk->textures_idx[face]. If idx_seed is
  *	false the seed used to select the texture is the chunk->textures_idx[face],
- *	else chunk->textures_idx[face] is set to idx_seed
+ *	else chunk->textures_idx[face] is set to a random int value
  * 
  * @param chunk 
  * @param face face which texture needs to be set
  * @param texture_group group of textures from wich the texture will be
  *			extracted
- * @param new_seed indicates if a new seed has to be generated for the
+ * @param new_seed indicates if a new seed has to be randomly generated for the
  *		designated texture.
  */
-void	init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
+void	sh_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
 	t_group_of_textures *texture_group, bool new_seed)
 {
 	if (new_seed)
@@ -41,11 +41,9 @@ void	init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
 #else
 
 /**
- * @brief insert animated texture pointer in the chunk textures tables[face].
- *	The texture is one of those present in the given texture_group, it will be
- *	selected based on the value of chunk->textures_idx[face]. If idx_seed is
- *	false the seed used to select the texture is the chunk->textures_idx[face],
- *	else chunk->textures_idx[face] is set to idx_seed
+ * @brief insert the animated texture pointer in the chunk textures tables[face].
+ *	The texture the only one of those present in the given texture_group.
+ *	new_seed is irrelevant in the mandatory part
  * 
  * @param chunk 
  * @param face face which texture needs to be set
@@ -53,7 +51,7 @@ void	init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
  *			extracted
  * @param new_seed ignored in mandatoy part
  */
-void	init_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
+void	sh_chunk_set_texture(t_chunk *chunk, t_chunk_face face,
 	t_group_of_textures *texture_group, bool new_seed)
 {
 	(void)new_seed;

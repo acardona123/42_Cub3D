@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doors_update.c                                     :+:      :+:    :+:   */
+/*   shared_doors_update.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 01:35:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:29:03 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:53:44 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 /**
  * @brief updates the door status if it was closing or opening based on the
- *	current time and the time it starts to move.
- *	Update t_chunk->extra_data_f : takes the width of the opening of the door
+ *	current time and the time it started to move.
+ *	Updates t_chunk->extra_data_f : takes the width of the opening of the door
  *		(0 = closed, 0.5 = mid-opened, 1 = fully opended and so on)
  *	If the door status changed due to time running then the texture of the
  *		door and/or the adjacent walls may need an update, the funtion therefore
@@ -27,13 +27,13 @@
  *	
  * 
  * @param gen
- * @param door chunk of the map correspondingto the door to update
+ * @param door chunk of the map corresponding to the door to update
  * @param time time at which the ray has been thrown
- * @return true the door status changed due to time, the textre has to beupdated
+ * @return true the door status changed due to time, the texture has to beupdated
  * @return false no change in the door sttus
  *		
  */
-bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
+bool	sh_doors_update_status(t_general *gen, t_chunk *door, size_t time)
 {
 	static t_door_last_update	last = {0, NULL, 0.};
 
@@ -63,9 +63,10 @@ bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
  * @brief updates the texture of the wall the door goes through when opening and
  *			closing (different animation depending on the door movement)
  * 
-printf * @param door 
+ * @param texture_pack 
+ * @param door 
  */
-void	doors_update_texture_main_side(t_texture_pack *texture_pack,
+void	sh_doors_update_texture_main_side(t_texture_pack *texture_pack,
 	t_chunk *door)
 {
 	t_chunk_face	face_to_update;
@@ -75,41 +76,17 @@ void	doors_update_texture_main_side(t_texture_pack *texture_pack,
 	else
 		face_to_update = FACE_S;
 	if (door->status == DOOR_OPEN)
-		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+		sh_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
 			face_to_update, &texture_pack->door_side_open_opened, false);
 	else if (door->status == DOOR_OPENING)
-		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+		sh_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
 			face_to_update, &texture_pack->door_side_open_opening, false);
 	else if (door->status == DOOR_CLOSED)
-		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+		sh_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
 			face_to_update, &texture_pack->door_side_open_closed, false);
 	else if (door->status == DOOR_CLOSING)
-		init_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
+		sh_chunk_set_texture(door->action->targets[TARGET_DOOR_SIDE],
 			face_to_update, &texture_pack->door_side_open_closing, false);
-}
-
-#else
-
-/**
- * @brief unused
- * 
- * @param door 
- * @param time 
- * @return float 
- */
-bool	doors_update_status(t_general *gen, t_chunk *door, size_t time)
-{
-	(void)gen;
-	(void)door;
-	(void)time;
-	return (0.);
-}
-
-void	doors_update_texture_main_side(t_texture_pack *texture_pack,
-	t_chunk *door)
-{
-	(void)texture_pack;
-	(void)door;
 }
 
 #endif

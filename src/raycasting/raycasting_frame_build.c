@@ -17,11 +17,10 @@ static void				_r_frame_build_column(t_general *gen, int idx_ray,
 static void				r_frame_empty_column(t_data *buff, int idx_ray);
 
 /**
- * @brief draws the buffer image using raycasting
- *		(floor, wall and ceilling only)
+ * @brief draws the raycasted buffer image using raycasting
  * 
  * @param gen 
- * @param time used for getting the right animation
+ * @param time_frame used for getting the ingame frames time coordinated
  */
 void	*rc_raycasting_frame_build(t_general *gen, size_t time_frame)
 {
@@ -51,14 +50,14 @@ void	*rc_raycasting_frame_build(t_general *gen, size_t time_frame)
 }
 
 /**
- * @brief draw a gray column if no ostacle is found. This shouldn't happen
- *	(can only happend if outside the map boundaries, but in this case a black
- *	screen is displayed so rc_raycasting_frame_build isn't called)
+ * @brief security function: draws a grey column if no ostacle is found.
+ *	This shouldn't happen (can normally only happend if outside the map
+ *	boundaries, but in this case a black
+ *	screen is displayed instead of a raycasted image so
+ *	rc_raycasting_frame_build isn't called)
  * 
  * @param buff 
  * @param idx_ray 
- * @param color_f 
- * @param color_c 
  */
 static void	r_frame_empty_column(t_data *buff, int idx_ray)
 {
@@ -72,11 +71,11 @@ static void	r_frame_empty_column(t_data *buff, int idx_ray)
 }
 
 /**
- * @brief draw a column of pixel form a texture into the buffer image
+ * @brief draws a column of pixel form a texture into the buffer image
  * 
  * @param gen 
  * @param idx_ray index of the column to draw (between 0 and WINDOW_WIDTH)
- * @param hitpoint impact point between the ray sent for this column
+ * @param hitpoint impact point of the ray sent for this column
  * @param time time when building the image (used for texture animation)
  */
 static void	_r_frame_build_column(t_general *gen, int idx_ray,

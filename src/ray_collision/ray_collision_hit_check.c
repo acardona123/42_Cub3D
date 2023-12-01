@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/30 16:43:53 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:13:06 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 #ifdef BONUS
 
 /**
- * @brief Used to check the obstacles on the primary axis
+ * @brief Used to check the presence of obstacle on the primary axis
  *		if rdata.shift == 0.
- *			->then checks if the hitpoint of the ray touchs an obstacle (not
- *			floor or nothing), if so returns true and update the hitpoint if
+ *			->then checks if the hitpoint of the ray touches an obstacle (not
+ *			floor or nothing), if so returns true and updates the hitpoint if
  *			needed (ie if it hit a door)
  *		else
  *			->then checks if hitpoint as a player position is "touching" a
- *			solid obstaclem ie is as close as DIST_WALL_MIN from it.
+ *			solid obstacle, ie is as close as rdata.shift from it.
  * 
  * @param gen 
  * @param hit_pt hitpoint detected that need to be checked
  * @param rdata 
- * @return true if the ray hit an obstacle, hit_pt updated if hit a door.
+ * @return true if the ray hits an obstacle, hit_pt updated if hit a door.
  * @return false if no obstacle
  */
 bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
@@ -58,7 +58,7 @@ bool	r_ray_hit_primary(t_general *gen, t_hitpoint *hit_pt, t_ray_data *rdata)
  * @param hit_pt hitpoint detected that need to be checked
  * @param rdata 
  * @param real_hitpt_co
- * @return true if the ray hit an obstacle, hit_pt updated (coord becomes
+ * @return true if the ray hits an obstacle, hit_pt updated (coord becomes
  *	real_hitpt_co) and are modified if hit a door
  * @return false if no obstacle, hit_pt unchanged
  */
@@ -86,8 +86,8 @@ bool	r_ray_hit_sec(t_general *gen, t_hitpoint *hit_pt,
 
 /**
  * @brief only used for raycasting:
- *		used on primary axis hitpoint: if the hitpoint touch an obstacle
- *		(not floor or nothing), returns true and update the hitpoint if
+ *		used on primary axis hitpoint: if the hitpoint touches an obstacle
+ *		(not floor or nothing), returns true and updates the hitpoint if
  *		needed (ie if it hit a door)
  * 
  * @param gen 

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:26:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/11 23:55:44 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:05:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static bool		_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
  * @brief checks if the ray that touched a door chunk on its primary axis really
  *	hit the door panel.
  * 
- * @param map 
- * @param hit_pt points toward the hitpoint with the door chunk border, is
- *		updated if the door is hit.
- * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
+ * @param gen
  * @param rdata 
- * @return true if the door panel is hit, the the hitpoint is updated to this
+ * @param hit_pt hitpoint with the door chunk border, is updated if the door
+ *		is hit.
+ * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
+ * @return true if the door panel is hit, the hitpoint is updated to this
  *		impact point and the door chunk extra data is updated to the position of
  *		the impact relativly to the door texture (between 0 and 1).
  * @return false if the ray doesn't hit the door panel, hitpoint untouched.
@@ -36,9 +36,9 @@ static bool		_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
 bool	r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
 	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
 {
-	if (doors_update_status(gen, &gen->map.map[hit_point->chunk_co_x]
+	if (sh_doors_update_status(gen, &gen->map.map[hit_point->chunk_co_x]
 			[hit_point->chunk_co_y], rdata->time_now))
-		doors_update_texture_main_side(&gen->textures,
+		sh_doors_update_texture_main_side(&gen->textures,
 			&gen->map.map[hit_point->chunk_co_x][hit_point->chunk_co_y]);
 	if (rdata->door_behaviour == ray_pass_door_always
 		|| gen->map.map[hit_point->chunk_co_x]
@@ -57,11 +57,11 @@ bool	r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
  * @brief checks if the ray that touched a door chunk on its secondary axis
  *	really hit the door panel.
  * 
- * @param map 
- * @param hit_pt points toward the hitpoint with the door chunk border, is
- *		updated if the door is hit.
- * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
+ * @param gen 
  * @param rdata 
+ * @param hitpoint with the door chunk border, is updated if the door is hit,
+ *		its pt_co aren't the real ones.
+ * @param real_hitpoint_co real coordinates of the hitpoint with the chunk
  * @return true if the door panel is hit, the the hitpoint is updated to this
  *		impact point and the door chunk extra data is updated to the position of
  *		the impact relativly to the door texture (between 0 and 1).
@@ -70,9 +70,9 @@ bool	r_ray_hit_check_doors_prim(t_general *gen, t_ray_data *rdata,
 bool	r_ray_hit_check_doors_sec(t_general *gen, t_ray_data *rdata,
 	t_hitpoint *hit_point, t_coord_f real_hitpoint_co)
 {
-	if (doors_update_status(gen, &gen->map.map[hit_point->chunk_co_x]
+	if (sh_doors_update_status(gen, &gen->map.map[hit_point->chunk_co_x]
 			[hit_point->chunk_co_y], rdata->time_now))
-		doors_update_texture_main_side(&gen->textures,
+		sh_doors_update_texture_main_side(&gen->textures,
 			&gen->map.map[hit_point->chunk_co_x][hit_point->chunk_co_y]);
 	if (rdata->door_behaviour == ray_pass_door_always
 		|| gen->map.map[hit_point->chunk_co_x]
@@ -155,28 +155,4 @@ static bool	_r_ray_hit_check_doors_v(t_chunk *door, t_hitpoint *hit_pt,
 	return (true);
 }
 
-#else
-
-bool	r_ray_hit_check_doors(t_general *gen, t_hitpoint *hitpoint,
-	t_ray_data *rdata, t_coord_f real_hitpoint_co)
-{
-	(void)gen;
-	(void)hitpoint;
-	(void)rdata;
-	(void)real_hitpoint_co;
-	return (hitpoint->pt_co = real_hitpoint_co, true);
-}
-
 #endif
-
-/*
-//tests 
-
-int main(int ac, char **av)
-{
-	(void)ac;
-	(void)av;
-	printf("Tests have to be done on hit_check_door and doors_update\n");
-	return (0);
-}
-*/

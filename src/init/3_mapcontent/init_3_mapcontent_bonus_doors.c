@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 00:48:21 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 02:52:17 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:41:49 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ t_bool	in_3_mapcontent_doors_chunk_init(t_texture_pack *texturepack,
 			|| !texturepack->door_side_open_closing.group_len))
 		return (to_error_msg(MSG_TEXTURE_MISSING_DOOR_S), FAIL);
 	check_texture_done = true;
-	init_chunk_set_texture(chunk_door, FACE_N, &texturepack->door_front, true);
-	init_chunk_set_texture(chunk_door, FACE_S, &texturepack->door_front, true);
-	init_chunk_set_texture(chunk_door, FACE_E, &texturepack->door_front, true);
-	init_chunk_set_texture(chunk_door, FACE_W, &texturepack->door_front, true);
+	sh_chunk_set_texture(chunk_door, FACE_N, &texturepack->door_front, true);
+	sh_chunk_set_texture(chunk_door, FACE_S, &texturepack->door_front, true);
+	sh_chunk_set_texture(chunk_door, FACE_E, &texturepack->door_front, true);
+	sh_chunk_set_texture(chunk_door, FACE_W, &texturepack->door_front, true);
 	return (SUCCESS);
 }
 
@@ -58,16 +58,16 @@ void	in_3_door_add_sides_textures(t_chunk **map,
 	if (ft_isinset(map[door_x - 1][door_y].type, CHARS_WALLS)
 		&& ft_isinset(map[door_x + 1][door_y].type, CHARS_WALLS))
 	{
-		init_chunk_set_texture(&map[door_x - 1][door_y], FACE_E,
+		sh_chunk_set_texture(&map[door_x - 1][door_y], FACE_E,
 			&textures->door_side_close, 0);
-		init_chunk_set_texture(&map[door_x + 1][door_y], FACE_W,
+		sh_chunk_set_texture(&map[door_x + 1][door_y], FACE_W,
 			&textures->door_side_open_closed, 0);
 	}
 	else
 	{
-		init_chunk_set_texture(&map[door_x][door_y - 1], FACE_N,
+		sh_chunk_set_texture(&map[door_x][door_y - 1], FACE_N,
 			&textures->door_side_close, 0);
-		init_chunk_set_texture(&map[door_x][door_y + 1], FACE_S,
+		sh_chunk_set_texture(&map[door_x][door_y + 1], FACE_S,
 			&textures->door_side_open_closed, 0);
 	}
 }

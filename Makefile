@@ -89,6 +89,7 @@ FILES_GAMEPLAY		=	$(addprefix gameplay/gameplay_, \
 
 FILES_SHARED		=	$(addprefix shared/shared_, \
 						set_texture \
+						doors_update \
 						)
 
 FILES_TOOLS		=	$(addprefix tools/tools_, \
@@ -99,10 +100,6 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 						angles_set \
 						mlx_img \
 						file \
-					)
-
-FILES_DOORS		=	$(addprefix doors/doors_, \
-						update \
 					)
 
 FILES_MAPS		=	$(addprefix maps/maps_, \
@@ -120,7 +117,6 @@ FILES_NAMES			=	\
 						$(FILES_RAY_COLLISION) \
 						$(FILES_RAYCASTING) \
 						$(FILES_GAMEPLAY) \
-						$(FILES_DOORS) \
 						$(FILES_MAPS) \
 						main
 

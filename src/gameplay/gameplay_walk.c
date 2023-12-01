@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:17:08 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/22 20:30:10 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:32:04 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
 }
 
 /**
- * @brief when a player trying to move to a target point touched a wall.
+ * @brief when a player trying to move to a target point touches an obstacle.
  *		In this case it moves in the direction parallele to the wall until it
  *		reaches another obstacle or the projection of the target point on this
  *		trajectory
@@ -104,17 +104,18 @@ static void	_gp_walk_slide_along_wall(t_general *gen, t_coord_f target,
 
 /**
  * @brief if a non null direction is given the player position is modified in
- *		this direction by a step based on the wakl speed and the fps 
+ *		this direction by a step fixed step (walk_speed * FIXED_DELAY) 
  * 
  * @param gen 
  * @param direction 
- * @param delay in ms since the last frame
+ * @param delay ignored
  */
 void	gp_walk(t_general *gen, int dir_xp, int dir_yp, size_t delay)
 {
+	(void)delay;
 	if (!dir_xp && !dir_yp)
 		return ;
-	gen->player.p_co = _gp_walk_get_target(gen, dir_xp, dir_yp, delay);
+	gen->player.p_co = _gp_walk_get_target(gen, dir_xp, dir_yp, FIXED_DELAY);
 	if (gen->player.p_co.x > gen->map.x_max - DIST_WALL_MIN)
 		gen->player.p_co.x = gen->map.x_max - DIST_WALL_MIN;
 	else if (gen->player.p_co.x < DIST_WALL_MIN)

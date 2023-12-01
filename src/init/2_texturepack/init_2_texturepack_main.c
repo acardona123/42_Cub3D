@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:59:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:22:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ static t_bool	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
  * @param mlx 
  * @param textu_pack 
  * @param line_arg 
- * @param already_done 
- * @return t_bool	SUCCESS if the textre has been successfully imported
+ * @param colors_done 
+ * @return t_bool	SUCCESS if the texture has been successfully imported
  *					FAIL if the accronym isn't a correct one or if there has
- *					been an error in the texture initialisation.
- *					err msg displayed
+ *						been an error in the texture initialisation, err msg
+ *						displayed
  */
 static t_bool	_in_2_init_texture_or_color(void *mlx,
-	t_texture_pack *textu_pack, char **line_arg, bool *already_done)
+	t_texture_pack *textu_pack, char **line_arg, bool *colors_done)
 {
 	if (ft_strlst_len(line_arg) != 2)
 		return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
@@ -87,20 +87,19 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
 		return (in_2_textu_group_init(mlx, &textu_pack->wall_e, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "F"))
 		return (in_2_set_color(&textu_pack->color_f, line_arg[1],
-				&already_done[IDX_FLOOR]));
+				&colors_done[IDX_FLOOR]));
 	else if (!ft_strcmp(*line_arg, "C"))
 		return (in_2_set_color(&textu_pack->color_c, line_arg[1],
-				&already_done[IDX_CEIL]));
+				&colors_done[IDX_CEIL]));
 	return (_in_2_init_texture_bonus(mlx, textu_pack, line_arg));
 }
 
 /**
- * @brief 
+ * @brief subfunction of _in_2_init_texture_or_color
  * 
  * @param mlx 
  * @param text_pack 
  * @param line_arg 
- * @param already_done 
  * @return t_bool	SUCCESS if the texture has been successfully init
  *				FAIL if there has been an error in the texture importation
  *				-1	if the accronym doesn't correspond to any texture accronym
@@ -148,19 +147,19 @@ static t_bool	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
 #else
 
 /**
- * @brief based on the arguments lines, extract the textures
+ * @brief based on the arguments lines, extracts the textures
  * 
  * @param mlx 
  * @param textu_pack 
  * @param line_arg 
- * @param already_done 
+ * @param colors_done 
  * @return t_bool	SUCCESS if the textre has been successfully imported
  *					FAIL if the accronym isn't a correct one or if there has
  *					been an error in the texture initialisation.
  *					err msg displayed
  */
 static t_bool	_in_2_init_texture_or_color(void *mlx,
-	t_texture_pack *textu_pack, char **line_arg, bool *already_done)
+	t_texture_pack *textu_pack, char **line_arg, bool *colors_done)
 {
 	if (ft_strlst_len(line_arg) != 2)
 		return (to_error_msg(MSG_WRONG_LINE_FORMAT), FAIL);
@@ -174,10 +173,10 @@ static t_bool	_in_2_init_texture_or_color(void *mlx,
 		return (in_2_textu_group_init(mlx, &textu_pack->wall_e, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "F"))
 		return (in_2_set_color(&textu_pack->color_f, line_arg[1],
-				&already_done[IDX_FLOOR]));
+				&colors_done[IDX_FLOOR]));
 	else if (!ft_strcmp(*line_arg, "C"))
 		return (in_2_set_color(&textu_pack->color_c, line_arg[1],
-				&already_done[IDX_CEIL]));
+				&colors_done[IDX_CEIL]));
 	return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
 }
 

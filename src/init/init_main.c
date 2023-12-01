@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 14:29:19 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:45:35 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ static void	_init_settings(t_general *gen);
 
 static void	_init_settings_bonus(t_general *gen);
 
+/**
+ * @brief initialisation of the game in wich user interface, map and textures
+ *		are loaded
+ * 
+ * @param ac 
+ * @param av 
+ * @param gen 
+ */
 void	init_main(int ac, char **av, t_general	*gen)
 {
 	t_lists	init_lists;
@@ -35,6 +43,14 @@ void	init_main(int ac, char **av, t_general	*gen)
 
 #else
 
+/**
+ * @brief initialisation of the game in wich user interface, map and textures
+ *		are loaded
+ * 
+ * @param ac 
+ * @param av 
+ * @param gen 
+ */
 void	init_main(int ac, char **av, t_general	*gen)
 {
 	t_lists	init_lists;

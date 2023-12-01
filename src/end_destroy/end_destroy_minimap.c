@@ -6,12 +6,19 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:11:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 14:21:34 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:01:58 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/end_destroy.h"
 
+#ifdef BONUS
+
+/**
+ * @brief Destroys properly all t_minimap structure's elements
+ * 
+ * @param map 
+ */
 void	end_destroy_minimap(void *mlx, t_minimap *minimap)
 {
 	if (minimap->world.img)
@@ -20,3 +27,5 @@ void	end_destroy_minimap(void *mlx, t_minimap *minimap)
 		mlx_destroy_image(mlx, minimap->bigmap.img);
 	*minimap = (t_minimap){0};
 }
+
+#endif

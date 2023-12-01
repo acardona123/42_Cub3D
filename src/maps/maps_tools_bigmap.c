@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 16:35:25 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/15 14:48:40 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:56:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void	_maps_bigmap_put_circle_window(t_display *disp, t_coord_i center,
  * 
  * @param minimap 
  * @param chunk 
+ * @param x
+ * @param y
  */
 void	maps_bigmap_draw_chunk(t_minimap *minimap, int chunk_x, int chunk_y)
 {
@@ -30,8 +32,7 @@ void	maps_bigmap_draw_chunk(t_minimap *minimap, int chunk_x, int chunk_y)
 	int		color;
 	char	*addr;
 
-	color = maps_world_get_chunk_color(minimap, minimap->world.pix_height,
-			chunk_x, chunk_y);
+	color = maps_world_get_chunk_color(minimap, chunk_x, chunk_y);
 	y_in_chunk = -1;
 	while (++y_in_chunk < minimap->bigmap_size_ratio)
 	{
@@ -50,6 +51,15 @@ void	maps_bigmap_draw_chunk(t_minimap *minimap, int chunk_x, int chunk_y)
 	}
 }
 
+/**
+ * @brief used when displaying the bigmap, puts a cicle on the window centered
+ *		arround the player position
+ * 
+ * @param disp 
+ * @param minimap 
+ * @param settings 
+ * @param player 
+ */
 void	maps_bigmap_put_player_window(t_display *disp, t_minimap *minimap,
 	t_settings *settings, t_player *player)
 {

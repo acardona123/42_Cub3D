@@ -6,15 +6,11 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:19:27 by acardona          #+#    #+#             */
-/*   Updated: 2023/10/15 23:54:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:45:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/tools.h"
-
-// static void	_tools_angle_calc_const_step(float fov, double *angles_set);
-static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
-				double *angle_correc);
 
 /**
  * @brief calculates the angle_offset to add to the player angle to obtain each
@@ -23,38 +19,17 @@ static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
  * @param old_fov point to gen->settings->fov
  * @param new_fov new fov used to calculate the angleset
  * @param angle_set pointer to gen->angles_set
+ * @param angle_correc  pointer to gen->angles_correc, containing the cosinus of
+ *			each angle_set element
  */
 void	to_angle_set_init(float *old_fov, float new_fov, double *angles_set,
-	double *angle_correc)
-{
-	*old_fov = new_fov;
-	_tools_angle_calc_adapted_step(new_fov, angles_set, angle_correc);
-}
-
-/**
- * @brief Calculates the angles with a constant step (linear model)
- * 
- * @param fov 
- * @param table_dest 
- */
-/*
-static void	_tools_angle_calc_const_step(float fov, double *angles_set)
-{
-	int		idx;
-
-	idx = -1;
-	while (++idx < WIN_WIDTH)
-		angles_set[idx] = fov * idx / WIN_WIDTH - 0.5 * fov;
-}
-*/
-
-static void	_tools_angle_calc_adapted_step(float fov, double *angles_set,
 	double *angle_correc)
 {
 	int		idx;
 	double	focal;
 
-	focal = WIN_WIDTH / (2 * tan(fov / 2));
+	*old_fov = new_fov;
+	focal = WIN_WIDTH / (2 * tan(new_fov / 2));
 	idx = -1;
 	while (++idx < WIN_WIDTH)
 	{

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:02:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 17:45:33 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:27:34 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #ifdef BONUS
 
 /**
- * @brief initialize a bool[4] that indicates if a face of a leaks chunk is
+ * @brief initializes a bool[4] that indicates if a face of a leaks chunk is
 *		active or not depending on its type
  * 
  * @param type ie character in the map .xpm file
@@ -38,7 +38,7 @@ static	void	_in_3_mapcontent_leaks_get_active_faces(t_chunk_type type,
  *	if leaks textures are availables (ie defined in the map)
  * 
  * @param texturepack 
- * @param chunk door chunk
+ * @param chunk leaks chunk
  * @return t_bool	FAIL if texture missing in the map, err msg displayed
  *					SUCCESS otherwise
  */
@@ -55,17 +55,17 @@ t_bool	in_3_mapcontent_leaks_chunk_init_textures(t_texture_pack *texturepack,
 	check_texture_done = true;
 	_in_3_mapcontent_leaks_get_active_faces(chunk_leaks->type, &active_faces);
 	if (!(active_faces & ACTIVE_N))
-		init_chunk_set_texture(chunk_leaks, FACE_N, &texturepack->wall_n, true);
+		sh_chunk_set_texture(chunk_leaks, FACE_N, &texturepack->wall_n, true);
 	if (!(active_faces & ACTIVE_E))
-		init_chunk_set_texture(chunk_leaks, FACE_E, &texturepack->wall_e, true);
+		sh_chunk_set_texture(chunk_leaks, FACE_E, &texturepack->wall_e, true);
 	if (!(active_faces & ACTIVE_S))
-		init_chunk_set_texture(chunk_leaks, FACE_S, &texturepack->wall_s, true);
+		sh_chunk_set_texture(chunk_leaks, FACE_S, &texturepack->wall_s, true);
 	if (!(active_faces & ACTIVE_W))
-		init_chunk_set_texture(chunk_leaks, FACE_W, &texturepack->wall_w, true);
+		sh_chunk_set_texture(chunk_leaks, FACE_W, &texturepack->wall_w, true);
 	i = -1;
 	while (++i < 4)
 		if (!chunk_leaks->textures[i])
-			init_chunk_set_texture(chunk_leaks, i, &texturepack->wall_leaks,
+			sh_chunk_set_texture(chunk_leaks, i, &texturepack->wall_leaks,
 				true);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:31:37 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:24:58 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ int	gp_looping(void *gen_)
 }
 
 /**
- * @brief ingame rendering: movementsand raycasting done 
+ * @brief move the player and render the ingame frame
  * 
  * @param gen 
- * @param delay 
- * @param now_time 
+ * @param delay delay since the last frame, used to calculate the payer 
+ *		(use of a speed to get a fluid movemet) and to get the right textures
+ *		during the animations
+ * @param now_time reference time used to render the frame
  */
 static void	_gp_frame_ingame(t_general *gen, size_t delay, size_t now_time)
 {
@@ -89,6 +91,26 @@ static void	_gp_frame_ingame(t_general *gen, size_t delay, size_t now_time)
 	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win, img, 0, 0);
 }
 
+/**
+ * @brief Only displays the big map on the entiere window
+ * 
+ * @param disp 
+ * @param bigmap_img 
+ */
+static void	_gp_frame_bigmap(t_general *gen)
+{
+	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win,
+		gen->minimap.bigmap.img, 0, 0);
+	if (gen->minimap.bigmap_size_ratio >= 0)
+		maps_bigmap_put_player_window(&gen->disp, &gen->minimap, &gen->settings,
+			&gen->player);
+}
+
+/**
+ * @brief displayes a disck centered arround the player in the big map display
+ * 
+ * @param buff 
+ */
 static void	_gp_frame_ingame_cursor(t_data *buff)
 {
 	register int	x;
@@ -116,21 +138,6 @@ static void	_gp_frame_ingame_cursor(t_data *buff)
 			}
 		}
 	}
-}
-
-/**
- * @brief Only displays the big map on the entiere window
- * 
- * @param disp 
- * @param bigmap_img 
- */
-static void	_gp_frame_bigmap(t_general *gen)
-{
-	mlx_put_image_to_window(gen->disp.mlx, gen->disp.win,
-		gen->minimap.bigmap.img, 0, 0);
-	if (gen->minimap.bigmap_size_ratio >= 0)
-		maps_bigmap_put_player_window(&gen->disp, &gen->minimap, &gen->settings,
-			&gen->player);
 }
 
 #else

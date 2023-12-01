@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:45:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 15:24:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:42:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 static t_bool	_in_4_bigmap_get_ratio(t_minimap *minimap, t_map *map);
 static void		_in_4_bigmap_fill(t_minimap *minimap, t_map *map);
 
+/**
+ * @brief generates the bigmap image that can will displayed on the entiere
+ *	window when the player press KEY_BIG_MAP
+ * 
+ * @param gen 
+ * EXIT if faillure
+ */
 void	in_4_bigmap_init(t_general *gen)
 {
 	if (to_mlx_new_empty_img(gen->disp.mlx, &gen->minimap.bigmap, WIN_WIDTH,
@@ -28,13 +35,15 @@ void	in_4_bigmap_init(t_general *gen)
 }
 
 /**
- * @brief adjusts the big map offsets and size_ratio as big as possible in the
- *		window size
+ * @brief adjusts the big map offsets and size_ratio to make the bigmap as
+ *		possible at the center of the window
  * 
  * @param minimap 
  * @param map 
  * @return t_bool	FAIL if the map is widder or taller than the window
- *						dimensions
+ *						dimensions (number of chunks vs number of pixels).
+ *						Warning msg displayed to informe that there will be no
+ *						bigmap generation.
  *					SUCCESS otherwise
  */
 static t_bool	_in_4_bigmap_get_ratio(t_minimap *minimap, t_map *map)

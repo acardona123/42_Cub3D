@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:01:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/28 22:39:59 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:00:29 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  *	as a static texture)
  *	- a subdirectory containing at least one .xpm file and, if there are
  *	multiple .xpm files, a file named like TEXTURE_PARAMETERS_FILE_NAME define
- *	(later used for describing the frame rates of the animated textured composed
- *	by the .xpm files of the subdirectory.
+ *	(later used for describing the frame rates). Those .xpm in the subdirectory
+ *	are the frames of one animated textured.
  *	The number of valid textures is stored in cpt_textures
  * 
  * @param dir_name the name of the directory to check
@@ -61,7 +61,7 @@ t_bool	in_2_textu_group_dir_count_textures(char *dir_name,
 }
 
 /**
- * @brief checks if a given directories contains what is requiered to define a
+ * @brief checks if a given directory contains what is requiered to define a
  *	texture:
  *	- at least one .xpm file
  *	- a file named as TEXTURE_PARAMETERS_FILE_NAME define
@@ -99,16 +99,16 @@ t_bool	in_2_textu_group_dir_check_subdir_contains_texture(char *dir_name,
 				&& !ft_strcmp(elem->d_name, TEXTURE_PARAMETERS_FILE_NAME));
 		elem = readdir(dir);
 	}
-	if (cpt_xpm && !cpt_data_txt)
+	if (cpt_xpm && cpt_data_txt != 1)
 		to_warning_msg(MSG_WARNING_TEXTURE_DATA_MISSING);
 	*subdir_contains_textures = (cpt_xpm && cpt_data_txt == 1);
 	return (closedir(dir), free(subdir_name), SUCCESS);
 }
 
 /**
- * @brief used in directories containing random-screen textures elements
- *		(examples: leaks/crashes subdirectories):
- *		generates the char **line_arg requiered to call the
+ * @brief used in directories containing multiple subdirectoris of textures 
+ *		elements (examples: leaks/crashes subdirectories), applied on the
+ *		subdirectories to generates the char **line_arg requiered to call the
  *		in_2_anim_textu_init function with the texture informations in
  *		dir_name/TEXTURE_PARAMETERS_FILE_NAME
  * 
@@ -148,17 +148,17 @@ char	**in_2_textu_group_dir_line_arg_from_subdir(char *dir_parent_name,
 }
 
 /**
- * @brief used for texure file (.xpm) directly in a random-screen textures
- *		directory (examples: leaks/crashes ):
+ * @brief used for texure file (.xpm) directly in a texture root directory
+ *		(examples: leaks/texture1.xpm):
  *		generates the char **line_arg requiered to call the
  *		in_2_anim_textu_init function
  * 
- * @param dir_parent_name 
  * @param dir_name 
+ * @param file_name 
  * @return char**	success: the line_arg for in_2_anim_textu_init
  *					error (malloc/open): NULL, error msg display
  */
-char	**in_2_textu_group_dir_line_arg_from_subfile(char *dir_parent_name,
+char	**in_2_textu_group_dir_line_arg_from_subfile(char *dir_name,
 	char *file_name)
 {
 	char	**arg;
@@ -166,7 +166,7 @@ char	**in_2_textu_group_dir_line_arg_from_subfile(char *dir_parent_name,
 	arg = ft_calloc(2, sizeof(char *));
 	if (!arg)
 		return (to_error_msg(MSG_BAD_ALLOC), NULL);
-	arg[0] = to_file_build_path(dir_parent_name, file_name, NULL, NULL);
+	arg[0] = to_file_build_path(dir_name, file_name, NULL, NULL);
 	if (!arg[0])
 		return (to_error_msg(MSG_BAD_ALLOC), free(arg), NULL);
 	return (arg);
