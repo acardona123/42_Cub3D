@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:20:13 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:40:47 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ face"
 # define MSG_TEXTURE_MISSING_LEAKS "Map: missing texture for the leaks' sides"
 # define MSG_TEXTURE_MISSING_CRASHES "Map: missing texture for the crashes' \
 sides"
+# define MSG_TEXTURE_MISSING_HOLOGRAM "Map: missing texture holograms"
 # define MSG_TEXTURE_MULTIPLE_DEF "Map: Multiple definition of texture"
 # define MSG_WRONG_COLOR_FORMAT "Map: wrong color format"
 # define MSG_COLOR_MISSING_CEIL "Map: missing color for the ceilling"
@@ -198,6 +199,9 @@ t_bool	in_3_mapcontent_leaks_action_init(t_map *map, int x, int y);
 t_bool	in_3_mapcontent_crashes_chunk_init_textures(t_texture_pack *texturepack,
 			t_chunk *chunk_crashes);
 t_bool	in_3_mapcontent_crashes_action_init(t_map *map, int x, int y);
+//init_3_mapcontent_bonus_hologram.c
+t_bool	in_3_mapcontent_hologram_chunk_init_textures(
+			t_texture_pack *texturepack, t_chunk *chunk_holo);
 // init_3_mapcontent_set_status_action.c
 t_bool	in_3_mapcontent_status_action_init(t_map *map);
 # endif

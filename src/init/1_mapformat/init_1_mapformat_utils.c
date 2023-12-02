@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:14:57 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/26 04:42:09 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:04:49 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ bool	in_1_line_is_parameter(char *line)
 		|| !ft_strncmp("DOCD ", line, 5) || !ft_strncmp("DOCG ", line, 5)
 		|| !ft_strncmp("LEAKS ", line, 6) || !ft_strncmp("CRASHES ", line, 8)
 		|| !ft_strncmp("LEAKS_W ", line, 8)
-		|| !ft_strncmp("CRASHES_W ", line, 10))
+		|| !ft_strncmp("CRASHES_W ", line, 10)
+		|| !ft_strncmp("HOLOGRAM ", line, 9))
 		return (true);
 	return (false);
 }

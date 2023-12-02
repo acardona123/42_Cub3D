@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 00:48:21 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 16:41:49 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:38:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 /**
  * @brief fills the textures arrays of a door chunk to point to each of its
  *	faces' textures. If it is the first time that a door is found, checks if all
- *	doors textures are availables (ie defined in the map)
+ *	doors textures are available (ie defined in the map)
  * 
  * @param texturepack 
  * @param chunk door chunk

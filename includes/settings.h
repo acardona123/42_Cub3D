@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 18:05:51 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 18:27:43 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <X11/keysym.h>
 
 //force bonus mode:
-// # ifndef BONUS
-// #  define BONUS
-// # endif
+# ifndef BONUS
+#  define BONUS
+# endif
 
 //window parameters
 # define WIN_NAME		"Cub3D"
@@ -93,6 +93,7 @@
 # define MINIMAP_COLOR_PLAYER	0x80FF
 # define MINIMAP_COLOR_LEAKS	0x353535
 # define MINIMAP_COLOR_CRASHES	0x353535
+# define MINIMAP_COLOR_HOLOGRAM	0xa0a0a0
 
 # define LEAKS_CRASHES_BACKGROUND	0xFFFFFF
 

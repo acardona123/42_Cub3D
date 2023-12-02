@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:17:29 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 17:05:02 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:43:27 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	end_destroy_texture_pack(void *mlx, t_texture_pack *pack)
 		&pack->door_side_close,
 		&pack->door_side_open_opened, &pack->door_side_open_opening,
 		&pack->door_side_open_closed, &pack->door_side_open_closing,
-		&pack->wall_crashes, &pack->wall_leaks, &pack->crashes, &pack->leaks};
+		&pack->wall_crashes, &pack->crashes,
+		&pack->wall_leaks, &pack->leaks,
+		&pack->hologram};
 	i_group = -1;
 	while (++i_group < NUMBER_OF_TEXTURES)
 		_end_textures_destroy_group_of_texture(mlx, groups[i_group]);

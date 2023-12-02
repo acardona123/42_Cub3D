@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 18:10:39 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:48:00 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_group_of_textures
 
 # ifdef BONUS
 
-#  define NUMBER_OF_TEXTURES 14
+#  define NUMBER_OF_TEXTURES 15
 
 typedef struct s_texture_pack
 {
@@ -66,6 +66,7 @@ typedef struct s_texture_pack
 	t_group_of_textures	door_side_open_closing;
 	t_group_of_textures	leaks;
 	t_group_of_textures	crashes;
+	t_group_of_textures	hologram;
 	int					color_f;
 	int					color_c;
 }	t_texture_pack;
@@ -96,13 +97,13 @@ typedef struct s_texture_pack
 
 # ifdef BONUS
 
-#  define CHARS_ALLOWED		"01 NESWdlkjhcvbx"
+#  define CHARS_ALLOWED		"01 NESWdlkjhcvbxp"
 #  define CHARS_LEAKS		"lkjh"
 #  define CHARS_CRASHES		"cvbx"
-#  define CHARS_WALLS		"1lkjhcvbx"
+#  define CHARS_WALLS		"1lkjhcvbxp"
 #  define CHARS_OBSTACLE	"1lkjhcvbx "
 #  define CHARS_TRANSPARENT " 0NSEW"
-#  define CHARS_NUMBER 16
+#  define CHARS_NUMBER 17
 
 typedef enum e_chunk_type
 {
@@ -117,6 +118,7 @@ typedef enum e_chunk_type
 	CRASHES_E	= 'v',
 	CRASHES_S	= 'b',
 	CRASHES_W	= 'x',
+	HOLOGRAM	= 'p',
 	NOTHING		= ' ',
 	PLAYER_N	= 'N',
 	PLAYER_E	= 'E',
@@ -336,9 +338,9 @@ typedef enum e_ray_door_behaviour
 	ray_pass_door_no_touch
 }	t_ray_door_behaviour;
 
-#  define CHARS_OBSTACLE_RAYCASTING "1lkjhcvbx "
+#  define CHARS_OBSTACLE_RAYCASTING "1lkjhcvbxp "
 #  define CHARS_OBSTACLE_WALK "1lkjhcvbx "
-#  define CHARS_OBSTACLE_ACTION "1dlkjhcvbx "
+#  define CHARS_OBSTACLE_ACTION "1dlkjhcvbxp "
 
 # else
 

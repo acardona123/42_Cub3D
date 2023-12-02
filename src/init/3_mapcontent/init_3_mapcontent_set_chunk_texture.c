@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:55:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:34:52 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:41:32 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ t_bool	in_3_mapcontent_set_chunk_textures(t_texture_pack *texturepack,
 		return (in_3_mapcontent_leaks_chunk_init_textures(texturepack, chunk));
 	else if (ft_isinset(chunk->type, CHARS_CRASHES))
 		return (in_3_mapcontent_crashes_chunk_init_textures(texturepack,
+				chunk));
+	else if (chunk->type == HOLOGRAM)
+		return (in_3_mapcontent_hologram_chunk_init_textures(texturepack,
 				chunk));
 	return (SUCCESS);
 }

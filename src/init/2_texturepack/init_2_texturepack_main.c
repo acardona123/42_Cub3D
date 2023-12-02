@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:22:48 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:05:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ static t_bool	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
 	else if (!ft_strcmp(*line_arg, "CRASHES_W"))
 		return (in_2_textu_group_init(mlx, &text_pack->wall_crashes,
 				line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "HOLOGRAM"))
+		return (in_2_textu_group_init(mlx, &text_pack->hologram, line_arg + 1));
 	return (to_error_msg(MSG_WRONG_ACRONYME), FAIL);
 }
 
