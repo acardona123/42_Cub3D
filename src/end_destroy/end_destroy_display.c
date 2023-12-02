@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 21:33:19 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 17:00:21 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:17:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	end_destroy_display(t_display *disp)
 	}
 	if (disp->mlx)
 	{
+		mlx_do_key_autorepeaton(disp->mlx);
 		mlx_destroy_display(disp->mlx);
 		free(disp->mlx);
 	}

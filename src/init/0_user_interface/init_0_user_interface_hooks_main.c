@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_0_user_interface_hooks_main.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:27:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 20:39:26 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:12:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	in_0_hooks_init(t_general *gen)
 {
 	mlx_hook(gen->disp.win, KeyPress, KeyPressMask, in_0_hooks_keys_press, gen);
 	mlx_key_hook(gen->disp.win, in_0_hooks_keys_release, gen);
-	mlx_hook(gen->disp.win, MotionNotify, PointerMotionMask,
-		in_0_hooks_mouse_move, gen);
 	mlx_hook(gen->disp.win, 33, 0L, _in_0_hooks_destroy, gen);
 }
 

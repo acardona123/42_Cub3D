@@ -13,6 +13,9 @@
 #include "../../../includes/init.h"
 
 static t_bool	_in_0_hooks_keys_press_move(t_general *gen, int key);
+
+#ifdef BONUS
+
 static t_bool	_in_0_hooks_keys_press_settings(t_general *gen, int key);
 
 /**
@@ -34,6 +37,58 @@ int	in_0_hooks_keys_press(int key, t_general *gen)
 		end_destroy_exit(gen, 0);
 	return (0);
 }
+
+
+//==================
+// Settings
+//==================
+
+static t_bool	_in_0_hooks_keys_press_settings(t_general *gen, int key)
+{
+	if (key == KEY_WALK_SPEED)
+		return (gen->settings.configuring = CONFIG_WALK_SPEED);
+	if (key == KEY_MINI_ZOOM)
+		return (gen->settings.configuring = CONFIG_MINI_ZOOM);
+	if (key == KEY_ROT_SPEED_MOUSE)
+		return (gen->settings.configuring = CONFIG_MOUSE_ROTATION_SPEED,
+			SUCCESS);
+	if (key == KEY_ROT_SPEED_KEY)
+		return (gen->settings.configuring = CONFIG_KEY_ROTATION_SPEED,
+			SUCCESS);
+	if (key == KEY_SPRINT && gen->sprint == false)
+		return (gen->sprint = true, gen->settings.walk_speed *= 1.5, SUCCESS);
+	if (key == KEY_FOV)
+		return (gen->settings.configuring = CONFIG_FOV, SUCCESS);
+	if (key == KEY_HELP && WIN_WIDTH > HELP_MSG_WIDTH
+		&& WIN_HEIGHT > HELP_MSG_HEIGHT)
+		return (gen->disp.render_selec = RENDER_HELP,
+			in_0_settings_help_msg(gen), SUCCESS);
+	if (key == KEY_BIG_MAP)
+		return (gen->disp.render_selec = RENDER_BIG_MAP, SUCCESS);
+	return (FAIL);
+}
+
+#else
+
+/**
+ * @brief initializes all hooks associated to keybord keys press
+ *
+ * @param key
+ * @param gen
+ * @return int 0 anyway
+ */
+int	in_0_hooks_keys_press(int key, t_general *gen)
+{
+	if (_in_0_hooks_keys_press_move(gen, key) == SUCCESS)
+		return (0);
+	if (key == KEY_ACT)
+		return (gp_action_main(gen), 0);
+	if (key == XK_Escape)
+		end_destroy_exit(gen, 0);
+	return (0);
+}
+
+#endif
 
 //==================
 // movements
@@ -60,32 +115,5 @@ static t_bool	_in_0_hooks_keys_press_move(t_general *gen, int key)
 		return (gen->next_turn_key[TURN_L] = true, SUCCESS);
 	if (key == KEY_LOOK_RIGHT)
 		return (gen->next_turn_key[TURN_R] = true, SUCCESS);
-	return (FAIL);
-}
-
-//==================
-// Settings
-//==================
-
-static t_bool	_in_0_hooks_keys_press_settings(t_general *gen, int key)
-{
-	if (key == KEY_WALK_SPEED)
-		return (gen->settings.configuring = CONFIG_WALK_SPEED);
-	if (key == KEY_MINI_ZOOM)
-		return (gen->settings.configuring = CONFIG_MINI_ZOOM);
-	if (key == KEY_ROT_SPEED_MOUSE)
-		return (gen->settings.configuring = CONFIG_MOUSE_ROTATION_SPEED,
-			SUCCESS);
-	if (key == KEY_ROT_SPEED_KEY)
-		return (gen->settings.configuring = CONFIG_KEY_ROTATION_SPEED,
-			SUCCESS);
-	if (key == KEY_FOV)
-		return (gen->settings.configuring = CONFIG_FOV, SUCCESS);
-	if (key == KEY_HELP && WIN_WIDTH > HELP_MSG_WIDTH
-		&& WIN_HEIGHT > HELP_MSG_HEIGHT)
-		return (gen->disp.img_select = RENDER_HELP,
-			in_0_settings_help_msg(gen), SUCCESS);
-	if (key == KEY_BIG_MAP)
-		return (gen->disp.img_select = BIG_MAP, SUCCESS);
 	return (FAIL);
 }

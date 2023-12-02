@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 20:55:51 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:55:50 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,33 @@
 # include <X11/keysym.h>
 
 // force bonus mode:
-// # ifndef BONUS
-// #  define BONUS
-// # endif
+# ifndef BONUS
+#  define BONUS
+# endif
 
 //window parameters
 # define WIN_NAME		"Cub3D"
-# define WIN_HEIGHT		1080
-# define WIN_WIDTH		1920
+# define WIN_HEIGHT		900
+# define WIN_WIDTH		1900
 
 //game default parameters
 # define DEFAULT_FOV					1.4
 # define DEFAULT_DELAY					1
 # define DEFAULT_WALK_SPEED				0.0016
 # define DEFAULT_ROTATE_SPEED_KEY		0.0011
-# ifdef BONUS
-#  define DEFAULT_ROTATE_MOUSE_SENSIBILITY	0.0001
-# endif
 
 //game settings
 # define FOV_INCREMENT	0.125
-# define FOV_MIN		1.047
-# define FOV_MAX		2.094
+# define FOV_MIN		0.2
+# define FOV_MAX		3.
 
 //movement settings
 # define WALK_SPEED_INCREMENT			0.0001
 # define ROTATE_SPEED_KEY_INCREMENT		0.001
-# define DIST_WALL_MIN					0.25
-// # define DIST_WALL_MIN 0.015625
+// # define DIST_WALL_MIN					0.25
+# define DIST_WALL_MIN 0.0125
 # ifdef BONUS
-#  define ROTATE_SPEED_MOUSE_INCREMENT	0.001
+#  define ROTATE_SPEED_MOUSE_INCREMENT	0.00005
 # else
 #  define FIXED_DELAY	20
 # endif

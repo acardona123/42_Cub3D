@@ -6,11 +6,13 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:28:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 17:39:19 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:11:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
+
+#ifdef BONUS
 
 /**
  * @brief fills the textures arrays of a hologram chunk to point to each of its
@@ -36,3 +38,5 @@ t_bool	in_3_mapcontent_hologram_chunk_init_textures(
 	sh_chunk_set_texture(chunk_holo, FACE_W, &texturepack->hologram, true);
 	return (SUCCESS);
 }
+
+#endif

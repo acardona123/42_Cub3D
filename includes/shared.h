@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shared.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 20:35:46 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:10:17 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,7 @@ typedef enum e_img_to_disp
 	RENDER_BIG_MAP,
 	RENDER_INGAME,
 	RENDER_CRASHES,
-	RENDER_LEAKES
+	RENDER_LEAKES,
 	BLACK,
 	BIG_MAP,
 	INGAME,

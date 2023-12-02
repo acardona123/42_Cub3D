@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 20:37:49 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:50:45 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static bool	_init_check_settings_define_ok(void)
 
 static void	_init_settings_bonus(t_general *gen)
 {
-	gen->settings.mouse_turn_sensibility = M_PI / (2 * WIN_WIDTH);
+	gen->settings.mouse_turn_sensibility = M_PI / (6 * WIN_WIDTH);
 	gen->settings.minimap_size
 		= (int)(MINIMAP_SIZE_DEFAULT * ft_min(WIN_HEIGHT, WIN_WIDTH));
 	gen->settings.minimap_zoom = ft_max(1, (int)(MINIMAP_ZOOM_DEFAULT

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_0_user_interface_hooks_keys_release.c         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 20:01:14 by alexandm          #+#    #+#             */
-/*   Updated: 2023/12/02 20:53:53 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:59:07 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	in_0_hooks_keys_release(int key, t_general *gen)
 	if (_in_0_hooks_keys_release_move(gen, key) == SUCCESS)
 		return (0);
 	if (key == KEY_WALK_SPEED || key == KEY_ROT_SPEED_KEY
-		|| key == KEY_ROT_SPEED_MOUSE || key == KEY_MINI_ZOOM)
+		|| key == KEY_ROT_SPEED_MOUSE || key == KEY_MINI_ZOOM || key == KEY_FOV)
 		return (gen->settings.configuring = CONFIG_NOTHING, SUCCESS);
-	if (key == KEY_HELP && gen->disp.img_select == RENDER_HELP)
-		return (gen->disp.img_select = INGAME, SUCCESS);
+	if (key == KEY_HELP && gen->disp.render_selec == RENDER_HELP)
+		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
 	return (0);
 }
 
@@ -57,8 +57,8 @@ static int	_in_0_hooks_keys_release_move(t_general *gen, int key)
 		return (gen->next_turn_key[TURN_L] = false, SUCCESS);
 	if (key == KEY_LOOK_RIGHT)
 		return (gen->next_turn_key[TURN_R] = false, SUCCESS);
-	if (key == KEY_BIG_MAP && gen->disp.img_select == BIG_MAP)
-		return (gen->disp.img_select = INGAME, SUCCESS);
+	if (key == KEY_BIG_MAP && gen->disp.render_selec == RENDER_BIG_MAP)
+		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
 	if (key == KEY_SPRINT)
 		return (gen->sprint = false, gen->settings.walk_speed /= 1.5, SUCCESS);
 	return (FAIL);

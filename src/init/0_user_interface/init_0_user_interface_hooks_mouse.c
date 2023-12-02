@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_0_user_interface_hooks_mouse.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:29:30 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 21:02:22 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:49:41 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	in_0_hooks_mouse_button_press(int key, int x, int y, t_general *gen)
 	(void)x;
 	(void)y;
 	if (key == MOUSE_LEFT_CLICK)
-		return (gp_action_do(gen), 0);
+		return (gp_action_main(gen), 0);
 	if (!gen->settings.configuring)
 		return (0);
 	if (key == MOUSE_MIDDLE_CLICK)
@@ -44,6 +44,17 @@ int	in_0_hooks_mouse_button_press(int key, int x, int y, t_general *gen)
 		return (_in_0_hooks_scroll_down(gen), 0);
 	if (key == MOUSE_SCROLL_UP)
 		return (_in_0_hooks_scroll_up(gen), 0);
+	return (0);
+}
+
+int	in_0_hooks_mouse_button_release(int key, int x, int y, t_general *gen)
+{
+	(void)x;
+	(void)y;
+	if (key == MOUSE_LEFT_CLICK
+		&& (gen->disp.render_selec == RENDER_LEAKES
+			|| gen->disp.render_selec == RENDER_CRASHES))
+			gen->disp.render_selec = RENDER_INGAME;
 	return (0);
 }
 
@@ -57,7 +68,7 @@ static int	_in_0_hooks_mouse_default(t_general *gen)
 				* gen->settings.minimap_size)), 0);
 	if (gen->settings.configuring == CONFIG_MOUSE_ROTATION_SPEED)
 		return (gen->settings.mouse_turn_sensibility
-			= M_PI / (2 * WIN_WIDTH), 0);
+			= M_PI / (6 * WIN_WIDTH), 0);
 	if (gen->settings.configuring == CONFIG_KEY_ROTATION_SPEED)
 		return (gen->settings.key_turn_speed = DEFAULT_ROTATE_SPEED_KEY, 0);
 	if (gen->settings.configuring == CONFIG_FOV)
