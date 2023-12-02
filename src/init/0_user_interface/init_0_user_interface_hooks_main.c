@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_0_user_interface_hooks_main.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:27:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/29 15:13:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 20:39:26 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

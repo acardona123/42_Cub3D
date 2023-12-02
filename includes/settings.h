@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 18:27:43 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 20:55:51 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
-//force bonus mode:
-# ifndef BONUS
-#  define BONUS
-# endif
+// force bonus mode:
+// # ifndef BONUS
+// #  define BONUS
+// # endif
 
 //window parameters
 # define WIN_NAME		"Cub3D"
-# define WIN_HEIGHT		900
-# define WIN_WIDTH		1500
+# define WIN_HEIGHT		1080
+# define WIN_WIDTH		1920
 
 //game default parameters
 # define DEFAULT_FOV					1.4
@@ -32,13 +32,13 @@
 # define DEFAULT_WALK_SPEED				0.0016
 # define DEFAULT_ROTATE_SPEED_KEY		0.0011
 # ifdef BONUS
-#  define DEFAULT_ROTATE_MOUSE_SENSIBILITY	0.001
+#  define DEFAULT_ROTATE_MOUSE_SENSIBILITY	0.0001
 # endif
 
 //game settings
 # define FOV_INCREMENT	0.125
-# define FOV_MIN		0.0125
-# define FOV_MAX		3.14
+# define FOV_MIN		1.047
+# define FOV_MAX		2.094
 
 //movement settings
 # define WALK_SPEED_INCREMENT			0.0001
@@ -74,7 +74,7 @@
 #  define MINIMAP_SIZE_DEFAULT			.33
 #  define MINIMAP_SIZE_INCREMENT		.125
 #  define MINIMAP_ZOOM_DEFAULT			.0625
-#  define MINIMAP_ZOOM_INCREMENT		.0625
+#  define MINIMAP_ZOOM_INCREMENT		1
 #  define MINIMAP_PLAYER_SIZE_DEFAULT	.125
 #  define BIGMAP_PLAYER_SIZE_DEFAULT	.05
 #  define BIGIMAP_PLAYER_SIZE_INCREMENT	.1
@@ -98,7 +98,12 @@
 # define LEAKS_CRASHES_BACKGROUND	0xFFFFFF
 
 //controls :
-# define NUMBER_KEY 12
+# define NUMBER_KEY 16
+
+// HELP
+# define HELP_DISP_OFFSET 140
+# define HELP_MSG_WIDTH 350
+# define HELP_MSG_HEIGHT 560
 
 typedef enum e_commands
 {
@@ -108,18 +113,35 @@ typedef enum e_commands
 	KEY_RIGHT			= XK_d,
 	KEY_LOOK_LEFT		= XK_Left,
 	KEY_LOOK_RIGHT		= XK_Right,
+	KEY_SPRINT			= XK_Shift_L,
 
 	KEY_ACT				= XK_space,
 	KEY_BIG_MAP			= XK_m,
+	KEY_HELP			= XK_h,
+	KEY_RESET_DEFAULT	= XK_0,
 
-	KEY_WALK_SPEED_UP	= XK_KP_8,//les kp ne marchent pas
-	KEY_WALK_SPEED_DOWN	= XK_KP_2,
-	KEY_ROT_SPEED_UP	= XK_KP_6,
-	KEY_ROT_SPEED_DOWN	= XK_KP_4,
-	KEY_FOV_UP			= XK_KP_Add,
-	KEY_FOV_DOWN		= XK_KP_Subtract,
-	KEY_ESCAPE			= XK_Escape
+	KEY_WALK_SPEED		= XK_1,
+	KEY_ROT_SPEED_KEY	= XK_2,
+	KEY_ROT_SPEED_MOUSE	= XK_3,
+	KEY_FOV				= XK_4,
+	KEY_MINI_ZOOM		= XK_5,
+
+	KEY_ESCAPE			= XK_Escape,
+
+	KEY_ADD				= 0xffab,
+	KEY_MINUS			= 0xffad
 }	t_command;
+
+// adjustable parameters array in t_settings
+typedef enum e_configuring
+{
+	CONFIG_NOTHING = 0,
+	CONFIG_WALK_SPEED,
+	CONFIG_MINI_ZOOM,
+	CONFIG_MOUSE_ROTATION_SPEED,
+	CONFIG_KEY_ROTATION_SPEED,
+	CONFIG_FOV
+}	t_configuring;
 
 //float_precision
 # define EPSILON 0.000001

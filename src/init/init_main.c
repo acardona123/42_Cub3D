@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:16 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:45:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 20:37:49 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/init.h"
 
 static void	_init_settings(t_general *gen);
+static bool	_init_check_settings_define_ok(void);
 
 #ifdef BONUS
 
@@ -67,11 +68,7 @@ void	init_main(int ac, char **av, t_general	*gen)
 
 static void	_init_settings(t_general *gen)
 {
-	if ( 0 ) //to_do define error
-	{
-		to_error_msg(MSG_SETTINGS_ERROR);
-		exit (EXIT_INIT_SETTINGS);
-	}
+	_init_check_settings_define_ok();
 	gen->settings.walk_speed = DEFAULT_WALK_SPEED;
 	gen->settings.key_turn_speed = DEFAULT_ROTATE_SPEED_KEY;
 	gen->settings.fov = DEFAULT_FOV;
@@ -79,17 +76,30 @@ static void	_init_settings(t_general *gen)
 		gen->angle_correc);
 }
 
+static bool	_init_check_settings_define_ok(void)
+{
+	if (DEFAULT_WALK_SPEED < 0)
+		return (to_error_msg(MSG_SETTINGS_WALK_SPEED), false);
+	if (FOV_MIN > FOV_MAX)
+		return (to_error_msg(MSG_SETTINGS_FOV_RANGE), false);
+	if (DIST_WALL_MIN < 0 || DIST_WALL_MIN > 0.25)
+		return (to_error_msg(MSG_SETTINGS_DIST_WALL_MIN), false);
+	if (DEFAULT_ROTATE_SPEED_KEY < 0)
+		return (to_error_msg(MSG_SETTINGS_ROTATE_SPEED), false);
+	return (true);
+}
+
 #ifdef BONUS
 
 static void	_init_settings_bonus(t_general *gen)
 {
-	gen->settings.mouse_turn_sensibility = DEFAULT_ROTATE_MOUSE_SENSIBILITY;
+	gen->settings.mouse_turn_sensibility = M_PI / (2 * WIN_WIDTH);
 	gen->settings.minimap_size
 		= (int)(MINIMAP_SIZE_DEFAULT * ft_min(WIN_HEIGHT, WIN_WIDTH));
 	gen->settings.minimap_zoom = ft_max(1, (int)(MINIMAP_ZOOM_DEFAULT
 				* gen->settings.minimap_size));
 	gen->settings.minimap_player_size = (int)(MINIMAP_PLAYER_SIZE_DEFAULT
-		* gen->settings.minimap_size);
+			* gen->settings.minimap_size);
 	gen->settings.bigmap_size = ft_min(WIN_HEIGHT, WIN_WIDTH);
 	gen->settings.bigmap_player_size = BIGMAP_PLAYER_SIZE_DEFAULT
 		* gen->settings.bigmap_size;

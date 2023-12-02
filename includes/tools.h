@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 20:53:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 21:02:13 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <X11/Xlib.h>
 # include <stdio.h>
 # include <sys/time.h>
 # include <sys/stat.h>
@@ -111,6 +112,8 @@ void	to_mlx_draw_rectangle(t_data *data, t_coord_i position,
 			t_coord_i dimensions, int color);
 void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
 			int color);
+void	to_mlx_draw_line_h(void *mlx, void *win, t_coord_i co, int len);
+void	to_mlx_str_put(void *ptr, int x, int y);
 
 # ifdef BONUS
 

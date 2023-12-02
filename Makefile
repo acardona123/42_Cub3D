@@ -26,8 +26,10 @@ FILES_INIT			=	$(addprefix init/, \
 							$(addprefix 0_user_interface/init_0_user_interface_, \
 								main \
 								hooks_main \
-								hooks_keys \
+								hooks_keys_press \
+								hooks_keys_release \
 								hooks_mouse \
+								settings_help_msg \
 							) \
 							$(addprefix 1_mapformat/init_1_mapformat_, \
 								main \

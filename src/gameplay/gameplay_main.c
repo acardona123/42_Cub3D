@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gameplay_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 18:24:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 20:37:24 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	gp_looping(void *gen_)
 	size_t			now_time;
 	size_t			delay;
 
+	// usleep(30000);
 	gen = gen_;
 	now_time = to_getime();
 	delay = now_time - last_time;
@@ -58,6 +59,8 @@ int	gp_looping(void *gen_)
 	else if (gen->disp.render_selec == RENDER_CRASHES
 		|| gen->disp.render_selec == RENDER_LEAKES)
 		gp_frame_leaks_or_craskes(gen, now_time);
+	else if (gen->disp.img_select == RENDER_HELP)
+		usleep(200);
 	return (0);
 }
 
