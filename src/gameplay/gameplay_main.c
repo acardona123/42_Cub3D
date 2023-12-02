@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gameplay_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 21:00:03 by acardona         ###   ########.fr       */
+/*   Updated: 2023/11/28 18:04:19 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	gp_looping(void *gen_)
 	size_t			now_time;
 	size_t			delay;
 
+	// usleep(30000);
 	gen = gen_;
 	now_time = to_getime();
 	delay = now_time - last_time;
@@ -55,6 +56,8 @@ int	gp_looping(void *gen_)
 		_gp_frame_ingame(gen, delay, now_time);
 	else if (gen->disp.img_select == BIG_MAP)
 		_gp_frame_bigmap(gen);
+	else if (gen->disp.img_select == RENDER_HELP)
+		usleep(200);
 	return (0);
 }
 
@@ -139,8 +142,8 @@ int	gp_looping(void *gen_)
 
 	gen = gen_;
 	gp_walk(gen,
-		(float)(gen->next_moove[GO_RIGHT] - gen->next_moove[GO_LEFT]),
-		(float)(gen->next_moove[GO_FORWARD] - gen->next_moove[GO_BACK]),
+		(float)(gen->next_walk[GO_RIGHT] - gen->next_walk[GO_LEFT]),
+		(float)(gen->next_walk[GO_FORWARD] - gen->next_walk[GO_BACK]),
 		FIXED_DELAY);
 	gp_turn_head(gen, FIXED_DELAY);
 	if (ft_isinset(gen->map.map[(int)gen->player.p_co.x]

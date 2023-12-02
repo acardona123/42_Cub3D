@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_mlx_img.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:31:48 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 20:18:36 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:26:01 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,42 @@ void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
 			}
 		}
 	}
+}
+
+/**
+ * @brief draw horizontal line
+ * 
+ * @param mlx 
+ * @param win 
+ * @param co 
+ * @param len number of pixels 
+ */
+void	to_mlx_draw_line_h(void *mlx, void *win, t_coord_i co, int len)
+{
+	while (--len >= 0)
+		mlx_pixel_put(mlx, win, co.x++, co.y, 0xff0000);
+}
+
+/**
+ * @brief display on the mlx window a string if the function have mlx pointers
+ * 
+ * @param ptr 
+ * @param co 
+ */
+void	to_mlx_str_put(void *ptr, int x, int y)
+{
+	static void	*mlx = 0;
+	static void	*win = 0;
+
+	if (!mlx)
+	{
+		mlx = ptr;
+		return ;
+	}
+	if (!win)
+	{
+		win = ptr;
+		return ;
+	}
+	mlx_string_put(mlx, win, x, y, 0xFFFFFF, (char *)ptr);
 }

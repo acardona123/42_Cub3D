@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 19:23:09 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 18:28:26 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@
 #  include <dirent.h>
 # endif
 
-# define MSG_SETTINGS_ERROR "Initialisation: wrong settings in defines"
+# define MSG_SETTINGS_DIMENSION "Screen dimension settings are invalid"
+# define MSG_SETTINGS_WALK_SPEED "invalid DEFAULT_WALK_SPEED"
+# define MSG_SETTINGS_ROTATE_SPEED "invalid DEFAULT_ROTATE_SPEED_KEY"
+# define MSG_SETTINGS_DIST_WALL_MIN "invalid DIST_WALL_MIN"
+# define MSG_SETTINGS_FOV_RANGE "settings FOV MIN > FOV MAX"
+//
 # define MSG_MAP_OPEN_FAIL "Map: cannot open the given map file"
-
-//map parameters error messages
 # define MSG_MAP_FILE_FORMAT "Map: format incorrect, requieres a .cub file"
+//map parameters error messages
 # define MSG_WRONG_LINE_FORMAT "Map: wrong number of parameters in a texture \
 definition"
 # define MSG_WRONG_ACRONYME "Map: wrong acronym for a texture definition or \
@@ -69,6 +73,7 @@ face"
 # define MSG_WARNING_BIG_MAP "Warning: map dimensions bigger than the window. \
 You will not be abble to display a big global map\n"
 
+
 typedef struct s_init_lists
 {
 	t_list			*lst_param;
@@ -86,8 +91,8 @@ typedef enum e_texture_int_index
 typedef enum e_mouse_keys
 {
 	MOUSE_LEFT_CLICK = 1,
-	MOUSE_RIGHT_CLICK = 2,
-	MOUSE_MIDDLE_CLICK = 3,
+	MOUSE_MIDDLE_CLICK = 2,
+	MOUSE_RIGHT_CLICK = 3,
 	MOUSE_SCROLL_UP = 4,
 	MOUSE_SCROLL_DOWN = 5
 }	t_mouse_keys;
@@ -119,6 +124,8 @@ int		in_0_hooks_keys_release(int key, t_general *gen);
 // init_0_user_interface_hooks_mouse.c
 int		in_0_hooks_mouse_move(int x, int y, t_general *gen);
 int		in_0_hooks_mouse_button(int key, int x, int y, t_general *gen);
+// init_0_user_interface_settings_help_msg
+void	in_0_settings_help_msg(t_general *gen);
 
 /*
 

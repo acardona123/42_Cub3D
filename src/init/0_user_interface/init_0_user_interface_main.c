@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_0_user_interface_main.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 19:10:28 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/01 23:30:33 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/init.h"
 
 static t_bool	_in_0_display_elements_init(t_display *disp);
+static bool		_in_0_check_screen_dimension_valid_ok(void *mlx);
 
 /**
  * @brief initializes the t_display structure that corresponds to the ui
@@ -41,6 +42,9 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
 	disp->mlx = mlx_init();
 	if (!disp->mlx)
 		return (to_error_msg(MSG_MLX_INIT), FAIL);
+	if (_in_0_check_screen_dimension_valid_ok(disp->mlx) == false)
+		return (to_error_msg(MSG_SETTINGS_DIMENSION), FAIL);
+	mlx_do_key_autorepeatoff(disp->mlx);
 	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
 	if (!disp->win)
 		return (to_error_msg(MSG_MLX_NEW_IMG), FAIL);
@@ -58,6 +62,17 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
 		return (FAIL);
 	disp->img_select = INGAME;
 	return (SUCCESS);
+}
+
+static bool	_in_0_check_screen_dimension_valid_ok(void *mlx)
+{
+	int	x;
+	int	y;
+
+	mlx_get_screen_size(mlx, &x, &y);
+	if (WIN_WIDTH < 1 || WIN_HEIGHT < 1 || WIN_WIDTH > x || WIN_HEIGHT > y)
+		return (false);
+	return (true);
 }
 
 /*

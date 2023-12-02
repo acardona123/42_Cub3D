@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shared.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/16 15:37:48 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 18:21:37 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "settings.h"
 # include "tools.h"
+# include "message.h"
 
 /*
 
@@ -214,6 +215,7 @@ typedef struct s_settings
 	int			minimap_player_size;
 	int			bigmap_player_size;
 	int			bigmap_size;
+	int			configuring;
 }	t_settings;
 
 /* ---- End: Settings ----
@@ -226,7 +228,8 @@ typedef enum e_img_to_disp
 {
 	BLACK,
 	BIG_MAP,
-	INGAME
+	INGAME,
+	RENDER_HELP
 }	t_img_to_disp;
 
 typedef struct s_display
@@ -259,6 +262,7 @@ typedef struct s_general
 	bool				next_walk[4];
 	bool				next_turn_key[2];
 	float				next_turn_mouse;
+	bool				sprint;
 	t_minimap			minimap;
 }	t_general;
 

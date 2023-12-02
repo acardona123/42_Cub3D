@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/14 20:23:38 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:28:41 by alexandm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,7 @@ void	to_mlx_draw_rectangle(t_data *data, t_coord_i position,
 			t_coord_i dimensions, int color);
 void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
 			int color);
+void	to_mlx_draw_line_h(void *mlx, void *win, t_coord_i co, int len);
+void	to_mlx_str_put(void *ptr, int x, int y);
+
 #endif
