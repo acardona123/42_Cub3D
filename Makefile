@@ -52,6 +52,7 @@ FILES_INIT			=	$(addprefix init/, \
 								bonus_doors \
 								bonus_leaks \
 								bonus_hologram \
+								bonus_wall1 \
 								fill_chunk \
 								set_chunk_texture \
 								set_status_action \

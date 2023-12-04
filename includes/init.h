@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:30:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 20:32:29 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:23:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,9 @@ t_bool	in_3_mapcontent_crashes_action_init(t_map *map, int x, int y);
 //init_3_mapcontent_bonus_hologram.c
 t_bool	in_3_mapcontent_hologram_chunk_init_textures(
 			t_texture_pack *texturepack, t_chunk *chunk_holo);
+//init_3_mapcontent_bonus_wall1.c
+t_bool	in_3_mapcontent_wall1_chunk_init_textures(
+			t_texture_pack *texturepack, t_chunk *chunk_wall1);
 // init_3_mapcontent_set_status_action.c
 t_bool	in_3_mapcontent_status_action_init(t_map *map);
 # endif
