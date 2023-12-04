@@ -1,13 +1,13 @@
-NO ./textures/random_tests/wall_n
-SO ./textures/random_tests/wall_s
-WE ./textures/random_tests/wall_w
-EA ./textures/random_tests/wall_e
-DF ./textures/random_tests/doors/door_face
-DC ./textures/random_tests/doors/door_side_closed
-DOOD ./textures/random_tests/doors/door_side_open_opened
-DOOG ./textures/random_tests/doors/door_side_open_opening
-DOCD ./textures/random_tests/doors/door_side_open_closed
-DOCG ./textures/random_tests/doors/door_side_open_closing
+NO ./textures/final_textures/walls/wall_enlighted
+SO ./textures/final_textures/walls/wall_enlighted
+WE ./textures/final_textures/walls/wall_shadow
+EA ./textures/final_textures/walls/wall_shadow
+DF ./textures/random_tests/door_face
+DC ./textures/random_tests/door_side_closed
+DOOD ./textures/random_tests/door_side_open_opened
+DOOG ./textures/random_tests/door_side_open_opening
+DOCD ./textures/random_tests/door_side_open_closed
+DOCG ./textures/random_tests/door_side_open_closing
 CRASHES ./textures/random_tests/crashes
 CRASHES_W ./textures/random_tests/wall_crashes
 LEAKS ./textures/random_tests/leaks
@@ -17,11 +17,11 @@ F 100,60,60
 C 60,160,255
         1111111111111111111111111
         1000000000x10000000000001
-        1011000001110000000000001
+        10110000011100000N0000001
         100x000000p00000000001001
 11111111101100000111000000000d001
 v00p0000001100000h11011j111111cl1
-1111011l1111c1011100Sd00p000x
+1111011l1111c10111000d00p000x
 1111d1111111b1011101d10010001
 11000000110101011100000010001
 1000000000000000k000000010001
