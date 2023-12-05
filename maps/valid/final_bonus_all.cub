@@ -1,0 +1,41 @@
+NO ./textures/final_textures/walls/wall_enlighted
+SO ./textures/final_textures/walls/wall_enlighted
+WE ./textures/final_textures/walls/wall_shadow
+EA ./textures/final_textures/walls/wall_shadow
+NO_1 ./textures/final_textures/walls_1
+SO_1 ./textures/final_textures/walls_1
+WE_1 ./textures/final_textures/walls_1
+EA_1 ./textures/final_textures/walls_1
+DF ./textures/random_tests/door_face
+DC ./textures/random_tests/door_side_closed
+DOOD ./textures/random_tests/door_side_open_opened
+DOOG ./textures/random_tests/door_side_open_opening
+DOCD ./textures/random_tests/door_side_open_closed
+DOCG ./textures/random_tests/door_side_open_closing
+CRASHES ./textures/random_tests/crashes
+CRASHES_W ./textures/random_tests/wall_crashes
+LEAKS ./textures/random_tests/leaks
+LEAKS_W ./textures/random_tests/wall_leaks
+HOLOGRAM ./textures/random_tests/wall_hologram
+F 100,60,60
+C 60,160,255
+
+           11111111111 1111b11111111
+  11111    1000000000x 100000001000111
+  10001    10000000001 100000001000001
+1110001111111c11d11111111d11111111d111
+11000000000000000000000000000000000001
+10000000000111111111111d1101d1111111j1
+100000000001100011v0000000l1010d010d0h
+10000000000k0000d0x0000000110d010d0v0x
+110000000001111111111111111111111111c1
+10000000000000000000000000000000W00001
+10000000000000000000000000000000000001
+11000001000001000001000001000001000001
+1111111111111111p111111111111111111111
+     222222222220222222222222222222222
+     200000000000000000000000000000002
+     200000000000000000000000000000002
+     200000000000000000000000000002222
+     200000000000000000000000000002
+     222222222222222222222222222222

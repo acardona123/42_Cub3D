@@ -1,7 +1,7 @@
-NO ./textures/random_tests/wall_n/wall_n_0/wall_n_0_0.xpm
-SO ./textures/random_tests/wall_s/wall_s_0/wall_s_0_0.xpm
-WE ./textures/random_tests/wall_w/wall_w_0/wall_w_0_0.xpm
-EA ./textures/random_tests/wall_e/wall_e_0/wall_e_0_0.xpm
+NO ./textures/final_textures/walls/wall_enlighted
+SO ./textures/final_textures/walls/wall_shadow
+WE ./textures/final_textures/walls/wall_enlighted
+EA ./textures/final_textures/walls/wall_shadow
 CRASHES ./textures/random_tests/crashes
 CRASHES_W ./textures/random_tests/wall_crashes
 F 100,60,60

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:52:12 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:32:04 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:37:56 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	in_3_mapcontent_fill_chunk_ok(t_general *gen, int c_type, int x, int y)
 	gen->map.map[x][y].status = INACTIVE;
 	if (!_in_3_character_is_valid(gen, c_type, x, y))
 		return (false);
-	gen->map.map[x][y].t0 = to_getime() - rand();
+	gen->map.map[x][y].t0 = to_getime();
 	if (in_3_mapcontent_set_chunk_textures(&gen->textures, &gen->map.map[x][y])
 		== FAIL)
 		return (false);

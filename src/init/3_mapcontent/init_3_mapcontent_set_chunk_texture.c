@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:55:56 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 17:41:32 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:25:25 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@
 t_bool	in_3_mapcontent_set_chunk_textures(t_texture_pack *texturepack,
 	t_chunk *chunk)
 {
-	if (chunk->type == WALL || chunk->type == NOTHING)
+	if (chunk->type == WALL0 || chunk->type == NOTHING)
 	{
 		sh_chunk_set_texture(chunk, FACE_N, &texturepack->wall_n, true);
 		sh_chunk_set_texture(chunk, FACE_S, &texturepack->wall_s, true);
 		sh_chunk_set_texture(chunk, FACE_E, &texturepack->wall_e, true);
 		sh_chunk_set_texture(chunk, FACE_W, &texturepack->wall_w, true);
 	}
+	else if (chunk->type == WALL1)
+		return (in_3_mapcontent_wall1_chunk_init_textures(texturepack, chunk));
 	else if (chunk->type == DOOR)
 		return (in_3_mapcontent_doors_chunk_init(texturepack, chunk));
 	else if (ft_isinset(chunk->type, CHARS_LEAKS))

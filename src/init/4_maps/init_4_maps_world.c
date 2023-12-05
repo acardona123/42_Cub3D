@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:15:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 18:21:23 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:54:22 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int			g_colors[CHARS_NUMBER + 1] = {
 	MINIMAP_COLOR_F,
-	MINIMAP_COLOR_WALL,
+	MINIMAP_COLOR_WALL, MINIMAP_COLOR_WALL,
 	MINIMAP_COLOR_NOTHING,
 	MINIMAP_COLOR_N, MINIMAP_COLOR_E, MINIMAP_COLOR_S, MINIMAP_COLOR_W,
 	MINIMAP_COLOR_LEAKS, MINIMAP_COLOR_LEAKS, MINIMAP_COLOR_LEAKS,
@@ -29,7 +29,7 @@ static int			g_colors[CHARS_NUMBER + 1] = {
 
 static t_chunk_type	g_type[CHARS_NUMBER + 1] = {
 	FLOOR,
-	WALL,
+	WALL0, WALL1,
 	NOTHING,
 	PLAYER_N, PLAYER_E, PLAYER_S, PLAYER_W,
 	LEAKS_N, LEAKS_E, LEAKS_S, LEAKS_W,

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 14:44:59 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 21:10:17 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/04 21:54:56 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_group_of_textures
 
 # ifdef BONUS
 
-#  define NUMBER_OF_TEXTURES 15
+#  define NUMBER_OF_TEXTURES 19
 
 typedef struct s_texture_pack
 {
@@ -57,6 +57,10 @@ typedef struct s_texture_pack
 	t_group_of_textures	wall_s;
 	t_group_of_textures	wall_e;
 	t_group_of_textures	wall_w;
+	t_group_of_textures	wall1_n;
+	t_group_of_textures	wall1_s;
+	t_group_of_textures	wall1_e;
+	t_group_of_textures	wall1_w;
 	t_group_of_textures	wall_leaks;
 	t_group_of_textures	wall_crashes;
 	t_group_of_textures	door_front;
@@ -98,18 +102,19 @@ typedef struct s_texture_pack
 
 # ifdef BONUS
 
-#  define CHARS_ALLOWED		"01 NESWdlkjhcvbxp"
+#  define CHARS_ALLOWED		"012 NESWdlkjhcvbxp"
 #  define CHARS_LEAKS		"lkjh"
 #  define CHARS_CRASHES		"cvbx"
-#  define CHARS_WALLS		"1lkjhcvbxp"
-#  define CHARS_OBSTACLE	"1lkjhcvbx "
+#  define CHARS_WALLS		"12lkjhcvbx"
+#  define CHARS_OBSTACLE	"12lkjhcvbx "
 #  define CHARS_TRANSPARENT " 0NSEW"
-#  define CHARS_NUMBER 17
+#  define CHARS_NUMBER 18
 
 typedef enum e_chunk_type
 {
 	FLOOR		= '0',
-	WALL		= '1',
+	WALL0		= '1',
+	WALL1		= '2',
 	DOOR		= 'd',
 	LEAKS_N		= 'l',
 	LEAKS_E		= 'k',
@@ -345,9 +350,9 @@ typedef enum e_ray_door_behaviour
 	ray_pass_door_no_touch
 }	t_ray_door_behaviour;
 
-#  define CHARS_OBSTACLE_RAYCASTING "1lkjhcvbxp "
-#  define CHARS_OBSTACLE_WALK "1lkjhcvbx "
-#  define CHARS_OBSTACLE_ACTION "1dlkjhcvbxp "
+#  define CHARS_OBSTACLE_RAYCASTING "12lkjhcvbxp "
+#  define CHARS_OBSTACLE_WALK "12lkjhcvbx "
+#  define CHARS_OBSTACLE_ACTION "12dlkjhcvbxp "
 
 # else
 

@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 20:01:14 by alexandm          #+#    #+#             */
-/*   Updated: 2023/12/02 21:59:07 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/02 22:10:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	in_0_hooks_keys_release(int key, t_general *gen)
 		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
 	return (0);
 }
-
 
 /**
  * @brief sets hooks activaed by releasing a key. Goal: stop player mouvement
@@ -78,7 +77,6 @@ int	in_0_hooks_keys_release(int key, t_general *gen)
 	_in_0_hooks_keys_release_move(gen, key);
 	return (0);
 }
-
 
 /**
  * @brief sets hooks activaed by releasing a key. Goal: stop player mouvement

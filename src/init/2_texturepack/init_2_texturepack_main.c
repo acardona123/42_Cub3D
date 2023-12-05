@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:59:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 17:05:45 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:15:59 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,15 @@ static t_bool	_in_2_init_texture_bonus(void *mlx, t_texture_pack *text_pack,
 static t_bool	_in_2_init_texture_bonus_1(void *mlx, t_texture_pack *text_pack,
 	char **line_arg)
 {
-	if (!ft_strcmp(*line_arg, "LEAKS"))
+	if (!ft_strcmp(*line_arg, "NO_1"))
+		return (in_2_textu_group_init(mlx, &text_pack->wall1_n, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "SO_1"))
+		return (in_2_textu_group_init(mlx, &text_pack->wall1_s, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "WE_1"))
+		return (in_2_textu_group_init(mlx, &text_pack->wall1_w, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "EA_1"))
+		return (in_2_textu_group_init(mlx, &text_pack->wall1_e, line_arg + 1));
+	else if (!ft_strcmp(*line_arg, "LEAKS"))
 		return (in_2_textu_group_init(mlx, &text_pack->leaks, line_arg + 1));
 	else if (!ft_strcmp(*line_arg, "LEAKS_W"))
 		return (in_2_textu_group_init(mlx, &text_pack->wall_leaks,
