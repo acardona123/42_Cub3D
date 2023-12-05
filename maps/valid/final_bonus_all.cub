@@ -6,7 +6,7 @@ NO_1 ./textures/final_textures/walls_1
 SO_1 ./textures/final_textures/walls_1
 WE_1 ./textures/final_textures/walls_1
 EA_1 ./textures/final_textures/walls_1
-DF ./textures/random_tests/door_face
+DF ./textures/final_textures/doors/door_front
 DC ./textures/random_tests/door_side_closed
 DOOD ./textures/random_tests/door_side_open_opened
 DOOG ./textures/random_tests/door_side_open_opening
