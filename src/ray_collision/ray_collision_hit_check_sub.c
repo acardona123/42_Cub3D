@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:09:42 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 20:10:07 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:39:54 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	r_ray_check_no_shift_diag(t_general *gen, t_ray_data *rdata,
 
 #ifdef BONUS
 
-static bool	r_ray_check_shift_diag_sub(t_chunk **map, t_ray_data *rdata,
+static bool	_r_ray_check_shift_diag_sub(t_chunk **map, t_ray_data *rdata,
 			t_coord_f dec, t_coord_i *chunk);
 
 /**
@@ -135,17 +135,10 @@ bool	r_ray_check_shift_diag(t_general *gen, t_ray_data *rdata,
 	dec.x = real_hitpt_co.x - floor(real_hitpt_co.x);
 	dec.y = real_hitpt_co.y - floor(real_hitpt_co.y);
 	chunk = (t_coord_i){(int)real_hitpt_co.x, (int)real_hitpt_co.y};
-	if ((dec.x <= rdata->shift || dec.x >= 1.f - rdata->shift)
-		&& r_ray_check_shift_diag_sub(gen->map.map, rdata, dec, &chunk))
+	if ((dec.x <= rdata->shift || dec.x >= 1.f - rdata->shift
+			|| dec.y <= rdata->shift || dec.y >= 1.f - rdata->shift)
+		&& _r_ray_check_shift_diag_sub(gen->map.map, rdata, dec, &chunk))
 		return (hit_pt->chunk_co_x = chunk.x, hit_pt->chunk_co_y = chunk.y,
-			hit_pt->pt_co = real_hitpt_co, true);
-	if (dec.y <= rdata->shift && r_ray_hit_is_solid_chunk(gen->map.map, rdata,
-			chunk.x, chunk.y - 1))
-		return (hit_pt->chunk_co_x = chunk.x, hit_pt->chunk_co_y = chunk.y - 1,
-			hit_pt->pt_co = real_hitpt_co, true);
-	if (dec.y >= 1.f - rdata->shift
-		&& r_ray_hit_is_solid_chunk(gen->map.map, rdata, chunk.x, chunk.y + 1))
-		return (hit_pt->chunk_co_x = chunk.x, hit_pt->chunk_co_y = chunk.y + 1,
 			hit_pt->pt_co = real_hitpt_co, true);
 	return (false);
 }
@@ -160,25 +153,19 @@ bool	r_ray_check_shift_diag(t_general *gen, t_ray_data *rdata,
  * @return true neighbor chunk hit
  * @return false 
  */
-static bool	r_ray_check_shift_diag_sub(t_chunk **map, t_ray_data *rdata,
+static bool	_r_ray_check_shift_diag_sub(t_chunk **map, t_ray_data *rdata,
 	t_coord_f dec, t_coord_i *chunk)
 {
-	chunk->x += 1 - 2 * (dec.x <= rdata->shift);
+	chunk->x += 1 - (dec.x <= rdata->shift);
+	chunk->y += 1 - (dec.y <= rdata->shift);
 	if (r_ray_hit_is_solid_chunk(map, rdata, chunk->x, chunk->y))
 		return (true);
-	if (dec.y <= rdata->shift && r_ray_hit_is_solid_chunk(
-			map, rdata, chunk->x, chunk->y - 1))
-	{
-		--chunk->y;
-		return (true);
-	}
-	if (dec.y >= 1.f - rdata->shift && r_ray_hit_is_solid_chunk(
-			map, rdata, chunk->x, chunk->y + 1))
-	{
-		++chunk->y;
-		return (true);
-	}
-	chunk->x -= 1 - 2 * (dec.x <= rdata->shift);
+	if (r_ray_hit_is_solid_chunk(map, rdata, chunk->x - 1, chunk->y - 1))
+		return (--chunk->x, --chunk->x, true);
+	if (r_ray_hit_is_solid_chunk(map, rdata, chunk->x - 1, chunk->y))
+		return (--chunk->x, true);
+	if (r_ray_hit_is_solid_chunk(map, rdata, chunk->x, chunk->y - 1))
+		return (--chunk->y, true);
 	return (false);
 }
 
