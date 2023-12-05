@@ -3,6 +3,10 @@ SO ./textures/random_tests/wall_s
 WE ./textures/random_tests/wall_w
 EA ./textures/random_tests/wall_e
 DF ./textures/random_tests/door_face
+DOOD ./textures/random_tests/door_side_open_opened
+DOOG ./textures/random_tests/door_side_open_opening
+DOCD ./textures/random_tests/door_side_open_closed
+DOCG ./textures/random_tests/door_side_open_closing
 F 100,60,60
 C 60,160,255
 

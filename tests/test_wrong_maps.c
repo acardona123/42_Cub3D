@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:43:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/11/02 01:05:39 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/05 21:09:29 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,10 +204,10 @@ static void	_test_repo_without_rights(char *exec_path, char **env)
 		perror(NULL);
 		return ;
 	}
-	write(fd_map_unreachable_texture, "NO no_rights_dir 500 0\nSO ./textures/\
-random_tests/wall_s 500 0\nWE ./textures/random_tests/wall_w 500 0\nEA \
-./textures/random_tests/wall_e 500 0\nF 100,60,60\n\
-C 60,160,255\n111\n1N1\n111", 179);
+	write(fd_map_unreachable_texture, "NO no_rights_dir\nSO ./textures/\
+random_tests/wall_s\nWE ./textures/random_tests/wall_w\nEA \
+./textures/random_tests/wall_e\nF 100,60,60\n\
+C 60,160,255\n111\n1N1\n111", 155);
 	close(fd_map_unreachable_texture);
 	child_pid = fork();
 	if (child_pid == -1)
