@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/05 19:56:57 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:48:23 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 	}
 	_in_1_map_mapcontent_check(gen, &lists, fd_input, &line);
 	to_get_next_line(-1, NULL);
-	//close ici ?
+	close(fd_input);
 	return (lists);
 }
 
