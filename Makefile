@@ -28,7 +28,8 @@ FILES_INIT			=	$(addprefix init/, \
 								hooks_main \
 								hooks_keys_press \
 								hooks_keys_release \
-								hooks_mouse \
+								hooks_mouse_button \
+								hooks_mouse_move \
 								settings_help_msg \
 							) \
 							$(addprefix 1_mapformat/init_1_mapformat_, \
@@ -255,13 +256,13 @@ $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE) :
 check : all $(LEAK_VALGRINDRC) $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)
 	@echo "\e[32m==== MANDATORY LEAKS CHECK ====\e[0m"
 	@echo "Example to test with arguments :\nmake check ARGS=maps/valid/subject_tests_no_textures.cub"
-	valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes ./$(NAME) $(ARGS) || true
+	valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes --track-fds=yes -s ./$(NAME) $(ARGS) || true
 	@echo "\e[32m==== End: Mandatory leaks check ====\e[0m"
 
 check_bonus : bonus $(LEAK_VALGRINDRC) $(LEAK_SUPPR_DIR)/$(LEAK_SUPPR_FILE)
 	@echo "\e[32m==== BONUS LEAKS CHECK ====\e[0m"
 	@echo "Example to test with arguments :\nmake check_bonus ARGS=maps/valid/subject_tests_no_textures.cub"
-	valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes ./$(NAME) $(ARGS) || true
+	valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes --track-fds=yes -s ./$(NAME) $(ARGS) || true
 	@echo "\e[32m==== End: Bonus leaks check ====\e[0m"
 
 check_clean : clean

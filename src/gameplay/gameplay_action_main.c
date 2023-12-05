@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:15:20 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 18:16:35 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:44:21 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	gp_action_main(t_general *gen)
  * 
  * @param gen 
  */
-void	gp_action_main(t_general *gen)//to dell, better modify the hooks in the mandatory part
+void	gp_action_main(t_general *gen)
 {
 	(void)gen;
 }

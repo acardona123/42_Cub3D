@@ -38,7 +38,6 @@ int	in_0_hooks_keys_press(int key, t_general *gen)
 	return (0);
 }
 
-
 //==================
 // Settings
 //==================

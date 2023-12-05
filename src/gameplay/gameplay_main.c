@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:35:18 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 21:11:05 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:44:46 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	gp_looping(void *gen_)
 	size_t			now_time;
 	size_t			delay;
 
-	// usleep(30000);
 	gen = gen_;
 	now_time = to_getime();
 	delay = now_time - last_time;

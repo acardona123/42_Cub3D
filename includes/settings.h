@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/05 20:46:55 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 00:51:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 //movement settings
 # define WALK_SPEED_INCREMENT			0.0001
 # define ROTATE_SPEED_KEY_INCREMENT		0.001
-// # define DIST_WALL_MIN					0.25
 # define DIST_WALL_MIN 0.0125
 # ifdef BONUS
 #  define ROTATE_SPEED_MOUSE_INCREMENT	0.00005
@@ -94,9 +93,6 @@
 
 # define LEAKS_CRASHES_BACKGROUND	0xFFFFFF
 
-//controls :
-# define NUMBER_KEY 16
-
 // HELP
 # define HELP_DISP_OFFSET 140
 # define HELP_MSG_WIDTH 350
@@ -111,22 +107,16 @@ typedef enum e_commands
 	KEY_LOOK_LEFT		= XK_Left,
 	KEY_LOOK_RIGHT		= XK_Right,
 	KEY_SPRINT			= XK_Shift_L,
-
 	KEY_ACT				= XK_space,
 	KEY_BIG_MAP			= XK_m,
 	KEY_HELP			= XK_h,
 	KEY_RESET_DEFAULT	= XK_0,
-
 	KEY_WALK_SPEED		= XK_1,
 	KEY_ROT_SPEED_KEY	= XK_2,
 	KEY_ROT_SPEED_MOUSE	= XK_3,
 	KEY_FOV				= XK_4,
 	KEY_MINI_ZOOM		= XK_5,
-
-	KEY_ESCAPE			= XK_Escape,
-
-	KEY_ADD				= 0xffab,
-	KEY_MINUS			= 0xffad
+	KEY_ESCAPE			= XK_Escape
 }	t_command;
 
 // adjustable parameters array in t_settings
