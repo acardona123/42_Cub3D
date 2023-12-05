@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 00:49:11 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 18:37:27 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:56:57 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_lists	in_1_map_format_check(int ac, char **av, t_general *gen)
 			EXIT_INIT_1);
 	}
 	_in_1_map_mapcontent_check(gen, &lists, fd_input, &line);
+	to_get_next_line(-1, NULL);
+	//close ici ?
 	return (lists);
 }
 
@@ -68,7 +70,9 @@ static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
 {
 	int	i;
 
-	*line = get_next_line(fd_input);//securisation du gnl ici
+	if (to_get_next_line(fd_input, line))
+		(close(fd_input),
+			in_init_destroy_lists_exit(gen, lists, NULL, EXIT_INIT_1));
 	while (*line && in_1_line_is_parameter(*line))
 	{
 		if (in_1_line_is_empty(*line))
@@ -76,7 +80,9 @@ static void	_in_1_map_params_check(t_general *gen, t_lists *lists, int fd_input,
 		else if (ft_lstnewaddback(&lists->lst_param, *line))
 			(free(*line), close(fd_input), in_init_destroy_lists_exit(gen,
 					lists, MSG_BAD_ALLOC, EXIT_INIT_1));
-		*line = get_next_line(fd_input);
+		if (to_get_next_line(fd_input, line))
+			(close(fd_input),
+				in_init_destroy_lists_exit(gen, lists, NULL, EXIT_INIT_1));
 	}
 	if (!(*line))
 		(close(fd_input), in_init_destroy_lists_exit(gen, lists,
@@ -118,6 +124,8 @@ static void	_in_1_map_mapcontent_check(t_general *gen, t_lists *lists,
 		lists->map_nb_lines++;
 		if (ft_strlen(*line) > lists->map_nb_col)
 			lists->map_nb_col = ft_strlen(*line);
-		*line = get_next_line(fd_input);
+		if (to_get_next_line(fd_input, line))
+			(close(fd_input),
+				in_init_destroy_lists_exit(gen, lists, NULL, EXIT_INIT_1));
 	}
 }

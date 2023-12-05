@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 19:01:44 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:00:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:10:20 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,13 @@ char	**in_2_textu_group_dir_line_arg_from_subdir(char *dir_parent_name,
 	arg[0] = to_file_build_path(dir_parent_name, dir_name, NULL, NULL);
 	if (!arg[0])
 		return (to_error_msg(MSG_BAD_ALLOC), close(fd), ft_tabfree(arg), NULL);
-	arg[1] = get_next_line(fd);
-	if (!arg[1])
-		return (to_error_msg(MSG_BAD_ALLOC), close(fd), ft_tabfree(arg), NULL);
-	arg[2] = get_next_line(fd);
-	if (!arg[2])
-		return (to_error_msg(MSG_BAD_ALLOC), close(fd), ft_tabfree(arg), NULL);
-	return (close(fd), arg);
+	if (to_get_next_line(fd, &arg[1]))
+		return (close(fd), ft_tabfree(arg), NULL);
+	if (arg[1] && to_get_next_line(fd, &arg[2]))
+		return (close(fd), ft_tabfree(arg), NULL);
+	if (!arg[1] || !arg[2])
+		return (to_error_msg(MSG_FILE_EOF), close(fd), ft_tabfree(arg), NULL);
+	return (to_get_next_line(-1, NULL), close(fd), arg);
 }
 
 /**

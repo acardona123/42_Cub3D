@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:10:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 21:02:13 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:52:47 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOOLS_H
 # define TOOLS_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -32,6 +36,7 @@
 # include "settings.h"
 
 # define MSG_BAD_ALLOC "memory allocation error"
+# define MSG_BAD_READ "gnl read error"
 //mlx error
 # define MSG_MLX_INIT "mlx: fail of mlx_init"
 # define MSG_MLX_NEW_IMG "mlx: fail to create a new image"
@@ -114,6 +119,9 @@ void	to_mlx_draw_circle(t_data *data, t_coord_i center, int radius,
 			int color);
 void	to_mlx_draw_line_h(void *mlx, void *win, t_coord_i co, int len);
 void	to_mlx_str_put(void *ptr, int x, int y);
+
+//tools_get_next_line.c
+int		to_get_next_line(int fd, char **dest);
 
 # ifdef BONUS
 

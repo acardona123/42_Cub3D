@@ -62,8 +62,6 @@ FILES_NAMES	=	ft_atoi \
 				ft_tabfree \
 				ft_tablen \
 				ft_try_free \
-				get_next_line \
-				get_next_line_utils \
 				ft_lstnew \
 				ft_lstadd_front \
 				ft_lstsize \

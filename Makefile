@@ -104,6 +104,7 @@ FILES_TOOLS		=	$(addprefix tools/tools_, \
 						angles_set \
 						mlx_img \
 						file \
+						get_next_line \
 					)
 
 FILES_MAPS		=	$(addprefix maps/maps_, \

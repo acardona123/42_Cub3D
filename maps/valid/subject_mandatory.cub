@@ -1,5 +1,5 @@
 NO ./textures/random_tests/wall_n/wall_n_0/wall_n_0_0.xpm
-SO ./textures/random_tests/wall_s/wall_s_0/wall_s_0_0.xpm
+SO ./textures/random_tests/wall_s/wall_s_0/wall_s_0_1.xpm
 WE ./textures/random_tests/wall_w/wall_w_0/wall_w_0_0.xpm
 EA ./textures/random_tests/wall_e/wall_e_0/wall_e_0_0.xpm
 F 100,60,60
