@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/06 13:48:00 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:22:29 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@
 
 //actions
 #  define ACTION_DOOR_TIME					1000.
-#  define ACTION_DOOR_DIST_RANGE 			100.
-#  define ACTION_LEAKS_CRASHES_DIST_RANGE	10.
+#  define ACTION_DOOR_DIST_RANGE 			1.5
+#  define ACTION_LEAKS_CRASHES_DIST_RANGE	3.
 #  define ACTION_LEAKS_CRASHES_BORDER_INF	.40
 #  define ACTION_LEAKS_CRASHES_BORDER_SUP	.60
 
