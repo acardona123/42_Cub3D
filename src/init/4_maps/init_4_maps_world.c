@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:15:23 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/04 21:54:22 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:46:37 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int			g_colors[CHARS_NUMBER + 1] = {
 	MINIMAP_COLOR_F,
-	MINIMAP_COLOR_WALL, MINIMAP_COLOR_WALL,
+	MINIMAP_COLOR_WALL, MINIMAP_COLOR_WALL_1,
 	MINIMAP_COLOR_NOTHING,
 	MINIMAP_COLOR_N, MINIMAP_COLOR_E, MINIMAP_COLOR_S, MINIMAP_COLOR_W,
 	MINIMAP_COLOR_LEAKS, MINIMAP_COLOR_LEAKS, MINIMAP_COLOR_LEAKS,
