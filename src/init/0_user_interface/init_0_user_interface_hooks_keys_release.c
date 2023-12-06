@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 20:01:14 by alexandm          #+#    #+#             */
-/*   Updated: 2023/12/02 22:10:20 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 01:01:38 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	in_0_hooks_keys_release(int key, t_general *gen)
 		|| key == KEY_ROT_SPEED_MOUSE || key == KEY_MINI_ZOOM || key == KEY_FOV)
 		return (gen->settings.configuring = CONFIG_NOTHING, SUCCESS);
 	if (key == KEY_HELP && gen->disp.render_selec == RENDER_HELP)
+		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
+	if (key == KEY_ACT && (gen->disp.render_selec == RENDER_CRASHES
+			|| gen->disp.render_selec == RENDER_LEAKES))
 		return (gen->disp.render_selec = RENDER_INGAME, SUCCESS);
 	return (0);
 }
