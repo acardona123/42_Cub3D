@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_0_user_interface_main.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandm <alexandm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 02:21:33 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/02 21:04:12 by alexandm         ###   ########.fr       */
+/*   Updated: 2023/12/06 02:38:29 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static t_bool	_in_0_display_elements_init(t_display *disp)
 	disp->win = mlx_new_window(disp->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
 	if (!disp->win)
 		return (to_error_msg(MSG_MLX_NEW_IMG), FAIL);
+	mlx_string_put(disp->mlx, disp->win, 5, 10, 0xFFFFFF,
+		"Loading textures...");
 	disp->buff = ft_calloc(1, sizeof(t_data));
 	if (!disp->buff)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
