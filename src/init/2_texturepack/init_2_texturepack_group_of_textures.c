@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 03:14:50 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:08:23 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:39:10 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ static t_bool	_in_2_textu_group_init_from_file(void *mlx,
 	textures_group->textures_array = ft_calloc(2, sizeof(t_animated_texture *));
 	if (!textures_group->textures_array)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
+	textures_group->group_len = 1;
 	line_arg = (char *[2]){*file_name, NULL};
 	if (in_2_anim_textu_init(mlx, textures_group->textures_array, line_arg)
 		== FAIL)
-		return (free(textures_group->textures_array), FAIL);
+		return (FAIL);
 	*file_name = NULL;
-	textures_group->group_len = 1;
 	return (SUCCESS);
 }

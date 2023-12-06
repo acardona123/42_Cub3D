@@ -6,15 +6,12 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/06 00:51:48 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:48:00 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SETTINGS_H
 # define SETTINGS_H
-
-# include <X11/X.h>
-# include <X11/keysym.h>
 
 // force bonus mode:
 // # ifndef BONUS
@@ -79,6 +76,7 @@
 //minimap colors
 # define MINIMAP_COLOR_F		0xe0e0e0
 # define MINIMAP_COLOR_WALL		0x424242
+# define MINIMAP_COLOR_WALL_1	0xe0e0e0
 # define MINIMAP_COLOR_NOTHING	0x696969
 # define MINIMAP_COLOR_N		0xe0e0e0
 # define MINIMAP_COLOR_E		0xe0e0e0
@@ -97,6 +95,9 @@
 # define HELP_DISP_OFFSET 140
 # define HELP_MSG_WIDTH 350
 # define HELP_MSG_HEIGHT 560
+
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 typedef enum e_commands
 {

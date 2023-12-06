@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 01:53:53 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/01 19:19:58 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:22:52 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_bool	in_2_anim_textu_init(void *mlx, t_animated_texture **texture,
 	if (*texture)
 		return (to_error_msg(MSG_TEXTURE_MULTIPLE_DEF), FAIL);
 	*texture = ft_calloc(1, sizeof(t_animated_texture));
-	if (!texture)
+	if (!*texture)
 		return (to_error_msg(MSG_BAD_ALLOC), FAIL);
 	if (ft_tablen(line_arg) == 1)
 		return (in_2_anim_textu_init_file(mlx, *texture, line_arg));

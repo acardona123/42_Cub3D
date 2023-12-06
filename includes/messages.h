@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:00:08 by alexandm          #+#    #+#             */
-/*   Updated: 2023/12/05 19:10:09 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:59:18 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ sides"
 # define MSG_WRONG_TIME "Map: wrong time argument in texture definition"
 
 //map content error messages
-# define MSG_NO_MAP_CONTENT "Map: map content under all the textures"
+# define MSG_NO_MAP_CONTENT "Map: map content not found"
 # define MSG_MAP_NOT_CLOSED "Map: not surrounded by walls"
 # define MSG_INVALID_CHAR "Map: contains an invalid character"
 # define MSG_MULTIPLE_PLAYER "Map: multiple player's position"
