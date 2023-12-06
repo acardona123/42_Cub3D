@@ -6,7 +6,7 @@
 /*   By: acardona <acardona@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 19:37:26 by acardona          #+#    #+#             */
-/*   Updated: 2023/12/06 14:22:29 by acardona         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:25:48 by acardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 // # endif
 
 //window parameters
-# define WIN_NAME		"Cub3D"
+# define WIN_NAME		"Memes pas cape"
 # define WIN_HEIGHT		900
 # define WIN_WIDTH		1900
 
