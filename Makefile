@@ -5,6 +5,8 @@ CFLAGS				=	-Werror -Wall -Wextra -g
 DEPSFLAG			=	-MMD
 
 MLX_DIR				=	mlx
+MLX_REPO			=	https://github.com/42Paris/minilibx-linux.git
+MLX_COMMIT			=	7dc53a411a7d4ae286c60c6229bd1e395b0efb82
 MLX					=	$(MLX_DIR)/libmlx.a
 LIBFT_DIR			=	libft
 INCLUDE_LIBFT		=	-L$(LIBFT_DIR) -lft
@@ -167,10 +169,15 @@ lib_mlx :
 	@echo "\e[32m==== MLX CLONING AND COMPILATION ====\e[0m"
 	@if [ ! -d "$(MLX_DIR)" ]; then \
         echo "Cloning the mlx..."; \
-        git clone -q https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
+        git clone -q $(MLX_REPO) $(MLX_DIR); \
+    fi
+	@if [ "$$(cd $(MLX_DIR) && git rev-parse HEAD)" != "$(MLX_COMMIT)" ]; then \
+        echo "Checking out pinned mlx version $(MLX_COMMIT)..."; \
+        (cd $(MLX_DIR) && git fetch -q origin \
+            && git checkout -q $(MLX_COMMIT) \
+            && (make clean >/dev/null 2>&1 || true)); \
     else \
-        echo "Pulling the mlx..."; \
-        (cd $(MLX_DIR) && git pull); \
+        echo "mlx already at pinned version"; \
     fi
 	@echo "Compiling the mlx..."
 	@make --no-print-directory -C $(MLX_DIR) >/dev/null 2>/dev/null
