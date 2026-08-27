@@ -45,7 +45,7 @@ The module boundaries described below are partly a consequence of that split. Ag
   <img src="readme_img/doors.jpg" width="720" alt="An open door in cub3D, with the minimap showing the door state in green"/>
 </p>
 
-Doors open and close on an animation timer and are raycast as their own surface. The minimap is colouring them green when open and red when closed. The clock on the left wall and the schedule board in the first screenshot are animated textures, cycling through frames on their own timer.
+Doors open and close on an animation timer and are raycast as their own surface. The minimap is colours them green when open and red when closed. The clock on the left wall and the schedule board in the first screenshot are animated textures, cycling through frames on their own timer.
 
 ## 🕹️ Beyond the subject
 
@@ -54,15 +54,15 @@ Doors and a minimap are the suggested bonuses. Everything below is ours, and it 
 To test them with optimal conditions try our special map: `make run_bonus ARGS="maps/valid/final_bonus_all.cub"`
 
 ### Buttons on the walls you can click
-> Hum, should I really click on that ?
+> Hum, should I really click on that?
 
 Some panels have buttons. Line one up in the crosshair, click or press space, and an animation plays on your screen.
-The two we shipped are named `leaks` and `crashes`, after the two things most likely to sink a 42 project, which makes walking into one a running joke rather than a feature .
+The two we shipped are named `leaks` and `crashes`, after the two things most likely to sink a 42 project, which makes walking into one a running joke rather than a feature.
 
 <!-- TODO: clip or screenshot of a leaks/crashes wall firing -> readme_img/props.gif -->
 
 ### Walls that are not there.
-> I swear there was a wall here !
+> I swear there was a wall here!
 
 A hologram block renders exactly like solid masonry and then lets you walk straight through it.
 It works because the engine keeps two separate notions of what counts as an obstacle, one for rays and one for footsteps:
@@ -72,7 +72,7 @@ It works because the engine keeps two separate notions of what counts as an obst
 #  define CHARS_OBSTACLE_WALK       "12lkjhcvbx " //can't be walked through
 ```
 
-The `p` is the symbole of the hologram in the map file. It's presence in the first list and its absence from the second is the whole trick. It is also the clearest argument for having kept rendering and collision apart in the first place.
+The `p` is the symbol of the hologram in the map file. Its presence in the first list and its absence from the second is the whole trick. It is also the clearest argument for having kept rendering and collision apart in the first place.
 
 <!-- TODO: clip walking through a hologram wall -> readme_img/hologram.gif -->
 
