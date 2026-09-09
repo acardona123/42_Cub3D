@@ -135,6 +135,31 @@ The Makefile clones MiniLibX at a pinned commit and builds it, so there is nothi
 
 ## 🚀 Getting Started
 
+### Prerequisites: the X11 headers
+
+MiniLibX is built from source by the Makefile, but it compiles against the X11
+development headers. On a 42 workstation they are already there; on a fresh
+Linux install, a VM, WSL or a container they usually are not, and their absence
+shows up as MiniLibX failing to build partway through `make`.
+
+Check whether they are present:
+
+```bash
+pkg-config --exists x11 xext && echo "X11 headers OK" || echo "X11 headers missing"
+```
+
+If they are missing, install them (Debian / Ubuntu / WSL):
+
+```bash
+sudo apt update
+sudo apt install -y gcc make xorg libxext-dev libbsd-dev libx11-dev
+```
+
+Fedora / RHEL: `sudo dnf install -y gcc make libX11-devel libXext-devel libbsd-devel`
+· Arch: `sudo pacman -S --needed base-devel libx11 libxext libbsd`
+
+### Build
+
 ```bash
 git clone https://github.com/acardona123/42_Cub3D.git
 cd 42_Cub3D
