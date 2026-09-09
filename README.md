@@ -137,10 +137,7 @@ The Makefile clones MiniLibX at a pinned commit and builds it, so there is nothi
 
 ### Prerequisites: the X11 headers
 
-MiniLibX is built from source by the Makefile, but it compiles against the X11
-development headers. On a 42 workstation they are already there; on a fresh
-Linux install, a VM, WSL or a container they usually are not, and their absence
-shows up as MiniLibX failing to build partway through `make`.
+MiniLibX is built from source by the Makefile, but it compiles against the X11 development headers. On a 42 workstation they are already there; on a fresh Linux install, a VM, WSL or a container they usually are not, and their absence shows up as MiniLibX failing to build partway through `make`.
 
 Check whether they are present:
 
