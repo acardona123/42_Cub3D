@@ -145,15 +145,22 @@ Check whether they are present:
 pkg-config --exists x11 xext && echo "X11 headers OK" || echo "X11 headers missing"
 ```
 
-If they are missing, install them (Debian / Ubuntu / WSL):
+If they are missing, install them.
+
+Debian / Ubuntu / WSL:
 
 ```bash
 sudo apt update
 sudo apt install -y gcc make xorg libxext-dev libbsd-dev libx11-dev
 ```
 
-Fedora / RHEL: `sudo dnf install -y gcc make libX11-devel libXext-devel libbsd-devel`
-· Arch: `sudo pacman -S --needed base-devel libx11 libxext libbsd`
+Fedora / RHEL (the school's current setup):
+
+```bash
+sudo dnf install -y gcc make libX11-devel libXext-devel libXpm-devel libbsd-devel
+```
+
+Arch: `sudo pacman -S --needed base-devel libx11 libxext libxpm libbsd`
 
 ### Build
 
